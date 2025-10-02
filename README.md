@@ -557,7 +557,9 @@ This project wouldn't be possible without these amazing open-source projects:
 
 <div align="center">
 
-**Made with ❤️ by the Ultimate Media Downloader Team**
+**Made with ❤️ by nk2552003**
+
+*Ultimate Media Downloader - October 2, 2025*
 
 ⭐ Star us on GitHub — it motivates us a lot!
 

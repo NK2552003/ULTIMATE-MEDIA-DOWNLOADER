@@ -9,7 +9,7 @@ This document provides a complete overview of all files created for the Ultimate
 ## 📂 Project Structure
 
 ```
-ultimate-downloader/
+ultimate-media-downloader/
 │
 ├── 🐍 Core Application
 │   ├── ultimate_downloader.py          ✅ Main application (5200+ lines)
@@ -460,8 +460,8 @@ gamdl>=1.7.5
 ### For Users
 
 ```bash
-git clone https://github.com/yourusername/ultimate-downloader.git
-cd ultimate-downloader
+git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+cd ULTIMATE-MEDIA-DOWNLOADER
 ./setup.sh
 ```
 
@@ -475,8 +475,8 @@ cd ultimate-downloader
 ### For Developers
 
 ```bash
-git clone https://github.com/yourusername/ultimate-downloader.git
-cd ultimate-downloader
+git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+cd ULTIMATE-MEDIA-DOWNLOADER
 ./setup.sh
 pip install pytest black flake8 mypy
 ```
@@ -563,7 +563,7 @@ pip install pytest black flake8 mypy
    git add .
    git commit -m "Initial commit: Ultimate Media Downloader v2.0"
    git branch -M main
-   git remote add origin https://github.com/yourusername/ultimate-downloader.git
+   git remote add origin https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
    git push -u origin main
    ```
 
@@ -603,5 +603,7 @@ This package includes:
 
 ---
 
+*Ultimate Media Downloader - Complete Package Summary*  
 *Package created with ❤️ for the open-source community*  
-*Last updated: October 2, 2024*
+*By nk2552003*  
+*Last updated: October 2, 2025*

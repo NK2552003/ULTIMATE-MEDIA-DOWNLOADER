@@ -627,3 +627,9 @@ Don't hesitate to ask! We're here to help:
 - Contact maintainers directly
 
 Thank you for contributing! 🎉
+
+---
+
+*Ultimate Media Downloader - Contributing Guide*  
+*Created by nk2552003*  
+*Last Updated: October 2, 2025*

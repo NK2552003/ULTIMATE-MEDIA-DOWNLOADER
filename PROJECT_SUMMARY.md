@@ -380,6 +380,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ---
 
-**Created with ❤️ for the open-source community**
-
-*Last Updated: October 2, 2024*
+*Ultimate Media Downloader - Project Summary*  
+*Created with ❤️ for the open-source community*  
+*By nk2552003*  
+*Last Updated: October 2, 2025*

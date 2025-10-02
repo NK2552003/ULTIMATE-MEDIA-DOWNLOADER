@@ -460,4 +460,6 @@ You'll know installation is successful when:
 
 ---
 
-*Last Updated: October 2, 2024*
+*Ultimate Media Downloader - Troubleshooting Guide*  
+*Created by nk2552003*  
+*Last Updated: October 2, 2025*
