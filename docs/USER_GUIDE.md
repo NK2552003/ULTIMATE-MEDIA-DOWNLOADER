@@ -43,7 +43,7 @@ You should see a welcome banner:
 Test your installation with a simple download:
 
 ```bash
-python ultimate_downloader.py "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+python3 ultimate_downloader.py "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 ```
 
 ---
@@ -54,34 +54,34 @@ python ultimate_downloader.py "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 
 **Simple download:**
 ```bash
-python ultimate_downloader.py "VIDEO_URL"
+python3 ultimate_downloader.py "VIDEO_URL"
 ```
 
 **Specify output directory:**
 ```bash
-python ultimate_downloader.py -o ~/Videos "VIDEO_URL"
+python3 ultimate_downloader.py -o ~/Videos "VIDEO_URL"
 ```
 
 **Choose quality:**
 ```bash
-python ultimate_downloader.py --quality 1080 "VIDEO_URL"
+python3 ultimate_downloader.py --quality 1080 "VIDEO_URL"
 ```
 
 ### Downloading Audio
 
 **Extract audio from video:**
 ```bash
-python ultimate_downloader.py -a "VIDEO_URL"
+python3 ultimate_downloader.py -a "VIDEO_URL"
 ```
 
 **High-quality audio:**
 ```bash
-python ultimate_downloader.py -a --audio-quality 320 "VIDEO_URL"
+python3 ultimate_downloader.py -a --audio-quality 320 "VIDEO_URL"
 ```
 
 **Specific audio format:**
 ```bash
-python ultimate_downloader.py -a --audio-format flac "VIDEO_URL"
+python3 ultimate_downloader.py -a --audio-format flac "VIDEO_URL"
 ```
 
 ### Interactive Mode
@@ -89,7 +89,7 @@ python ultimate_downloader.py -a --audio-format flac "VIDEO_URL"
 For a user-friendly experience, use interactive mode:
 
 ```bash
-python ultimate_downloader.py -i
+python3 ultimate_downloader.py -i
 ```
 
 You'll be prompted for:
@@ -106,22 +106,22 @@ You'll be prompted for:
 
 **Download entire playlist:**
 ```bash
-python ultimate_downloader.py -p "PLAYLIST_URL"
+python3 ultimate_downloader.py -p "PLAYLIST_URL"
 ```
 
 **Download specific range:**
 ```bash
-python ultimate_downloader.py -p --playlist-items 1-10 "PLAYLIST_URL"
+python3 ultimate_downloader.py -p --playlist-items 1-10 "PLAYLIST_URL"
 ```
 
 **Reverse order:**
 ```bash
-python ultimate_downloader.py -p --playlist-reverse "PLAYLIST_URL"
+python3 ultimate_downloader.py -p --playlist-reverse "PLAYLIST_URL"
 ```
 
 **Skip already downloaded:**
 ```bash
-python ultimate_downloader.py -p --archive archive.txt "PLAYLIST_URL"
+python3 ultimate_downloader.py -p --archive archive.txt "PLAYLIST_URL"
 ```
 
 ### Quality Selection
@@ -139,10 +139,10 @@ python ultimate_downloader.py -p --archive archive.txt "PLAYLIST_URL"
 **Examples:**
 ```bash
 # Download in 4K
-python ultimate_downloader.py --quality 4K "VIDEO_URL"
+python3 ultimate_downloader.py --quality 4K "VIDEO_URL"
 
 # Always best quality
-python ultimate_downloader.py --quality best "VIDEO_URL"
+python3 ultimate_downloader.py --quality best "VIDEO_URL"
 ```
 
 ### Format Selection
@@ -163,56 +163,56 @@ python ultimate_downloader.py --quality best "VIDEO_URL"
 **Examples:**
 ```bash
 # Download as MKV
-python ultimate_downloader.py --format mkv "VIDEO_URL"
+python3 ultimate_downloader.py --format mkv "VIDEO_URL"
 
 # Audio as FLAC
-python ultimate_downloader.py -a --audio-format flac "VIDEO_URL"
+python3 ultimate_downloader.py -a --audio-format flac "VIDEO_URL"
 ```
 
 ### Subtitles
 
 **Download with subtitles:**
 ```bash
-python ultimate_downloader.py --subtitles "VIDEO_URL"
+python3 ultimate_downloader.py --subtitles "VIDEO_URL"
 ```
 
 **Auto-generated subtitles:**
 ```bash
-python ultimate_downloader.py --subtitles --auto-subs "VIDEO_URL"
+python3 ultimate_downloader.py --subtitles --auto-subs "VIDEO_URL"
 ```
 
 **Specific language:**
 ```bash
-python ultimate_downloader.py --subtitles --sub-lang en "VIDEO_URL"
+python3 ultimate_downloader.py --subtitles --sub-lang en "VIDEO_URL"
 ```
 
 **All available subtitles:**
 ```bash
-python ultimate_downloader.py --all-subs "VIDEO_URL"
+python3 ultimate_downloader.py --all-subs "VIDEO_URL"
 ```
 
 ### Metadata & Thumbnails
 
 **Embed thumbnail:**
 ```bash
-python ultimate_downloader.py --embed-thumbnail "VIDEO_URL"
+python3 ultimate_downloader.py --embed-thumbnail "VIDEO_URL"
 ```
 
 **Embed metadata:**
 ```bash
-python ultimate_downloader.py --embed-metadata "VIDEO_URL"
+python3 ultimate_downloader.py --embed-metadata "VIDEO_URL"
 ```
 
 **Both:**
 ```bash
-python ultimate_downloader.py --embed-thumbnail --embed-metadata "VIDEO_URL"
+python3 ultimate_downloader.py --embed-thumbnail --embed-metadata "VIDEO_URL"
 ```
 
 ### Concurrent Downloads
 
 **Download multiple items simultaneously:**
 ```bash
-python ultimate_downloader.py -p --concurrent 5 "PLAYLIST_URL"
+python3 ultimate_downloader.py -p --concurrent 5 "PLAYLIST_URL"
 ```
 
 **Adjust based on your connection:**
@@ -224,34 +224,34 @@ python ultimate_downloader.py -p --concurrent 5 "PLAYLIST_URL"
 
 **Use HTTP proxy:**
 ```bash
-python ultimate_downloader.py --proxy "http://proxy:port" "VIDEO_URL"
+python3 ultimate_downloader.py --proxy "http://proxy:port" "VIDEO_URL"
 ```
 
 **SOCKS proxy:**
 ```bash
-python ultimate_downloader.py --proxy "socks5://proxy:port" "VIDEO_URL"
+python3 ultimate_downloader.py --proxy "socks5://proxy:port" "VIDEO_URL"
 ```
 
 **With authentication:**
 ```bash
-python ultimate_downloader.py --proxy "http://user:pass@proxy:port" "VIDEO_URL"
+python3 ultimate_downloader.py --proxy "http://user:pass@proxy:port" "VIDEO_URL"
 ```
 
 ### Search and Download
 
 **Search YouTube:**
 ```bash
-python ultimate_downloader.py --search "song name artist"
+python3 ultimate_downloader.py --search "song name artist"
 ```
 
 **Download first result:**
 ```bash
-python ultimate_downloader.py --search "song name" --first
+python3 ultimate_downloader.py --search "song name" --first
 ```
 
 **Search with filters:**
 ```bash
-python ultimate_downloader.py --search "tutorial python" --filter duration:short
+python3 ultimate_downloader.py --search "tutorial python" --filter duration:short
 ```
 
 ---
@@ -262,27 +262,27 @@ python ultimate_downloader.py --search "tutorial python" --filter duration:short
 
 **Single video:**
 ```bash
-python ultimate_downloader.py "https://www.youtube.com/watch?v=VIDEO_ID"
+python3 ultimate_downloader.py "https://www.youtube.com/watch?v=VIDEO_ID"
 ```
 
 **Short URL:**
 ```bash
-python ultimate_downloader.py "https://youtu.be/VIDEO_ID"
+python3 ultimate_downloader.py "https://youtu.be/VIDEO_ID"
 ```
 
 **Playlist:**
 ```bash
-python ultimate_downloader.py -p "https://www.youtube.com/playlist?list=PLAYLIST_ID"
+python3 ultimate_downloader.py -p "https://www.youtube.com/playlist?list=PLAYLIST_ID"
 ```
 
 **Channel (all videos):**
 ```bash
-python ultimate_downloader.py -p "https://www.youtube.com/c/CHANNEL_NAME/videos"
+python3 ultimate_downloader.py -p "https://www.youtube.com/c/CHANNEL_NAME/videos"
 ```
 
 **Live stream:**
 ```bash
-python ultimate_downloader.py "https://www.youtube.com/watch?v=LIVE_ID"
+python3 ultimate_downloader.py "https://www.youtube.com/watch?v=LIVE_ID"
 ```
 
 ### Spotify
@@ -305,34 +305,34 @@ python ultimate_downloader.py "https://www.youtube.com/watch?v=LIVE_ID"
 
 **Download track:**
 ```bash
-python ultimate_downloader.py "https://open.spotify.com/track/TRACK_ID"
+python3 ultimate_downloader.py "https://open.spotify.com/track/TRACK_ID"
 ```
 
 **Download album:**
 ```bash
-python ultimate_downloader.py -p "https://open.spotify.com/album/ALBUM_ID"
+python3 ultimate_downloader.py -p "https://open.spotify.com/album/ALBUM_ID"
 ```
 
 **Download playlist:**
 ```bash
-python ultimate_downloader.py -p "https://open.spotify.com/playlist/PLAYLIST_ID"
+python3 ultimate_downloader.py -p "https://open.spotify.com/playlist/PLAYLIST_ID"
 ```
 
 ### Instagram
 
 **Post:**
 ```bash
-python ultimate_downloader.py "https://www.instagram.com/p/POST_ID/"
+python3 ultimate_downloader.py "https://www.instagram.com/p/POST_ID/"
 ```
 
 **Reel:**
 ```bash
-python ultimate_downloader.py "https://www.instagram.com/reel/REEL_ID/"
+python3 ultimate_downloader.py "https://www.instagram.com/reel/REEL_ID/"
 ```
 
 **IGTV:**
 ```bash
-python ultimate_downloader.py "https://www.instagram.com/tv/VIDEO_ID/"
+python3 ultimate_downloader.py "https://www.instagram.com/tv/VIDEO_ID/"
 ```
 
 **Note:** Private accounts require authentication (not yet implemented).
@@ -341,87 +341,87 @@ python ultimate_downloader.py "https://www.instagram.com/tv/VIDEO_ID/"
 
 **Video:**
 ```bash
-python ultimate_downloader.py "https://www.tiktok.com/@user/video/VIDEO_ID"
+python3 ultimate_downloader.py "https://www.tiktok.com/@user/video/VIDEO_ID"
 ```
 
 **User profile (all videos):**
 ```bash
-python ultimate_downloader.py -p "https://www.tiktok.com/@username"
+python3 ultimate_downloader.py -p "https://www.tiktok.com/@username"
 ```
 
 **Without watermark:**
 ```bash
-python ultimate_downloader.py --no-watermark "TIKTOK_URL"
+python3 ultimate_downloader.py --no-watermark "TIKTOK_URL"
 ```
 
 ### SoundCloud
 
 **Track:**
 ```bash
-python ultimate_downloader.py "https://soundcloud.com/artist/track"
+python3 ultimate_downloader.py "https://soundcloud.com/artist/track"
 ```
 
 **Playlist:**
 ```bash
-python ultimate_downloader.py -p "https://soundcloud.com/artist/sets/playlist"
+python3 ultimate_downloader.py -p "https://soundcloud.com/artist/sets/playlist"
 ```
 
 **User (all tracks):**
 ```bash
-python ultimate_downloader.py -p "https://soundcloud.com/username"
+python3 ultimate_downloader.py -p "https://soundcloud.com/username"
 ```
 
 ### Twitter/X
 
 **Video tweet:**
 ```bash
-python ultimate_downloader.py "https://twitter.com/user/status/TWEET_ID"
+python3 ultimate_downloader.py "https://twitter.com/user/status/TWEET_ID"
 ```
 
 **Video with highest quality:**
 ```bash
-python ultimate_downloader.py --quality best "TWITTER_URL"
+python3 ultimate_downloader.py --quality best "TWITTER_URL"
 ```
 
 ### Facebook
 
 **Video:**
 ```bash
-python ultimate_downloader.py "https://www.facebook.com/watch/?v=VIDEO_ID"
+python3 ultimate_downloader.py "https://www.facebook.com/watch/?v=VIDEO_ID"
 ```
 
 **Story (if public):**
 ```bash
-python ultimate_downloader.py "https://www.facebook.com/stories/VIDEO_ID"
+python3 ultimate_downloader.py "https://www.facebook.com/stories/VIDEO_ID"
 ```
 
 ### Vimeo
 
 **Video:**
 ```bash
-python ultimate_downloader.py "https://vimeo.com/VIDEO_ID"
+python3 ultimate_downloader.py "https://vimeo.com/VIDEO_ID"
 ```
 
 **With password:**
 ```bash
-python ultimate_downloader.py --video-password PASSWORD "VIMEO_URL"
+python3 ultimate_downloader.py --video-password PASSWORD "VIMEO_URL"
 ```
 
 ### Twitch
 
 **VOD:**
 ```bash
-python ultimate_downloader.py "https://www.twitch.tv/videos/VIDEO_ID"
+python3 ultimate_downloader.py "https://www.twitch.tv/videos/VIDEO_ID"
 ```
 
 **Clip:**
 ```bash
-python ultimate_downloader.py "https://www.twitch.tv/username/clip/CLIP_ID"
+python3 ultimate_downloader.py "https://www.twitch.tv/username/clip/CLIP_ID"
 ```
 
 **Live stream (saves current stream):**
 ```bash
-python ultimate_downloader.py "https://www.twitch.tv/username"
+python3 ultimate_downloader.py "https://www.twitch.tv/username"
 ```
 
 ---
@@ -503,7 +503,7 @@ export DOWNLOADER_PROXY="http://proxy:port"
 Create a custom output template:
 
 ```bash
-python ultimate_downloader.py -o "~/Music/%(artist)s/%(album)s/%(title)s.%(ext)s" "MUSIC_URL"
+python3 ultimate_downloader.py -o "~/Music/%(artist)s/%(album)s/%(title)s.%(ext)s" "MUSIC_URL"
 ```
 
 ### 2. Batch Download from File
@@ -520,7 +520,7 @@ https://www.youtube.com/watch?v=video3
 Download all:
 
 ```bash
-python ultimate_downloader.py --batch-file urls.txt
+python3 ultimate_downloader.py --batch-file urls.txt
 ```
 
 ### 3. Resume Failed Downloads
@@ -528,7 +528,7 @@ python ultimate_downloader.py --batch-file urls.txt
 Use archive mode:
 
 ```bash
-python ultimate_downloader.py -p --archive archive.txt "PLAYLIST_URL"
+python3 ultimate_downloader.py -p --archive archive.txt "PLAYLIST_URL"
 ```
 
 If interrupted, run again - it will skip completed downloads.
@@ -536,7 +536,7 @@ If interrupted, run again - it will skip completed downloads.
 ### 4. Download Audio with Best Quality
 
 ```bash
-python ultimate_downloader.py -a --audio-quality 0 "VIDEO_URL"
+python3 ultimate_downloader.py -a --audio-quality 0 "VIDEO_URL"
 ```
 
 `0` means "best available".
@@ -544,7 +544,7 @@ python ultimate_downloader.py -a --audio-quality 0 "VIDEO_URL"
 ### 5. Limit Download Speed
 
 ```bash
-python ultimate_downloader.py --rate-limit 1M "VIDEO_URL"
+python3 ultimate_downloader.py --rate-limit 1M "VIDEO_URL"
 ```
 
 Useful for preventing bandwidth exhaustion.
@@ -552,7 +552,7 @@ Useful for preventing bandwidth exhaustion.
 ### 6. Keep Video and Audio Separate
 
 ```bash
-python ultimate_downloader.py --keep-video --keep-audio "VIDEO_URL"
+python3 ultimate_downloader.py --keep-video --keep-audio "VIDEO_URL"
 ```
 
 Saves both merged and separate files.
@@ -562,7 +562,7 @@ Saves both merged and separate files.
 For following channels:
 
 ```bash
-python ultimate_downloader.py -p --dateafter 20251001 "CHANNEL_URL"
+python3 ultimate_downloader.py -p --dateafter 20251001 "CHANNEL_URL"
 ```
 
 Downloads only videos from October 1, 2025 onwards.
@@ -570,7 +570,7 @@ Downloads only videos from October 1, 2025 onwards.
 ### 8. Custom File Names
 
 ```bash
-python ultimate_downloader.py -o "%(title)s-%(id)s.%(ext)s" "VIDEO_URL"
+python3 ultimate_downloader.py -o "%(title)s-%(id)s.%(ext)s" "VIDEO_URL"
 ```
 
 Available fields:
@@ -584,7 +584,7 @@ Available fields:
 ### 9. Download Thumbnails Only
 
 ```bash
-python ultimate_downloader.py --skip-download --write-thumbnail "VIDEO_URL"
+python3 ultimate_downloader.py --skip-download --write-thumbnail "VIDEO_URL"
 ```
 
 ### 10. Verify Downloads
@@ -592,7 +592,7 @@ python ultimate_downloader.py --skip-download --write-thumbnail "VIDEO_URL"
 Enable checksum verification:
 
 ```bash
-python ultimate_downloader.py --verify "VIDEO_URL"
+python3 ultimate_downloader.py --verify "VIDEO_URL"
 ```
 
 ---
@@ -613,7 +613,7 @@ python ultimate_downloader.py --verify "VIDEO_URL"
 
 ```bash
 # Export cookies from browser
-python ultimate_downloader.py --cookies cookies.txt "VIDEO_URL"
+python3 ultimate_downloader.py --cookies cookies.txt "VIDEO_URL"
 ```
 
 ### Q: Can I download private videos?
@@ -637,7 +637,7 @@ python ultimate_downloader.py --cookies cookies.txt "VIDEO_URL"
 ```bash
 cd ULTIMATE-MEDIA-DOWNLOADER
 git pull
-pip install -r requirements.txt --upgrade
+pip3 install -r requirements.txt --upgrade
 ```
 
 ### Q: Can I use this on a server without display?
@@ -645,7 +645,7 @@ pip install -r requirements.txt --upgrade
 **A:** Yes, use `--quiet` mode:
 
 ```bash
-python ultimate_downloader.py --quiet "VIDEO_URL"
+python3 ultimate_downloader.py --quiet "VIDEO_URL"
 ```
 
 ### Q: How much disk space do I need?

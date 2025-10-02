@@ -14,7 +14,7 @@
 source activate-env.sh
 
 # Download
-python ultimate_downloader.py "URL"
+python3 ultimate_downloader.py "URL"
 ```
 
 ---
@@ -24,55 +24,55 @@ python ultimate_downloader.py "URL"
 ### Basic Downloads
 ```bash
 # Video
-python ultimate_downloader.py "VIDEO_URL"
+python3 ultimate_downloader.py "VIDEO_URL"
 
 # Audio only
-python ultimate_downloader.py -a "VIDEO_URL"
+python3 ultimate_downloader.py -a "VIDEO_URL"
 
 # Playlist
-python ultimate_downloader.py -p "PLAYLIST_URL"
+python3 ultimate_downloader.py -p "PLAYLIST_URL"
 
 # Interactive
-python ultimate_downloader.py -i
+python3 ultimate_downloader.py -i
 ```
 
 ### Quality Selection
 ```bash
 # 4K
-python ultimate_downloader.py --quality 4K "URL"
+python3 ultimate_downloader.py --quality 4K "URL"
 
 # 1080p
-python ultimate_downloader.py --quality 1080 "URL"
+python3 ultimate_downloader.py --quality 1080 "URL"
 
 # Best available
-python ultimate_downloader.py --quality best "URL"
+python3 ultimate_downloader.py --quality best "URL"
 ```
 
 ### Format Options
 ```bash
 # MP4 video
-python ultimate_downloader.py --format mp4 "URL"
+python3 ultimate_downloader.py --format mp4 "URL"
 
 # MP3 audio
-python ultimate_downloader.py -a --audio-format mp3 "URL"
+python3 ultimate_downloader.py -a --audio-format mp3 "URL"
 
 # FLAC audio (lossless)
-python ultimate_downloader.py -a --audio-format flac "URL"
+python3 ultimate_downloader.py -a --audio-format flac "URL"
 ```
 
 ### Advanced
 ```bash
 # With metadata & thumbnail
-python ultimate_downloader.py --embed-metadata --embed-thumbnail "URL"
+python3 ultimate_downloader.py --embed-metadata --embed-thumbnail "URL"
 
 # With subtitles
-python ultimate_downloader.py --subtitles "URL"
+python3 ultimate_downloader.py --subtitles "URL"
 
 # Using proxy
-python ultimate_downloader.py --proxy "http://proxy:port" "URL"
+python3 ultimate_downloader.py --proxy "http://proxy:port" "URL"
 
 # Concurrent downloads
-python ultimate_downloader.py -p --concurrent 5 "PLAYLIST_URL"
+python3 ultimate_downloader.py -p --concurrent 5 "PLAYLIST_URL"
 ```
 
 ---
@@ -159,7 +159,7 @@ chmod +x setup.sh activate-env.sh
 **Module not found?**
 ```bash
 source activate-env.sh
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 ---

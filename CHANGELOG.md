@@ -185,7 +185,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 5. **Test installation**:
    ```bash
    source activate-env.sh
-   python ultimate_downloader.py --version
+   python3 ultimate_downloader.py --version
    ```
 
 ---
