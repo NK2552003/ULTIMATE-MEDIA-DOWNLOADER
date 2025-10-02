@@ -14,7 +14,7 @@ lxml>=4.9.0
 mutagen>=1.47.0
 rich>=13.7.0
 emoji>=2.10.0
-pyfiglet>=1.0.2
+pyfiglet>=0.8
 halo>=0.0.31
 # Optional Apple Music direct downloader support
 # gamdl may require additional setup and an Apple Music token
