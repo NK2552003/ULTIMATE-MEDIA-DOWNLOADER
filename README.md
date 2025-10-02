@@ -154,7 +154,7 @@ sudo dnf install python3 python3-pip ffmpeg
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/ultimate-downloader.git
+git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
 cd ultimate-downloader
 
 # Run the setup script
@@ -166,7 +166,7 @@ chmod +x setup.sh
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/ultimate-downloader.git
+git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
 cd ultimate-downloader
 
 # Create virtual environment
@@ -181,6 +181,15 @@ venv\Scripts\activate
 # Install dependencies
 pip install -r requirements.txt
 ```
+
+### Installation Issues?
+
+If you encounter any problems during installation, check our comprehensive [**TROUBLESHOOTING.md**](TROUBLESHOOTING.md) guide.
+
+**Common quick fixes:**
+- **Package version errors**: Use `pip install -r requirements-minimal.txt`
+- **FFmpeg missing**: See [TROUBLESHOOTING.md](TROUBLESHOOTING.md#issue-4-ffmpeg-not-found)
+- **Python version issues**: Requires Python 3.8+
 
 ---
 
@@ -463,7 +472,7 @@ Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for det
 
 ```bash
 # Clone your fork
-git clone https://github.com/yourusername/ultimate-downloader.git
+git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
 cd ultimate-downloader
 
 # Create virtual environment
@@ -529,8 +538,8 @@ This project wouldn't be possible without these amazing open-source projects:
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/yourusername/ultimate-downloader/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/ultimate-downloader/discussions)
+- **Issues**: [GitHub Issues](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/discussions)
 
 ---
 
@@ -552,6 +561,6 @@ This project wouldn't be possible without these amazing open-source projects:
 
 ⭐ Star us on GitHub — it motivates us a lot!
 
-[Report Bug](https://github.com/yourusername/ultimate-downloader/issues) • [Request Feature](https://github.com/yourusername/ultimate-downloader/issues)
+[Report Bug](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues) • [Request Feature](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues)
 
 </div>
