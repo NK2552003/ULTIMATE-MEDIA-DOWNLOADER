@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.0.0] - 2024-10-02
+## [2.0.0] - 2025-10-02
 
 ### Added
 - **Interactive Mode**: Beautiful CLI interface with Rich library integration
@@ -134,9 +134,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version History
 
-| Version | Release Date | Description |
-|---------|--------------|-------------|
-| 2.0.0   | 2024-10-02  | Major rewrite with multi-platform support |
+| Version | Date       | Description                               |
+|---------|------------|-------------------------------------------|
+| 2.0.0   | 2025-10-02  | Major rewrite with multi-platform support |
 | 1.0.0   | 2023-XX-XX  | Initial release |
 
 ---
@@ -203,7 +203,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Thank you to all contributors who made this release possible!
 
-- **Lead Developer**: [Your Name]
+- **Lead Developer**: nk2552003
 - **Contributors**: See CONTRIBUTORS.md
 
 ---
@@ -211,9 +211,11 @@ Thank you to all contributors who made this release possible!
 ## Support
 
 For issues, questions, or contributions:
-- GitHub Issues: https://github.com/yourusername/ultimate-downloader/issues
-- GitHub Discussions: https://github.com/yourusername/ultimate-downloader/discussions
+- GitHub Issues: https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues
+- GitHub Discussions: https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/discussions
 
 ---
 
-*This changelog is maintained according to [Keep a Changelog](https://keepachangelog.com/) principles.*
+*Ultimate Media Downloader - Changelog*  
+*Created by nk2552003*  
+*Last Updated: October 2, 2025*

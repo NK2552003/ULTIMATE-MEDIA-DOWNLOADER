@@ -8,8 +8,8 @@ Welcome to **Ultimate Media Downloader**! This guide will get you up and running
 
 ```bash
 # Clone and setup in one go
-git clone https://github.com/yourusername/ultimate-downloader.git && \
-cd ultimate-downloader && \
+git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git && \
+cd ULTIMATE-MEDIA-DOWNLOADER && \
 ./setup.sh
 ```
 
@@ -17,8 +17,8 @@ cd ultimate-downloader && \
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/yourusername/ultimate-downloader.git
-cd ultimate-downloader
+git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+cd ULTIMATE-MEDIA-DOWNLOADER
 
 # 2. Run setup script
 chmod +x setup.sh
@@ -167,3 +167,9 @@ python ultimate_downloader.py
 ```
 
 Enjoy! 🚀
+
+---
+
+*Ultimate Media Downloader - Quick Start Guide*  
+*Created by nk2552003*  
+*October 2, 2025*

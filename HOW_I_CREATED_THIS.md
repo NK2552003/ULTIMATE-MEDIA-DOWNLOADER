@@ -640,5 +640,7 @@ This project demonstrates:
 
 ---
 
+*Ultimate Media Downloader - Development Journey*  
 *Created with passion for learning and sharing knowledge*  
-*October 2, 2024*
+*By nk2552003*  
+*October 2, 2025*

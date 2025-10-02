@@ -631,7 +631,7 @@ class QuietLogger:
 
 ### Getting Help
 
-1. Check [GitHub Issues](https://github.com/yourusername/ultimate-downloader/issues)
+1. Check [GitHub Issues](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues)
 2. Read [yt-dlp documentation](https://github.com/yt-dlp/yt-dlp)
 3. Join discussions on GitHub Discussions
 4. Check FFmpeg installation: `ffmpeg -version`
@@ -644,8 +644,8 @@ class QuietLogger:
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/ultimate-downloader.git
-cd ultimate-downloader
+git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+cd ULTIMATE-MEDIA-DOWNLOADER
 
 # Create virtual environment
 python3 -m venv venv
@@ -807,6 +807,7 @@ This project is licensed under the MIT License. See LICENSE file for details.
 
 ## Credits
 
+- **Created by**: nk2552003
 - **yt-dlp Team**: Core download engine
 - **FFmpeg Project**: Audio/video processing
 - **Rich Library**: Beautiful terminal UI
@@ -814,4 +815,6 @@ This project is licensed under the MIT License. See LICENSE file for details.
 
 ---
 
-*Last Updated: 2024*
+*Ultimate Media Downloader - Complete Documentation*  
+*Created by nk2552003*  
+*Last Updated: October 2, 2025*
