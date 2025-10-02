@@ -28,6 +28,7 @@ Pillow>=10.1.0                  # Image processing for thumbnails
 # -------------------------------------------------------------------------
 spotipy>=2.23.0                 # Spotify API wrapper
 youtube-search-python>=1.6.6    # YouTube search without API key
+spotdl>=4.4.2                   # Spotify to YouTube downloader
 
 # Advanced Web Scraping & Downloading
 # -------------------------------------------------------------------------
@@ -64,7 +65,7 @@ mypy>=1.7.1                     # Static type checker
 
 # Optional: Apple Music Support
 # -------------------------------------------------------------------------
-# gamdl                         # Uncomment to enable Apple Music downloads
+gamdl                         # Uncomment to enable Apple Music downloads
 # Note: gamdl requires additional setup and Apple Music subscription
 
 # Platform-specific dependencies

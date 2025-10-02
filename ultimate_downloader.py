@@ -2445,7 +2445,7 @@ class UltimateMediaDownloader:
         
         return successful_downloads > 0
     
-    def _search_youtube_for_music(self, track_query, max_results=5):
+    def _search_youtube_for_music(self, track_query, max_results=8):
         """Enhanced YouTube search specifically for music tracks with quality scoring"""
         # Clean up the track query for better search results
         cleaned_query = self._clean_track_query(track_query)
@@ -2460,6 +2460,7 @@ class UltimateMediaDownloader:
         
         best_match = None
         best_score = 0
+        all_candidates = []  # Store all candidates for comparison
         
         for variation in search_variations:
             print(f"  ⌕ Trying: {variation}")
@@ -2468,16 +2469,41 @@ class UltimateMediaDownloader:
             results = self._search_youtube_multiple(variation, max_results=max_results)
             
             if results:
-                # Score each result and pick the best one
+                # Score each result and track all candidates
                 for result_url in results:
                     score = self._score_youtube_result(result_url, track_query)
+                    all_candidates.append((result_url, score))
+                    
                     if score > best_score:
                         best_score = score
                         best_match = result_url
                 
-                # If we found a good match, use it
-                if best_match and best_score > 50:  # Threshold for acceptable match
+                # If we found a very good match (high score), use it immediately
+                if best_match and best_score > 80:  # High threshold for excellent match
+                    print(f"  ✓ Found excellent match with score: {best_score}")
                     return best_match
+        
+        # After all searches, select the absolute best by re-evaluating top candidates
+        if all_candidates:
+            # Remove duplicates while keeping highest score
+            unique_candidates = {}
+            for url, score in all_candidates:
+                if url not in unique_candidates or score > unique_candidates[url]:
+                    unique_candidates[url] = score
+            
+            # Sort by score descending to get the best match
+            sorted_candidates = sorted(unique_candidates.items(), key=lambda x: x[1], reverse=True)
+            
+            if sorted_candidates:
+                best_match, best_score = sorted_candidates[0]
+                print(f"  ✓ Selected best match with score: {best_score}")
+                
+                # Show runner-up if available (for debugging/transparency)
+                if len(sorted_candidates) > 1:
+                    runner_up_score = sorted_candidates[1][1]
+                    print(f"    (Runner-up score: {runner_up_score})")
+                
+                return best_match
         
         # Return best match even if score is low
         return best_match
@@ -2554,26 +2580,53 @@ class UltimateMediaDownloader:
                 elif duration and 30 < duration < 600:  # 30 seconds to 10 minutes
                     score += 10
                 
-                # Score based on popularity (higher views = more likely to be official/correct)
-                # Check that view_count is a valid number before comparing
-                if isinstance(view_count, (int, float)) and view_count > 50_000_000:  # 50M+ views
-                    score += 25
-                elif isinstance(view_count, (int, float)) and view_count > 10_000_000:  # 10M+ views
-                    score += 20
-                elif isinstance(view_count, (int, float)) and view_count > 1_000_000:  # 1M+ views
-                    score += 15
-                elif isinstance(view_count, (int, float)) and view_count > 100_000:  # 100K+ views
-                    score += 10
-                elif isinstance(view_count, (int, float)) and view_count > 10_000:  # 10K+ views
-                    score += 5
+                # Enhanced scoring based on popularity (views AND likes combined)
+                # Higher weight for both metrics to better differentiate quality
+                if isinstance(view_count, (int, float)) and view_count > 0:
+                    if view_count > 100_000_000:  # 100M+ views
+                        score += 40
+                    elif view_count > 50_000_000:  # 50M+ views
+                        score += 35
+                    elif view_count > 10_000_000:  # 10M+ views
+                        score += 30
+                    elif view_count > 5_000_000:  # 5M+ views
+                        score += 25
+                    elif view_count > 1_000_000:  # 1M+ views
+                        score += 20
+                    elif view_count > 500_000:  # 500K+ views
+                        score += 15
+                    elif view_count > 100_000:  # 100K+ views
+                        score += 10
+                    elif view_count > 10_000:  # 10K+ views
+                        score += 5
                 
-                # Score based on like ratio
-                # Ensure both values are valid numbers before calculating ratio
+                # Enhanced scoring based on absolute like count (indicates quality)
+                if isinstance(like_count, (int, float)) and like_count > 0:
+                    if like_count > 5_000_000:  # 5M+ likes
+                        score += 35
+                    elif like_count > 1_000_000:  # 1M+ likes
+                        score += 30
+                    elif like_count > 500_000:  # 500K+ likes
+                        score += 25
+                    elif like_count > 100_000:  # 100K+ likes
+                        score += 20
+                    elif like_count > 50_000:  # 50K+ likes
+                        score += 15
+                    elif like_count > 10_000:  # 10K+ likes
+                        score += 10
+                    elif like_count > 1_000:  # 1K+ likes
+                        score += 5
+                
+                # Enhanced like ratio scoring (engagement quality)
                 if isinstance(view_count, (int, float)) and isinstance(like_count, (int, float)) and view_count > 0 and like_count > 0:
                     like_ratio = like_count / view_count
-                    if like_ratio > 0.05:  # 5%+ like ratio is very good
+                    if like_ratio > 0.08:  # 8%+ like ratio is exceptional
+                        score += 25
+                    elif like_ratio > 0.05:  # 5%+ like ratio is very good
+                        score += 20
+                    elif like_ratio > 0.03:  # 3%+ is good
                         score += 15
-                    elif like_ratio > 0.02:  # 2%+ is good
+                    elif like_ratio > 0.02:  # 2%+ is above average
                         score += 10
                     elif like_ratio > 0.01:  # 1%+ is decent
                         score += 5
@@ -2587,11 +2640,14 @@ class UltimateMediaDownloader:
                 if any(keyword in title for keyword in ['audio', 'lyric video', 'official music video']):
                     score += 10
                 
+                # Calculate like ratio for display
+                like_ratio_pct = (like_count / view_count * 100) if view_count > 0 else 0
+                
                 # Format view and like counts safely
                 view_str = f"{view_count:,}" if isinstance(view_count, (int, float)) else "N/A"
                 like_str = f"{like_count:,}" if isinstance(like_count, (int, float)) else "N/A"
                 
-                print(f"    ▤ Score: {score} | Views: {view_str} | Likes: {like_str} | {title[:60]}...")
+                print(f"    ▤ Score: {score} | Views: {view_str} | Likes: {like_str} ({like_ratio_pct:.2f}%) | {title[:50]}...")
                 
                 return max(0, score)  # Don't return negative scores
                 
@@ -3479,7 +3535,6 @@ class UltimateMediaDownloader:
         """Parse Apple Music HTML to extract metadata"""
         metadata = {}
         tracks = []
-        
         # If raw_html is provided, use it for more aggressive pattern matching
         if raw_html:
             try:
@@ -3560,54 +3615,75 @@ class UltimateMediaDownloader:
                         print(f"  ⚠  JSON object parsing error: {e}")
                 
                 # Pattern 3: Direct regex extraction (most aggressive, last resort)
-                # IMPORTANT: In Apple Music HTML, artistName comes BEFORE title in the structure!
+                # Strategy: Extract ALL track names first, then ALL artist names, then pair by index
                 if not tracks:
                     try:
-                        # Pattern 1: artistName before title (this is the correct order for Apple Music)
-                        # Use a pattern that handles escaped quotes within strings
-                        artist_title_pattern = r'"artistName"\s*:\s*"((?:[^"\\]|\\.)*)".{0,2000}?"title"\s*:\s*"((?:[^"\\]|\\.)*)"'
-                        matches = re.findall(artist_title_pattern, raw_html, re.DOTALL)
+                        # Step 1: Extract ALL track names (song titles) from the entire HTML
+                        track_names = []
+                        name_pattern = r'"name"\s*:\s*"((?:[^"\\]|\\.)*?)"'
+                        all_names = re.findall(name_pattern, raw_html)
                         
-                        for artist_name, track_name in matches:
-                            # Filter out non-track data
-                            if track_name and artist_name:
-                                # Clean up escaped characters in track names
-                                # Replace escaped quotes and backslashes
-                                track_name = track_name.replace(r'\"', '"').replace(r'\\', '\\').strip()
-                                artist_name = artist_name.replace(r'\"', '"').replace(r'\\', '\\').strip()
-                                
-                                if track_name.lower() not in ['music', 'playlist', 'album', 'artist']:
-                                    # Check for duplicates using normalized comparison
-                                    if not any(t['title'].lower() == track_name.lower() and t['artist'].lower() == artist_name.lower() for t in tracks):
-                                        tracks.append({
-                                            'title': track_name,
-                                            'artist': artist_name
-                                        })
+                        for name in all_names:
+                            cleaned_name = name.replace(r'\"', '"').replace(r'\\', '\\').strip()
+                            if cleaned_name:
+                                track_names.append(cleaned_name)
                         
-                        if tracks:
-                            print(f"  ✓ Extracted {len(tracks)} tracks using artistName+title pattern")
+                        # Step 2: Extract ALL artist names from the entire HTML
+                        artist_names = []
+                        artist_pattern = r'"artistName"\s*:\s*"((?:[^"\\]|\\.)*?)"'
+                        all_artists = re.findall(artist_pattern, raw_html)
                         
-                        # Pattern 2: Fallback - try the reverse order (name before artistName)
-                        if not tracks:
-                            name_artist_pattern = r'"name"\s*:\s*"([^"]+)".{0,2000}?"artistName"\s*:\s*"([^"]+)"'
-                            matches = re.findall(name_artist_pattern, raw_html, re.DOTALL)
+                        for artist in all_artists:
+                            cleaned_artist = artist.replace(r'\"', '"').replace(r'\\', '\\').strip()
+                            if cleaned_artist:
+                                artist_names.append(cleaned_artist)
+                        
+                        # Step 3: Remove the first two indices from track_names list
+                        if len(track_names) > 2:
+                            track_names = track_names[2:]
+                            print(f"  ℹ  Removed first 2 entries from track names (likely metadata)")
+                        
+                        # Step 4: Remove duplicates from track_names only (not from artists)
+                        # Use dict to preserve order (Python 3.7+) and remove duplicates
+                        seen_names = {}
+                        unique_track_names = []
+                        for name in track_names:
+                            name_lower = name.lower()
+                            if name_lower not in seen_names:
+                                seen_names[name_lower] = True
+                                unique_track_names.append(name)
+                        
+                        track_names = unique_track_names
+                        # Keep artist_names as-is with duplicates intact
+                        
+                        # Step 5: Pair them up by index - index 0 of titles with index 0 of artists
+                        if track_names and artist_names:
+                            # Use the minimum length to avoid index errors
+                            min_length = min(len(track_names), len(artist_names))
                             
-                            for track_name, artist_name in matches:
-                                if track_name and artist_name:
-                                    # Clean up escaped characters
-                                    track_name = track_name.replace('\\', '').strip()
-                                    artist_name = artist_name.strip()
-                                    
-                                    if track_name.lower() not in ['music', 'playlist', 'album', 'artist']:
-                                        # Check for duplicates using normalized comparison
-                                        if not any(t['title'].lower() == track_name.lower() and t['artist'].lower() == artist_name.lower() for t in tracks):
-                                            tracks.append({
-                                                'title': track_name,
-                                                'artist': artist_name
-                                            })
+                            print(f"  ℹ  Found {len(track_names)} unique track names and {len(artist_names)} unique artist names")
+                            print(f"  ℹ  Will pair {min_length} tracks by index")
+                            
+                            # Track seen combinations to avoid duplicates in final list
+                            seen_combinations = set()
+                            
+                            for i in range(min_length):
+                                track_name = track_names[i]
+                                artist_name = artist_names[i]
+                                
+                                # Create a normalized key for duplicate checking
+                                combo_key = f"{track_name.lower()}|||{artist_name.lower()}"
+                                
+                                if combo_key not in seen_combinations:
+                                    seen_combinations.add(combo_key)
+                                    tracks.append({
+                                        'title': track_name,
+                                        'artist': artist_name
+                                    })
                             
                             if tracks:
-                                print(f"  ✓ Extracted {len(tracks)} tracks using name+artistName pattern")
+                                print(f"  ✓ Extracted {len(tracks)} unique tracks using indexed pairing")
+                                    
                     except Exception as e:
                         print(f"  ⚠  Regex extraction error: {e}")
                         
