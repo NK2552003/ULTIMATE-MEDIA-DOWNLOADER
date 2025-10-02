@@ -1,0 +1,45 @@
+# Ultimate Media Downloader - Requirements
+# Compatible with Python 3.8+
+
+# Core download engine
+yt-dlp>=2024.3.10
+
+# Media processing
+ffmpeg-python>=0.2.0
+mutagen>=1.47.0
+
+# HTTP and networking
+requests>=2.31.0
+
+# Web scraping and automation
+beautifulsoup4>=4.12.2
+lxml>=4.9.0
+cloudscraper>=1.2.71
+
+# Browser automation (optional but recommended)
+selenium>=4.12.0
+webdriver-manager>=4.0.1
+undetected-chromedriver>=3.5.5
+
+# API integrations
+spotipy>=2.23.0
+
+# Search functionality
+youtube-search-python>=1.6.6
+
+# Image processing
+Pillow>=10.0.0
+
+# File type detection
+filetype>=1.2.0
+
+# UI and display
+rich>=13.7.0
+pyfiglet>=0.8
+halo>=0.0.31
+emoji>=2.10.0
+
+# Optional: Apple Music direct downloader
+# gamdl>=1.7.5
+# Note: gamdl requires additional setup and Apple Music authentication token
+# Uncomment above line if you want to use direct Apple Music downloads

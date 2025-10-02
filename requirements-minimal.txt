@@ -1,0 +1,29 @@
+# Minimal requirements for Ultimate Media Downloader
+# Install only essential packages for basic functionality
+
+# Core download engine (required)
+yt-dlp>=2024.3.10
+
+# Media processing (required)
+ffmpeg-python>=0.2.0
+mutagen>=1.47.0
+
+# HTTP requests (required)
+requests>=2.31.0
+
+# UI (required)
+rich>=13.7.0
+
+# Web scraping (required for some platforms)
+beautifulsoup4>=4.12.2
+lxml>=4.9.0
+
+# Image processing (required for metadata)
+Pillow>=10.0.0
+
+# API integrations (optional - for Spotify)
+spotipy>=2.23.0
+
+# Additional UI elements (optional but recommended)
+pyfiglet>=0.8
+emoji>=2.10.0
