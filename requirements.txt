@@ -1,5 +1,9 @@
-yt-dlp>=2024.3.10
-ffmpeg-python>=0.2.0
+yt-dlp>=2024.mutagen>=1.47.0
+rich>=13.7.0
+emoji>=2.10.0
+pyfiglet>=0.8.post1
+halo>=0.0.31
+# Optional Apple Music direct downloader supportfmpeg-python>=0.2.0
 requests>=2.31.0
 Pillow>=10.0.0
 filetype>=1.2.0
