@@ -1,0 +1,44 @@
+# Python environments
+.downloader_env/
+downloader_env/
+youtube_downloader_env/
+.venv/
+venv/
+
+# Downloads and caches
+downloads/
+**/.cache/
+*.part
+*.ytdl
+*.aria2
+*.temp
+*.tmp
+*.log
+
+# yt-dlp artifacts (uncomment to keep thumbnails/info)
+*.info.json
+*.jpg
+*.jpeg
+*.png
+*.webp
+
+# Python build artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+build/
+dist/
+*.egg-info/
+pip-wheel-metadata/
+
+# OS/editor junk
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Selenium/WebDriver caches
+webdriver/

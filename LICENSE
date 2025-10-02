@@ -1,0 +1,74 @@
+MIT License
+
+Copyright (c) 2024 Ultimate Media Downloader Contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+================================================================================
+
+THIRD-PARTY SOFTWARE LICENSES
+
+This project uses the following open-source libraries:
+
+1. yt-dlp (Unlicense)
+   https://github.com/yt-dlp/yt-dlp
+   
+2. FFmpeg (LGPL 2.1+)
+   https://ffmpeg.org/
+
+3. Rich (MIT License)
+   https://github.com/Textualize/rich
+
+4. Spotipy (MIT License)
+   https://github.com/spotipy-dev/spotipy
+
+5. Mutagen (GPL-2.0)
+   https://github.com/quodlibet/mutagen
+
+6. BeautifulSoup4 (MIT License)
+   https://www.crummy.com/software/BeautifulSoup/
+
+7. Requests (Apache License 2.0)
+   https://github.com/psf/requests
+
+8. Pillow (HPND License)
+   https://github.com/python-pillow/Pillow
+
+9. Selenium (Apache License 2.0)
+   https://github.com/SeleniumHQ/selenium
+
+10. youtube-search-python (MIT License)
+    https://github.com/alexmercerind/youtube-search-python
+
+All third-party libraries retain their original licenses.
+Please refer to their respective repositories for full license texts.
+
+================================================================================
+
+DISCLAIMER
+
+This software is provided for educational and personal use only. Users are
+responsible for complying with the terms of service of any websites or
+platforms they interact with using this software. The authors and contributors
+of this software are not responsible for any misuse or legal issues arising
+from the use of this software.
+
+Users must ensure they have the right to download and use any content they
+obtain through this software, including respecting copyright laws and the
+intellectual property rights of content creators.

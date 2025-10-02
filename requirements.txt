@@ -1,0 +1,21 @@
+yt-dlp>=2024.3.10
+ffmpeg-python>=0.2.0
+requests>=2.31.0
+Pillow>=10.0.0
+filetype>=1.2.0
+spotipy>=2.23.0
+youtube-search-python>=1.6.6
+beautifulsoup4>=4.12.2
+cloudscraper>=1.2.71
+selenium>=4.12.0
+webdriver-manager>=4.0.1
+undetected-chromedriver>=3.5.5
+lxml>=4.9.0
+mutagen>=1.47.0
+rich>=13.7.0
+emoji>=2.10.0
+pyfiglet>=1.0.2
+halo>=0.0.31
+# Optional Apple Music direct downloader support
+# gamdl may require additional setup and an Apple Music token
+gamdl>=1.7.5
