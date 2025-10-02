@@ -1,44 +1,140 @@
-# Python environments
-.downloader_env/
-downloader_env/
-youtube_downloader_env/
-.venv/
-venv/
+# .gitignore - Ultimate Media Downloader
 
-# Downloads and caches
-downloads/
-**/.cache/
-*.part
-*.ytdl
-*.aria2
-*.temp
-*.tmp
-*.log
-
-# yt-dlp artifacts (uncomment to keep thumbnails/info)
-*.info.json
-*.jpg
-*.jpeg
-*.png
-*.webp
-
-# Python build artifacts
+# Python
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+*.py[cod]
+*$py.class
+*.so
 .Python
 build/
+develop-eggs/
 dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
 *.egg-info/
-pip-wheel-metadata/
+.installed.cfg
+*.egg
+MANIFEST
 
-# OS/editor junk
-.DS_Store
+# Virtual Environment
+venv/
+ENV/
+env/
+.venv
+
+# IDEs
 .vscode/
 .idea/
 *.swp
 *.swo
+*~
+.DS_Store
 
-# Selenium/WebDriver caches
-webdriver/
+# Project specific
+downloads/
+*.mp4
+*.mp3
+*.mkv
+*.webm
+*.flac
+*.wav
+*.m4a
+*.jpg
+*.png
+*.jpeg
+
+# Configuration (with credentials)
+config.local.json
+.env
+.env.local
+cookies.txt
+*.cookie
+
+# Logs
+*.log
+logs/
+.cache/
+
+# Archive files
+archive.txt
+download_history.txt
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# System files
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.hypothesis/
+
+# Documentation builds
+docs/_build/
+docs/.doctrees/
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Credentials and sensitive data
+credentials.json
+secrets.json
+*.key
+*.pem
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# ChromeDriver
+chromedriver
+chromedriver.exe
+
+# FFmpeg (if downloaded locally)
+ffmpeg
+ffmpeg.exe
+ffprobe
+ffprobe.exe
+
+# Node modules (if using any JS tools)
+node_modules/
+
+# macOS
+.AppleDouble
+.LSOverride
+Icon
+._*
+
+# Windows
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
