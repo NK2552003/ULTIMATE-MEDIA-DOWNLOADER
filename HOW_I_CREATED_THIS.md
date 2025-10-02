@@ -297,17 +297,17 @@ gantt
     title Bug Fix Timeline
     dateFormat YYYY-MM-DD
     section Critical Bugs
-    Playlist timeout fix        :2024-09-01, 2d
-    Metadata embedding crash    :2024-09-03, 1d
-    Windows path issues         :2024-09-04, 2d
+    Playlist timeout fix        :2025-08-15, 2d
+    Metadata embedding crash    :2025-08-18, 1d
+    Windows path issues         :2025-08-20, 2d
     
     section Performance
-    Memory leak in batch mode   :2024-09-06, 1d
-    Progress bar flickering     :2024-09-07, 1d
+    Memory leak in batch mode   :2025-08-25, 3d
+    Progress bar flickering     :2025-08-28, 1d
     
     section Enhancements
-    Better error messages       :2024-09-08, 2d
-    Interactive improvements    :2024-09-10, 2d
+    Better error messages       :2025-09-01, 2d
+    Interactive improvements    :2025-09-15, 3d
 ```
 
 ---
@@ -539,24 +539,24 @@ gantt
     title Feature Development Timeline
     dateFormat YYYY-MM-DD
     section Core
-    Basic download          :done, 2024-07-01, 7d
-    Platform detection      :done, 2024-07-08, 7d
-    Multi-platform support  :done, 2024-07-15, 14d
+    Basic download          :done, 2025-06-01, 7d
+    Platform detection      :done, 2025-06-08, 7d
+    Multi-platform support  :done, 2025-06-15, 14d
     
     section UI
-    CLI interface          :done, 2024-07-29, 7d
-    Interactive mode       :done, 2024-08-05, 7d
-    Progress bars          :done, 2024-08-12, 3d
+    CLI interface          :done, 2025-06-29, 7d
+    Interactive mode       :done, 2025-07-06, 7d
+    Progress bars          :done, 2025-07-13, 3d
     
     section Advanced
-    Playlist support       :done, 2024-08-15, 7d
-    Batch downloads        :done, 2024-08-22, 5d
-    Metadata embedding     :done, 2024-08-27, 7d
+    Playlist support       :done, 2025-07-16, 7d
+    Batch downloads        :done, 2025-07-23, 5d
+    Metadata embedding     :done, 2025-07-28, 7d
     
     section Polish
-    Testing & bug fixes    :done, 2024-09-03, 7d
-    Documentation          :done, 2024-09-10, 7d
-    Setup scripts          :done, 2024-09-17, 3d
+    Testing & bug fixes    :done, 2025-08-10, 10d
+    Documentation          :done, 2025-09-01, 14d
+    Setup scripts          :done, 2025-09-20, 5d
 ```
 
 ---
