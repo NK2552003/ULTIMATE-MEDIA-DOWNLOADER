@@ -1,16 +1,17 @@
 # Contributing to Ultimate Media Downloader
 
-First off, thank you for considering contributing to Ultimate Media Downloader! It's people like you that make this tool better for everyone.
+Thank you for your interest in contributing to Ultimate Media Downloader! This document provides guidelines and instructions for contributing to this project.
 
 ## Table of Contents
 
 - [Code of Conduct](#code-of-conduct)
 - [How Can I Contribute?](#how-can-i-contribute)
 - [Development Setup](#development-setup)
+- [Coding Standards](#coding-standards)
+- [Commit Guidelines](#commit-guidelines)
 - [Pull Request Process](#pull-request-process)
-- [Style Guidelines](#style-guidelines)
-- [Commit Message Guidelines](#commit-message-guidelines)
 - [Testing Guidelines](#testing-guidelines)
+- [Documentation](#documentation)
 
 ---
 
@@ -24,7 +25,7 @@ We pledge to make participation in our project a harassment-free experience for 
 
 **Positive behavior includes:**
 - Using welcoming and inclusive language
-- Being respectful of differing viewpoints and experiences
+- Being respectful of differing viewpoints
 - Gracefully accepting constructive criticism
 - Focusing on what is best for the community
 - Showing empathy towards other community members
@@ -41,92 +42,91 @@ We pledge to make participation in our project a harassment-free experience for 
 
 ### Reporting Bugs
 
-Before creating bug reports, please check existing issues to avoid duplicates. When creating a bug report, include:
+Before creating bug reports, please check existing issues to avoid duplicates.
 
-**Required Information:**
-- Clear, descriptive title
-- Detailed steps to reproduce
-- Expected vs actual behavior
-- Environment details (OS, Python version)
-- Relevant logs and error messages
-- Screenshots if applicable
-
-**Example Bug Report:**
+**Bug Report Template:**
 
 ```markdown
-**Bug Description:**
-Download fails for Spotify playlists with more than 50 tracks
+**Bug Description**
+A clear and concise description of what the bug is.
 
-**Steps to Reproduce:**
-1. Run `python ultimate_downloader.py "PLAYLIST_URL" --playlist`
-2. Select "Download all tracks"
-3. Wait for processing
+**To Reproduce**
+Steps to reproduce the behavior:
+1. Run command '...'
+2. With URL '....'
+3. See error
 
-**Expected Behavior:**
-All tracks should download successfully
+**Expected Behavior**
+What you expected to happen.
 
-**Actual Behavior:**
-Download stops after track 50 with error: "Connection timeout"
+**Actual Behavior**
+What actually happened.
 
 **Environment:**
-- OS: macOS 14.0
-- Python: 3.11.5
-- yt-dlp: 2024.3.10
+- OS: [e.g., Ubuntu 22.04]
+- Python Version: [e.g., 3.11.5]
+- App Version: [e.g., 2.0.0]
 
-**Error Log:**
+**Logs**
 ```
-[ERROR] Connection timeout after 60 seconds
-Traceback (most recent call last):
-  ...
+Paste relevant log output here
 ```
+
+**Additional Context**
+Add any other context about the problem.
 ```
 
 ### Suggesting Enhancements
 
-Enhancement suggestions are tracked as GitHub issues. When creating an enhancement suggestion, include:
+Enhancement suggestions are tracked as GitHub issues.
 
-- Clear, descriptive title
-- Detailed description of the proposed functionality
-- Rationale (why is this needed?)
-- Possible implementation approach
-- Alternative solutions considered
-
-**Example Enhancement Request:**
+**Enhancement Template:**
 
 ```markdown
-**Feature Request: Add Support for Bandcamp Albums**
+**Feature Description**
+A clear description of the feature you'd like to see.
 
-**Description:**
-Add native support for downloading Bandcamp albums with metadata.
+**Use Case**
+Why would this feature be useful? What problem does it solve?
 
-**Rationale:**
-Many independent artists use Bandcamp. Current workaround requires manual
-URL extraction for each track.
+**Proposed Solution**
+How you envision this feature working.
 
-**Proposed Implementation:**
-1. Detect Bandcamp URLs in `detect_platform()`
-2. Extract album metadata using BeautifulSoup
-3. Download tracks individually
-4. Embed metadata from Bandcamp
+**Alternatives Considered**
+Other solutions you've considered.
 
-**Alternatives:**
-- Use yt-dlp's Bandcamp extractor (limited metadata)
-- Third-party Bandcamp API wrapper
+**Additional Context**
+Screenshots, mockups, or examples from other projects.
 ```
 
-### Your First Code Contribution
+### Adding Platform Support
 
-Unsure where to begin? Look for issues labeled:
-- `good first issue` - Good for newcomers
-- `help wanted` - Extra attention needed
-- `documentation` - Documentation improvements
+Want to add support for a new platform?
 
-### Pull Requests
+1. Create a new handler class in `ultimate_downloader.py`
+2. Implement the `PlatformHandler` interface
+3. Add platform detection logic
+4. Write tests
+5. Update documentation
+
+**Example:**
+
+```python
+class NewPlatformHandler(PlatformHandler):
+    def can_handle(self, url: str) -> bool:
+        return 'newplatform.com' in url
+    
+    def download(self, url: str, options: dict) -> Result:
+        # Implementation
+        pass
+```
+
+### Code Contributions
 
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
-4. Write or update tests
+4. Write/update tests
 5. Update documentation
 6. Submit a pull request
 
@@ -136,7 +136,7 @@ Unsure where to begin? Look for issues labeled:
 
 ### Prerequisites
 
-- Python 3.8 or higher
+- Python 3.9 or higher
 - Git
 - FFmpeg
 - Virtual environment tool
@@ -144,247 +144,178 @@ Unsure where to begin? Look for issues labeled:
 ### Setup Steps
 
 ```bash
-# 1. Fork and clone the repository
-git clone https://github.com/YOUR-USERNAME/ultimate-downloader.git
-cd ultimate-downloader
+# Clone your fork
+git clone https://github.com/YOUR_USERNAME/ULTIMATE-MEDIA-DOWNLOADER.git
+cd ULTIMATE-MEDIA-DOWNLOADER
 
-# 2. Create virtual environment
+# Add upstream remote
+git remote add upstream https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+
+# Create virtual environment
 python3 -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-# 3. Install dependencies
+# Install dependencies
 pip install -r requirements.txt
+pip install -r requirements-dev.txt
 
-# 4. Install development dependencies
-pip install pytest pytest-cov black flake8 mypy pylint
-
-# 5. Verify setup
-python ultimate_downloader.py --help
+# Install pre-commit hooks
+pre-commit install
 ```
 
 ### Development Dependencies
 
-```bash
-# Code formatting
-pip install black isort
+Create `requirements-dev.txt`:
 
-# Linting
-pip install flake8 pylint
-
-# Type checking
-pip install mypy
-
+```
 # Testing
-pip install pytest pytest-cov pytest-mock
+pytest>=7.4.3
+pytest-cov>=4.1.0
+pytest-mock>=3.12.0
+pytest-asyncio>=0.21.1
+
+# Code Quality
+black>=23.12.0
+flake8>=6.1.0
+pylint>=3.0.3
+mypy>=1.7.1
+isort>=5.13.2
 
 # Documentation
-pip install pdoc3 sphinx
+sphinx>=7.2.6
+sphinx-rtd-theme>=2.0.0
+
+# Pre-commit
+pre-commit>=3.6.0
 ```
 
 ---
 
-## Pull Request Process
-
-### Before Submitting
-
-1. **Update your fork:**
-   ```bash
-   git remote add upstream https://github.com/ORIGINAL-OWNER/ultimate-downloader.git
-   git fetch upstream
-   git checkout main
-   git merge upstream/main
-   ```
-
-2. **Create a feature branch:**
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
-
-3. **Make your changes:**
-   - Write clear, commented code
-   - Follow style guidelines
-   - Add tests for new functionality
-   - Update documentation
-
-4. **Test your changes:**
-   ```bash
-   # Run tests
-   pytest tests/
-   
-   # Check code style
-   black ultimate_downloader.py
-   flake8 ultimate_downloader.py
-   
-   # Type checking
-   mypy ultimate_downloader.py
-   ```
-
-5. **Commit your changes:**
-   ```bash
-   git add .
-   git commit -m "feat: add support for Bandcamp albums"
-   ```
-
-6. **Push to your fork:**
-   ```bash
-   git push origin feature/your-feature-name
-   ```
-
-### Pull Request Template
-
-```markdown
-## Description
-Brief description of the changes
-
-## Type of Change
-- [ ] Bug fix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
-- [ ] Documentation update
-
-## How Has This Been Tested?
-Describe the tests you ran to verify your changes
-
-## Checklist
-- [ ] My code follows the style guidelines of this project
-- [ ] I have performed a self-review of my own code
-- [ ] I have commented my code, particularly in hard-to-understand areas
-- [ ] I have made corresponding changes to the documentation
-- [ ] My changes generate no new warnings
-- [ ] I have added tests that prove my fix is effective or that my feature works
-- [ ] New and existing unit tests pass locally with my changes
-
-## Screenshots (if applicable)
-```
-
-### Review Process
-
-1. Maintainers will review your PR within 1-2 weeks
-2. Address any feedback or requested changes
-3. Once approved, your PR will be merged
-4. You'll be added to the contributors list!
-
----
-
-## Style Guidelines
+## Coding Standards
 
 ### Python Style Guide
 
-We follow PEP 8 with these modifications:
+We follow **PEP 8** with some modifications:
+
+- **Line Length**: 100 characters (not 79)
+- **Quotes**: Double quotes for strings
+- **Indentation**: 4 spaces (no tabs)
+- **Naming**:
+  - `snake_case` for functions and variables
+  - `PascalCase` for classes
+  - `UPPER_CASE` for constants
+
+### Code Formatting
+
+We use **Black** for automatic formatting:
+
+```bash
+# Format all Python files
+black .
+
+# Check formatting without making changes
+black --check .
+```
+
+### Linting
+
+We use **Flake8** for linting:
+
+```bash
+# Run linter
+flake8 .
+
+# Configuration in .flake8
+[flake8]
+max-line-length = 100
+exclude = venv,.git,__pycache__
+ignore = E203,W503
+```
+
+### Type Hints
+
+Use type hints for better code clarity:
 
 ```python
-# Maximum line length: 120 characters
-# Use double quotes for strings
-# Use type hints for function parameters and returns
+from typing import List, Optional, Dict, Any
 
-# Good
-def download_media(url: str, quality: str = "best") -> bool:
-    """Download media from URL with specified quality."""
-    pass
-
-# Bad
-def download_media(url, quality="best"):
+def download_video(
+    url: str,
+    quality: Optional[str] = None,
+    output_dir: Path = Path("downloads")
+) -> Dict[str, Any]:
+    """
+    Download video from URL.
+    
+    Args:
+        url: Video URL
+        quality: Desired quality (e.g., "1080p")
+        output_dir: Output directory path
+        
+    Returns:
+        Dictionary containing download result info
+        
+    Raises:
+        ValueError: If URL is invalid
+        DownloadError: If download fails
+    """
     pass
 ```
 
-### Code Organization
-
-```python
-# 1. Imports (standard library, third-party, local)
-import os
-import sys
-from pathlib import Path
-
-import requests
-from rich.console import Console
-
-from utils import helper_function
-
-# 2. Constants
-DEFAULT_QUALITY = "best"
-MAX_RETRIES = 3
-
-# 3. Classes
-class MediaDownloader:
-    """Main downloader class."""
-    pass
-
-# 4. Functions
-def main():
-    """Entry point."""
-    pass
-
-# 5. Main execution
-if __name__ == "__main__":
-    main()
-```
-
-### Documentation Style
+### Docstrings
 
 Use Google-style docstrings:
 
 ```python
-def download_media(url: str, quality: str = "best", audio_only: bool = False) -> bool:
-    """Download media from a URL with specified options.
+def example_function(param1: str, param2: int = 0) -> bool:
+    """
+    Brief description of function.
     
-    This function downloads media from various platforms using yt-dlp as the
-    core engine. It supports multiple quality levels and format conversions.
+    More detailed description if needed. Can span
+    multiple lines.
     
     Args:
-        url: The URL of the media to download.
-        quality: Video quality level. Options: 'best', '1080p', '720p', etc.
-            Defaults to 'best'.
-        audio_only: If True, extracts audio only. Defaults to False.
-    
+        param1: Description of param1
+        param2: Description of param2. Defaults to 0.
+        
     Returns:
-        True if download was successful, False otherwise.
-    
+        Description of return value
+        
     Raises:
-        ValueError: If URL is invalid or unsupported.
-        DownloadError: If download fails after retries.
-    
+        ValueError: When param1 is empty
+        TypeError: When param2 is negative
+        
     Example:
-        >>> downloader = UltimateMediaDownloader()
-        >>> success = downloader.download_media(
-        ...     url="https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-        ...     quality="1080p",
-        ...     audio_only=False
-        ... )
-        >>> print(success)
+        >>> example_function("test", 5)
         True
     """
     pass
 ```
 
-### Naming Conventions
+### Import Organization
+
+Use **isort** to organize imports:
 
 ```python
-# Classes: PascalCase
-class MediaDownloader:
-    pass
+# Standard library imports
+import os
+import sys
+from pathlib import Path
 
-# Functions and methods: snake_case
-def download_media():
-    pass
+# Third-party imports
+import requests
+from rich.console import Console
 
-# Constants: UPPER_SNAKE_CASE
-MAX_RETRIES = 3
-
-# Private methods: _leading_underscore
-def _internal_helper():
-    pass
-
-# Variables: snake_case
-download_path = "/path/to/downloads"
+# Local application imports
+from .handlers import YouTubeHandler
+from .utils import parse_url
 ```
 
 ---
 
-## Commit Message Guidelines
+## Commit Guidelines
 
-We follow the Conventional Commits specification:
-
-### Format
+### Commit Message Format
 
 ```
 <type>(<scope>): <subject>
@@ -396,77 +327,174 @@ We follow the Conventional Commits specification:
 
 ### Types
 
-- `feat`: New feature
-- `fix`: Bug fix
-- `docs`: Documentation changes
-- `style`: Code style changes (formatting, etc.)
-- `refactor`: Code refactoring
-- `test`: Adding or updating tests
-- `chore`: Maintenance tasks
+- **feat**: New feature
+- **fix**: Bug fix
+- **docs**: Documentation changes
+- **style**: Code style changes (formatting, no code change)
+- **refactor**: Code refactoring
+- **test**: Adding or updating tests
+- **chore**: Maintenance tasks
 
 ### Examples
 
-```bash
-# Feature
-git commit -m "feat(spotify): add support for Spotify playlists with 100+ tracks"
-
-# Bug fix
-git commit -m "fix(youtube): resolve playlist extraction timeout issue"
-
-# Documentation
-git commit -m "docs: update installation instructions for Windows"
-
-# Refactoring
-git commit -m "refactor(downloader): extract metadata handling to separate class"
-
-# Multiple changes
-git commit -m "feat(platforms): add Bandcamp support
-
-- Add Bandcamp URL detection
-- Implement album metadata extraction
-- Add tests for Bandcamp downloads
-
-Closes #123"
 ```
+feat(youtube): Add support for YouTube Shorts
+
+Implement handler for YouTube Shorts URLs. Includes:
+- Detection of Shorts URLs
+- Extraction of video ID
+- Format selection for mobile videos
+
+Closes #123
+```
+
+```
+fix(spotify): Resolve authentication token expiry
+
+Fix issue where cached tokens weren't refreshed properly.
+Now checks token expiry before each request.
+
+Fixes #456
+```
+
+### Commit Best Practices
+
+- Keep commits atomic (one logical change per commit)
+- Write clear, descriptive messages
+- Reference issues when applicable
+- Use present tense ("Add feature" not "Added feature")
+- Limit subject line to 50 characters
+- Wrap body at 72 characters
+
+---
+
+## Pull Request Process
+
+### Before Submitting
+
+1. **Update your fork**:
+   ```bash
+   git fetch upstream
+   git rebase upstream/main
+   ```
+
+2. **Run tests**:
+   ```bash
+   pytest tests/
+   ```
+
+3. **Check code quality**:
+   ```bash
+   black --check .
+   flake8 .
+   mypy .
+   ```
+
+4. **Update documentation**:
+   - Update README if needed
+   - Add docstrings
+   - Update CHANGELOG.md
+
+### PR Template
+
+```markdown
+## Description
+Brief description of changes
+
+## Type of Change
+- [ ] Bug fix (non-breaking change fixing an issue)
+- [ ] New feature (non-breaking change adding functionality)
+- [ ] Breaking change (fix or feature causing existing functionality to break)
+- [ ] Documentation update
+
+## Testing
+Describe tests you've added or run:
+- [ ] Unit tests added
+- [ ] Integration tests added
+- [ ] Manual testing performed
+
+## Checklist
+- [ ] Code follows project style guidelines
+- [ ] Self-review completed
+- [ ] Comments added for complex code
+- [ ] Documentation updated
+- [ ] No new warnings generated
+- [ ] Tests added and passing
+- [ ] Dependent changes merged
+
+## Related Issues
+Closes #(issue number)
+
+## Screenshots (if applicable)
+Add screenshots for UI changes
+```
+
+### Review Process
+
+1. Automated checks must pass
+2. At least one maintainer approval required
+3. All review comments addressed
+4. No merge conflicts
+5. Documentation updated
+
+### After Approval
+
+- Maintainer will merge your PR
+- Delete your feature branch
+- Update your fork:
+  ```bash
+  git checkout main
+  git pull upstream main
+  ```
 
 ---
 
 ## Testing Guidelines
 
+### Test Structure
+
+```
+tests/
+├── unit/
+│   ├── test_url_parser.py
+│   ├── test_handlers.py
+│   └── test_utils.py
+├── integration/
+│   ├── test_youtube_download.py
+│   └── test_spotify_download.py
+└── fixtures/
+    └── sample_data.json
+```
+
 ### Writing Tests
 
 ```python
 import pytest
-from ultimate_downloader import UltimateMediaDownloader
+from ultimate_downloader import UltimateDownloader
 
-class TestMediaDownloader:
-    """Tests for UltimateMediaDownloader class."""
-    
+class TestYouTubeHandler:
     @pytest.fixture
     def downloader(self):
-        """Create a downloader instance for testing."""
-        return UltimateMediaDownloader(output_dir="test_downloads")
+        """Create downloader instance for testing."""
+        return UltimateDownloader()
     
-    def test_detect_platform_youtube(self, downloader):
+    def test_youtube_url_detection(self, downloader):
         """Test YouTube URL detection."""
         url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-        assert downloader.detect_platform(url) == "youtube"
+        assert downloader.can_handle_youtube(url)
     
-    def test_detect_platform_spotify(self, downloader):
-        """Test Spotify URL detection."""
-        url = "https://open.spotify.com/track/TRACK_ID"
-        assert downloader.detect_platform(url) == "spotify"
+    def test_invalid_url(self, downloader):
+        """Test handling of invalid URLs."""
+        with pytest.raises(ValueError):
+            downloader.download("not_a_url")
     
     @pytest.mark.integration
-    def test_download_youtube_video(self, downloader):
-        """Integration test for YouTube download."""
-        url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-        success = downloader.download_media(
-            url=url,
-            quality="360p",  # Low quality for faster testing
-            audio_only=True
-        )
-        assert success is True
+    def test_download_video(self, downloader, tmp_path):
+        """Integration test for video download."""
+        url = "https://www.youtube.com/watch?v=test"
+        result = downloader.download(url, output_dir=tmp_path)
+        assert result.success
+        assert result.file_path.exists()
 ```
 
 ### Running Tests
@@ -476,160 +504,122 @@ class TestMediaDownloader:
 pytest
 
 # Run specific test file
-pytest tests/test_downloader.py
-
-# Run specific test
-pytest tests/test_downloader.py::TestMediaDownloader::test_detect_platform_youtube
+pytest tests/unit/test_handlers.py
 
 # Run with coverage
-pytest --cov=ultimate_downloader tests/
+pytest --cov=. --cov-report=html
 
-# Run integration tests only
+# Run only unit tests
+pytest tests/unit/
+
+# Run only integration tests
 pytest -m integration
-
-# Run and show print statements
-pytest -s
 ```
 
-### Test Coverage
+### Mocking External Services
 
-Aim for at least 80% test coverage:
+```python
+from unittest.mock import Mock, patch
 
-```bash
-# Generate coverage report
-pytest --cov=ultimate_downloader --cov-report=html tests/
-
-# View report
-open htmlcov/index.html
+def test_youtube_api_call(self):
+    """Test YouTube API call with mocked response."""
+    with patch('requests.get') as mock_get:
+        mock_get.return_value.json.return_value = {
+            'title': 'Test Video',
+            'url': 'http://example.com/video.mp4'
+        }
+        
+        result = download_video('test_url')
+        assert result['title'] == 'Test Video'
 ```
 
 ---
 
-## Adding New Features
+## Documentation
 
-### Feature Development Checklist
+### Code Documentation
 
-- [ ] Create an issue describing the feature
-- [ ] Get feedback from maintainers
-- [ ] Create a feature branch
-- [ ] Implement the feature
-- [ ] Add comprehensive tests
-- [ ] Update documentation
-- [ ] Add usage examples
-- [ ] Update CHANGELOG.md
-- [ ] Submit pull request
-
-### Platform Support Template
-
-When adding support for a new platform:
-
-```python
-def _download_newplatform_track(self, url: str) -> bool:
-    """Download track from NewPlatform.
-    
-    Args:
-        url: NewPlatform track URL
-        
-    Returns:
-        True if download successful
-        
-    Example:
-        >>> downloader._download_newplatform_track(
-        ...     "https://newplatform.com/track/123"
-        ... )
-        True
-    """
-    try:
-        # 1. Extract metadata
-        metadata = self._extract_newplatform_metadata(url)
-        
-        # 2. Build search query
-        search_query = f"{metadata['artist']} - {metadata['title']}"
-        
-        # 3. Search YouTube
-        youtube_url = self._search_youtube(search_query)
-        
-        # 4. Download from YouTube
-        return self.download_media(
-            url=youtube_url,
-            audio_only=True,
-            add_metadata=True
-        )
-        
-    except Exception as e:
-        self.print_rich(f"[red]Error: {e}[/red]")
-        return False
-```
-
----
-
-## Documentation Guidelines
-
-### Code Comments
-
-```python
-# Good: Explain WHY, not WHAT
-# Retry download because of intermittent network issues
-retry_count = 3
-
-# Bad: Obvious comment
-# Set retry count to 3
-retry_count = 3
-```
+- Add docstrings to all public functions and classes
+- Include examples in docstrings
+- Keep comments up to date with code changes
+- Explain "why" not just "what"
 
 ### README Updates
 
-When adding features, update:
-- Features section
-- Usage examples
-- Command-line options table
-- Supported platforms list
+When adding new features, update:
 
-### API Documentation
-
-Update DOCUMENTATION.md with:
-- New class/method descriptions
-- Parameter documentation
-- Return value documentation
+- Feature list
 - Usage examples
-- Error handling information
+- Command-line options
+- Configuration options
+
+### Changelog
+
+Update `CHANGELOG.md`:
+
+```markdown
+## [Unreleased]
+
+### Added
+- New platform support for XYZ
+- Configuration option for ABC
+
+### Changed
+- Improved error handling in download process
+
+### Fixed
+- Bug in playlist processing
+```
+
+### Documentation Site
+
+For major features, add detailed guides:
+
+```
+docs/
+├── guides/
+│   ├── spotify-setup.md
+│   ├── proxy-configuration.md
+│   └── advanced-usage.md
+└── api/
+    └── handlers-api.md
+```
 
 ---
 
-## Community
+## Release Process
 
-### Getting Help
+(For Maintainers)
 
-- **GitHub Issues**: Bug reports and feature requests
-- **GitHub Discussions**: Questions and general discussion
-- **Discord**: Real-time chat (if available)
+1. Update version in `__version__`
+2. Update CHANGELOG.md
+3. Create release branch
+4. Tag release: `git tag -a v2.1.0 -m "Release 2.1.0"`
+5. Push tags: `git push --tags`
+6. Create GitHub release
+7. Update documentation
 
-### Recognition
+---
+
+## Getting Help
+
+- **Questions**: Open a discussion on GitHub
+- **Bugs**: File an issue with bug report template
+- **Features**: Open an issue with feature request template
+- **Chat**: Join our community (link TBD)
+
+---
+
+## Recognition
 
 Contributors will be:
-- Added to CONTRIBUTORS.md
+- Listed in CONTRIBUTORS.md
 - Mentioned in release notes
-- Credited in documentation
-
----
-
-## License
-
-By contributing, you agree that your contributions will be licensed under the MIT License.
-
----
-
-## Questions?
-
-Don't hesitate to ask! We're here to help:
-- Open an issue with the `question` label
-- Start a discussion on GitHub Discussions
-- Contact maintainers directly
+- Credited in relevant documentation
 
 Thank you for contributing! 🎉
 
 ---
 
-*Ultimate Media Downloader - Contributing Guide*  
-*Created by nk2552003*  
-*Last Updated: October 2, 2025*
+**Last Updated**: October 2, 2025  
+**Version**: 2.0.0

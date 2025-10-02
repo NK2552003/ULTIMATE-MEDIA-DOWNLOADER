@@ -1,0 +1,53 @@
+# Development Requirements for Ultimate Media Downloader
+# Version: 2.0.0
+# Date: October 2, 2025
+
+# Testing Framework
+pytest>=7.4.3
+pytest-cov>=4.1.0
+pytest-mock>=3.12.0
+pytest-asyncio>=0.21.1
+pytest-timeout>=2.2.0
+pytest-xdist>=3.5.0
+
+# Code Quality
+black>=23.12.0
+flake8>=6.1.0
+pylint>=3.0.3
+mypy>=1.7.1
+isort>=5.13.2
+autopep8>=2.0.4
+
+# Type Stubs
+types-requests>=2.31.0
+types-setuptools>=69.0.0
+
+# Documentation
+sphinx>=7.2.6
+sphinx-rtd-theme>=2.0.0
+sphinx-autodoc-typehints>=1.25.2
+myst-parser>=2.0.0
+
+# Pre-commit Hooks
+pre-commit>=3.6.0
+
+# Security
+bandit>=1.7.5
+safety>=2.3.5
+
+# Performance Profiling
+memory-profiler>=0.61.0
+py-spy>=0.3.14
+
+# Debugging
+ipdb>=0.13.13
+pdbpp>=0.10.3
+
+# Build Tools
+setuptools>=69.0.0
+wheel>=0.42.0
+twine>=4.0.2
+
+# Coverage
+coverage>=7.3.4
+codecov>=2.1.13

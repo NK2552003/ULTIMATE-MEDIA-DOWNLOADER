@@ -1,0 +1,76 @@
+{
+    "spotify": {
+        "client_id": "",
+        "client_secret": "",
+        "enabled": false
+    },
+    "apple_music": {
+        "enabled": false,
+        "cookie_file": "",
+        "media_user_token": ""
+    },
+    "download": {
+        "output_dir": "downloads",
+        "format": "best",
+        "audio_format": "mp3",
+        "audio_quality": "320",
+        "video_quality": "1080",
+        "embed_thumbnail": true,
+        "embed_metadata": true,
+        "subtitles": false,
+        "auto_subtitles": false,
+        "all_subtitles": false,
+        "subtitle_language": "en"
+    },
+    "proxy": {
+        "enabled": false,
+        "http": "",
+        "https": "",
+        "socks5": ""
+    },
+    "authentication": {
+        "youtube": {
+            "cookies_file": ""
+        },
+        "instagram": {
+            "username": "",
+            "password": ""
+        },
+        "facebook": {
+            "cookies_file": ""
+        }
+    },
+    "advanced": {
+        "concurrent_downloads": 3,
+        "retry_attempts": 3,
+        "timeout": 300,
+        "rate_limit": null,
+        "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+        "cookies_file": "",
+        "archive_file": "archive.txt",
+        "use_cache": true,
+        "cache_dir": ".cache"
+    },
+    "ui": {
+        "show_progress": true,
+        "verbose": false,
+        "quiet": false,
+        "colors": true,
+        "ascii_banner": true
+    },
+    "post_processing": {
+        "convert_format": false,
+        "target_format": "mp4",
+        "normalize_audio": false,
+        "organize_files": true,
+        "file_template": "%(title)s.%(ext)s"
+    },
+    "filters": {
+        "min_duration": null,
+        "max_duration": null,
+        "date_after": null,
+        "date_before": null,
+        "min_views": null,
+        "max_views": null
+    }
+}

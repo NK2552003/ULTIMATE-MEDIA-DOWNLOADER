@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Ultimate Multi-Platform Media Downloader
-Supports YouTube, Spotify, Apple Music, SoundCloud, and 1000+ other platforms
+Supports YouTube, Spotify, Apple Music, SoundCloud, and many other platforms
 """
 
 import os
@@ -72,6 +72,12 @@ try:
     CLOUDSCRAPER_AVAILABLE = True
 except ImportError:
     CLOUDSCRAPER_AVAILABLE = False
+
+try:
+    from generic_downloader import GenericSiteDownloader
+    GENERIC_DOWNLOADER_AVAILABLE = True
+except ImportError:
+    GENERIC_DOWNLOADER_AVAILABLE = False
 
 try:
     from rich.console import Console
@@ -303,7 +309,7 @@ class ModernUI:
             "▶ Video Downloads",
             "♪ Audio Extraction", 
             "▭ Social Media",
-            "⚡ 1000+ Platforms"
+            "⚡ many Platforms"
         )
         
         self.console.print(Align.center(features))
@@ -327,7 +333,7 @@ class ModernUI:
         info_table.add_row("[bold white]Supported Platforms:[/bold white]")
         info_table.add_row("▶ YouTube     ♪ Spotify     ◉ Instagram")
         info_table.add_row("♫ SoundCloud  ▭ TikTok      ◐ Twitter")
-        info_table.add_row("... and 1000+ more!")
+        info_table.add_row("... and many more!")
         info_table.add_row("")
         info_table.add_row("[bold white]Quick Commands:[/bold white]")
         info_table.add_row("[yellow]help[/yellow]      - Show available commands")
@@ -451,9 +457,9 @@ class UltimateMediaDownloader:
             'skip_unavailable_fragments': True,
             'keepvideo': False,
             'noplaylist': False,
-            'ignoreerrors': True,
-            'no_warnings': True,  # Suppress warnings for cleaner output
-            'quiet': True,  # Suppress yt-dlp's default progress output
+            'ignoreerrors': False,  # Changed to False to catch errors properly
+            'no_warnings': False,  # Show warnings to help diagnose issues
+            'quiet': False,  # Show output for better error visibility
             'no_color': False,  # Allow colors in our custom progress
             'extractaudio': False,
             'audioformat': 'best',  # Changed from 'mp3' to 'best' for higher quality
@@ -617,7 +623,7 @@ class UltimateMediaDownloader:
                 {'name': 'Vimeo', 'description': 'Vimeo videos'},
                 {'name': 'Twitch', 'description': 'Twitch VODs and clips'},
                 {'name': 'Apple Music', 'description': 'Apple Music tracks (via YouTube search)'},
-                {'name': 'Generic', 'description': '1000+ other video and audio platforms'}
+                {'name': 'Generic', 'description': 'many other video and audio platforms'}
             ]
             return major_sites
         except Exception as e:
@@ -627,7 +633,8 @@ class UltimateMediaDownloader:
     def search_and_download_spotify_track(self, spotify_url):
         """Search for Spotify track/album/playlist on YouTube and download"""
         if not self.spotify_client:
-            self.print_rich(Messages.error("Spotify API not available. Trying to extract track info from URL..."))
+            self.print_rich(Messages.warning("Spotify API not configured. Using web scraping method..."))
+            self.print_rich(Messages.info("💡 Tip: For better Spotify support, set SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET"))
             return self._fallback_spotify_search(spotify_url)
         
         try:
@@ -655,21 +662,80 @@ class UltimateMediaDownloader:
         track = self.spotify_client.track(track_id)
         artists = ', '.join([artist['name'] for artist in track['artists']])
         track_name = track['name']
-        search_query = f"{artists} - {track_name}"
+        # Format as "songname - artist name" for better YouTube search results
+        search_query = f"{track_name} - {artists}"
         
         self.print_rich(f"[bold green]{Icons.get('spotify')} Spotify Track:[/bold green] [cyan]{search_query}[/cyan]")
+        
+        # Ask for quality preference (like Apple Music)
+        output_format = 'mp3'
+        quality = 'best'
+        
+        self.print_rich(f"\n[bold cyan]🎚️  Select audio quality:[/bold cyan]")
+        self.print_rich("  [green]1[/green]. Best Quality (320kbps MP3) - Recommended")
+        self.print_rich("  [yellow]2[/yellow]. High Quality (256kbps AAC/M4A) - Balanced")
+        self.print_rich("  [blue]3[/blue]. Very High Quality (FLAC) - Lossless, larger files")
+        self.print_rich("  [magenta]4[/magenta]. Best Available (Auto) - Highest quality possible")
+        
+        try:
+            from rich.prompt import Prompt
+            quality_choice = Prompt.ask("\n[cyan]Enter choice (1-4)[/cyan]", default="1")
+            
+            if quality_choice == "1":
+                output_format = 'mp3'
+                quality = 'best'
+            elif quality_choice == "2":
+                output_format = 'm4a'
+                quality = 'best'
+            elif quality_choice == "3":
+                output_format = 'flac'
+                quality = 'best'
+            elif quality_choice == "4":
+                output_format = 'best'
+                quality = 'best'
+            else:
+                output_format = 'mp3'
+                quality = 'best'
+        except:
+            # If rich prompt fails, fall back to regular input
+            try:
+                quality_choice = input("\nEnter choice (1-4) [default: 1]: ").strip() or "1"
+                
+                if quality_choice == "1":
+                    output_format = 'mp3'
+                    quality = 'best'
+                elif quality_choice == "2":
+                    output_format = 'm4a'
+                    quality = 'best'
+                elif quality_choice == "3":
+                    output_format = 'flac'
+                    quality = 'best'
+                elif quality_choice == "4":
+                    output_format = 'best'
+                    quality = 'best'
+                else:
+                    output_format = 'mp3'
+                    quality = 'best'
+            except:
+                output_format = 'mp3'
+                quality = 'best'
+        
         self.print_rich(Messages.searching("Searching on YouTube..."))
         
         youtube_url = self._search_youtube(search_query)
         if youtube_url:
             self.print_rich(Messages.success(f"Found on YouTube: {youtube_url}"))
+            # Create filename as "Artist - Title"
+            filename_format = f"{artists} - {track_name}"
             # Use enhanced audio settings for Spotify tracks
             return self.download_media(
                 youtube_url, 
                 audio_only=True, 
-                output_format='mp3',  # MP3 for better compatibility
+                output_format=output_format,
+                quality=quality,
                 add_metadata=True,
-                add_thumbnail=True
+                add_thumbnail=True,
+                custom_filename=filename_format  # Save as "Artist - Title"
             )
         else:
             self.print_rich(Messages.error("Could not find track on YouTube"))
@@ -699,18 +765,22 @@ class UltimateMediaDownloader:
             try:
                 artists = ', '.join([artist['name'] for artist in track['artists']])
                 track_name = track['name']
-                search_query = f"{artists} - {track_name}"
+                # Format as "songname - artist name" for better YouTube search results
+                search_query = f"{track_name} - {artists}"
                 
                 self.print_rich(f"\n[bold blue]{Icons.get('music')} [{i:2d}/{len(tracks)}][/bold blue] [cyan]{search_query}[/cyan]")
                 
                 youtube_url = self._search_youtube(search_query)
                 if youtube_url:
+                    # Create filename as "Artist - Title"
+                    filename_format = f"{artists} - {track_name}"
                     result = album_downloader.download_media(
                         youtube_url, 
                         audio_only=True, 
                         output_format='mp3',  # MP3 for better compatibility
                         add_metadata=True,
-                        add_thumbnail=True
+                        add_thumbnail=True,
+                        custom_filename=filename_format
                     )
                     if result:
                         successful_downloads += 1
@@ -741,13 +811,14 @@ class UltimateMediaDownloader:
         print(f"◈ Owner: {owner_name}")
         print(f"▤ Total tracks: {len(valid_tracks)}")
         
-        # Convert to track list format
+        # Convert to track list format - use "songname - artist" for better YouTube search
         track_list = []
         for item in valid_tracks:
             track = item['track']
             artists = ', '.join([artist['name'] for artist in track['artists']])
             track_name = track['name']
-            track_list.append(f"{artists} - {track_name}")
+            # Format as "songname - artist name" for consistent search format
+            track_list.append(f"{track_name} - {artists}")
         
         print(f"✓ Found {len(track_list)} tracks in playlist:")
         for i, track in enumerate(track_list[:10], 1):  # Show first 10 tracks
@@ -778,24 +849,889 @@ class UltimateMediaDownloader:
         return playlist_downloader._download_track_queue(selected_tracks, "Spotify")
     
     def _fallback_spotify_search(self, spotify_url):
-        """Fallback method to extract Spotify track info without API"""
+        """Fallback method to extract Spotify track info without API using web scraping"""
         try:
-            # Try to extract track info from URL or page title
-            print("⌕ Attempting fallback Spotify track extraction...")
+            self.print_rich(Messages.searching("Attempting fallback Spotify track extraction..."))
             
-            # Simple regex to extract track info from common Spotify URL patterns
-            # This is a basic implementation - you might want to enhance it
-            match = re.search(r'track/([a-zA-Z0-9]+)', spotify_url)
-            if match:
-                track_id = match.group(1)
-                # You could try to scrape the Spotify web page here
-                # For now, we'll just indicate that manual search is needed
-                print("⚠  Manual search required. Please provide the track name manually.")
+            # Determine content type
+            if '/track/' in spotify_url:
+                return self._scrape_spotify_track(spotify_url)
+            elif '/album/' in spotify_url:
+                return self._scrape_spotify_album(spotify_url)
+            elif '/playlist/' in spotify_url:
+                return self._scrape_spotify_playlist(spotify_url)
+            elif '/artist/' in spotify_url:
+                return self._scrape_spotify_artist(spotify_url)
+            else:
+                self.print_rich(Messages.error("Unknown Spotify URL format"))
+                self.print_rich(Messages.info("Supported: /track/, /album/, /playlist/, /artist/"))
                 return None
             
         except Exception as e:
-            print(f"✗ Fallback search failed: {e}")
+            self.print_rich(Messages.error(f"Fallback search failed: {e}"))
             return None
+    
+    def _scrape_spotify_track(self, spotify_url):
+        """Scrape Spotify track information and download from YouTube (like Apple Music)"""
+        try:
+            self.print_rich(Messages.info("Processing Spotify track URL..."))
+            
+            # Extract track info - simplified approach that mirrors Apple Music
+            track_info = self._extract_spotify_track_info(spotify_url)
+            
+            if track_info:
+                search_query = track_info
+                self.print_rich(f"[bold green]♪ Spotify Track:[/bold green] [cyan]{search_query}[/cyan]")
+                
+                # Check if artist info is missing (no " - " in search query)
+                if ' - ' not in search_query:
+                    self.print_rich(Messages.warning("⚠  Artist information not found in metadata"))
+                    self.print_rich(Messages.info("💡 Please provide the artist name for better search results:"))
+                    
+                    try:
+                        from rich.prompt import Prompt
+                        artist_name = Prompt.ask("[cyan]Artist name (or press Enter to skip)[/cyan]", default="")
+                        
+                        if artist_name:
+                            # Format as "songname - artist name" for better YouTube search
+                            search_query = f"{search_query} - {artist_name}"
+                            self.print_rich(f"[bold green]♪ Updated search:[/bold green] [cyan]{search_query}[/cyan]")
+                    except KeyboardInterrupt:
+                        self.print_rich(Messages.info("\nSkipping artist info, continuing with track name only"))
+                    except:
+                        pass
+            else:
+                # If automatic extraction failed, ask user (exactly like Apple Music does)
+                self.print_rich(Messages.warning("Could not automatically extract track information from URL"))
+                self.print_rich(Messages.info("💡 Please provide the track details manually:"))
+                self.print_rich("[dim]Tip: You can find this info on the Spotify page[/dim]")
+                
+                try:
+                    from rich.prompt import Prompt
+                    track_name = Prompt.ask("[cyan]Song/Track name[/cyan]")
+                    artist_name = Prompt.ask("[cyan]Artist name[/cyan]")
+                    
+                    if not track_name:
+                        self.print_rich(Messages.error("Track name is required"))
+                        return None
+                    
+                    if artist_name:
+                        # Format as "songname - artist name" for better YouTube search
+                        search_query = f"{track_name} - {artist_name}"
+                    else:
+                        search_query = track_name
+                    
+                    self.print_rich(f"\n[bold green]♪ Searching for:[/bold green] [cyan]{search_query}[/cyan]")
+                except KeyboardInterrupt:
+                    self.print_rich(Messages.info("\nCancelled by user"))
+                    return None
+                except:
+                    self.print_rich(Messages.error("Could not get track information"))
+                    return None
+            
+            # Ask for quality preference (like Apple Music)
+            output_format = 'mp3'
+            quality = 'best'
+            
+            self.print_rich(f"\n[bold cyan]🎚️  Select audio quality:[/bold cyan]")
+            self.print_rich("  [green]1[/green]. Best Quality (320kbps MP3) - Recommended")
+            self.print_rich("  [yellow]2[/yellow]. High Quality (256kbps AAC/M4A) - Balanced")
+            self.print_rich("  [blue]3[/blue]. Very High Quality (FLAC) - Lossless, larger files")
+            self.print_rich("  [magenta]4[/magenta]. Best Available (Auto) - Highest quality possible")
+            
+            try:
+                from rich.prompt import Prompt
+                quality_choice = Prompt.ask("\n[cyan]Enter choice (1-4)[/cyan]", default="1")
+                
+                if quality_choice == "1":
+                    output_format = 'mp3'
+                    quality = 'best'
+                elif quality_choice == "2":
+                    output_format = 'm4a'
+                    quality = 'best'
+                elif quality_choice == "3":
+                    output_format = 'flac'
+                    quality = 'best'
+                elif quality_choice == "4":
+                    output_format = 'best'
+                    quality = 'best'
+                else:
+                    output_format = 'mp3'
+                    quality = 'best'
+            except:
+                # If rich prompt fails, fall back to regular input
+                try:
+                    quality_choice = input("\nEnter choice (1-4) [default: 1]: ").strip() or "1"
+                    
+                    if quality_choice == "1":
+                        output_format = 'mp3'
+                        quality = 'best'
+                    elif quality_choice == "2":
+                        output_format = 'm4a'
+                        quality = 'best'
+                    elif quality_choice == "3":
+                        output_format = 'flac'
+                        quality = 'best'
+                    elif quality_choice == "4":
+                        output_format = 'best'
+                        quality = 'best'
+                    else:
+                        output_format = 'mp3'
+                        quality = 'best'
+                except:
+                    output_format = 'mp3'
+                    quality = 'best'
+            
+            self.print_rich(Messages.searching("Searching on YouTube..."))
+            
+            youtube_url = self._search_youtube(search_query)
+            if youtube_url:
+                self.print_rich(Messages.success(f"Found on YouTube: {youtube_url}"))
+                
+                # Try to get album art from Spotify
+                album_art_url = self._get_spotify_album_art(spotify_url)
+                if album_art_url:
+                    self.print_rich(f"  [dim]✓ Spotify album art available[/dim]")
+                
+                # Extract artist and title for filename
+                if ' - ' in search_query:
+                    parts = search_query.split(' - ', 1)
+                    if len(parts) == 2:
+                        # search_query is "songname - artist"
+                        filename_format = f"{parts[1]} - {parts[0]}"  # Convert to "artist - songname"
+                    else:
+                        filename_format = search_query
+                else:
+                    filename_format = search_query
+                
+                # Download from YouTube with selected quality
+                result = self.download_media(
+                    youtube_url, 
+                    audio_only=True, 
+                    output_format=output_format,
+                    quality=quality,
+                    add_metadata=True,
+                    add_thumbnail=True,
+                    custom_filename=filename_format
+                )
+                
+                # If download succeeded and we have album art, replace YouTube thumbnail with Spotify art
+                if result and album_art_url:
+                    # Find the downloaded file
+                    downloaded_file = self._find_recently_downloaded_file()
+                    if downloaded_file:
+                        self._embed_spotify_album_art(downloaded_file, album_art_url, search_query)
+                
+                return result
+            else:
+                self.print_rich(Messages.error("Could not find track on YouTube"))
+                
+                # Interactive fallback - ask for more details
+                self.print_rich(f"\n[yellow]→ The search for '{search_query}' didn't find any results.[/yellow]")
+                self.print_rich("[yellow]Would you like to try with different search terms?[/yellow]")
+                try:
+                    from rich.prompt import Prompt, Confirm
+                    if Confirm.ask("Try again with different terms?", default=False):
+                        track = Prompt.ask("Track name")
+                        artist = Prompt.ask("Artist name")
+                        if artist and track:
+                            # Format as "songname - artist name" for better search
+                            better_query = f"{track} - {artist}"
+                            filename_format = f"{artist} - {track}"
+                            self.print_rich(f"\n[cyan]⌕ Searching again for: {better_query}[/cyan]")
+                            youtube_url = self._search_youtube(better_query)
+                            if youtube_url:
+                                self.print_rich(Messages.success(f"Found on YouTube: {youtube_url}"))
+                                return self.download_media(
+                                    youtube_url, 
+                                    audio_only=True, 
+                                    output_format=output_format,
+                                    quality=quality,
+                                    add_metadata=True,
+                                    add_thumbnail=True,
+                                    custom_filename=filename_format
+                                )
+                except:
+                    pass
+                
+                return None
+                
+        except Exception as e:
+            self.print_rich(Messages.error(f"Error processing Spotify track: {e}"))
+            return None
+    
+    def _extract_spotify_track_info(self, spotify_url):
+        """Extract track information from Spotify URL using various methods"""
+        try:
+            # Method 1: Try oembed API (works without SSL issues usually)
+            try:
+                import urllib3
+                urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+                
+                oembed_url = f"https://open.spotify.com/oembed?url={spotify_url}"
+                response = requests.get(oembed_url, timeout=10, verify=False)
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    title_raw = data.get('title', '').strip()
+                    
+                    if title_raw:
+                        # Spotify oembed returns title in various formats:
+                        # Format 1: "Song Name" (just title)
+                        # Format 2: "Artist · Song Name" (with middle dot)
+                        # Format 3: "Song Name - Artist" (with dash)
+                        
+                        # Try to extract both track and artist
+                        track_name = None
+                        artist_name = None
+                        
+                        # Check for middle dot separator (most common in Spotify oembed)
+                        if ' · ' in title_raw or ' · ' in title_raw:
+                            parts = title_raw.replace(' · ', ' · ').split(' · ')
+                            if len(parts) == 2:
+                                artist_name = parts[0].strip()
+                                track_name = parts[1].strip()
+                        # Check for dash separator
+                        elif ' - ' in title_raw and title_raw.count(' - ') == 1:
+                            parts = title_raw.split(' - ')
+                            # Could be "Artist - Song" or "Song - Artist"
+                            # Usually Spotify uses "Artist - Song"
+                            artist_name = parts[0].strip()
+                            track_name = parts[1].strip()
+                        else:
+                            # Only track name, no artist
+                            track_name = title_raw
+                        
+                        if track_name and artist_name:
+                            # Format as "songname - artist" for better YouTube search
+                            search_query = f"{track_name} - {artist_name}"
+                            self.print_rich(f"  [dim]✓ Extracted: {track_name}[/dim]")
+                            self.print_rich(f"  [dim]✓ Artist: {artist_name}[/dim]")
+                            return search_query
+                        else:
+                            # Only track name found
+                            self.print_rich(f"  [dim]✓ Extracted track: {track_name}[/dim]")
+                            self.print_rich(f"  [dim]⚠ Artist not found in metadata[/dim]")
+                            return track_name
+            except:
+                pass
+            
+            # Method 2: Try scraping the Spotify page directly
+            try:
+                headers = {
+                    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36'
+                }
+                response = requests.get(spotify_url, headers=headers, timeout=10)
+                
+                if response.status_code == 200:
+                    from bs4 import BeautifulSoup
+                    soup = BeautifulSoup(response.content, 'html.parser')
+                    
+                    # Try to get from meta tags
+                    og_title = soup.find('meta', property='og:title')
+                    if og_title and og_title.get('content'):
+                        title_content = og_title.get('content').strip()
+                        
+                        # Parse out artist and track
+                        if ' - song and lyrics by ' in title_content.lower():
+                            # Format: "Track Name - song and lyrics by Artist | Spotify"
+                            parts = title_content.split(' - song and lyrics by ')
+                            if len(parts) >= 2:
+                                track_name = parts[0].strip()
+                                artist_part = parts[1].split('|')[0].strip()
+                                search_query = f"{track_name} - {artist_part}"
+                                self.print_rich(f"  [dim]✓ Extracted: {track_name}[/dim]")
+                                self.print_rich(f"  [dim]✓ Artist: {artist_part}[/dim]")
+                                return search_query
+            except:
+                pass
+            
+            return None
+            
+        except Exception as e:
+            return None
+    
+    def _get_spotify_album_art(self, spotify_url):
+        """Get album art URL from Spotify using oembed API"""
+        try:
+            import urllib3
+            urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+            
+            oembed_url = f"https://open.spotify.com/oembed?url={spotify_url}"
+            response = requests.get(oembed_url, timeout=10, verify=False)
+            
+            if response.status_code == 200:
+                data = response.json()
+                thumbnail_url = data.get('thumbnail_url', '')
+                if thumbnail_url:
+                    self.print_rich(f"  [dim]✓ Found Spotify album art[/dim]")
+                    return thumbnail_url
+        except:
+            pass
+        
+        return None
+    
+    def _embed_spotify_album_art(self, file_path, album_art_url, track_info):
+        """Download and embed Spotify album art into the audio file"""
+        try:
+            if not MUTAGEN_AVAILABLE:
+                return False
+            
+            self.print_rich(Messages.info("Adding Spotify album art..."))
+            
+            # Download album art
+            response = requests.get(album_art_url, timeout=10)
+            if response.status_code != 200:
+                return False
+            
+            album_art_data = response.content
+            
+            # Determine file type and embed art
+            file_path_obj = Path(file_path) if isinstance(file_path, str) else file_path
+            
+            if not file_path_obj.exists():
+                # Try to find the file with different extensions
+                possible_files = list(file_path_obj.parent.glob(f"{file_path_obj.stem}.*"))
+                if possible_files:
+                    file_path_obj = possible_files[0]
+                else:
+                    return False
+            
+            file_ext = file_path_obj.suffix.lower()
+            
+            if file_ext == '.mp3':
+                audio = MP3(str(file_path_obj), ID3=ID3)
+                if audio.tags is None:
+                    audio.add_tags()
+                
+                audio.tags.add(
+                    APIC(
+                        encoding=3,
+                        mime='image/jpeg',
+                        type=3,  # Cover (front)
+                        desc='Cover',
+                        data=album_art_data
+                    )
+                )
+                audio.save()
+                self.print_rich(Messages.success("✓ Album art added successfully!"))
+                return True
+                
+            elif file_ext == '.m4a':
+                audio = MP4(str(file_path_obj))
+                audio.tags['covr'] = [MP4Cover(album_art_data, imageformat=MP4Cover.FORMAT_JPEG)]
+                audio.save()
+                self.print_rich(Messages.success("✓ Album art added successfully!"))
+                return True
+                
+            elif file_ext == '.flac':
+                audio = FLAC(str(file_path_obj))
+                image = Picture()
+                image.type = 3  # Cover (front)
+                image.mime = 'image/jpeg'
+                image.desc = 'Cover'
+                image.data = album_art_data
+                audio.add_picture(image)
+                audio.save()
+                self.print_rich(Messages.success("✓ Album art added successfully!"))
+                return True
+            
+            return False
+            
+        except Exception as e:
+            self.print_rich(f"  [dim]⚠ Could not add album art: {e}[/dim]")
+            return False
+    
+    def _find_recently_downloaded_file(self):
+        """Find the most recently downloaded audio file"""
+        try:
+            import time
+            current_time = time.time()
+            
+            # Look for files created/modified in the last 2 minutes
+            audio_extensions = ['.mp3', '.m4a', '.flac', '.opus', '.ogg', '.wav']
+            recent_files = []
+            
+            for ext in audio_extensions:
+                files = list(self.output_dir.glob(f"*{ext}"))
+                for f in files:
+                    if f.is_file() and (current_time - f.stat().st_mtime) < 120:  # 2 minutes
+                        recent_files.append((f, f.stat().st_mtime))
+            
+            if recent_files:
+                # Sort by modification time, newest first
+                recent_files.sort(key=lambda x: x[1], reverse=True)
+                return recent_files[0][0]
+            
+            return None
+            
+        except Exception as e:
+            return None
+    
+    def _scrape_spotify_album(self, spotify_url):
+        """Scrape Spotify album information and try to download tracks (like Apple Music)"""
+        try:
+            from bs4 import BeautifulSoup
+            import re
+            
+            self.print_rich(Messages.searching("Scraping Spotify album page..."))
+            
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                'Accept-Language': 'en-US,en;q=0.9',
+            }
+            
+            response = requests.get(spotify_url, headers=headers, timeout=10)
+            response.raise_for_status()
+            
+            soup = BeautifulSoup(response.content, 'html.parser')
+            raw_html = response.text
+            
+            # Extract album name and artist
+            album_name = "Unknown Album"
+            artist_name = "Unknown Artist"
+            
+            # Try structured data
+            script_tags = soup.find_all('script', type='application/ld+json')
+            for script in script_tags:
+                try:
+                    json_data = json.loads(script.string)
+                    if isinstance(json_data, dict) and json_data.get('@type') == 'MusicAlbum':
+                        album_name = json_data.get('name', album_name)
+                        if 'byArtist' in json_data:
+                            artist_data = json_data['byArtist']
+                            if isinstance(artist_data, dict):
+                                artist_name = artist_data.get('name', artist_name)
+                        break
+                except:
+                    continue
+            
+            # Fallback to meta tags
+            if album_name == "Unknown Album":
+                og_title = soup.find('meta', property='og:title')
+                if og_title:
+                    title_text = og_title.get('content', '')
+                    if ' - ' in title_text:
+                        parts = title_text.split(' - ', 1)
+                        album_name = parts[0].strip()
+                        artist_name = parts[1].strip()
+                    else:
+                        album_name = title_text.strip()
+            
+            self.print_rich(f"[bold magenta]♪ Spotify Album:[/bold magenta] [cyan]{artist_name} - {album_name}[/cyan]")
+            
+            # Try to extract track list from the page
+            tracks = []
+            try:
+                # Look for track data in JSON
+                track_pattern = r'"name"\s*:\s*"([^"]+)".{0,500}?"type"\s*:\s*"track"'
+                track_matches = re.findall(track_pattern, raw_html)
+                
+                if track_matches:
+                    # Remove duplicates while preserving order
+                    seen = set()
+                    for track in track_matches:
+                        if track not in seen and len(track) > 2:
+                            seen.add(track)
+                            tracks.append(track)
+                    
+                    self.print_rich(Messages.success(f"Found {len(tracks)} tracks in album"))
+                    
+                    # Show first few tracks
+                    self.print_rich(Messages.info("Track list:"))
+                    for i, track in enumerate(tracks[:5], 1):
+                        self.print_rich(f"  {i}. {track}")
+                    if len(tracks) > 5:
+                        self.print_rich(f"  ... and {len(tracks) - 5} more")
+            except:
+                pass
+            
+            if not tracks:
+                self.print_rich(Messages.warning("Could not extract track list from album page"))
+                self.print_rich(Messages.info("You can:"))
+                self.print_rich("  1. [green]Set up Spotify API credentials[/green] for full album downloads")
+                self.print_rich("  2. [yellow]Download individual tracks[/yellow] using their URLs")
+                self.print_rich("  3. [cyan]Search for the album on YouTube[/cyan] - trying now...")
+                
+                # Try to find the album on YouTube as a single search
+                search_query = f"{artist_name} {album_name} full album"
+                youtube_url = self._search_youtube(search_query)
+                if youtube_url:
+                    self.print_rich(Messages.success(f"Found album on YouTube: {youtube_url}"))
+                    return self.download_media(youtube_url, audio_only=True, output_format='mp3')
+                else:
+                    self.print_rich(Messages.error("Could not find album on YouTube"))
+                return None
+            
+            # Ask user what to download
+            self.print_rich("")
+            self.print_rich("[yellow]Do you want to download all tracks?[/yellow]")
+            self.print_rich("  [green]1[/green] - Download all tracks (searches YouTube for each)")
+            self.print_rich("  [yellow]2[/yellow] - Cancel")
+            
+            try:
+                from rich.prompt import Prompt
+                choice = Prompt.ask("Choose option", choices=["1", "2"], default="2")
+                
+                if choice == "2":
+                    self.print_rich(Messages.info("Download cancelled"))
+                    return None
+            except:
+                self.print_rich(Messages.info("Download cancelled"))
+                return None
+            
+            # Create album directory
+            safe_album_name = "".join(c for c in f"{artist_name} - {album_name}" if c.isalnum() or c in (' ', '-', '_')).rstrip()
+            album_dir = self.output_dir / safe_album_name
+            album_downloader = UltimateMediaDownloader(album_dir)
+            
+            # Download tracks
+            successful = 0
+            for i, track_name in enumerate(tracks, 1):
+                try:
+                    search_query = f"{artist_name} - {track_name}"
+                    self.print_rich(f"\n[bold blue]♫ [{i:2d}/{len(tracks)}][/bold blue] [cyan]{search_query}[/cyan]")
+                    
+                    youtube_url = self._search_youtube(search_query)
+                    if youtube_url:
+                        result = album_downloader.download_media(
+                            youtube_url, 
+                            audio_only=True, 
+                            output_format='mp3',
+                            add_metadata=True,
+                            add_thumbnail=True
+                        )
+                        if result:
+                            successful += 1
+                    else:
+                        self.print_rich(Messages.error(f"Could not find: {track_name}"))
+                except Exception as e:
+                    self.print_rich(Messages.error(f"Error downloading {track_name}: {e}"))
+            
+            self.print_rich("")
+            self.print_rich(Messages.success(f"Album download completed: {successful}/{len(tracks)} tracks downloaded"))
+            return successful > 0
+            
+        except Exception as e:
+            self.print_rich(Messages.error(f"Error scraping Spotify album: {e}"))
+            import traceback
+            traceback.print_exc()
+            return None
+    
+    def _scrape_spotify_artist(self, spotify_url):
+        """Handle Spotify artist URLs with helpful guidance"""
+        try:
+            artist_name = "this artist"
+            
+            # Try to get artist name from oembed API
+            try:
+                oembed_url = f"https://open.spotify.com/oembed?url={spotify_url}"
+                response = requests.get(oembed_url, timeout=5, verify=False)
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    artist_name = data.get('title', 'this artist').strip()
+            except:
+                # If oembed fails, try to extract from URL or use generic name
+                pass
+            
+            self.print_rich(f"[bold cyan]🎤 Spotify Artist Link Detected[/bold cyan]")
+            self.print_rich("")
+            
+            # Provide helpful guidance
+            self.print_rich(Panel.fit(
+                "[bold yellow]📌 Spotify Artist Download Information[/bold yellow]\n\n"
+                f"You've provided a link to: [cyan]{artist_name}[/cyan]\n\n"
+                "[bold]Artist pages cannot be downloaded directly.[/bold]\n"
+                "You need to specify what content you want to download:\n\n"
+                "[bold green]✓ What You Can Download:[/bold green]\n\n"
+                "[bold cyan]1. Individual Tracks (Easiest)[/bold cyan]\n"
+                "   • Go to the artist's Spotify page\n"
+                "   • Click on any song\n"
+                "   • Copy the track URL\n"
+                "   • Format: [green]https://open.spotify.com/track/...[/green]\n"
+                "   • [yellow]✓ Works immediately - no API needed![/yellow]\n\n"
+                "[bold cyan]2. Full Albums[/bold cyan]\n"
+                "   • Browse the artist's albums on Spotify\n"
+                "   • Click on an album\n"
+                "   • Copy the album URL\n"
+                "   • Format: [green]https://open.spotify.com/album/...[/green]\n"
+                "   • Requires: Spotify API credentials\n\n"
+                "[bold cyan]3. Playlists[/bold cyan]\n"
+                "   • Find playlists featuring this artist\n"
+                "   • Copy the playlist URL\n"
+                "   • Format: [green]https://open.spotify.com/playlist/...[/green]\n"
+                "   • Requires: Python 3.10+ OR Spotify API\n\n"
+                "[bold cyan]4. Alternative: YouTube Search[/bold cyan]\n"
+                f"   • Search YouTube directly for the artist\n"
+                f"   • Use: [green]ytsearch:\"{artist_name} top songs\"[/green]\n"
+                "   • Or browse YouTube and copy video URLs\n\n"
+                "[bold yellow]💡 Quick Tip:[/bold yellow]\n"
+                "For the best experience with single tracks, just copy any song URL\n"
+                "from the artist's page - it works without any additional setup!",
+                title=f"🎵 Cannot Download Artist Page Directly",
+                border_style="yellow"
+            ))
+            
+            return None
+            
+        except Exception as e:
+            self.print_rich(Messages.warning("Spotify artist pages cannot be downloaded directly"))
+            self.print_rich("")
+            self.print_rich(Messages.info("Please provide one of these instead:"))
+            self.print_rich("  • [green]Track URL[/green] - https://open.spotify.com/track/... (works instantly!)")
+            self.print_rich("  • [yellow]Album URL[/yellow] - https://open.spotify.com/album/... (needs API)")
+            self.print_rich("  • [cyan]Playlist URL[/cyan] - https://open.spotify.com/playlist/... (needs API or Python 3.10+)")
+            return None
+    
+    def _scrape_spotify_playlist(self, spotify_url):
+        """Scrape Spotify playlist information from web page"""
+        try:
+            self.print_rich(Messages.searching("Fetching playlist information..."))
+            
+            # Extract playlist ID
+            playlist_id = self._extract_spotify_id(spotify_url, 'playlist')
+            if not playlist_id:
+                self.print_rich(Messages.error("Could not extract playlist ID"))
+                return None
+            
+            # Try to get playlist data from Spotify's public API (no auth required for public playlists)
+            api_url = f"https://api.spotify.com/v1/playlists/{playlist_id}"
+            
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
+                'Accept': 'application/json',
+            }
+            
+            # First, get playlist name from the web page
+            web_response = requests.get(spotify_url, headers=headers, timeout=10)
+            playlist_name = "Spotify Playlist"
+            
+            if web_response.status_code == 200:
+                from bs4 import BeautifulSoup
+                soup = BeautifulSoup(web_response.content, 'html.parser')
+                og_title = soup.find('meta', property='og:title')
+                if og_title:
+                    playlist_name = og_title.get('content', 'Spotify Playlist').strip()
+            
+            # Try using spotdl if available
+            try:
+                import spotdl
+                self.print_rich(Messages.success("Using spotdl for playlist download..."))
+                return self._download_spotify_with_spotdl(spotify_url, playlist_name)
+            except ImportError:
+                pass
+            
+            # If spotdl is not available, provide installation instructions
+            self.print_rich(Messages.warning(f"Cannot download playlist: {playlist_name}"))
+            self.print_rich("")
+            self.print_rich(Panel.fit(
+                "[bold yellow]📌 Spotify Playlist Download Options:[/bold yellow]\n\n"
+                "[bold cyan]Option 1: Use spotdl (Recommended)[/bold cyan]\n"
+                "  Install: [green]pip install spotdl[/green]\n"
+                "  Then run this downloader again\n\n"
+                "[bold cyan]Option 2: Configure Spotify API[/bold cyan]\n"
+                "  1. Go to: https://developer.spotify.com/dashboard\n"
+                "  2. Create an app and get Client ID & Secret\n"
+                "  3. Set environment variables:\n"
+                "     [green]export SPOTIFY_CLIENT_ID='your_id'[/green]\n"
+                "     [green]export SPOTIFY_CLIENT_SECRET='your_secret'[/green]\n\n"
+                "[bold cyan]Option 3: Use Individual Track URLs[/bold cyan]\n"
+                "  Download tracks one by one using their Spotify URLs",
+                title="🎵 Spotify Playlist Support",
+                border_style="yellow"
+            ))
+            
+            return None
+            
+        except Exception as e:
+            self.print_rich(Messages.error(f"Error processing Spotify playlist: {e}"))
+            return None
+    
+    def _download_spotify_with_spotdl(self, spotify_url, playlist_name):
+        """Download Spotify content using spotdl Python module or web scraping"""
+        try:
+            # Check Python version
+            import sys
+            if sys.version_info < (3, 10):
+                self.print_rich(Messages.warning("spotdl requires Python 3.10+. Using alternative method..."))
+                return self._download_spotify_playlist_manual(spotify_url, playlist_name)
+            
+            from spotdl import Spotdl
+            
+            # Create playlist directory
+            safe_playlist_name = "".join(c for c in playlist_name if c.isalnum() or c in (' ', '-', '_')).rstrip()
+            playlist_dir = self.output_dir / f"Spotify - {safe_playlist_name}"
+            playlist_dir.mkdir(parents=True, exist_ok=True)
+            
+            self.print_rich(Messages.info(f"Downloading to: {playlist_dir}"))
+            self.print_rich(Messages.searching("Initializing spotdl..."))
+            
+            # Configure spotdl options
+            options = {
+                'output': str(playlist_dir / '{artist} - {title}.{output-ext}'),
+                'format': 'mp3',
+                'bitrate': '320k',
+                'threads': 4,
+            }
+            
+            # Initialize Spotdl
+            spotdl_client = Spotdl(
+                client_id='5f573c9620494bae87890c0f08a60293',  # Public client ID
+                client_secret='212476d9b0f3472eaa762d90b19b0ba8',  # Public client secret
+                downloader_settings=options
+            )
+            
+            self.print_rich(Messages.searching("Fetching playlist tracks..."))
+            
+            # Get songs from URL
+            songs = spotdl_client.search([spotify_url])
+            
+            if not songs:
+                self.print_rich(Messages.error("No tracks found in playlist"))
+                return False
+            
+            total_tracks = len(songs)
+            self.print_rich(Messages.success(f"Found {total_tracks} tracks in playlist"))
+            
+            # Download songs
+            successful = 0
+            failed = 0
+            
+            if RICH_AVAILABLE and self.console:
+                with Progress(
+                    SpinnerColumn(),
+                    TextColumn("[progress.description]{task.description}"),
+                    BarColumn(),
+                    TextColumn("[progress.percentage]{task.percentage:>3.0f}%"),
+                    console=self.console
+                ) as progress:
+                    task = progress.add_task(f"[cyan]Downloading playlist...", total=total_tracks)
+                    
+                    for i, song in enumerate(songs, 1):
+                        try:
+                            progress.update(task, description=f"[cyan]Downloading: {song.name} - {song.artist}")
+                            spotdl_client.downloader.download_song(song)
+                            successful += 1
+                            progress.advance(task)
+                        except Exception as e:
+                            self.print_rich(f"[red]✗ Error downloading {song.name}: {e}[/red]")
+                            failed += 1
+                            progress.advance(task)
+            else:
+                for i, song in enumerate(songs, 1):
+                    try:
+                        print(f"[{i}/{total_tracks}] Downloading: {song.name} - {song.artist}")
+                        spotdl_client.downloader.download_song(song)
+                        successful += 1
+                    except Exception as e:
+                        print(f"✗ Error downloading {song.name}: {e}")
+                        failed += 1
+            
+            # Summary
+            self.print_rich("")
+            self.print_rich(Messages.success(f"✓ Playlist download complete!"))
+            self.print_rich(Messages.info(f"Successfully downloaded: {successful}/{total_tracks} tracks"))
+            if failed > 0:
+                self.print_rich(Messages.warning(f"Failed to download: {failed} tracks"))
+            
+            return successful > 0
+                
+        except ImportError as e:
+            self.print_rich(Messages.error(f"spotdl import error: {e}"))
+            return False
+        except Exception as e:
+            error_msg = str(e)
+            if 'Python version' in error_msg or 'Deprecated' in error_msg:
+                self.print_rich(Messages.warning("spotdl requires Python 3.10+. Using alternative method..."))
+                return self._download_spotify_playlist_manual(spotify_url, playlist_name)
+            else:
+                self.print_rich(Messages.error(f"Error using spotdl: {e}"))
+                return False
+    
+    def _download_spotify_playlist_manual(self, spotify_url, playlist_name):
+        """Manual download method using web scraping when spotdl is not available"""
+        try:
+            self.print_rich(Messages.searching("Fetching playlist using alternative method..."))
+            
+            # Use a simple web request to get the playlist embed
+            playlist_id = self._extract_spotify_id(spotify_url, 'playlist')
+            if not playlist_id:
+                self.print_rich(Messages.error("Could not extract playlist ID"))
+                return False
+            
+            # Try to get track list using Spotify's public API (no auth needed for some data)
+            try:
+                # Use oembed endpoint which doesn't require auth
+                oembed_url = f"https://open.spotify.com/oembed?url={spotify_url}"
+                headers = {
+                    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36'
+                }
+                
+                response = requests.get(oembed_url, headers=headers, timeout=10)
+                if response.status_code == 200:
+                    data = response.json()
+                    # Get basic info from oembed
+                    self.print_rich(Messages.info(f"Playlist: {data.get('title', playlist_name)}"))
+            except:
+                pass
+            
+            # Since we can't get the full track list without API, provide instructions
+            self.print_rich("")
+            self.print_rich(Panel.fit(
+                "[bold yellow]⚠️  Spotify Playlist Download Limitation[/bold yellow]\n\n"
+                "Without Spotify API credentials or Python 3.10+, playlist downloads are limited.\n\n"
+                "[bold cyan]Available Options:[/bold cyan]\n\n"
+                "[bold green]1. Upgrade to Python 3.10 or higher[/bold green]\n"
+                "   • spotdl will work automatically with Python 3.10+\n"
+                "   • Run: [green]python --version[/green] to check your version\n\n"
+                "[bold green]2. Set up Spotify API credentials[/bold green]\n"
+                "   • Go to: https://developer.spotify.com/dashboard\n"
+                "   • Create an app and get Client ID & Secret\n"
+                "   • Set environment variables:\n"
+                "     [green]export SPOTIFY_CLIENT_ID='your_id'[/green]\n"
+                "     [green]export SPOTIFY_CLIENT_SECRET='your_secret'[/green]\n\n"
+                "[bold green]3. Download tracks individually[/bold green]\n"
+                "   • Get each track's Spotify URL\n"
+                "   • Download them one by one (works without API)\n\n"
+                "[bold green]4. Use external tools[/bold green]\n"
+                "   • Install: [green]pip install spotdl[/green] (requires Python 3.10+)\n"
+                "   • Or use: [green]youtube-dl[/green] with search",
+                title="🎵 Spotify Playlist Options",
+                border_style="yellow"
+            ))
+            
+            return False
+            
+        except Exception as e:
+            self.print_rich(Messages.error(f"Error in manual download: {e}"))
+            return False
+    
+    def _extract_tracks_from_json(self, data, tracks=None):
+        """Recursively extract track information from JSON data"""
+        if tracks is None:
+            tracks = []
+        
+        if isinstance(data, dict):
+            # Check if this is a track object
+            if 'name' in data and ('artists' in data or 'artist' in data):
+                track_info = {
+                    'name': data.get('name'),
+                    'artist': data.get('artist') or (data.get('artists', [{}])[0].get('name') if data.get('artists') else 'Unknown'),
+                }
+                tracks.append(track_info)
+            
+            # Recursively search nested dictionaries
+            for value in data.values():
+                if isinstance(value, (dict, list)):
+                    self._extract_tracks_from_json(value, tracks)
+        
+        elif isinstance(data, list):
+            for item in data:
+                if isinstance(item, (dict, list)):
+                    self._extract_tracks_from_json(item, tracks)
+        
+        return tracks
     
     def _extract_spotify_id(self, url, content_type):
         """Extract Spotify ID from URL for different content types"""
@@ -811,6 +1747,10 @@ class UltimateMediaDownloader:
             'playlist': [
                 rf'spotify\.com/playlist/([a-zA-Z0-9]+)',
                 rf'open\.spotify\.com/playlist/([a-zA-Z0-9]+)',
+            ],
+            'artist': [
+                rf'spotify\.com/artist/([a-zA-Z0-9]+)',
+                rf'open\.spotify\.com/artist/([a-zA-Z0-9]+)',
             ]
         }
         
@@ -3316,6 +4256,71 @@ class UltimateMediaDownloader:
         except Exception as e:
             print(f"✗ Error during conversion: {e}")
             return str(file_path)
+    
+    def _convert_video_format(self, video_file_path, target_format='mp4'):
+        """Convert video to target format using FFmpeg"""
+        try:
+            file_path = Path(video_file_path)
+            output_file = file_path.with_suffix(f'.{target_format}')
+            
+            # If output already exists, return it
+            if output_file.exists():
+                return str(output_file)
+            
+            print(f"⟳ Converting {file_path.name} to {target_format.upper()}...")
+            
+            # Use FFmpeg to convert with good quality settings
+            cmd = [
+                'ffmpeg', '-i', str(file_path),
+                '-c:v', 'libx264',  # H.264 codec for MP4
+                '-preset', 'medium',  # Encoding speed/quality tradeoff
+                '-crf', '23',  # Quality (lower = better, 23 is good default)
+                '-c:a', 'aac',  # AAC audio codec
+                '-b:a', '192k',  # Audio bitrate
+                str(output_file),
+                '-y'  # Overwrite output file
+            ]
+            
+            # For formats other than MP4, adjust codec
+            if target_format == 'mkv':
+                cmd = [
+                    'ffmpeg', '-i', str(file_path),
+                    '-c:v', 'copy',  # Copy video stream (no re-encode)
+                    '-c:a', 'copy',  # Copy audio stream (no re-encode)
+                    str(output_file),
+                    '-y'
+                ]
+            elif target_format == 'avi':
+                cmd = [
+                    'ffmpeg', '-i', str(file_path),
+                    '-c:v', 'libx264',
+                    '-c:a', 'mp3',
+                    str(output_file),
+                    '-y'
+                ]
+            
+            # Run FFmpeg conversion
+            result = subprocess.run(
+                cmd,
+                capture_output=True,
+                text=True,
+                timeout=600  # 10 minute timeout for video
+            )
+            
+            if result.returncode == 0 and output_file.exists():
+                print(f"✓ Converted to {target_format.upper()}: {output_file.name}")
+                return str(output_file)
+            else:
+                error_msg = result.stderr if result.stderr else "Unknown error"
+                print(f"✗ Conversion failed: {error_msg[:200]}")
+                return None
+                
+        except subprocess.TimeoutExpired:
+            print(f"✗ Conversion timeout exceeded")
+            return None
+        except Exception as e:
+            print(f"✗ Error during video conversion: {e}")
+            return None
                 
     def _add_album_art_to_playlist(self, playlist_dir):
         """Add album art to all audio files in a playlist directory"""
@@ -3932,9 +4937,71 @@ class UltimateMediaDownloader:
                 else:
                     print("\n▸ Starting download...")
                 
-                ydl.download([url])
+                # Track download success
+                download_result = ydl.download([url])
                 
-                if not self.cancelled:
+                # Check if download actually succeeded
+                # yt-dlp returns 0 on success, non-zero on failure
+                download_succeeded = (download_result == 0)
+                
+                # Enhanced check: Also verify if any file was actually downloaded
+                if download_succeeded and info:
+                    title = info.get('title', 'Unknown')
+                    uploader = info.get('uploader', 'Unknown')
+                    
+                    # Look for downloaded files with multiple patterns
+                    # yt-dlp sanitizes filenames, replacing characters like | with ｜
+                    # Clean the strings for glob patterns - remove special glob characters
+                    title_clean = title[:40].replace('|', '').replace('/', '').replace('\\', '').replace('*', '').replace('?', '').replace('[', '').replace(']', '')
+                    uploader_clean = uploader[:20].replace('|', '').replace('/', '').replace('\\', '').replace('*', '').replace('?', '').replace('[', '').replace(']', '')
+                    
+                    # Search for files with any of these extensions
+                    extensions = ['.mp3', '.m4a', '.webm', '.mp4', '.mkv', '.flac', '.opus']
+                    downloaded_files = []
+                    
+                    for ext in extensions:
+                        # Try multiple search patterns
+                        # Clean patterns to avoid glob syntax errors
+                        if title_clean:
+                            title_pattern = ''.join(c for c in title_clean[:20] if c.isalnum() or c in ' -_')
+                            if title_pattern.strip():
+                                try:
+                                    files = list(self.output_dir.glob(f"*{title_pattern[:15]}*{ext}"))
+                                    if files:
+                                        downloaded_files.extend(files)
+                                        break
+                                except:
+                                    pass
+                        
+                        if uploader_clean and not downloaded_files:
+                            uploader_pattern = ''.join(c for c in uploader_clean if c.isalnum() or c in ' -_')
+                            if uploader_pattern.strip():
+                                try:
+                                    files = list(self.output_dir.glob(f"*{uploader_pattern[:15]}*{ext}"))
+                                    if files:
+                                        downloaded_files.extend(files)
+                                        break
+                                except:
+                                    pass
+                        
+                        if downloaded_files:
+                            break
+                    
+                    if not downloaded_files:
+                        # Last resort: check for any recently created files
+                        import time
+                        current_time = time.time()
+                        recent_files = [f for f in self.output_dir.iterdir() 
+                                      if f.is_file() and (current_time - f.stat().st_mtime) < 60]
+                        
+                        if recent_files:
+                            download_succeeded = True
+                            self.print_rich(f"  [dim]✓ Found downloaded file: {recent_files[0].name}[/dim]")
+                        else:
+                            # No files found, download likely failed
+                            download_succeeded = False
+                
+                if not self.cancelled and download_succeeded:
                     # Show beautiful completion message
                     if RICH_AVAILABLE and self.console:
                         completion_msg = """
@@ -3945,7 +5012,25 @@ class UltimateMediaDownloader:
                         self.print_panel(completion_msg, title="🎊 SUCCESS", border_style="green")
                     else:
                         print("\n✓ Download completed successfully!")
-                    
+                elif not self.cancelled and not download_succeeded:
+                    # Download failed
+                    if RICH_AVAILABLE and self.console:
+                        error_msg = """
+[bold red]✗ Download failed![/bold red]
+
+[yellow]⚠  The video could not be downloaded. Possible reasons:[/yellow]
+[dim]• The URL is not supported or requires authentication
+• The video is private, deleted, or region-restricted
+• The site has anti-bot protection enabled
+• Network connection issues[/dim]
+"""
+                        self.print_panel(error_msg, title="❌ DOWNLOAD FAILED", border_style="red")
+                    else:
+                        print("\n✗ Download failed!")
+                        print("⚠  The video could not be downloaded")
+                    return None
+                
+                if download_succeeded:
                     # Show downloaded file info
                     if info:
                         title = info.get('title', 'Unknown')
@@ -3954,40 +5039,130 @@ class UltimateMediaDownloader:
                         if output_format:
                             ext = output_format.lower()
                         
-                        expected_filename = f"{artist} - {title}.{ext}"
+                        # Determine expected filename - use custom filename if provided
+                        if custom_filename:
+                            # Custom filename was provided
+                            safe_custom = custom_filename.replace('/', '-').replace('\\', '-').replace(':', '-')
+                            expected_filename = f"{safe_custom}.{ext}"
+                        else:
+                            # Default filename format
+                            expected_filename = f"{artist} - {title}.{ext}"
+                        
                         downloaded_file_path = self.output_dir / expected_filename
                         
-                        print(f"📁 File saved as: {expected_filename}")
-                        print(f"▸ Location: {self.output_dir}")
+                        # Verify the expected file actually exists
+                        actual_file = None
+                        if downloaded_file_path.exists():
+                            actual_file = downloaded_file_path
+                        else:
+                            # yt-dlp sanitizes filenames, so we need to search for the actual file
+                            # Check for recently modified files first (most reliable)
+                            import time
+                            current_time = time.time()
+                            recent_files = [f for f in self.output_dir.iterdir() 
+                                          if f.is_file() and (current_time - f.stat().st_mtime) < 60]
+                            
+                            if recent_files:
+                                # Find files with the correct extension
+                                possible_extensions = [f'.{ext}', '.mp4', '.webm', '.mkv', '.avi', '.mov', '.mp3', '.m4a', '.flac', '.wav', '.opus']
+                                for check_ext in possible_extensions:
+                                    ext_matches = [f for f in recent_files if f.suffix.lower() == check_ext]
+                                    if ext_matches:
+                                        # Take the most recently modified file
+                                        actual_file = max(ext_matches, key=lambda p: p.stat().st_mtime)
+                                        
+                                        if check_ext.lower() != f".{ext}":
+                                            print(f"  ℹ  File downloaded as {check_ext} format instead of requested .{ext}")
+                                        
+                                        # Try to convert to requested format if different (for video files)
+                                        if not audio_only and output_format and check_ext.lower() != f".{ext}":
+                                            print(f"  ⟳ Converting {check_ext} to .{ext}...")
+                                            try:
+                                                converted_path = self._convert_video_format(str(actual_file), ext)
+                                                if converted_path and Path(converted_path).exists():
+                                                    old_file = actual_file
+                                                    actual_file = Path(converted_path)
+                                                    downloaded_file_path = actual_file
+                                                    # Remove the original file after successful conversion
+                                                    try:
+                                                        old_file.unlink()
+                                                    except:
+                                                        pass
+                                                    print(f"  ✓ Converted to: {actual_file.name}")
+                                                else:
+                                                    print(f"  ⚠  Conversion failed, keeping original format")
+                                            except Exception as e:
+                                                print(f"  ⚠  Conversion error: {e}, keeping original format")
+                                        break
+                            
+                            # If still not found, try pattern matching as fallback
+                            if not actual_file:
+                                title_pattern = title[:40].replace('|', '*').replace('/', '*').replace('\\', '*')
+                                possible_extensions = ['.mp4', '.webm', '.mkv', '.avi', '.mov', '.mp3', '.m4a', '.flac', '.wav', '.opus']
+                                
+                                for alt_ext in possible_extensions:
+                                    try:
+                                        matching_files = list(self.output_dir.glob(f"*{title_pattern}*{alt_ext}"))
+                                        if matching_files:
+                                            actual_file = max(matching_files, key=lambda p: p.stat().st_mtime)
+                                            break
+                                    except:
+                                        pass
                         
-                        # Enhanced post-processing for audio files
-                        if audio_only and downloaded_file_path.exists():
-                            print("\n◨ Applying enhanced post-processing...")
+                        # Only show success if file actually exists
+                        if actual_file and actual_file.exists():
+                            print(f"📁 File saved as: {actual_file.name}")
+                            print(f"▸ Location: {self.output_dir}")
+                            downloaded_file_path = actual_file
                             
-                            # Fetch and embed album art from Spotify/Apple Music
-                            if platform not in ['spotify', 'apple_music']:  # Only if not from streaming service
-                                self._enhance_audio_with_metadata(
-                                    str(downloaded_file_path),
-                                    title,
-                                    artist,
-                                    fetch_from_streaming=True
-                                )
+                            # Enhanced post-processing for audio files
+                            if audio_only and downloaded_file_path.exists():
+                                print("\n◨ Applying enhanced post-processing...")
+                                
+                                # Fetch and embed album art from Spotify/Apple Music
+                                if platform not in ['spotify', 'apple_music']:  # Only if not from streaming service
+                                    self._enhance_audio_with_metadata(
+                                        str(downloaded_file_path),
+                                        title,
+                                        artist,
+                                        fetch_from_streaming=True
+                                    )
+                                
+                                # Convert to true lossless if FLAC or WAV requested
+                                if output_format and output_format.lower() in ['flac', 'wav']:
+                                    print(f"\n⟳ Converting to true {output_format.upper()} format...")
+                                    converted_path = self._convert_to_true_lossless(
+                                        str(downloaded_file_path),
+                                        target_format=output_format.lower()
+                                    )
+                                    if converted_path != str(downloaded_file_path):
+                                        downloaded_file_path = Path(converted_path)
+                                        print(f"✓ Converted to: {downloaded_file_path.name}")
                             
-                            # Convert to true lossless if FLAC or WAV requested
-                            if output_format and output_format.lower() in ['flac', 'wav']:
-                                print(f"\n⟳ Converting to true {output_format.upper()} format...")
-                                converted_path = self._convert_to_true_lossless(
-                                    str(downloaded_file_path),
-                                    target_format=output_format.lower()
-                                )
-                                if converted_path != str(downloaded_file_path):
-                                    downloaded_file_path = Path(converted_path)
-                                    print(f"✓ Converted to: {downloaded_file_path.name}")
-                    
-                    # Cleanup intermediate files (thumbnails, json, etc.)
-                    self._cleanup_intermediate_files(info, audio_only, output_format)
+                            # Cleanup intermediate files (thumbnails, json, etc.)
+                            self._cleanup_intermediate_files(info, audio_only, output_format, str(actual_file))
+                        else:
+                            # File not found - this shouldn't happen but handle gracefully
+                            # Check one more time for ANY recent file
+                            import time
+                            current_time = time.time()
+                            any_recent_files = [f for f in self.output_dir.iterdir() 
+                                              if f.is_file() and (current_time - f.stat().st_mtime) < 120]
+                            
+                            if any_recent_files:
+                                # File was downloaded but we can't find it with expected name
+                                latest_file = max(any_recent_files, key=lambda p: p.stat().st_mtime)
+                                print(f"✓ File downloaded successfully!")
+                                print(f"📁 File saved as: {latest_file.name}")
+                                print(f"▸ Location: {self.output_dir}")
+                                # Don't mark as failed since file exists
+                            else:
+                                print(f"⚠  Warning: Expected file not found: {expected_filename}")
+                                print(f"⚠  Download may have failed or file was saved with a different name")
+                                download_succeeded = False
                 
-                return info
+                # Only return info if download succeeded
+                return info if download_succeeded else None
                 
         except KeyboardInterrupt:
             print("\n✗ Download cancelled by user")
@@ -4013,6 +5188,32 @@ class UltimateMediaDownloader:
                 print("   Windows: Download from https://ffmpeg.org/download.html")
             elif not error_msg or error_msg.strip() == "":
                 print("→ Tip: An unknown error occurred. The video might be unavailable or have restricted access")
+            
+            # Try generic downloader as last resort
+            if platform == 'generic' and GENERIC_DOWNLOADER_AVAILABLE:
+                print(f"\n{'='*80}")
+                print("🔥 ATTEMPTING ADVANCED GENERIC DOWNLOADER")
+                print(f"{'='*80}")
+                print("ℹ  yt-dlp failed, trying alternative methods with SSL/TLS bypass...")
+                
+                try:
+                    generic_dl = GenericSiteDownloader(self.output_dir, verbose=True)
+                    result_file = generic_dl.download(url)
+                    
+                    if result_file:
+                        print(f"\n✅ SUCCESS with advanced downloader!")
+                        print(f"📥 Downloaded: {result_file}")
+                        
+                        # Return a mock info dict for compatibility
+                        return {
+                            'title': Path(result_file).stem,
+                            'filepath': result_file,
+                            'ext': Path(result_file).suffix[1:],
+                        }
+                    else:
+                        print("\n❌ Advanced downloader also failed")
+                except Exception as generic_error:
+                    print(f"❌ Advanced downloader error: {generic_error}")
             
             # Don't fail completely, return None to continue with other tracks
             return None
@@ -4595,7 +5796,7 @@ class UltimateMediaDownloader:
         except:
             return "Unknown"
     
-    def _cleanup_intermediate_files(self, info, audio_only=False, output_format=None):
+    def _cleanup_intermediate_files(self, info, audio_only=False, output_format=None, keep_file=None):
         """Clean up intermediate files (thumbnails, json, etc.) after download completes"""
         try:
             if not info:
@@ -4607,6 +5808,9 @@ class UltimateMediaDownloader:
             # Determine the main output file extension
             main_ext = output_format.lower() if output_format else ('mp3' if audio_only else 'mp4')
             main_filename_base = f"{uploader} - {title}"
+            
+            # Get the actual file we want to keep (absolute path)
+            keep_file_path = Path(keep_file).resolve() if keep_file else None
             
             # List of intermediate file extensions to clean up
             intermediate_extensions = [
@@ -4629,6 +5833,10 @@ class UltimateMediaDownloader:
                 if file_path.is_file():
                     file_name = file_path.name
                     file_stem = file_path.stem
+                    
+                    # NEVER delete the file we want to keep
+                    if keep_file_path and file_path.resolve() == keep_file_path:
+                        continue
                     
                     # Check if this is an intermediate file related to our download
                     for ext in intermediate_extensions:
@@ -4928,7 +6136,7 @@ def create_banner():
 
 def main():
     parser = argparse.ArgumentParser(
-        description=f"{Icons.get('video')} Ultimate Multi-Platform Media Downloader\n\nA powerful, feature-rich downloader supporting 1000+ platforms including YouTube, Spotify, Instagram, TikTok, SoundCloud, Apple Music, and more!",
+        description=f"{Icons.get('video')} Ultimate Multi-Platform Media Downloader\n\nA powerful, feature-rich downloader supporting many platforms including YouTube, Spotify, Instagram, TikTok, SoundCloud, Apple Music, and more!",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=f"""
 {'═'*79}
@@ -5009,7 +6217,7 @@ def main():
   {Icons.get('completed')} Facebook (Videos, Live Streams)
   {Icons.get('completed')} Vimeo (Videos, Private Content)
   {Icons.get('completed')} Twitch (VODs, Clips, Live Streams)
-  {Icons.get('completed')} And 1000+ more platforms!
+  {Icons.get('completed')} And many more platforms!
 
   Use --list-platforms to see all supported sites
   Use --check-support <URL> to verify URL compatibility
