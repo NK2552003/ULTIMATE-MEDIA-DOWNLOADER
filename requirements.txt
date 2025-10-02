@@ -7,74 +7,72 @@
 
 # Core Video/Audio Downloading
 # -------------------------------------------------------------------------
-yt-dlp>=2023.12.30              # YouTube and 1000+ sites downloader
-requests>=2.31.0                # HTTP library
-urllib3>=2.1.0                  # HTTP client
+yt-dlp>=2025.09.26                # YouTube and 1000+ sites downloader :contentReference[oaicite:0]{index=0}  
+requests>=2.32.5                  # HTTP library  
 
 # Rich CLI Interface
 # -------------------------------------------------------------------------
-rich>=13.7.0                    # Beautiful terminal formatting
-colorama>=0.4.6                 # Cross-platform colored terminal text
-pyfiglet>=1.0.2                 # ASCII art text
-emoji>=2.9.0                    # Emoji support
-halo>=0.0.31                    # Elegant terminal spinners
+rich>=13.9.4,<14                  # Beautiful terminal formatting (compatible with spotdl)
+colorama>=0.4.6                   # Cross-platform colored terminal text  
+pyfiglet>=1.0.2                   # ASCII art text  
+emoji>=2.9.0                      # Emoji support  
+halo>=0.0.31                      # Elegant terminal spinners  
 
 # Audio/Video Processing
 # -------------------------------------------------------------------------
-mutagen>=1.47.0                 # Audio metadata editing
-Pillow>=10.1.0                  # Image processing for thumbnails
+mutagen>=1.47.0                   # Audio metadata editing :contentReference[oaicite:2]{index=2}  
+Pillow>=11.2.1                     # Image processing for thumbnails :contentReference[oaicite:3]{index=3}  
 
 # Music Platform Support
 # -------------------------------------------------------------------------
-spotipy>=2.23.0                 # Spotify API wrapper
-youtube-search-python>=1.6.6    # YouTube search without API key
-spotdl>=4.4.2                   # Spotify to YouTube downloader
+spotipy>=2.25.1                   # Spotify API wrapper :contentReference[oaicite:4]{index=4}  
+youtube-search-python>=1.6.6     # YouTube search without API key  
+spotdl>=4.4.2                     # Spotify to YouTube downloader  
 
 # Advanced Web Scraping & Downloading
 # -------------------------------------------------------------------------
-cloudscraper>=1.2.71            # Cloudflare bypass
-httpx>=0.25.2                   # Modern HTTP client
-curl-cffi>=0.6.2                # curl with cffi bindings
-fake-useragent>=1.4.0           # Random user agent generator
-requests-html>=0.10.0           # HTML parsing with JavaScript support
-beautifulsoup4>=4.12.2          # HTML/XML parser
-lxml>=4.9.3                     # XML and HTML parser
+cloudscraper>=1.2.71              # Cloudflare bypass  
+httpx>=0.25.2                     # Modern HTTP client  
+curl-cffi>=0.6.2                  # curl with cffi bindings  
+fake-useragent>=1.4.0             # Random user agent generator  
+requests-html>=0.10.0             # HTML parsing with JavaScript support  
+beautifulsoup4>=4.12.2            # HTML/XML parser  
+lxml>=4.9.3                       # XML and HTML parser  
 
 # Browser Automation
 # -------------------------------------------------------------------------
-selenium>=4.16.0                # Browser automation
-undetected-chromedriver>=3.5.4  # Undetected Chrome driver
-webdriver-manager>=4.0.1        # Automatic webdriver management
-playwright>=1.40.0              # Modern browser automation
+selenium>=4.16.0                  # Browser automation  
+undetected-chromedriver>=3.5.4    # Undetected Chrome driver  
+webdriver-manager>=4.0.1          # Automatic webdriver management  
+playwright>=1.40.0                # Modern browser automation  
 
 # Stream Extraction
 # -------------------------------------------------------------------------
-streamlink>=6.5.0               # Extract streams from various services
+streamlink>=6.5.0                 # Extract streams from various services  
 
 # Utilities
 # -------------------------------------------------------------------------
-python-dateutil>=2.8.2          # Date/time utilities
-pytz>=2023.3                    # Timezone support
+python-dateutil>=2.8.2            # Date/time utilities  
+pytz>=2023.3                       # Timezone support  
 
 # Development & Testing (Optional)
 # -------------------------------------------------------------------------
-pytest>=7.4.3                   # Testing framework
-black>=23.12.0                  # Code formatter
-flake8>=6.1.0                   # Linting
-mypy>=1.7.1                     # Static type checker
+pytest>=7.4.3                      # Testing framework  
+black>=23.12.0                     # Code formatter  
+flake8>=6.1.0                      # Linting  
+mypy>=1.7.1                        # Static type checker  
 
 # Optional: Apple Music Support
 # -------------------------------------------------------------------------
-gamdl                         # Uncomment to enable Apple Music downloads
-# Note: gamdl requires additional setup and Apple Music subscription
-
+gamdl                             # Uncomment to enable Apple Music downloads  
+                                   # (requires additional setup & subscription)
 # Platform-specific dependencies
 # -------------------------------------------------------------------------
 # Windows:
-# - pywin32>=306                # Windows API access
-# 
+# - pywin32>=306                   # Windows API access  
+#
 # Linux:
-# - python-magic>=0.4.27        # File type identification
+# - python-magic>=0.4.27            # File type identification  
 #
 # macOS:
-# - pyobjc-framework-Cocoa>=10.0  # macOS framework bindings
+# - pyobjc-framework-Cocoa>=10.0     # macOS framework bindings  
