@@ -14,6 +14,7 @@ ULTIMATE-MEDIA-DOWNLOADER/
 ├── 📄 README.md                    # Main project documentation
 ├── 📄 LICENSE                      # MIT License
 ├── 📄 CHANGELOG.md                 # Version history and changes
+├── 📄 COMPONENTS.md                # Reusable components documentation
 ├── 📄 .gitignore                   # Git ignore patterns
 ├── 📄 requirements.txt             # Python dependencies
 ├── 📄 requirements-dev.txt         # Development dependencies
@@ -21,8 +22,12 @@ ULTIMATE-MEDIA-DOWNLOADER/
 ├── 🔧 setup.sh                     # Automated setup script
 ├── 🔧 activate-env.sh              # Environment activation script
 │
-├── 🐍 ultimate_downloader.py       # Main application (6,454 lines)
+├── 🐍 ultimate_downloader.py       # Main application (6,400+ lines)
 ├── 🐍 generic_downloader.py        # Generic site handler (1,219 lines)
+├── 🐍 logger.py                    # Custom logging module (NEW)
+├── 🐍 ui_components.py             # UI components module (NEW)
+├── 🐍 utils.py                     # Utility functions module (NEW)
+├── 🐍 example_components_usage.py  # Example usage of components (NEW)
 │
 ├── 📁 docs/                        # Documentation directory
 │   ├── 📄 ARCHITECTURE.md          # System architecture
@@ -156,16 +161,12 @@ source activate-env.sh
 
 ### Core Python Files
 
-#### 🐍 ultimate_downloader.py (6,454 lines)
+#### 🐍 ultimate_downloader.py (6,400+ lines)
 **Purpose**: Main application logic  
 **Key Components**:
 
 1. **Classes**:
-   - `UltimateDownloader` - Main application
-   - `ModernUI` - User interface
-   - `Icons` - Icon management
-   - `Messages` - Message templates
-   - `QuietLogger` - Custom logger
+   - `UltimateDownloader` - Main application class
 
 2. **Handlers**:
    - YouTube handler
@@ -186,12 +187,12 @@ source activate-env.sh
 
 **Structure**:
 ```python
-# Imports (lines 1-100)
-# Logger class (lines 101-200)
-# UI classes (lines 201-500)
-# Main downloader class (lines 501-6000)
-# CLI interface (lines 6001-6454)
+# Imports (lines 1-120) - Now imports from modular components
+# Main downloader class (lines 121-6000)
+# CLI interface (lines 6001-6400+)
 ```
+
+**Note**: UI components, logging, and utilities have been extracted to separate modules.
 
 #### 🐍 generic_downloader.py (1,219 lines)
 **Purpose**: Universal site handler  
@@ -217,6 +218,134 @@ source activate-env.sh
 - Complex JavaScript sites
 - Protected content
 - Stream extraction
+
+---
+
+## Reusable Component Modules (NEW)
+
+### 🐍 logger.py (~60 lines)
+**Purpose**: Custom logging functionality  
+**Key Components**:
+
+1. **Class**: `QuietLogger`
+   - Custom logger for yt-dlp integration
+   - Suppresses verbose output
+   - Shows important messages only
+   - Rich formatting support
+
+**Usage**:
+```python
+from logger import QuietLogger
+logger = QuietLogger()
+logger.info("Download started")
+logger.warning("Quality limited")
+logger.error("Download failed")
+```
+
+### 🐍 ui_components.py (~300 lines)
+**Purpose**: Professional UI elements  
+**Key Components**:
+
+1. **Class**: `Icons`
+   - 40+ modern flat design icons
+   - Platform icons (YouTube, Spotify, etc.)
+   - Status icons (success, error, warning)
+   - Media icons (video, audio, playlist)
+
+2. **Class**: `Messages`
+   - Centralized message templates
+   - Rich formatting support
+   - Consistent styling
+   - 9 message types
+
+3. **Class**: `ModernUI`
+   - Welcome banners
+   - Progress bars
+   - Spinners
+   - Input prompts
+   - Status messages
+   - ASCII art logos
+
+**Usage**:
+```python
+from ui_components import Icons, Messages, ModernUI
+
+# Get icons
+icon = Icons.get('success')
+
+# Format messages
+msg = Messages.success("Download complete!")
+
+# Create UI
+ui = ModernUI()
+ui.show_welcome_banner()
+```
+
+### 🐍 utils.py (~250 lines)
+**Purpose**: Common utility functions  
+**Key Functions**:
+
+1. **File Operations**:
+   - `sanitize_filename()` - Clean filenames
+   - `ensure_directory()` - Create directories
+   - `get_file_extension()` - Extract extensions
+
+2. **Formatting**:
+   - `format_bytes()` - Human-readable sizes
+   - `format_duration()` - Time formatting
+   - `truncate_string()` - String truncation
+
+3. **URL Detection**:
+   - `detect_platform()` - Platform identification
+   - `is_playlist_url()` - Playlist detection
+   - `extract_video_id()` - ID extraction
+   - `validate_url()` - URL validation
+
+4. **Configuration**:
+   - `load_config()` - Load JSON config
+   - `save_config()` - Save JSON config
+
+5. **String Processing**:
+   - `clean_string()` - Remove extra whitespace
+
+**Usage**:
+```python
+from utils import (
+    sanitize_filename, 
+    format_bytes, 
+    detect_platform
+)
+
+# Clean filename
+safe_name = sanitize_filename("My Video: Part 1")
+
+# Format size
+size = format_bytes(1048576)  # "1.00 MB"
+
+# Detect platform
+platform = detect_platform(url)  # "youtube"
+```
+
+### 🐍 example_components_usage.py (~350 lines)
+**Purpose**: Component usage examples  
+**Contents**:
+- Logger examples
+- Icon examples
+- Message examples
+- UI examples
+- Utility function examples
+- Complete workflow example
+
+**Usage**:
+```bash
+python3 example_components_usage.py
+```
+
+**Features**:
+- Demonstrates all components
+- Shows best practices
+- Provides working code examples
+- Educational resource
 
 ---
 
