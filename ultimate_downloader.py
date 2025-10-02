@@ -755,6 +755,9 @@ class UltimateMediaDownloader:
         self.print_rich(f"[bold magenta]{Icons.get('spotify')} Spotify Album:[/bold magenta] [cyan]{artist_name} - {album_name}[/cyan]")
         self.print_rich(Messages.info(f"Total tracks: {len(tracks)}"))
         
+        # Prompt for audio format and quality
+        output_format, quality = self._prompt_audio_format_quality()
+        
         # Create album directory
         album_dir = self.output_dir / f"{artist_name} - {album_name}"
         album_downloader = UltimateMediaDownloader(album_dir)
@@ -777,7 +780,8 @@ class UltimateMediaDownloader:
                     result = album_downloader.download_media(
                         youtube_url, 
                         audio_only=True, 
-                        output_format='mp3',  # MP3 for better compatibility
+                        output_format=output_format,
+                        quality=quality,
                         add_metadata=True,
                         add_thumbnail=True,
                         custom_filename=filename_format
@@ -839,6 +843,9 @@ class UltimateMediaDownloader:
             # User selected specific tracks
             selected_tracks = choice
         
+        # Prompt for audio format and quality
+        output_format, quality = self._prompt_audio_format_quality()
+        
         print(f"\n♫ Starting download of {len(selected_tracks)} track(s)...")
         
         # Create playlist directory
@@ -846,7 +853,7 @@ class UltimateMediaDownloader:
         playlist_dir = self.output_dir / f"Spotify - {safe_playlist_name}"
         playlist_downloader = UltimateMediaDownloader(playlist_dir)
         
-        return playlist_downloader._download_track_queue(selected_tracks, "Spotify")
+        return playlist_downloader._download_track_queue(selected_tracks, "Spotify", output_format, quality)
     
     def _fallback_spotify_search(self, spotify_url):
         """Fallback method to extract Spotify track info without API using web scraping"""
@@ -1853,7 +1860,9 @@ class UltimateMediaDownloader:
                 return self._download_apple_music_track_enhanced(apple_music_url, interactive=interactive)
             elif content_type == 'album':
                 print("◎ Processing as album...")
-                return self._download_apple_music_album_enhanced(apple_music_url)
+                # Prompt for format and quality
+                output_format, quality = self._prompt_audio_format_quality()
+                return self._download_apple_music_album_enhanced(apple_music_url, output_format=output_format)
             elif content_type == 'playlist':
                 print("≡ Processing as playlist...")
                 return self._download_apple_music_playlist_enhanced(apple_music_url)
@@ -1986,8 +1995,11 @@ class UltimateMediaDownloader:
                 # User selected specific tracks
                 selected_tracks = choice
             
+            # Prompt for audio format and quality
+            output_format, quality = self._prompt_audio_format_quality()
+            
             print(f"\n♫ Starting download of {len(selected_tracks)} track(s)...")
-            return self._download_track_queue(selected_tracks, "Apple Music")
+            return self._download_track_queue(selected_tracks, "Apple Music", output_format, quality)
                     
         except Exception as e:
             print(f"✗ Error downloading Apple Music playlist: {e}")
@@ -2391,12 +2403,13 @@ class UltimateMediaDownloader:
             print("✗ Invalid selection")
             return "cancel"
     
-    def _download_track_queue(self, tracks, source_platform="Unknown"):
+    def _download_track_queue(self, tracks, source_platform="Unknown", output_format='mp3', quality='best'):
         """Download a queue of tracks one by one"""
         successful_downloads = 0
         failed_downloads = 0
         
         print(f"\n♫ Starting download queue: {len(tracks)} tracks from {source_platform}")
+        print(f"♪ Format: {output_format.upper()} | Quality: {quality}")
         print("=" * 60)
         
         for i, track in enumerate(tracks, 1):
@@ -2414,7 +2427,8 @@ class UltimateMediaDownloader:
                     result = self.download_media(
                         youtube_url, 
                         audio_only=True, 
-                        output_format='mp3',
+                        output_format=output_format,
+                        quality=quality,
                         add_metadata=True,
                         add_thumbnail=True
                     )
@@ -3201,8 +3215,11 @@ class UltimateMediaDownloader:
             else:
                 selected_tracks = choice
             
+            # Prompt for audio format and quality
+            output_format, quality = self._prompt_audio_format_quality()
+            
             print(f"\n♫ Starting download of {len(selected_tracks)} track(s)...")
-            return self._download_track_queue_enhanced(selected_tracks, "Apple Music")
+            return self._download_track_queue_enhanced(selected_tracks, "Apple Music", output_format, quality)
             
         except Exception as e:
             print(f"✗ Enhanced playlist download error: {e}")
@@ -3965,7 +3982,34 @@ class UltimateMediaDownloader:
         except KeyboardInterrupt:
             return "cancel"
     
-    def _download_track_queue_enhanced(self, tracks, source_name):
+    def _prompt_audio_format_quality(self):
+        """Prompt user for audio format and quality preferences"""
+        print(f"\n🎚️  Select audio quality:")
+        print("  1. Best Quality (320kbps MP3) - Recommended")
+        print("  2. High Quality (256kbps AAC/M4A) - Balanced")
+        print("  3. Very High Quality (FLAC) - Lossless, larger files")
+        print("  4. Best Available (Auto) - Highest quality possible")
+        
+        while True:
+            try:
+                quality_choice = input("\nEnter choice (1-4) [default: 1]: ").strip() or "1"
+                
+                if quality_choice == "1":
+                    return 'mp3', 'best'
+                elif quality_choice == "2":
+                    return 'm4a', 'best'
+                elif quality_choice == "3":
+                    return 'flac', 'best'
+                elif quality_choice == "4":
+                    return 'best', 'best'
+                else:
+                    print("Please enter 1, 2, 3, or 4")
+                    
+            except KeyboardInterrupt:
+                print("\n✗ Using default: MP3 320kbps")
+                return 'mp3', 'best'
+    
+    def _download_track_queue_enhanced(self, tracks, source_name, output_format='mp3', quality='best'):
         """Enhanced track queue download with better progress tracking"""
         if not tracks:
             return False
@@ -3973,6 +4017,7 @@ class UltimateMediaDownloader:
         print("\n" + "=" * 60)
         print(f"♫ Starting {source_name} Download Queue")
         print(f"▤ Total tracks: {len(tracks)}")
+        print(f"♪ Format: {output_format.upper()} | Quality: {quality}")
         print("=" * 60)
         
         successful_downloads = 0
@@ -4000,7 +4045,8 @@ class UltimateMediaDownloader:
                     result = self.download_media(
                         youtube_url,
                         audio_only=True,
-                        output_format='mp3',  # Use MP3 for better compatibility
+                        output_format=output_format,
+                        quality=quality,
                         add_metadata=True,
                         add_thumbnail=True,
                         custom_filename=filename  # Save as "Artist - Title"
