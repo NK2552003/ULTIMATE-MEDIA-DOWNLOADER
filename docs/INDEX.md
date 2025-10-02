@@ -196,7 +196,7 @@ Welcome to the Ultimate Media Downloader documentation hub. This index will help
 1. **[README.md](../README.md)** (5 min) - Overview
 2. **[QUICK_REFERENCE.md](../QUICK_REFERENCE.md)** (2 min) - Commands
 3. **Setup**: Run `./setup.sh` (5 min)
-4. **Try it**: `python ultimate_downloader.py -i` (3 min)
+4. **Try it**: `python3 ultimate_downloader.py -i` (3 min)
 
 ### Path 2: Power User (30 minutes)
 1. **[README.md](../README.md)** (5 min) - Overview

@@ -211,7 +211,7 @@ python3 -m venv venv
 source venv/bin/activate
 
 # Install Python packages
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 #### macOS
@@ -232,7 +232,7 @@ python3 -m venv venv
 source venv/bin/activate
 
 # Install Python packages
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 #### Windows
@@ -246,11 +246,11 @@ git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
 cd ULTIMATE-MEDIA-DOWNLOADER
 
 # Create virtual environment
-python -m venv venv
+python3 -m venv venv
 .\venv\Scripts\activate
 
 # Install Python packages
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 ---
@@ -260,20 +260,18 @@ pip install -r requirements.txt
 ### Basic Usage
 
 ```bash
-# Activate environment (if not already activated)
+# Use
 source activate-env.sh
-
-# Download a video
-python ultimate_downloader.py "https://www.youtube.com/watch?v=VIDEO_ID"
+python3 ultimate_downloader.py "YOUR_VIDEO_URL"
 
 # Download audio only
-python ultimate_downloader.py -a "https://www.youtube.com/watch?v=VIDEO_ID"
+python3 ultimate_downloader.py -a "https://www.youtube.com/watch?v=VIDEO_ID"
 
 # Download playlist
-python ultimate_downloader.py -p "https://www.youtube.com/playlist?list=PLAYLIST_ID"
+python3 ultimate_downloader.py -p "https://www.youtube.com/playlist?list=PLAYLIST_ID"
 
 # Interactive mode
-python ultimate_downloader.py -i
+python3 ultimate_downloader.py -i
 ```
 
 ### First Time Setup
@@ -294,7 +292,7 @@ python ultimate_downloader.py -i
 
 2. **Test Installation**:
    ```bash
-   python ultimate_downloader.py --help
+   python3 ultimate_downloader.py --help
    ```
 
 ---
@@ -305,71 +303,71 @@ python ultimate_downloader.py -i
 
 ```bash
 # Download best quality video
-python ultimate_downloader.py "VIDEO_URL"
+python3 ultimate_downloader.py "VIDEO_URL"
 
 # Download specific quality
-python ultimate_downloader.py --quality 1080 "VIDEO_URL"
+python3 ultimate_downloader.py --quality 1080 "VIDEO_URL"
 
 # Download with subtitles
-python ultimate_downloader.py --subtitles "VIDEO_URL"
+python3 ultimate_downloader.py --subtitles "VIDEO_URL"
 
 # Download specific format
-python ultimate_downloader.py --format mp4 "VIDEO_URL"
+python3 ultimate_downloader.py --format mp4 "VIDEO_URL"
 ```
 
 ### Audio Downloads
 
 ```bash
 # Extract audio as MP3
-python ultimate_downloader.py -a "VIDEO_URL"
+python3 ultimate_downloader.py -a "VIDEO_URL"
 
 # High-quality audio
-python ultimate_downloader.py -a --audio-quality 320 "VIDEO_URL"
+python3 ultimate_downloader.py -a --audio-quality 320 "VIDEO_URL"
 
 # Audio in FLAC format
-python ultimate_downloader.py -a --audio-format flac "VIDEO_URL"
+python3 ultimate_downloader.py -a --audio-format flac "VIDEO_URL"
 ```
 
 ### Playlist Downloads
 
 ```bash
 # Download entire playlist
-python ultimate_downloader.py -p "PLAYLIST_URL"
+python3 ultimate_downloader.py -p "PLAYLIST_URL"
 
 # Download playlist items 1-10
-python ultimate_downloader.py -p --playlist-items 1-10 "PLAYLIST_URL"
+python3 ultimate_downloader.py -p --playlist-items 1-10 "PLAYLIST_URL"
 
 # Download playlist in reverse
-python ultimate_downloader.py -p --playlist-reverse "PLAYLIST_URL"
+python3 ultimate_downloader.py -p --playlist-reverse "PLAYLIST_URL"
 ```
 
 ### Advanced Features
 
 ```bash
 # Download with proxy
-python ultimate_downloader.py --proxy "http://proxy:port" "VIDEO_URL"
+python3 ultimate_downloader.py --proxy "http://proxy:port" "VIDEO_URL"
 
 # Concurrent downloads
-python ultimate_downloader.py --concurrent 5 "PLAYLIST_URL"
+python3 ultimate_downloader.py --concurrent 5 "PLAYLIST_URL"
 
 # Custom output directory
-python ultimate_downloader.py -o ~/Downloads/Videos "VIDEO_URL"
+python3 ultimate_downloader.py -o ~/Downloads/Videos "VIDEO_URL"
 
 # Embed thumbnail and metadata
-python ultimate_downloader.py --embed-thumbnail --embed-metadata "VIDEO_URL"
+python3 ultimate_downloader.py --embed-thumbnail --embed-metadata "VIDEO_URL"
 
 # Archive mode (skip downloaded)
-python ultimate_downloader.py --archive archive.txt "PLAYLIST_URL"
+python3 ultimate_downloader.py --archive archive.txt "PLAYLIST_URL"
 ```
 
 ### Search and Download
 
 ```bash
 # Search YouTube and download
-python ultimate_downloader.py --search "song name"
+python3 ultimate_downloader.py --search "song name"
 
 # Search and download first result
-python ultimate_downloader.py --search "song name" --first
+python3 ultimate_downloader.py --search "song name" --first
 ```
 
 ---
@@ -541,19 +539,19 @@ sudo chown -R $USER:$USER venv/
 #### 3. SSL Certificate Errors
 ```bash
 # Update certificates
-pip install --upgrade certifi
+pip3 install --upgrade certifi
 
 # Or disable SSL verification (not recommended)
-python ultimate_downloader.py --no-check-certificate "URL"
+python3 ultimate_downloader.py --no-check-certificate "URL"
 ```
 
 #### 4. Module Import Errors
 ```bash
 # Reinstall requirements
-pip install --force-reinstall -r requirements.txt
+pip3 install --force-reinstall -r requirements.txt
 
 # Or install specific package
-pip install package-name
+pip3 install package-name
 ```
 
 For more issues, see [TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)
@@ -594,7 +592,7 @@ git push origin feature/your-feature-name
 
 ```bash
 # Install development dependencies
-pip install -r requirements-dev.txt
+pip3 install -r requirements-dev.txt
 
 # Run tests
 pytest tests/
@@ -622,14 +620,15 @@ See [CONTRIBUTING.md](docs/CONTRIBUTING.md) for detailed guidelines.
 
 ## 🗺️ Roadmap
 
-### Version 2.1 (Q4 2025)
+### Version 2.1 (Q1 2026)
+- [ ] Proper Folder Structure for Project
 - [ ] GUI interface (Tkinter/PyQt)
 - [ ] Browser extension
 - [ ] Mobile app (React Native)
 - [ ] Cloud storage integration
 - [ ] Better playlist management
 
-### Version 2.2 (Q1 2026)
+### Version 2.2 (Q3 2026)
 - [ ] AI-powered quality enhancement
 - [ ] Automatic subtitle generation
 - [ ] Advanced scheduling
