@@ -1289,6 +1289,12 @@ class UltimateMediaDownloader:
             self.print_rich(Messages.info(f"Downloading to: {playlist_dir}"))
             self.print_rich(Messages.searching("Initializing spotdl..."))
             
+            # Configure logging - allow spotdl's output to show
+            import logging
+            logging.getLogger('urllib3').setLevel(logging.ERROR)
+            logging.getLogger('requests').setLevel(logging.ERROR)
+            # Don't suppress spotdl logging - let it show progress
+            
             # Configure spotdl options
             options = {
                 'output': str(playlist_dir / '{artist} - {title}.{output-ext}'),
@@ -1314,32 +1320,59 @@ class UltimateMediaDownloader:
                 return False
             
             total_tracks = len(songs)
-            self.print_rich(Messages.success(f"Found {total_tracks} tracks in playlist"))
+            self.print_rich(Messages.success(f"Found {total_tracks} tracks in playlist\n"))
             
-            # Download songs
+            # Display the playlist tracks
+            if RICH_AVAILABLE and self.console:
+                self.console.print("[bold cyan]📋 Playlist Tracks:[/bold cyan]\n")
+                for i, song in enumerate(songs, 1):
+                    song_display = f"{song.name[:50]}..." if len(song.name) > 50 else song.name
+                    artist_display = f"{song.artist[:30]}..." if len(song.artist) > 30 else song.artist
+                    self.console.print(f"  [dim]{i:2d}.[/dim] [cyan]{song_display}[/cyan] [dim]-[/dim] [yellow]{artist_display}[/yellow]")
+                self.console.print()
+            else:
+                print("\n📋 Playlist Tracks:\n")
+                for i, song in enumerate(songs, 1):
+                    print(f"  {i:2d}. {song.name} - {song.artist}")
+                print()
+            
+            # Download songs with individual progress bars
             successful = 0
             failed = 0
             
             if RICH_AVAILABLE and self.console:
-                with Progress(
-                    SpinnerColumn(),
-                    TextColumn("[progress.description]{task.description}"),
-                    BarColumn(),
-                    TextColumn("[progress.percentage]{task.percentage:>3.0f}%"),
-                    console=self.console
-                ) as progress:
-                    task = progress.add_task(f"[cyan]Downloading playlist...", total=total_tracks)
+                self.console.print("[bold green]▸ Starting Downloads...[/bold green]\n")
+                
+                for i, song in enumerate(songs, 1):
+                    # Truncate long names to prevent display issues
+                    song_display = f"{song.name[:45]}..." if len(song.name) > 45 else song.name
+                    artist_display = f"{song.artist[:30]}..." if len(song.artist) > 30 else song.artist
                     
-                    for i, song in enumerate(songs, 1):
-                        try:
-                            progress.update(task, description=f"[cyan]Downloading: {song.name} - {song.artist}")
-                            spotdl_client.downloader.download_song(song)
-                            successful += 1
-                            progress.advance(task)
-                        except Exception as e:
-                            self.print_rich(f"[red]✗ Error downloading {song.name}: {e}[/red]")
+                    # Show current track header
+                    print(f"\n[{i}/{total_tracks}] {song_display} - {artist_display}")
+                    
+                    try:
+                        # Download the song - spotdl will show its own progress bar
+                        result = spotdl_client.downloader.download_song(song)
+                        
+                        # Check if download was actually successful
+                        if result and hasattr(result, 'success') and not result.success:
                             failed += 1
-                            progress.advance(task)
+                            print(f"✗ Failed to download\n")
+                        else:
+                            # Verify file was created
+                            expected_file = playlist_dir / f"{song.artist} - {song.name}.mp3"
+                            if expected_file.exists():
+                                successful += 1
+                                print(f"✓ Downloaded successfully\n")
+                            else:
+                                failed += 1
+                                print(f"✗ Download failed - file not found\n")
+                        
+                    except Exception as e:
+                        failed += 1
+                        error_msg = str(e)[:150]
+                        print(f"✗ Error: {error_msg}\n")
             else:
                 for i, song in enumerate(songs, 1):
                     try:
