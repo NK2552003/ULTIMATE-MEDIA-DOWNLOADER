@@ -2,11 +2,16 @@
 # =============================================================================
 # Ultimate Media Downloader - Setup Script
 # Version: 2.0.0
-# Date: October 2, 2025
+# Date: October 3, 2025
 # Description: Automated setup script for Ultimate Media Downloader
+# Author: Nitish Kumar
+# Repository: https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER
 # =============================================================================
 
 set -e  # Exit on error
+
+# Trap errors and provide helpful messages
+trap 'error_exit "Setup failed at line $LINENO. Please check the error message above."' ERR
 
 # Colors for output
 RED='\033[0;31m'
@@ -72,6 +77,14 @@ print_step() {
     echo -e "${BLUE}${ARROW} $1${NC}"
 }
 
+error_exit() {
+    echo -e "\n${RED}╔════════════════════════════════════════════════════════════════════╗${NC}"
+    echo -e "${RED}║                        SETUP FAILED                                 ║${NC}"
+    echo -e "${RED}╚════════════════════════════════════════════════════════════════════╝${NC}"
+    echo -e "${RED}${ERROR} $1${NC}\n"
+    exit 1
+}
+
 # =============================================================================
 # System Detection
 # =============================================================================
@@ -112,14 +125,32 @@ check_python() {
     if command -v python3 &> /dev/null; then
         PYTHON_CMD="python3"
         PYTHON_INSTALLED_VERSION=$(python3 --version | cut -d' ' -f2)
-        print_success "Python found: $PYTHON_INSTALLED_VERSION"
+        
+        # Extract major and minor version
+        PYTHON_MAJOR=$(echo $PYTHON_INSTALLED_VERSION | cut -d. -f1)
+        PYTHON_MINOR=$(echo $PYTHON_INSTALLED_VERSION | cut -d. -f2)
+        
+        # Check if version is 3.9 or higher
+        if [ "$PYTHON_MAJOR" -eq 3 ] && [ "$PYTHON_MINOR" -ge 9 ]; then
+            print_success "Python found: $PYTHON_INSTALLED_VERSION (✓ Compatible)"
+        else
+            print_warning "Python $PYTHON_INSTALLED_VERSION found, but 3.9+ recommended"
+            print_info "Some features may not work with older versions"
+        fi
     elif command -v python &> /dev/null; then
         PYTHON_CMD="python"
-        PYTHON_INSTALLED_VERSION=$(python --version | cut -d' ' -f2)
+        PYTHON_INSTALLED_VERSION=$(python --version 2>&1 | cut -d' ' -f2)
         
         # Check if it's Python 3
         if [[ $PYTHON_INSTALLED_VERSION == 3.* ]]; then
-            print_success "Python found: $PYTHON_INSTALLED_VERSION"
+            PYTHON_MAJOR=$(echo $PYTHON_INSTALLED_VERSION | cut -d. -f1)
+            PYTHON_MINOR=$(echo $PYTHON_INSTALLED_VERSION | cut -d. -f2)
+            
+            if [ "$PYTHON_MAJOR" -eq 3 ] && [ "$PYTHON_MINOR" -ge 9 ]; then
+                print_success "Python found: $PYTHON_INSTALLED_VERSION (✓ Compatible)"
+            else
+                print_warning "Python $PYTHON_INSTALLED_VERSION found, but 3.9+ recommended"
+            fi
         else
             print_error "Python 3.9+ required. Found: $PYTHON_INSTALLED_VERSION"
             install_python
@@ -136,7 +167,8 @@ check_python() {
         print_warning "pip not found. Installing pip..."
         install_pip
     else
-        print_success "pip is installed"
+        PIP_VERSION=$($PYTHON_CMD -m pip --version | cut -d' ' -f2)
+        print_success "pip is installed: $PIP_VERSION"
     fi
 }
 
@@ -365,25 +397,47 @@ install_python_dependencies() {
     
     # Upgrade pip, setuptools, and wheel
     print_step "Upgrading pip, setuptools, and wheel..."
-    pip install --upgrade pip setuptools wheel
+    pip install --upgrade pip setuptools wheel --quiet
     
     # Install requirements
     if [ -f "$REQUIREMENTS_FILE" ]; then
         print_step "Installing packages from $REQUIREMENTS_FILE..."
-        pip install -r "$REQUIREMENTS_FILE"
+        print_info "This may take 2-5 minutes depending on your internet speed..."
+        
+        # Install with progress
+        pip install -r "$REQUIREMENTS_FILE" --progress-bar on
+        
         print_success "All dependencies installed successfully"
     else
         print_error "Requirements file not found: $REQUIREMENTS_FILE"
-        print_info "Creating requirements.txt..."
-        create_requirements_file
-        pip install -r "$REQUIREMENTS_FILE"
+        error_exit "Please ensure requirements.txt exists in the project directory"
     fi
     
-    # Verify installations
+    # Verify critical installations
     print_step "Verifying critical packages..."
-    python -c "import yt_dlp; import requests; import rich" && \
-        print_success "Core packages verified" || \
-        print_error "Some core packages failed to install"
+    
+    PACKAGES_TO_VERIFY=("yt_dlp" "requests" "rich" "mutagen" "spotipy")
+    FAILED_PACKAGES=()
+    
+    for package in "${PACKAGES_TO_VERIFY[@]}"; do
+        if python -c "import $package" 2>/dev/null; then
+            print_success "$package verified"
+        else
+            print_error "$package failed to install"
+            FAILED_PACKAGES+=("$package")
+        fi
+    done
+    
+    if [ ${#FAILED_PACKAGES[@]} -eq 0 ]; then
+        print_success "All core packages verified successfully"
+    else
+        print_warning "Some packages failed: ${FAILED_PACKAGES[*]}"
+        print_info "You can try installing them manually later"
+    fi
+    
+    # Count installed packages
+    INSTALLED_COUNT=$(pip list --format=freeze | wc -l)
+    print_info "Total packages installed: $INSTALLED_COUNT"
 }
 
 create_requirements_file() {
@@ -583,35 +637,100 @@ print('All imports successful')
 show_post_install_info() {
     print_section "Setup Complete!"
     
+    # Calculate setup time (if SECONDS is available)
+    if [ -n "$SETUP_START_TIME" ]; then
+        SETUP_TIME=$((SECONDS - SETUP_START_TIME))
+        SETUP_MINUTES=$((SETUP_TIME / 60))
+        SETUP_SECONDS=$((SETUP_TIME % 60))
+    fi
+    
     echo ""
     echo -e "${GREEN}╔════════════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${GREEN}║                    SETUP COMPLETED SUCCESSFULLY!                   ║${NC}"
+    echo -e "${GREEN}║                    SETUP COMPLETED SUCCESSFULLY! ✓                 ║${NC}"
     echo -e "${GREEN}╚════════════════════════════════════════════════════════════════════╝${NC}"
     echo ""
-    echo -e "${CYAN}${ARROW} Next Steps:${NC}"
+    
+    if [ -n "$SETUP_START_TIME" ]; then
+        echo -e "${CYAN}⏱  Setup completed in ${SETUP_MINUTES}m ${SETUP_SECONDS}s${NC}"
+        echo ""
+    fi
+    
+    echo -e "${CYAN}╔════════════════════════════════════════════════════════════════════╗${NC}"
+    echo -e "${CYAN}║                         QUICK START GUIDE                          ║${NC}"
+    echo -e "${CYAN}╚════════════════════════════════════════════════════════════════════╝${NC}"
     echo ""
-    echo -e "  1. Activate the environment:"
-    echo -e "     ${YELLOW}source activate-env.sh${NC}"
+    echo -e "${YELLOW}▶ STEP 1: Activate Environment${NC}"
+    echo -e "  ${BLUE}source activate-env.sh${NC}"
     echo ""
-    echo -e "  2. Run the downloader:"
-    echo -e "     ${YELLOW}python ultimate_downloader.py <URL>${NC}"
+    echo -e "${YELLOW}▶ STEP 2: Download Your First Video${NC}"
+    echo -e "  ${BLUE}python ultimate_downloader.py \"https://youtube.com/watch?v=xxx\"${NC}"
     echo ""
-    echo -e "  3. For help:"
-    echo -e "     ${YELLOW}python ultimate_downloader.py --help${NC}"
+    echo -e "${YELLOW}▶ STEP 3: Try Interactive Mode${NC}"
+    echo -e "  ${BLUE}python ultimate_downloader.py -i${NC}"
     echo ""
-    echo -e "${CYAN}${ARROW} Optional Configuration:${NC}"
+    echo -e "${CYAN}╔════════════════════════════════════════════════════════════════════╗${NC}"
+    echo -e "${CYAN}║                         COMMON COMMANDS                            ║${NC}"
+    echo -e "${CYAN}╚════════════════════════════════════════════════════════════════════╝${NC}"
     echo ""
-    echo -e "  • Edit ${YELLOW}config.json${NC} to add Spotify credentials"
-    echo -e "  • Configure proxy settings if needed"
-    echo -e "  • Customize download preferences"
+    echo -e "  ${GREEN}•${NC} Download video:       ${BLUE}python ultimate_downloader.py \"URL\"${NC}"
+    echo -e "  ${GREEN}•${NC} Download audio:       ${BLUE}python ultimate_downloader.py -a \"URL\"${NC}"
+    echo -e "  ${GREEN}•${NC} Download playlist:    ${BLUE}python ultimate_downloader.py -p \"URL\"${NC}"
+    echo -e "  ${GREEN}•${NC} Interactive mode:     ${BLUE}python ultimate_downloader.py -i${NC}"
+    echo -e "  ${GREEN}•${NC} Show help:            ${BLUE}python ultimate_downloader.py --help${NC}"
     echo ""
-    echo -e "${CYAN}${ARROW} Documentation:${NC}"
+    echo -e "${CYAN}╔════════════════════════════════════════════════════════════════════╗${NC}"
+    echo -e "${CYAN}║                    OPTIONAL CONFIGURATION                          ║${NC}"
+    echo -e "${CYAN}╚════════════════════════════════════════════════════════════════════╝${NC}"
     echo ""
-    echo -e "  • README.md - Full documentation"
-    echo -e "  • docs/ - Detailed guides and flowcharts"
+    echo -e "  ${GREEN}•${NC} Spotify API: Edit ${YELLOW}config.json${NC} to add credentials"
+    echo -e "    Get keys from: ${BLUE}https://developer.spotify.com/dashboard${NC}"
     echo ""
-    echo -e "${GREEN}Happy downloading! 🎉${NC}"
+    echo -e "  ${GREEN}•${NC} Proxy: Configure proxy in ${YELLOW}config.json${NC}"
+    echo -e "  ${GREEN}•${NC} Output: Customize download directory and quality"
     echo ""
+    echo -e "${CYAN}╔════════════════════════════════════════════════════════════════════╗${NC}"
+    echo -e "${CYAN}║                        DOCUMENTATION                               ║${NC}"
+    echo -e "${CYAN}╚════════════════════════════════════════════════════════════════════╝${NC}"
+    echo ""
+    echo -e "  ${GREEN}•${NC} User Guide:           ${BLUE}docs/USER_GUIDE.md${NC}"
+    echo -e "  ${GREEN}•${NC} API Reference:        ${BLUE}docs/API_REFERENCE.md${NC}"
+    echo -e "  ${GREEN}•${NC} Complete Index:       ${BLUE}docs/INDEX.md${NC}"
+    echo -e "  ${GREEN}•${NC} Troubleshooting:      ${BLUE}docs/USER_GUIDE.md#troubleshooting${NC}"
+    echo ""
+    echo -e "${CYAN}╔════════════════════════════════════════════════════════════════════╗${NC}"
+    echo -e "${CYAN}║                      INSTALLATION SUMMARY                          ║${NC}"
+    echo -e "${CYAN}╚════════════════════════════════════════════════════════════════════╝${NC}"
+    echo ""
+    echo -e "  ${GREEN}✓${NC} Python $PYTHON_INSTALLED_VERSION installed"
+    echo -e "  ${GREEN}✓${NC} Virtual environment created"
+    echo -e "  ${GREEN}✓${NC} $INSTALLED_COUNT packages installed"
+    echo -e "  ${GREEN}✓${NC} FFmpeg configured"
+    echo -e "  ${GREEN}✓${NC} Configuration files created"
+    echo -e "  ${GREEN}✓${NC} Ready to download from 1000+ platforms"
+    echo ""
+    echo -e "${GREEN}════════════════════════════════════════════════════════════════════${NC}"
+    echo -e "${GREEN}                     Happy Downloading! 🎉🎬🎵                       ${NC}"
+    echo -e "${GREEN}════════════════════════════════════════════════════════════════════${NC}"
+    echo ""
+    echo -e "${CYAN}💡 Tip: Run 'source activate-env.sh' now to get started!${NC}"
+    echo ""
+}
+
+# =============================================================================
+# Cleanup Function
+# =============================================================================
+
+cleanup_temp_files() {
+    print_step "Cleaning up temporary files..."
+    
+    # Remove any .pyc files
+    find . -type f -name "*.pyc" -delete 2>/dev/null || true
+    find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
+    
+    # Remove any pip cache
+    rm -rf ~/.cache/pip 2>/dev/null || true
+    
+    print_success "Cleanup complete"
 }
 
 # =============================================================================
@@ -619,13 +738,22 @@ show_post_install_info() {
 # =============================================================================
 
 main() {
+    # Start timer
+    SETUP_START_TIME=$SECONDS
+    
     print_header
+    
+    echo -e "${CYAN}╔════════════════════════════════════════════════════════════════════╗${NC}"
+    echo -e "${CYAN}║  This script will install all dependencies and configure the app  ║${NC}"
+    echo -e "${CYAN}║  Estimated time: 3-5 minutes (depending on internet speed)        ║${NC}"
+    echo -e "${CYAN}╚════════════════════════════════════════════════════════════════════╝${NC}"
+    echo ""
     
     # Detect OS
     detect_os
     
     # Check and install Python
-    check_python
+    check_python || error_exit "Python installation failed"
     
     # Check and install FFmpeg
     check_ffmpeg
@@ -634,10 +762,10 @@ main() {
     install_system_dependencies
     
     # Create virtual environment
-    create_virtual_environment
+    create_virtual_environment || error_exit "Virtual environment creation failed"
     
     # Install Python dependencies
-    install_python_dependencies
+    install_python_dependencies || error_exit "Python dependency installation failed"
     
     # Create configuration files
     create_config_file
@@ -648,9 +776,22 @@ main() {
     # Run tests
     run_tests
     
+    # Cleanup
+    cleanup_temp_files
+    
     # Show post-installation info
     show_post_install_info
 }
 
-# Run main installation
-main
+# =============================================================================
+# Script Entry Point
+# =============================================================================
+
+# Check if script is being run directly
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    # Run main installation
+    main
+else
+    echo "This script should be run directly, not sourced."
+    echo "Usage: ./setup.sh"
+fi

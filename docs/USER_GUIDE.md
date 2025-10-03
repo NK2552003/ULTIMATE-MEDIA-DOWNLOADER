@@ -1,25 +1,74 @@
 # User Guide - Ultimate Media Downloader
 
 **Version**: 2.0.0  
-**Last Updated**: October 2, 2025
+**Last Updated**: October 3, 2025  
+**Repository**: [ULTIMATE-MEDIA-DOWNLOADER](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER)
 
-Welcome to the comprehensive user guide for Ultimate Media Downloader. This guide will help you get the most out of the application.
+Welcome to the comprehensive user guide for Ultimate Media Downloader. This guide will help you master all features and capabilities of the application.
 
 ---
 
-## Table of Contents
+## 📑 Table of Contents
 
 1. [Getting Started](#getting-started)
-2. [Basic Usage](#basic-usage)
-3. [Advanced Features](#advanced-features)
-4. [Platform-Specific Guides](#platform-specific-guides)
-5. [Configuration](#configuration)
-6. [Tips & Tricks](#tips--tricks)
-7. [FAQ](#faq)
+2. [Installation](#installation)
+3. [Basic Usage](#basic-usage)
+4. [Advanced Features](#advanced-features)
+5. [Platform-Specific Guides](#platform-specific-guides)
+6. [Configuration](#configuration)
+7. [Command-Line Reference](#command-line-reference)
+8. [Tips & Tricks](#tips--tricks)
+9. [Troubleshooting](#troubleshooting)
+10. [FAQ](#faq)
 
 ---
 
 ## Getting Started
+
+### Prerequisites
+
+- **Operating System**: Linux, macOS, or Windows
+- **Python**: Version 3.9 or higher
+- **Disk Space**: At least 1GB free space
+- **Internet**: Stable internet connection
+
+### Installation
+
+#### Quick Setup (Recommended)
+
+```bash
+# Clone the repository
+git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+cd ULTIMATE-MEDIA-DOWNLOADER
+
+# Run automated setup
+bash setup.sh
+
+# Activate environment
+source activate-env.sh
+```
+
+The setup script will:
+1. ✓ Check Python version
+2. ✓ Create virtual environment
+3. ✓ Install all dependencies
+4. ✓ Create necessary directories
+5. ✓ Verify installation
+
+#### Manual Setup
+
+```bash
+# Create virtual environment
+python3 -m venv venv
+
+# Activate environment
+source venv/bin/activate  # Linux/macOS
+# or
+venv\Scripts\activate  # Windows
+
+# Install dependencies
+pip install -r requirements.txt
+```
 
 ### First Launch
 
@@ -33,9 +82,18 @@ You should see a welcome banner:
 
 ```
 ╔════════════════════════════════════════════════════════════════════╗
-║        ULTIMATE MEDIA DOWNLOADER - Environment                     ║
+║        ULTIMATE MEDIA DOWNLOADER - Environment Active              ║
 ║                    Version 2.0.0 - October 2025                    ║
 ╚════════════════════════════════════════════════════════════════════╝
+
+✓ Environment activated
+✓ Python 3.9+ detected
+✓ All dependencies installed
+
+Quick Commands:
+  python3 ultimate_downloader.py -i          # Interactive mode
+  python3 ultimate_downloader.py --help      # Show help
+  python3 ultimate_downloader.py "URL"       # Quick download
 ```
 
 ### Quick Test
@@ -46,43 +104,150 @@ Test your installation with a simple download:
 python3 ultimate_downloader.py "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 ```
 
+If successful, you'll see:
+```
+▶ Detecting platform... YouTube
+↓ Downloading: Rick Astley - Never Gonna Give You Up
+⚙ [===================>              ] 45% 125.3 MB/s ETA: 00:15
+✓ Download complete: Rick Astley - Never Gonna Give You Up.mp4
+```
+
 ---
 
 ## Basic Usage
 
-### Downloading a Video
+### Downloading Videos
 
-**Simple download:**
+#### Simple Download
+
+Download video in best available quality:
+
 ```bash
 python3 ultimate_downloader.py "VIDEO_URL"
 ```
 
-**Specify output directory:**
+**Example**:
+```bash
+python3 ultimate_downloader.py "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+```
+
+#### Specify Output Directory
+
 ```bash
 python3 ultimate_downloader.py -o ~/Videos "VIDEO_URL"
 ```
 
-**Choose quality:**
+**Example**:
+```bash
+python3 ultimate_downloader.py -o ~/Desktop/Downloads "https://youtube.com/watch?v=xxx"
+```
+
+#### Choose Video Quality
+
 ```bash
 python3 ultimate_downloader.py --quality 1080 "VIDEO_URL"
 ```
 
+**Available Quality Options**:
+- `best` - Highest available quality (default)
+- `2160` - 4K (2160p)
+- `1440` - 2K (1440p)
+- `1080` - Full HD (1080p)
+- `720` - HD (720p)
+- `480` - SD (480p)
+- `360` - Low quality (360p)
+
+**Example**:
+```bash
+# Download in 720p
+python3 ultimate_downloader.py --quality 720 "https://youtube.com/watch?v=xxx"
+```
+
+---
+
 ### Downloading Audio
 
-**Extract audio from video:**
+#### Extract Audio from Video
+
 ```bash
 python3 ultimate_downloader.py -a "VIDEO_URL"
 ```
 
-**High-quality audio:**
+**Example**:
+```bash
+python3 ultimate_downloader.py -a "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+# Output: Rick Astley - Never Gonna Give You Up.mp3
+```
+
+#### High-Quality Audio
+
 ```bash
 python3 ultimate_downloader.py -a --audio-quality 320 "VIDEO_URL"
 ```
 
-**Specific audio format:**
+**Audio Quality Options**:
+- `320` - 320 kbps (highest quality, default)
+- `256` - 256 kbps (high quality)
+- `192` - 192 kbps (good quality)
+- `128` - 128 kbps (standard quality)
+
+**Example**:
+```bash
+python3 ultimate_downloader.py -a --audio-quality 320 "https://youtube.com/watch?v=xxx"
+```
+
+#### Choose Audio Format
+
 ```bash
 python3 ultimate_downloader.py -a --audio-format flac "VIDEO_URL"
 ```
+
+**Supported Audio Formats**:
+- `mp3` - MP3 (most compatible, default)
+- `wav` - WAV (lossless, large files)
+- `flac` - FLAC (lossless compression)
+- `m4a` - M4A/AAC (good quality, smaller files)
+- `opus` - Opus (efficient compression)
+
+**Example**:
+```bash
+# Download as FLAC
+python3 ultimate_downloader.py -a --audio-format flac "https://youtube.com/watch?v=xxx"
+```
+
+---
+
+### Downloading Playlists
+
+#### Download Entire Playlist
+
+```bash
+python3 ultimate_downloader.py -p "PLAYLIST_URL"
+```
+
+**Example**:
+```bash
+python3 ultimate_downloader.py -p "https://www.youtube.com/playlist?list=PLxxxxxx"
+```
+
+#### Playlist as Audio
+
+```bash
+python3 ultimate_downloader.py -p -a "PLAYLIST_URL"
+```
+
+**Example**:
+```bash
+python3 ultimate_downloader.py -p -a --audio-format mp3 "https://youtube.com/playlist?list=xxx"
+```
+
+#### Playlist with Quality Selection
+
+```bash
+python3 ultimate_downloader.py -p --quality 720 "PLAYLIST_URL"
+```
+
+---
 
 ### Interactive Mode
 
@@ -92,11 +257,733 @@ For a user-friendly experience, use interactive mode:
 python3 ultimate_downloader.py -i
 ```
 
-You'll be prompted for:
-- URL to download
-- Download type (video/audio)
-- Quality preferences
-- Output location
+**Interactive Mode Features**:
+- ✓ Guided prompts for all options
+- ✓ Auto-detection of platform
+- ✓ Quality suggestions based on platform
+- ✓ Real-time validation
+- ✓ Beautiful progress display
+
+**Interactive Mode Flow**:
+
+```
+╔══════════════════════════════════════════════════════════════╗
+║         ULTIMATE MEDIA DOWNLOADER - Interactive Mode          ║
+╚══════════════════════════════════════════════════════════════╝
+
+? Enter URL to download: https://www.youtube.com/watch?v=xxx
+▶ Platform detected: YouTube
+
+? What would you like to download?
+  1. Video (best quality)
+  2. Audio only
+  3. Playlist
+> 2
+
+? Select audio format:
+  1. MP3 (320 kbps) - Recommended
+  2. FLAC (lossless)
+  3. WAV (lossless)
+  4. M4A (efficient)
+> 1
+
+? Output directory: (./downloads)
+./downloads
+
+✓ Starting download...
+```
+
+---
+
+## Advanced Features
+
+### Spotify Integration
+
+Download Spotify tracks with full metadata embedding.
+
+#### Download Spotify Track
+
+```bash
+python3 ultimate_downloader.py "https://open.spotify.com/track/xxx"
+```
+
+**Process**:
+1. Extract metadata from Spotify
+2. Search for track on YouTube
+3. Download best audio quality
+4. Embed Spotify metadata (artist, album, year)
+5. Embed high-resolution album art
+6. Rename file to match Spotify track
+
+**Example**:
+```bash
+python3 ultimate_downloader.py "https://open.spotify.com/track/6rqhFgbbKwnb9MLmUQDhG6"
+# Output: Harry Styles - Watermelon Sugar.mp3
+# With embedded metadata and album art
+```
+
+#### Download Spotify Album
+
+```bash
+python3 ultimate_downloader.py -p "https://open.spotify.com/album/xxx"
+```
+
+#### Download Spotify Playlist
+
+```bash
+python3 ultimate_downloader.py -p "https://open.spotify.com/playlist/xxx"
+```
+
+**Note**: For faster Spotify downloads, configure API credentials in `config.json`:
+
+```json
+{
+  "spotify": {
+    "client_id": "YOUR_CLIENT_ID",
+    "client_secret": "YOUR_CLIENT_SECRET",
+    "enabled": true
+  }
+}
+```
+
+Get credentials from: https://developer.spotify.com/dashboard
+
+---
+
+### Metadata Embedding
+
+Automatically embed rich metadata into audio files.
+
+#### Default Metadata
+
+By default, the downloader embeds:
+- Title
+- Artist
+- Album
+- Album art/thumbnail
+- Duration
+- Year
+- Track number (for playlists/albums)
+
+#### Disable Metadata Embedding
+
+```bash
+python3 ultimate_downloader.py -a --no-metadata "VIDEO_URL"
+```
+
+#### Disable Thumbnail Embedding
+
+```bash
+python3 ultimate_downloader.py -a --no-thumbnail "VIDEO_URL"
+```
+
+---
+
+### Proxy Support
+
+Use proxy servers for downloads.
+
+#### Configure Proxy in config.json
+
+```json
+{
+  "proxy": {
+    "enabled": true,
+    "http": "http://proxy.example.com:8080",
+    "https": "https://proxy.example.com:8080",
+    "socks5": "socks5://proxy.example.com:1080"
+  }
+}
+```
+
+#### Command-Line Proxy
+
+```bash
+export HTTP_PROXY="http://proxy.example.com:8080"
+export HTTPS_PROXY="https://proxy.example.com:8080"
+python3 ultimate_downloader.py "VIDEO_URL"
+```
+
+---
+
+### Concurrent Downloads
+
+Download multiple URLs simultaneously.
+
+Create a file `urls.txt`:
+```
+https://www.youtube.com/watch?v=xxx1
+https://www.youtube.com/watch?v=xxx2
+https://www.youtube.com/watch?v=xxx3
+```
+
+Download all:
+```bash
+while read url; do
+    python3 ultimate_downloader.py "$url" &
+done < urls.txt
+wait
+```
+
+---
+
+### Archive Mode
+
+Keep track of downloaded URLs to avoid duplicates.
+
+Enable in `config.json`:
+```json
+{
+  "advanced": {
+    "archive_file": "archive.txt"
+  }
+}
+```
+
+All downloaded URLs are saved to `archive.txt` and skipped on future runs.
+
+---
+
+## Platform-Specific Guides
+
+### YouTube
+
+#### Download Single Video
+
+```bash
+python3 ultimate_downloader.py "https://www.youtube.com/watch?v=xxx"
+```
+
+#### Download Playlist
+
+```bash
+python3 ultimate_downloader.py -p "https://www.youtube.com/playlist?list=xxx"
+```
+
+#### Download Channel Videos
+
+```bash
+python3 ultimate_downloader.py -p "https://www.youtube.com/@ChannelName/videos"
+```
+
+#### Download with Subtitles
+
+Configure in `config.json`:
+```json
+{
+  "download": {
+    "subtitles": true,
+    "subtitle_language": "en"
+  }
+}
+```
+
+#### Age-Restricted Videos
+
+Use cookies file for authentication:
+```json
+{
+  "authentication": {
+    "youtube": {
+      "cookies_file": "cookies.txt"
+    }
+  }
+}
+```
+
+Export cookies from browser using extension like "Get cookies.txt"
+
+---
+
+### Spotify
+
+#### Track Download
+
+```bash
+python3 ultimate_downloader.py "https://open.spotify.com/track/xxx"
+```
+
+#### Album Download
+
+```bash
+python3 ultimate_downloader.py -p "https://open.spotify.com/album/xxx"
+```
+
+#### Playlist Download
+
+```bash
+python3 ultimate_downloader.py -p "https://open.spotify.com/playlist/xxx"
+```
+
+**Features**:
+- ✓ High-quality audio (320 kbps)
+- ✓ Full metadata embedding
+- ✓ Album art from Spotify
+- ✓ Proper file naming
+- ✓ Batch downloads
+
+---
+
+### SoundCloud
+
+#### Track Download
+
+```bash
+python3 ultimate_downloader.py "https://soundcloud.com/artist/track"
+```
+
+#### Playlist/Set Download
+
+```bash
+python3 ultimate_downloader.py -p "https://soundcloud.com/artist/sets/playlist"
+```
+
+**Features**:
+- ✓ Original quality preservation
+- ✓ Metadata extraction
+- ✓ Cover art embedding
+
+---
+
+### Instagram
+
+#### Post/Reel Download
+
+```bash
+python3 ultimate_downloader.py "https://www.instagram.com/p/xxx/"
+```
+
+#### Private Content
+
+Configure credentials in `config.json`:
+```json
+{
+  "authentication": {
+    "instagram": {
+      "username": "your_username",
+      "password": "your_password"
+    }
+  }
+}
+```
+
+---
+
+### TikTok
+
+```bash
+python3 ultimate_downloader.py "https://www.tiktok.com/@user/video/xxx"
+```
+
+**Features**:
+- ✓ No watermark (when possible)
+- ✓ Original quality
+- ✓ Audio extraction supported
+
+---
+
+### Twitter/X
+
+```bash
+python3 ultimate_downloader.py "https://twitter.com/user/status/xxx"
+```
+
+**Supported**:
+- Videos
+- GIFs
+- Images
+
+---
+
+### Generic Sites
+
+For sites not explicitly supported, the generic downloader tries 10+ methods:
+
+```bash
+python3 ultimate_downloader.py "https://example.com/video.mp4"
+```
+
+**Methods Tried**:
+1. yt-dlp (1000+ sites)
+2. Direct download
+3. System curl/wget
+4. curl-cffi (TLS bypass)
+5. cloudscraper (Cloudflare bypass)
+6. streamlink (live streams)
+7. httpx (HTTP/2)
+8. Selenium (browser automation)
+9. Playwright (advanced automation)
+10. HTML parsing and extraction
+
+---
+
+## Configuration
+
+### Configuration File
+
+Edit `config.json` to customize behavior:
+
+```json
+{
+  "spotify": {
+    "client_id": "",
+    "client_secret": "",
+    "enabled": false
+  },
+  "download": {
+    "output_dir": "downloads",
+    "format": "best",
+    "audio_format": "mp3",
+    "audio_quality": "320",
+    "video_quality": "1080",
+    "embed_thumbnail": true,
+    "embed_metadata": true,
+    "subtitles": false
+  },
+  "proxy": {
+    "enabled": false,
+    "http": "",
+    "https": ""
+  },
+  "advanced": {
+    "concurrent_downloads": 3,
+    "retry_attempts": 3,
+    "timeout": 300,
+    "archive_file": "archive.txt"
+  }
+}
+```
+
+### Environment Variables
+
+Override settings with environment variables:
+
+```bash
+export SPOTIFY_CLIENT_ID="your_id"
+export SPOTIFY_CLIENT_SECRET="your_secret"
+export OUTPUT_DIR="~/Downloads"
+```
+
+---
+
+## Command-Line Reference
+
+### Complete Syntax
+
+```bash
+python3 ultimate_downloader.py [OPTIONS] URL
+```
+
+### Options
+
+| Option | Description | Example |
+|--------|-------------|---------|
+| `-h, --help` | Show help message | `--help` |
+| `-o, --output DIR` | Output directory | `-o ~/Music` |
+| `-a, --audio` | Extract audio only | `-a` |
+| `-q, --quality Q` | Video quality | `-q 1080` |
+| `--audio-format FMT` | Audio format | `--audio-format flac` |
+| `--audio-quality Q` | Audio quality | `--audio-quality 320` |
+| `-p, --playlist` | Download playlist | `-p` |
+| `-i, --interactive` | Interactive mode | `-i` |
+| `-v, --verbose` | Verbose output | `-v` |
+| `--version` | Show version | `--version` |
+| `--no-metadata` | Skip metadata | `--no-metadata` |
+| `--no-thumbnail` | Skip thumbnail | `--no-thumbnail` |
+
+### Examples
+
+```bash
+# Download video in 720p
+python3 ultimate_downloader.py -q 720 "URL"
+
+# Download audio as FLAC
+python3 ultimate_downloader.py -a --audio-format flac "URL"
+
+# Download playlist to specific folder
+python3 ultimate_downloader.py -p -o ~/Music/Playlists "URL"
+
+# Interactive mode
+python3 ultimate_downloader.py -i
+
+# Verbose mode for debugging
+python3 ultimate_downloader.py -v "URL"
+```
+
+---
+
+## Tips & Tricks
+
+### 1. Batch Downloads
+
+Create `download_list.sh`:
+```bash
+#!/bin/bash
+urls=(
+    "https://youtube.com/watch?v=xxx1"
+    "https://youtube.com/watch?v=xxx2"
+    "https://youtube.com/watch?v=xxx3"
+)
+
+for url in "${urls[@]}"; do
+    python3 ultimate_downloader.py -a "$url"
+done
+```
+
+Run:
+```bash
+bash download_list.sh
+```
+
+---
+
+### 2. Organize Downloads
+
+```bash
+# Music downloads
+python3 ultimate_downloader.py -a -o ~/Music "SPOTIFY_URL"
+
+# Video downloads
+python3 ultimate_downloader.py -o ~/Videos "YOUTUBE_URL"
+
+# Podcasts
+python3 ultimate_downloader.py -a -o ~/Podcasts "PODCAST_URL"
+```
+
+---
+
+### 3. Quality vs Speed
+
+| Priority | Command | Description |
+|----------|---------|-------------|
+| Best Quality | `-q best` | Slowest, largest files |
+| Balanced | `-q 1080` | Good quality, reasonable size |
+| Fast | `-q 720` | Faster, smaller files |
+| Fastest | `-q 480` | Quick downloads |
+
+---
+
+### 4. Storage Optimization
+
+```bash
+# Lower quality for storage saving
+python3 ultimate_downloader.py -a --audio-quality 192 "URL"
+
+# Use efficient formats
+python3 ultimate_downloader.py -a --audio-format opus "URL"
+```
+
+---
+
+### 5. Automation
+
+Add to cron for scheduled downloads:
+
+```bash
+# Edit crontab
+crontab -e
+
+# Add job (daily at 2 AM)
+0 2 * * * cd /path/to/ULTIMATE-MEDIA-DOWNLOADER && source activate-env.sh && python3 ultimate_downloader.py "URL"
+```
+
+---
+
+## Troubleshooting
+
+### Common Issues
+
+#### 1. "Command not found: python3"
+
+**Solution**: Install Python 3.9+
+```bash
+# macOS
+brew install python3
+
+# Ubuntu/Debian
+sudo apt install python3
+
+# Check version
+python3 --version
+```
+
+---
+
+#### 2. "Module not found" errors
+
+**Solution**: Reinstall dependencies
+```bash
+source activate-env.sh
+pip install -r requirements.txt --upgrade
+```
+
+---
+
+#### 3. Download fails with "Unable to extract"
+
+**Solution**: Update yt-dlp
+```bash
+pip install yt-dlp --upgrade
+```
+
+---
+
+#### 4. Slow downloads
+
+**Solutions**:
+- Try lower quality: `-q 720`
+- Check internet connection
+- Use proxy if blocked
+- Try different time
+
+---
+
+#### 5. Age-restricted content fails
+
+**Solution**: Use cookies file
+1. Install browser extension "Get cookies.txt"
+2. Export cookies to `cookies.txt`
+3. Configure in `config.json`:
+```json
+{
+  "authentication": {
+    "youtube": {
+      "cookies_file": "cookies.txt"
+    }
+  }
+}
+```
+
+---
+
+#### 6. Spotify tracks not found
+
+**Solutions**:
+- Check Spotify URL is correct
+- Track might be region-restricted
+- Try configuring Spotify API credentials
+- Manual search alternative on YouTube
+
+---
+
+## FAQ
+
+### Q: Is this legal?
+
+**A**: The tool itself is legal. However, downloading copyrighted content without permission may violate copyright laws. Only download content you have rights to or that is in the public domain.
+
+---
+
+### Q: Which platforms are supported?
+
+**A**: 1000+ platforms including:
+- YouTube, Spotify, SoundCloud
+- Instagram, TikTok, Twitter
+- Facebook, Vimeo, Dailymotion
+- Twitch, and many more
+
+See README.md for complete list.
+
+---
+
+### Q: Can I download private/deleted videos?
+
+**A**: No. The downloader can only access publicly available content. Private or deleted content cannot be downloaded.
+
+---
+
+### Q: Why is audio quality limited to 320kbps?
+
+**A**: Most platforms don't provide audio above 320kbps. This is the highest quality available from YouTube and most sources.
+
+---
+
+### Q: Can I download 4K videos?
+
+**A**: Yes! Use `--quality 2160` for 4K downloads (if available).
+
+---
+
+### Q: How do I cancel a download?
+
+**A**: Press `Ctrl+C` to cancel the current download.
+
+---
+
+### Q: Where are files saved?
+
+**A**: By default in `./downloads/`. Change with `-o` option or in `config.json`.
+
+---
+
+### Q: Can I resume interrupted downloads?
+
+**A**: Yes! The downloader automatically resumes interrupted downloads.
+
+---
+
+### Q: How do I update the tool?
+
+**A**:
+```bash
+cd ULTIMATE-MEDIA-DOWNLOADER
+git pull origin main
+pip install -r requirements.txt --upgrade
+```
+
+---
+
+### Q: Does it work on Windows?
+
+**A**: Yes! Supports Windows, macOS, and Linux.
+
+---
+
+## Getting Help
+
+### Support Channels
+
+- **Documentation**: Check all files in `docs/` folder
+- **Issues**: https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues
+- **Discussions**: https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/discussions
+
+### Reporting Bugs
+
+When reporting bugs, include:
+1. Operating system and version
+2. Python version (`python3 --version`)
+3. Complete error message
+4. Command used
+5. URL (if public)
+
+---
+
+## Quick Reference Card
+
+```
+QUICK COMMANDS:
+  python3 ultimate_downloader.py -i              # Interactive mode
+  python3 ultimate_downloader.py "URL"           # Quick download
+  python3 ultimate_downloader.py -a "URL"        # Audio only
+  python3 ultimate_downloader.py -p "URL"        # Playlist
+  python3 ultimate_downloader.py -q 720 "URL"    # 720p video
+  python3 ultimate_downloader.py --help          # Show all options
+
+COMMON OPTIONS:
+  -o DIR          Output directory
+  -a              Audio only
+  -p              Playlist
+  -q QUALITY      Video quality (360, 720, 1080, best)
+  --audio-format  Audio format (mp3, flac, wav)
+  -v              Verbose mode
+  -i              Interactive mode
+```
+
+---
+
+**Last Updated**: October 3, 2025  
+**Maintainer**: Nitish Kumar  
+**Repository**: [GitHub](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER)
 
 ---
 
