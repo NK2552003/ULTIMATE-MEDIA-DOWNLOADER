@@ -1,5 +1,5 @@
 <div align="center">
-# Ultimate Media Downloader 🎬🎵
+<h1>Ultimate Media Downloader</h1>
 </div>
 <div align="center">
 
