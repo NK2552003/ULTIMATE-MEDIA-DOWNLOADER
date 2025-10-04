@@ -18,7 +18,7 @@
 
 ---
 
-## 🎬 Demo
+## Demo
 
 <div align="center">
 
@@ -32,7 +32,7 @@ https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/assets/demo_video/demo.mp
 
 ## Table of Contents
 
-- [🎬 Demo](#-demo)
+- [Demo](#demo)
 - [Overview](#overview)
 - [Features](#features)
 - [Supported Platforms](#supported-platforms)
