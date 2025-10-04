@@ -40,6 +40,7 @@ env/
 # Project specific
 downloads/
 *.mp4
+!demo_video/demo.mp4
 *.mp3
 *.mkv
 *.webm
