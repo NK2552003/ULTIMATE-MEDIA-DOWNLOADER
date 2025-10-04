@@ -12,7 +12,19 @@
 
 **A powerful, feature-rich media downloader supporting 1000+ platforms**
 
-**Version 2.0.0** | [Documentation](docs/INDEX.md) • [Installation](#-installation) • [Quick Start](#-quick-start) • [Contributing](CONTRIBUTING.md)
+**Version 2.0.0** | [Documentation](docs/INDEX.md) • [Installation](#installation) • [Quick Start](#quick-start) • [Contributing](CONTRIBUTING.md)
+
+</div>
+
+---
+
+## 🎬 Demo
+
+<div align="center">
+
+https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/assets/demo_video/demo.mp4
+
+*Watch the Ultimate Media Downloader in action*
 
 </div>
 
@@ -20,16 +32,17 @@
 
 ## Table of Contents
 
-- [Overview](#-overview)
-- [Features](#-features)
-- [Supported Platforms](#-supported-platforms)
-- [System Requirements](#-system-requirements)
-- [Installation](#-installation)
-- [Quick Start](#-quick-start)
-- [Documentation](#-documentation)
-- [Contributing](#-contributing)
-- [License](#-license)
-- [Disclaimer](#-disclaimer)
+- [🎬 Demo](#-demo)
+- [Overview](#overview)
+- [Features](#features)
+- [Supported Platforms](#supported-platforms)
+- [System Requirements](#system-requirements)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Documentation](#documentation)
+- [Contributing](#contributing)
+- [License](#license)
+- [Disclaimer](#disclaimer)
 
 ---
 
