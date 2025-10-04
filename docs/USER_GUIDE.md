@@ -268,7 +268,7 @@ python3 ultimate_downloader.py -i
 
 ```
 ╔══════════════════════════════════════════════════════════════╗
-║         ULTIMATE MEDIA DOWNLOADER - Interactive Mode          ║
+║         ULTIMATE MEDIA DOWNLOADER - Interactive Mode         ║
 ╚══════════════════════════════════════════════════════════════╝
 
 ? Enter URL to download: https://www.youtube.com/watch?v=xxx

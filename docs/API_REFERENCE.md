@@ -8,7 +8,7 @@ Complete API documentation for all modules, classes, and functions in the Ultima
 
 ---
 
-## 📑 Table of Contents
+## Table of Contents
 
 1. [ultimate_downloader Module](#ultimate_downloader-module)
 2. [generic_downloader Module](#generic_downloader-module)
