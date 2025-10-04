@@ -1,7 +1,6 @@
-# Ultimate Media Downloader 🎬🎵
 
 <div align="center">
-
+<h1>Ultimate Media Downloader</h1> 
 [![Python Version](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20macOS%20%7C%20Windows-lightgrey.svg)](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER)
@@ -17,7 +16,7 @@
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Overview](#-overview)
 - [Features](#-features)
@@ -32,7 +31,7 @@
 
 ---
 
-## 🌟 Overview
+## Overview
 
 **Ultimate Media Downloader** is a professional-grade, open-source media downloading tool that supports over 1000+ platforms including YouTube, Spotify, SoundCloud, Instagram, TikTok, and many more. Built with Python and featuring a beautiful Rich CLI interface, it provides enterprise-level features with consumer-friendly simplicity.
 
@@ -208,7 +207,7 @@ For troubleshooting installation issues, see [USER_GUIDE.md](docs/USER_GUIDE.md#
 
 ---
 
-## 🎯 Quick Start
+## Quick Start
 
 ### Basic Usage
 
@@ -381,7 +380,7 @@ For detailed statistics, see [PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md)
 
 ---
 
-## 📅 Recent Updates
+## Recent Updates
 
 ### Version 2.0.0 (October 2025) - Current
 - [x] Complete documentation overhaul
@@ -399,7 +398,7 @@ For detailed statistics, see [PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md)
 
 **Made with ❤️ by [Nitish Kumar](https://github.com/NK2552003)**
 
-If you find this project useful, please consider giving it a star! ⭐
+If you find this project useful, please consider giving it a star!
 
 [⬆ Back to Top](#ultimate-media-downloader-)
 
