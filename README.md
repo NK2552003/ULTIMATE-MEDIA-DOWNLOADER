@@ -22,7 +22,7 @@
 
 <div align="center">
 
-https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/assets/demo_video/demo.mp4
+https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/blob/main/demo_video/demo.mp4
 
 *Watch the Ultimate Media Downloader in action*
 
