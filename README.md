@@ -153,6 +153,8 @@ For detailed requirements, see [USER_GUIDE.md](docs/USER_GUIDE.md#prerequisites)
 
 The easiest way to get started:
 
+#### Linux / macOS
+
 ```bash
 # Clone the repository
 git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
@@ -166,16 +168,34 @@ chmod +x setup.sh
 source activate-env.sh
 ```
 
+#### Windows
+
+```batch
+# Clone the repository
+git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+cd ULTIMATE-MEDIA-DOWNLOADER
+
+# Run setup script (one command does everything!)
+setup.bat
+
+# Activate environment
+activate-env.bat
+```
+
 **The setup script automatically:**
 - [x] Detects your operating system (Linux/macOS/Windows)
 - [x] Checks and installs Python 3.9+ if needed
-- [x] Installs FFmpeg for video processing
+- [x] Installs FFmpeg for video processing (auto-install on Linux/macOS, manual on Windows)
 - [x] Creates isolated virtual environment
 - [x] Installs all Python packages
 - [x] Creates configuration files
 - [x] Runs verification tests
 
 **Estimated time**: 3-5 minutes
+
+**Note for Windows users:** 
+- Make sure Python is added to PATH during installation
+- FFmpeg must be installed manually from [ffmpeg.org](https://ffmpeg.org/download.html) or via package managers like Chocolatey (`choco install ffmpeg`) or Scoop (`scoop install ffmpeg`)
 
 ### Method 2: Manual Installation
 
@@ -207,14 +227,16 @@ pip3 install -r requirements.txt
 
 #### Windows
 
-```powershell
+```batch
 # Install Python from python.org and FFmpeg from ffmpeg.org
 git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
 cd ULTIMATE-MEDIA-DOWNLOADER
 python -m venv venv
-.\venv\Scripts\activate
+venv\Scripts\activate
 pip install -r requirements.txt
 ```
+
+**Tip:** Use the automated setup script `setup.bat` for easier installation!
 
 </details>
 
@@ -225,6 +247,8 @@ For troubleshooting installation issues, see [USER_GUIDE.md](docs/USER_GUIDE.md#
 ## Quick Start
 
 ### Basic Usage
+
+#### Linux / macOS
 
 ```bash
 # Activate environment (if not already activated)
@@ -241,6 +265,25 @@ python3 ultimate_downloader.py -p "https://www.youtube.com/playlist?list=PLAYLIS
 
 # Interactive mode
 python3 ultimate_downloader.py -i
+```
+
+#### Windows
+
+```batch
+# Activate environment (if not already activated)
+activate-env.bat
+
+# Download a video
+python ultimate_downloader.py "YOUR_VIDEO_URL"
+
+# Download audio only
+python ultimate_downloader.py -a "https://www.youtube.com/watch?v=VIDEO_ID"
+
+# Download playlist
+python ultimate_downloader.py -p "https://www.youtube.com/playlist?list=PLAYLIST_ID"
+
+# Interactive mode
+python ultimate_downloader.py -i
 ```
 
 ### Common Examples
