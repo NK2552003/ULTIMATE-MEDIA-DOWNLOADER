@@ -4854,7 +4854,7 @@ class UltimateMediaDownloader:
                 elif interactive:
                     choice_options = [
                         "Download as playlist (all videos/songs)",
-                        "Download single item only",
+                        "Download single video (select from list)",
                         "Show playlist contents first"
                     ]
                     
@@ -4866,27 +4866,39 @@ class UltimateMediaDownloader:
                     
                     if choice == "Download as playlist (all videos/songs)":
                         return self.download_playlist(url, quality, audio_only, output_format, custom_format, interactive=interactive)
+                    elif choice == "Download single video (select from list)":
+                        # Let user select which video from the playlist
+                        selected_url = self.select_video_from_playlist(url)
+                        if selected_url:
+                            url = selected_url
+                            print(f"◎ Downloading selected video: {url}")
+                        else:
+                            print("✗ No video selected, cancelling download")
+                            return None
                     elif choice == "Show playlist contents first":
                         playlist_info = self.show_playlist_contents(url)
                         if playlist_info:
                             # Ask again after showing contents
                             download_choice = self.prompt_user_choice(
                                 "Now what would you like to do?",
-                                ["Download entire playlist", "Download single item only", "Cancel"],
+                                ["Download entire playlist", "Download single video (select from list)", "Cancel"],
                                 default="Download entire playlist"
                             )
                             
                             if download_choice == "Download entire playlist":
                                 return self.download_playlist(url, quality, audio_only, output_format, custom_format, interactive=interactive)
+                            elif download_choice == "Download single video (select from list)":
+                                # Let user select which video from the playlist
+                                selected_url = self.select_video_from_playlist(url)
+                                if selected_url:
+                                    url = selected_url
+                                    print(f"◎ Downloading selected video: {url}")
+                                else:
+                                    print("✗ No video selected, cancelling download")
+                                    return None
                             elif download_choice == "Cancel":
                                 print("✗ Download cancelled by user")
                                 return None
-                            # else: continue with single download
-                    # else: continue with single download (clean URL to remove playlist params)
-                    
-                    # Clean URL for single item download
-                    url = self.clean_url(url, keep_playlist=False)
-                    print(f"◎ Downloading single item from: {url}")
                 else:
                     # Non-interactive mode: download entire playlist automatically
                     print("ℹ  Playlist URL detected: downloading entire playlist automatically")
@@ -5530,6 +5542,113 @@ class UltimateMediaDownloader:
                 
         except Exception as e:
             print(f"✗ Error extracting playlist: {e}")
+            return None
+    
+    def select_video_from_playlist(self, url):
+        """Allow user to select a specific video from playlist
+        
+        Args:
+            url: Playlist URL
+            
+        Returns:
+            Selected video URL or None if cancelled
+        """
+        try:
+            print("⌕ Loading playlist videos...")
+            
+            # For YouTube URLs with both video and playlist, convert to playlist URL
+            if "youtube.com" in url and "watch?v=" in url and "list=" in url:
+                parsed = urlparse(url)
+                params = parse_qs(parsed.query)
+                if 'list' in params:
+                    list_id = params['list'][0]
+                    url = f"https://www.youtube.com/playlist?list={list_id}"
+            
+            ydl_opts = self.default_ydl_opts.copy()
+            ydl_opts.update({
+                'quiet': True,
+                'extract_flat': 'in_playlist',
+                'noplaylist': False,
+                'yes_playlist': True,
+            })
+            
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                info = ydl.extract_info(url, download=False)
+                
+                if not info or not info.get('entries'):
+                    print("✗ No playlist found or playlist is empty")
+                    return None
+                
+                entries = [entry for entry in info['entries'] if entry]
+                total_videos = len(entries)
+                
+                # Show playlist info
+                if RICH_AVAILABLE and self.console:
+                    self.console.print(f"\n[bold cyan]≡ PLAYLIST:[/bold cyan] [yellow]{info.get('title', 'Unknown')}[/yellow]")
+                    self.console.print(f"[cyan]▤ Total videos:[/cyan] [green]{total_videos}[/green]\n")
+                else:
+                    print(f"\n≡ PLAYLIST: {info.get('title', 'Unknown')}")
+                    print(f"▤ Total videos: {total_videos}\n")
+                
+                # Display all videos with numbers
+                print("♫ PLAYLIST VIDEOS:")
+                print("-" * 80)
+                
+                for i, entry in enumerate(entries, 1):
+                    if entry:
+                        title = entry.get('title', 'Unknown Title')
+                        duration = self._format_duration(entry.get('duration', 0))
+                        
+                        # Truncate long titles
+                        if len(title) > 60:
+                            title = title[:57] + "..."
+                        
+                        print(f"{i:3d}. {title:<60} | {duration:>8}")
+                
+                print("-" * 80)
+                
+                # Prompt user to select a video
+                while True:
+                    if RICH_AVAILABLE and self.console:
+                        from rich.prompt import Prompt
+                        selection = Prompt.ask(
+                            f"\n[bold cyan]Select video number[/bold cyan] [dim](1-{total_videos}, or 'c' to cancel)[/dim]",
+                            default="1"
+                        )
+                    else:
+                        selection = input(f"\nSelect video number (1-{total_videos}, or 'c' to cancel) [1]: ").strip() or "1"
+                    
+                    if selection.lower() == 'c':
+                        print("✗ Selection cancelled")
+                        return None
+                    
+                    try:
+                        video_num = int(selection)
+                        if 1 <= video_num <= total_videos:
+                            selected_entry = entries[video_num - 1]
+                            video_url = selected_entry.get('url') or selected_entry.get('webpage_url')
+                            
+                            # For YouTube, construct the URL from video ID
+                            if not video_url and selected_entry.get('id'):
+                                video_url = f"https://www.youtube.com/watch?v={selected_entry['id']}"
+                            
+                            if video_url:
+                                selected_title = selected_entry.get('title', 'Unknown')
+                                if RICH_AVAILABLE and self.console:
+                                    self.console.print(f"\n[green]✓ Selected:[/green] [bold]{selected_title}[/bold]")
+                                else:
+                                    print(f"\n✓ Selected: {selected_title}")
+                                return video_url
+                            else:
+                                print("✗ Could not get video URL")
+                                return None
+                        else:
+                            print(f"⚠ Please enter a number between 1 and {total_videos}")
+                    except ValueError:
+                        print("⚠ Please enter a valid number or 'c' to cancel")
+                        
+        except Exception as e:
+            print(f"✗ Error selecting video from playlist: {e}")
             return None
     
     def download_playlist(self, url, quality="best", audio_only=False, output_format=None, custom_format=None, max_downloads=None, start_index=1, interactive=True):
