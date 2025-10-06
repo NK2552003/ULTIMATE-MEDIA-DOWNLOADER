@@ -116,6 +116,12 @@ try:
 except ImportError:
     HALO_AVAILABLE = False
 
+try:
+    from youtube_scorer import YouTubeScorer, score_youtube_video
+    YOUTUBE_SCORER_AVAILABLE = True
+except ImportError:
+    YOUTUBE_SCORER_AVAILABLE = False
+
 # Import reusable components from separate modules
 from logger import QuietLogger
 from ui_components import Icons, Messages, ModernUI
@@ -2241,7 +2247,7 @@ class UltimateMediaDownloader:
                         best_match = result_url
                 
                 # If we found a very good match (high score), use it immediately
-                if best_match and best_score > 80:  # High threshold for excellent match
+                if best_match and best_score > 150:  # High threshold for excellent match (increased due to new scoring scale)
                     print(f"  ✓ Found excellent match with score: {best_score}")
                     return best_match
         
@@ -2295,127 +2301,69 @@ class UltimateMediaDownloader:
         return []
     
     def _score_youtube_result(self, youtube_url, original_query):
-        """Score YouTube result based on relevance, views, likes, and quality"""
+        """Score YouTube result using advanced scoring system"""
         try:
             ydl_opts = {'quiet': True, 'no_warnings': True}
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 info = ydl.extract_info(youtube_url, download=False)
                 
-                score = 0
-                title = info.get('title', '').lower()
-                duration = info.get('duration', 0)
-                view_count = info.get('view_count') or 0  # Handle None values
-                like_count = info.get('like_count') or 0  # Handle None values
-                uploader = info.get('uploader', '').lower()
-                
-                # Ensure numeric values are valid
-                if view_count is None:
-                    view_count = 0
-                if like_count is None:
-                    like_count = 0
-                if duration is None:
-                    duration = 0
-                
-                # Extract song and artist from original query
-                # Query format is now "Title - Artist"
-                song_words = []
-                artist_words = []
-                if ' - ' in original_query:
-                    song, artist = original_query.split(' - ', 1)
-                    song_words = [w.lower() for w in song.split() if len(w) > 2]
-                    artist_words = [w.lower() for w in artist.split() if len(w) > 2]
+                # Use advanced scorer if available
+                if YOUTUBE_SCORER_AVAILABLE:
+                    score, breakdown = score_youtube_video(info, original_query, verbose=False)
+                    
+                    # Display score with metrics
+                    title = info.get('title', '')
+                    view_count = info.get('view_count') or 0
+                    like_count = info.get('like_count') or 0
+                    like_ratio_pct = (like_count / view_count * 100) if view_count > 0 else 0
+                    
+                    view_str = f"{view_count:,}" if isinstance(view_count, (int, float)) else "N/A"
+                    like_str = f"{like_count:,}" if isinstance(like_count, (int, float)) else "N/A"
+                    
+                    print(f"    ▤ Score: {score:.0f} | Views: {view_str} | Likes: {like_str} ({like_ratio_pct:.2f}%) | {title[:50]}...")
+                    
+                    return score
                 else:
-                    song_words = [w.lower() for w in original_query.split() if len(w) > 2]
-                
-                # Score based on title match (most important)
-                song_matches = sum(25 for word in song_words if word in title)
-                artist_matches = sum(20 for word in artist_words if word in title)
-                score += song_matches + artist_matches
-                
-                # Bonus for "official" content
-                if any(keyword in title or keyword in uploader for keyword in ['official', 'vevo', 'records', 'music']):
-                    score += 30
-                
-                # Score based on duration (music tracks are typically 2-7 minutes)
-                if duration and 90 < duration < 420:  # 1.5 to 7 minutes
-                    score += 20
-                elif duration and 30 < duration < 600:  # 30 seconds to 10 minutes
-                    score += 10
-                
-                # Enhanced scoring based on popularity (views AND likes combined)
-                # Higher weight for both metrics to better differentiate quality
-                if isinstance(view_count, (int, float)) and view_count > 0:
-                    if view_count > 100_000_000:  # 100M+ views
-                        score += 40
-                    elif view_count > 50_000_000:  # 50M+ views
-                        score += 35
-                    elif view_count > 10_000_000:  # 10M+ views
-                        score += 30
-                    elif view_count > 5_000_000:  # 5M+ views
-                        score += 25
-                    elif view_count > 1_000_000:  # 1M+ views
-                        score += 20
-                    elif view_count > 500_000:  # 500K+ views
-                        score += 15
-                    elif view_count > 100_000:  # 100K+ views
-                        score += 10
-                    elif view_count > 10_000:  # 10K+ views
-                        score += 5
-                
-                # Enhanced scoring based on absolute like count (indicates quality)
-                if isinstance(like_count, (int, float)) and like_count > 0:
-                    if like_count > 5_000_000:  # 5M+ likes
-                        score += 35
-                    elif like_count > 1_000_000:  # 1M+ likes
-                        score += 30
-                    elif like_count > 500_000:  # 500K+ likes
-                        score += 25
-                    elif like_count > 100_000:  # 100K+ likes
-                        score += 20
-                    elif like_count > 50_000:  # 50K+ likes
-                        score += 15
-                    elif like_count > 10_000:  # 10K+ likes
-                        score += 10
-                    elif like_count > 1_000:  # 1K+ likes
-                        score += 5
-                
-                # Enhanced like ratio scoring (engagement quality)
-                if isinstance(view_count, (int, float)) and isinstance(like_count, (int, float)) and view_count > 0 and like_count > 0:
-                    like_ratio = like_count / view_count
-                    if like_ratio > 0.08:  # 8%+ like ratio is exceptional
-                        score += 25
-                    elif like_ratio > 0.05:  # 5%+ like ratio is very good
-                        score += 20
-                    elif like_ratio > 0.03:  # 3%+ is good
-                        score += 15
-                    elif like_ratio > 0.02:  # 2%+ is above average
-                        score += 10
-                    elif like_ratio > 0.01:  # 1%+ is decent
-                        score += 5
-                
-                # Penalize non-music content
-                non_music_keywords = ['interview', 'documentary', 'behind the scenes', 'making of', 'reaction', 'cover', 'karaoke', 'instrumental']
-                penalty = sum(15 for keyword in non_music_keywords if keyword in title)
-                score -= penalty
-                
-                # Bonus for audio-only or official video keywords
-                if any(keyword in title for keyword in ['audio', 'lyric video', 'official music video']):
-                    score += 10
-                
-                # Calculate like ratio for display
-                like_ratio_pct = (like_count / view_count * 100) if view_count > 0 else 0
-                
-                # Format view and like counts safely
-                view_str = f"{view_count:,}" if isinstance(view_count, (int, float)) else "N/A"
-                like_str = f"{like_count:,}" if isinstance(like_count, (int, float)) else "N/A"
-                
-                print(f"    ▤ Score: {score} | Views: {view_str} | Likes: {like_str} ({like_ratio_pct:.2f}%) | {title[:50]}...")
-                
-                return max(0, score)  # Don't return negative scores
+                    # Fallback: Return basic score if advanced scorer not available
+                    print(f"  ⚠  Advanced scorer not available, using basic scoring")
+                    return self._basic_score(info, original_query)
                 
         except Exception as e:
             print(f"  ⚠  Scoring error: {e}")
             return 0
+    
+    def _basic_score(self, info, original_query):
+        """Basic fallback scoring when advanced scorer is unavailable"""
+        score = 0
+        title = info.get('title', '').lower()
+        view_count = info.get('view_count') or 0
+        like_count = info.get('like_count') or 0
+        
+        # Simple title matching
+        query_lower = original_query.lower()
+        if query_lower in title:
+            score += 100
+        
+        # Basic popularity scoring
+        if view_count > 1_000_000:
+            score += 50
+        elif view_count > 100_000:
+            score += 30
+        elif view_count > 10_000:
+            score += 10
+        
+        if like_count > 10_000:
+            score += 30
+        elif like_count > 1_000:
+            score += 15
+        
+        # Display score
+        like_ratio_pct = (like_count / view_count * 100) if view_count > 0 else 0
+        view_str = f"{view_count:,}"
+        like_str = f"{like_count:,}"
+        print(f"    ▤ Score: {score} | Views: {view_str} | Likes: {like_str} ({like_ratio_pct:.2f}%) | {title[:50]}...")
+        
+        return max(0, score)
     
     def _clean_track_query(self, track_query):
         """Clean track query for better YouTube search results"""
