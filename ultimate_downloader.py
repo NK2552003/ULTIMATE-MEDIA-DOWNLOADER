@@ -3858,17 +3858,23 @@ class UltimateMediaDownloader:
         signal.signal(signal.SIGINT, self.signal_handler)
         signal.signal(signal.SIGTERM, self.signal_handler)
     
-    def clean_url(self, url):
-        """Clean and normalize URLs"""
+    def clean_url(self, url, keep_playlist=False):
+        """Clean and normalize URLs
+        
+        Args:
+            url: The URL to clean
+            keep_playlist: If True, keeps playlist parameters (for playlist downloads)
+        """
         # Remove playlist parameters that might cause issues for single video downloads
-        if "youtube.com" in url or "youtu.be" in url:
-            if "&list=" in url and "watch?v=" in url:
-                # For YouTube, if it's a single video in a playlist, extract just the video
-                parsed = urlparse(url)
-                params = parse_qs(parsed.query)
-                if 'v' in params:
-                    video_id = params['v'][0]
-                    return f"https://www.youtube.com/watch?v={video_id}"
+        if not keep_playlist:
+            if "youtube.com" in url or "youtu.be" in url:
+                if "&list=" in url and "watch?v=" in url:
+                    # For YouTube, if it's a single video in a playlist, extract just the video
+                    parsed = urlparse(url)
+                    params = parse_qs(parsed.query)
+                    if 'v' in params:
+                        video_id = params['v'][0]
+                        return f"https://www.youtube.com/watch?v={video_id}"
         return url
     
     def _fetch_spotify_album_art(self, track_name, artist_name, silent=False):
@@ -4606,8 +4612,21 @@ class UltimateMediaDownloader:
                 print(f"\r✗ Error in information extraction: {e}")
                 return None
     
-    def download_media(self, url, quality="best", audio_only=False, output_format=None, custom_format=None, interactive=False, add_metadata=False, add_thumbnail=False, custom_filename=None):
-        """Download media with enhanced options and smart URL handling"""
+    def download_media(self, url, quality="best", audio_only=False, output_format=None, custom_format=None, interactive=False, add_metadata=False, add_thumbnail=False, custom_filename=None, no_playlist=False):
+        """Download media with enhanced options and smart URL handling
+        
+        Args:
+            url: Media URL to download
+            quality: Video quality
+            audio_only: Download audio only
+            output_format: Output format
+            custom_format: Custom yt-dlp format
+            interactive: Interactive mode
+            add_metadata: Add metadata to file
+            add_thumbnail: Add thumbnail to file
+            custom_filename: Custom filename
+            no_playlist: Download only single video from playlist URL
+        """
         try:
             # Setup signal handlers
             self.setup_signal_handlers()
@@ -4637,7 +4656,12 @@ class UltimateMediaDownloader:
             if self.is_playlist_url(url):
                 print("⌕ Playlist detected in URL!")
                 
-                if interactive:
+                if no_playlist:
+                    # User explicitly wants only single video
+                    url = self.clean_url(url, keep_playlist=False)
+                    print(f"ℹ  --no-playlist flag detected: downloading single item only")
+                    print(f"◎ Downloading: {url}")
+                elif interactive:
                     choice_options = [
                         "Download as playlist (all videos/songs)",
                         "Download single item only",
@@ -4671,13 +4695,13 @@ class UltimateMediaDownloader:
                     # else: continue with single download (clean URL to remove playlist params)
                     
                     # Clean URL for single item download
-                    url = self.clean_url(url)
+                    url = self.clean_url(url, keep_playlist=False)
                     print(f"◎ Downloading single item from: {url}")
                 else:
-                    # Non-interactive mode: clean URL and download single item
-                    print("ℹ  Non-interactive mode: downloading single item only")
-                    url = self.clean_url(url)
-                    print(f"◎ Downloading: {url}")
+                    # Non-interactive mode: download entire playlist automatically
+                    print("ℹ  Playlist URL detected: downloading entire playlist automatically")
+                    print("◎ Tip: Use --no-playlist flag to download single item only")
+                    return self.download_playlist(url, quality, audio_only, output_format, custom_format, interactive=False)
             
             # Platform-specific handling already done above for spotify/apple_music
             
@@ -5177,11 +5201,21 @@ class UltimateMediaDownloader:
         try:
             print("⌕ Extracting playlist information...")
             
+            # For YouTube URLs with both video and playlist, convert to playlist URL
+            if "youtube.com" in url and "watch?v=" in url and "list=" in url:
+                parsed = urlparse(url)
+                params = parse_qs(parsed.query)
+                if 'list' in params:
+                    # Convert to playlist URL to force playlist extraction
+                    list_id = params['list'][0]
+                    url = f"https://www.youtube.com/playlist?list={list_id}"
+            
             ydl_opts = self.default_ydl_opts.copy()
             ydl_opts.update({
                 'quiet': True,
-                'extract_flat': True,  # Fast extraction for listing
+                'extract_flat': 'in_playlist',  # Fast extraction for listing
                 'noplaylist': False,
+                'yes_playlist': True,  # Force playlist extraction
             })
             
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -5235,6 +5269,15 @@ class UltimateMediaDownloader:
     def download_playlist(self, url, quality="best", audio_only=False, output_format=None, custom_format=None, max_downloads=None, start_index=1, interactive=True):
         """Download playlist with enhanced options and user interaction"""
         try:
+            # For YouTube URLs with both video and playlist, convert to playlist URL
+            if "youtube.com" in url and "watch?v=" in url and "list=" in url:
+                parsed = urlparse(url)
+                params = parse_qs(parsed.query)
+                if 'list' in params:
+                    # Convert to playlist URL to force playlist extraction
+                    list_id = params['list'][0]
+                    url = f"https://www.youtube.com/playlist?list={list_id}"
+            
             platform = self.detect_platform(url)
             if RICH_AVAILABLE and self.console:
                 self.console.print(f"[bold cyan]→[/bold cyan] Detected platform: [cyan]{platform.upper()}[/cyan]")
@@ -6046,6 +6089,12 @@ def main():
         --custom-format "bestvideo[height<=720]+bestaudio[ext=m4a]"
 
 {Icons.get('playlist')} PLAYLIST DOWNLOADS:
+  • Download Entire Playlist (Default for playlist URLs):
+    python ultimate_downloader.py "PLAYLIST_URL"
+
+  • Download Only Single Video from Playlist:
+    python ultimate_downloader.py "PLAYLIST_URL" --no-playlist
+
   • Interactive Playlist Download:
     python ultimate_downloader.py "PLAYLIST_URL" --playlist
 
@@ -6120,6 +6169,8 @@ Report issues: Create an issue on the GitHub repository
                        help='Output directory (default: downloads)')
     parser.add_argument('-p', '--playlist', action='store_true',
                        help='Download playlist (with interactive options by default)')
+    parser.add_argument('--no-playlist', action='store_true',
+                       help='Download only single video from playlist URL')
     parser.add_argument('-m', '--max-downloads', type=int,
                        help='Maximum number of videos to download from playlist')
     parser.add_argument('-s', '--start-index', type=int, default=1,
@@ -6285,7 +6336,8 @@ Report issues: Create an issue on the GitHub repository
                         custom_format=args.custom_format,
                         interactive=False,
                         add_metadata=args.embed_metadata or args.audio_only,
-                        add_thumbnail=args.embed_thumbnail or args.audio_only
+                        add_thumbnail=args.embed_thumbnail or args.audio_only,
+                        no_playlist=args.no_playlist
                     )
                     if result:
                         successful += 1
@@ -6317,7 +6369,8 @@ Report issues: Create an issue on the GitHub repository
         custom_format=args.custom_format,
         interactive=use_interactive,
         add_metadata=add_metadata,
-        add_thumbnail=add_thumbnail
+        add_thumbnail=add_thumbnail,
+        no_playlist=args.no_playlist
     )
 
 if __name__ == "__main__":    
