@@ -4612,7 +4612,197 @@ class UltimateMediaDownloader:
                 print(f"\r✗ Error in information extraction: {e}")
                 return None
     
-    def download_media(self, url, quality="best", audio_only=False, output_format=None, custom_format=None, interactive=False, add_metadata=False, add_thumbnail=False, custom_filename=None, no_playlist=False):
+    def detect_audio_languages(self, url):
+        """Detect available audio language tracks in a video
+        
+        Returns:
+            List of dictionaries containing language info, or None if only one language
+        """
+        try:
+            ydl_opts = self.default_ydl_opts.copy()
+            ydl_opts.update({
+                'quiet': True,
+                'extract_flat': False,
+            })
+            
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                info = ydl.extract_info(url, download=False)
+                
+                if not info or 'formats' not in info:
+                    return None
+                
+                # Extract unique audio languages from formats
+                audio_languages = {}
+                
+                for fmt in info.get('formats', []):
+                    # Check if this is an audio format
+                    if fmt.get('acodec') != 'none':
+                        lang = fmt.get('language') or fmt.get('audio_lang') or 'und'
+                        
+                        # Normalize language code for display deduplication (e.g., en-US, en-GB -> en)
+                        normalized_lang = self._normalize_language_code(lang)
+                        
+                        # Skip if we already have this language with better quality
+                        if normalized_lang in audio_languages:
+                            # Compare quality (prefer higher bitrate)
+                            existing_abr = audio_languages[normalized_lang].get('abr', 0) or 0
+                            current_abr = fmt.get('abr', 0) or 0
+                            if current_abr <= existing_abr:
+                                continue
+                        
+                        # Get language name (try to convert code to full name)
+                        lang_name = self._get_language_name(normalized_lang)
+                        
+                        # Store with both original and normalized codes
+                        # Use original code for actual download, normalized for display
+                        audio_languages[normalized_lang] = {
+                            'code': lang,  # Keep original code (en-US, en-GB, etc.) for download
+                            'normalized_code': normalized_lang,  # Normalized code (en, es, etc.) for display
+                            'name': lang_name,
+                            'format_id': fmt.get('format_id'),
+                            'abr': fmt.get('abr'),
+                            'acodec': fmt.get('acodec'),
+                            'ext': fmt.get('ext')
+                        }
+                
+                # If only one language or no language info, return None
+                if len(audio_languages) <= 1:
+                    return None
+                
+                # Return sorted list (by language name)
+                languages_list = list(audio_languages.values())
+                languages_list.sort(key=lambda x: x['name'])
+                
+                return languages_list
+                
+        except Exception as e:
+            if RICH_AVAILABLE and self.console:
+                self.console.print(f"[yellow]⚠ Could not detect audio languages: {e}[/yellow]")
+            else:
+                print(f"⚠ Could not detect audio languages: {e}")
+            return None
+    
+    def _normalize_language_code(self, lang_code):
+        """Normalize language codes to avoid duplicates
+        
+        Converts variants like en-US, en-GB to just 'en'
+        es-ES, es-MX to just 'es', etc.
+        
+        Args:
+            lang_code: Language code (e.g., 'en-US', 'en', 'es-MX')
+            
+        Returns:
+            Normalized language code (e.g., 'en', 'es')
+        """
+        if not lang_code:
+            return 'und'
+        
+        # Convert to lowercase for consistency
+        lang_code = lang_code.lower()
+        
+        # Split on hyphen or underscore (e.g., en-US, en_US)
+        if '-' in lang_code:
+            base_lang = lang_code.split('-')[0]
+        elif '_' in lang_code:
+            base_lang = lang_code.split('_')[0]
+        else:
+            base_lang = lang_code
+        
+        return base_lang
+    
+    def _get_language_name(self, lang_code):
+        """Convert language code to full name"""
+        # Common language codes mapping
+        language_map = {
+            'en': 'English',
+            'es': 'Spanish',
+            'fr': 'French',
+            'de': 'German',
+            'it': 'Italian',
+            'pt': 'Portuguese',
+            'ru': 'Russian',
+            'ja': 'Japanese',
+            'ko': 'Korean',
+            'zh': 'Chinese',
+            'ar': 'Arabic',
+            'hi': 'Hindi',
+            'nl': 'Dutch',
+            'pl': 'Polish',
+            'tr': 'Turkish',
+            'sv': 'Swedish',
+            'da': 'Danish',
+            'no': 'Norwegian',
+            'fi': 'Finnish',
+            'el': 'Greek',
+            'he': 'Hebrew',
+            'th': 'Thai',
+            'vi': 'Vietnamese',
+            'id': 'Indonesian',
+            'ms': 'Malay',
+            'cs': 'Czech',
+            'hu': 'Hungarian',
+            'ro': 'Romanian',
+            'uk': 'Ukrainian',
+            'und': 'Unknown/Default'
+        }
+        
+        return language_map.get(lang_code.lower(), lang_code.upper())
+    
+    def prompt_audio_language_selection(self, languages):
+        """Prompt user to select audio language
+        
+        Args:
+            languages: List of language dictionaries
+            
+        Returns:
+            Selected language dictionary
+        """
+        if not languages or len(languages) <= 1:
+            return None
+        
+        # Display available languages
+        if RICH_AVAILABLE and self.console:
+            self.console.print("\n[bold cyan]🌐 Multiple Audio Languages Detected[/bold cyan]")
+            self.console.print("[dim]─" * 50 + "[/dim]")
+            
+            # Create table for better display
+            from rich.table import Table
+            table = Table(show_header=True, header_style="bold magenta")
+            table.add_column("#", style="cyan", width=4)
+            table.add_column("Language", style="green")
+            table.add_column("Quality", style="yellow")
+            table.add_column("Codec", style="blue")
+            
+            for i, lang in enumerate(languages, 1):
+                quality = f"{lang.get('abr', 'N/A')} kbps" if lang.get('abr') else "N/A"
+                codec = lang.get('acodec', 'N/A')
+                table.add_row(str(i), lang['name'], quality, codec)
+            
+            self.console.print(table)
+        else:
+            print("\n🌐 Multiple Audio Languages Detected")
+            print("─" * 50)
+            for i, lang in enumerate(languages, 1):
+                quality = f"{lang.get('abr', 'N/A')} kbps" if lang.get('abr') else "N/A"
+                codec = lang.get('acodec', 'N/A')
+                print(f"{i}. {lang['name']} - {quality} ({codec})")
+        
+        # Prompt for selection
+        language_choices = [lang['name'] for lang in languages]
+        selected_name = self.prompt_user_choice(
+            "Select audio language:",
+            language_choices,
+            default=language_choices[0]
+        )
+        
+        # Find and return the selected language
+        for lang in languages:
+            if lang['name'] == selected_name:
+                return lang
+        
+        return languages[0]  # Fallback to first language
+    
+    def download_media(self, url, quality="best", audio_only=False, output_format=None, custom_format=None, interactive=False, add_metadata=False, add_thumbnail=False, custom_filename=None, no_playlist=False, audio_language=None):
         """Download media with enhanced options and smart URL handling
         
         Args:
@@ -4709,6 +4899,43 @@ class UltimateMediaDownloader:
             if interactive and not custom_format:
                 quality, audio_only, output_format, custom_format = self.prompt_format_selection(url)
             
+            # Detect and prompt for audio language selection (YouTube videos)
+            selected_language = None
+            if platform == 'youtube' and not audio_language:
+                # Detect available audio languages
+                if RICH_AVAILABLE and self.console:
+                    with self.console.status("[bold cyan]🔍 Detecting available audio languages...[/bold cyan]"):
+                        languages = self.detect_audio_languages(url)
+                else:
+                    print("🔍 Detecting available audio languages...")
+                    languages = self.detect_audio_languages(url)
+                
+                # If multiple languages found, prompt user (in interactive mode or always for multi-language)
+                if languages and len(languages) > 1:
+                    if interactive:
+                        selected_language = self.prompt_audio_language_selection(languages)
+                    else:
+                        # Even in non-interactive mode, show languages and prompt
+                        selected_language = self.prompt_audio_language_selection(languages)
+                    
+                    if selected_language:
+                        if RICH_AVAILABLE and self.console:
+                            self.console.print(f"[green]✓ Selected audio language: {selected_language['name']}[/green]")
+                        else:
+                            print(f"✓ Selected audio language: {selected_language['name']}")
+                elif languages and len(languages) == 1:
+                    # Only one language, download silently
+                    if RICH_AVAILABLE and self.console:
+                        self.console.print(f"[dim]ℹ Audio language: {languages[0]['name']}[/dim]")
+                    else:
+                        pass  # Don't display message for single language
+            elif audio_language:
+                # Audio language was specified via parameter
+                if RICH_AVAILABLE and self.console:
+                    self.console.print(f"[green]✓ Using specified audio language: {audio_language}[/green]")
+                else:
+                    print(f"✓ Using specified audio language: {audio_language}")
+            
             # Configure yt-dlp options
             ydl_opts = self.default_ydl_opts.copy()
             
@@ -4722,7 +4949,38 @@ class UltimateMediaDownloader:
             if custom_format:
                 ydl_opts['format'] = custom_format
             else:
-                ydl_opts['format'] = self._get_format_selector(quality, audio_only)
+                base_format = self._get_format_selector(quality, audio_only)
+                
+                # Apply audio language filter if selected
+                if selected_language and selected_language.get('code'):
+                    lang_code = selected_language['code']  # Original code like en-US, es-MX, etc.
+                    # Modify format selector to prefer the selected language
+                    if audio_only:
+                        # For audio-only downloads, filter by language
+                        # Try exact match first, then fallback to base language, then any
+                        ydl_opts['format'] = f"bestaudio[language={lang_code}]/bestaudio"
+                    else:
+                        # For video downloads, prefer audio track in selected language
+                        # Split the format selector and add language preference
+                        if '+' in base_format:
+                            # Format like "bestvideo+bestaudio"
+                            video_part, audio_part = base_format.split('+', 1)
+                            ydl_opts['format'] = f"{video_part}+bestaudio[language={lang_code}]/{base_format}"
+                        else:
+                            # Fallback for other formats
+                            ydl_opts['format'] = base_format
+                elif audio_language:
+                    # Use specified audio language parameter
+                    # This could be either normalized (en) or specific (en-US)
+                    # We need to handle both cases
+                    if audio_only:
+                        # Try the specified language and common variants
+                        ydl_opts['format'] = f"bestaudio[language^={audio_language}]/bestaudio[language={audio_language}]/bestaudio"
+                    else:
+                        base_video = base_format.split('+')[0] if '+' in base_format else 'bestvideo'
+                        ydl_opts['format'] = f"{base_video}+bestaudio[language^={audio_language}]/{base_video}+bestaudio[language={audio_language}]/{base_format}"
+                else:
+                    ydl_opts['format'] = base_format
             
             # Set output format and post-processors with enhanced quality settings
             if output_format:
@@ -4824,10 +5082,18 @@ class UltimateMediaDownloader:
                         print(f"▭ Output format: {output_format.upper()}")
                     if custom_format:
                         print(f"🔧 Custom format: {custom_format}")
+                    # Show selected audio language if available
+                    if selected_language:
+                        print(f"🌐 Audio language: {selected_language['name']}")
+                    elif audio_language:
+                        print(f"🌐 Audio language: {audio_language}")
                 
                 # Start download
                 if RICH_AVAILABLE and self.console:
-                    self.console.print("\n[bold green]▸ Starting download...[/bold green]")
+                    download_msg = "\n[bold green]▸ Starting download...[/bold green]"
+                    if selected_language and len(selected_language) > 1:
+                        download_msg += f"\n[cyan]🌐 Downloading in {selected_language['name']}[/cyan]"
+                    self.console.print(download_msg)
                 else:
                     print("\n▸ Starting download...")
                 
@@ -6199,6 +6465,8 @@ Report issues: Create an issue on the GitHub repository
                        choices=['best', 'high', 'medium', 'low'],
                        default='best',
                        help='Audio quality level (default: best)')
+    parser.add_argument('--audio-language', '--audio-lang',
+                       help='Preferred audio language code (e.g., en, es, fr) for videos with multiple audio tracks')
     
     # Performance and metadata options
     parser.add_argument('--max-concurrent', type=int, default=3,
@@ -6337,7 +6605,8 @@ Report issues: Create an issue on the GitHub repository
                         interactive=False,
                         add_metadata=args.embed_metadata or args.audio_only,
                         add_thumbnail=args.embed_thumbnail or args.audio_only,
-                        no_playlist=args.no_playlist
+                        no_playlist=args.no_playlist,
+                        audio_language=args.audio_language
                     )
                     if result:
                         successful += 1
@@ -6370,7 +6639,8 @@ Report issues: Create an issue on the GitHub repository
         interactive=use_interactive,
         add_metadata=add_metadata,
         add_thumbnail=add_thumbnail,
-        no_playlist=args.no_playlist
+        no_playlist=args.no_playlist,
+        audio_language=args.audio_language
     )
 
 if __name__ == "__main__":    
