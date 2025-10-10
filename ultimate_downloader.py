@@ -4798,13 +4798,33 @@ class UltimateMediaDownloader:
             
             # Check if URL might be a playlist
             if self.is_playlist_url(url):
-                print("⌕ Playlist detected in URL!")
+                # First check if this is a YouTube Mix/Radio playlist (unviewable)
+                is_youtube_mix = False
+                if "youtube.com" in url or "youtu.be" in url:
+                    if "list=" in url:
+                        parsed = urlparse(url)
+                        params = parse_qs(parsed.query)
+                        if 'list' in params:
+                            list_id = params['list'][0]
+                            # Mix/Radio playlists start with RD
+                            if list_id.startswith('RD'):
+                                is_youtube_mix = True
+                                print("⌕ YouTube Mix/Radio playlist detected!")
+                                print("ℹ  Mix playlists are dynamically generated and unviewable")
+                                print("→ Extracting single video from URL...")
+                                url = self.clean_url(url, keep_playlist=False)
+                                print(f"◎ Extracted video URL: {url}")
+                                # Continue to single video download (skip playlist logic)
                 
-                if no_playlist:
-                    # User explicitly wants only single video
-                    url = self.clean_url(url, keep_playlist=False)
-                    print(f"ℹ  --no-playlist flag detected: downloading single item only")
-                    print(f"◎ Downloading: {url}")
+                if not is_youtube_mix:
+                    print("⌕ Playlist detected in URL!")
+                
+                if no_playlist or is_youtube_mix:
+                    # User explicitly wants only single video, or it's a Mix playlist
+                    if not is_youtube_mix:
+                        url = self.clean_url(url, keep_playlist=False)
+                        print(f"ℹ  --no-playlist flag detected: downloading single item only")
+                        print(f"◎ Downloading: {url}")
                 elif interactive:
                     choice_options = [
                         "Download as playlist (all videos/songs)",
