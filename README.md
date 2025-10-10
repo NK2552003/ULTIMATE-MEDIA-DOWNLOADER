@@ -1,24 +1,39 @@
 <div align="center">
-<h1>Ultimate Media Downloader</h1>
-</div>
-<div align="center">
 
-[![Python Version](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/downloads/)
+# 🎬 Ultimate Media Downloader
+
+[![Python Version](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20macOS%20%7C%20Windows-lightgrey.svg)](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER)
 [![Maintained](https://img.shields.io/badge/maintained-yes-brightgreen.svg)](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/commits/main)
 [![Last Updated](https://img.shields.io/badge/updated-October%202025-blue.svg)](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER)
-[![Documentation](https://img.shields.io/badge/docs-comprehensive-brightgreen.svg)](docs/INDEX.md)
 
-**A powerful, feature-rich media downloader supporting 1000+ platforms**
+**Download media from 1000+ platforms with just one command: `umd`**
 
-**Version 2.0.0** | [Documentation](docs/INDEX.md) • [Installation](#installation) • [Quick Start](#quick-start) • [Contributing](CONTRIBUTING.md)
+[Features](#-features) • [Installation](#-installation) • [Quick Start](#-quick-start) • [Documentation](#-documentation) • [Contributing](CONTRIBUTING.md)
 
 </div>
 
 ---
 
-## Demo
+## 🌟 Overview
+
+**Ultimate Media Downloader** is a professional-grade, open-source media downloading tool that supports over 1000+ platforms including YouTube, Spotify, SoundCloud, Instagram, TikTok, and many more. Built with Python and featuring a beautiful Rich CLI interface, it provides enterprise-level features with consumer-friendly simplicity.
+
+### Why Choose Ultimate Media Downloader?
+
+- 🚀 **One Command**: Install once, use `umd` from anywhere
+- 🎵 **1000+ Platforms**: YouTube, Spotify, Instagram, TikTok, SoundCloud, and more
+- 🎯 **No Virtual Environment**: Clean installation with `pipx`
+- 📁 **Auto Organization**: Downloads saved to `~/Downloads/UltimateDownloader`
+- 🎨 **Beautiful UI**: Modern CLI with progress bars and rich formatting
+- ⚡ **Fast Downloads**: Concurrent downloads with resume support
+- 🎭 **High Quality**: 4K/8K video, 320kbps audio, metadata embedding
+- 🛠️ **Active Development**: Regular updates and improvements
+
+---
+
+## 📺 Demo
 
 <div align="center">
 
@@ -30,107 +45,420 @@ https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/blob/main/demo_video/demo
 
 ---
 
-## Table of Contents
+## ✨ Features
 
-- [Demo](#demo)
-- [Overview](#overview)
-- [Features](#features)
-- [Supported Platforms](#supported-platforms)
-- [System Requirements](#system-requirements)
-- [Installation](#installation)
-- [Quick Start](#quick-start)
-- [Documentation](#documentation)
-- [Contributing](#contributing)
-- [License](#license)
-- [Disclaimer](#disclaimer)
+### Core Capabilities
 
----
+🎬 **Video Downloads**
+- YouTube (4K/8K), Vimeo, Dailymotion
+- Live streams and premieres
+- Age-restricted content support
+- Custom quality selection
 
-## Overview
+🎵 **Audio Downloads**
+- Spotify (via YouTube search)
+- SoundCloud, Apple Music
+- MP3, FLAC, M4A, OPUS formats
+- Automatic metadata & cover art embedding
 
-**Ultimate Media Downloader** is a professional-grade, open-source media downloading tool that supports over 1000+ platforms including YouTube, Spotify, SoundCloud, Instagram, TikTok, and many more. Built with Python and featuring a beautiful Rich CLI interface, it provides enterprise-level features with consumer-friendly simplicity.
+📱 **Social Media**
+- Instagram (Posts, Reels, IGTV, Stories)
+- TikTok (Videos, User content)
+- Twitter/X (Video tweets)
+- Facebook (Videos, Live streams)
 
-### Why Choose Ultimate Media Downloader?
-
-- **1000+ Platforms**: Download from virtually any media platform
-- **High Quality**: Support for 4K/8K video and 320kbps audio
-- **Smart Metadata**: Automatic thumbnail embedding and metadata tagging
-- **Playlist Support**: Download entire playlists and channels
-- **Advanced Features**: Proxy support, concurrent downloads, retry logic
-- **Beautiful UI**: Modern CLI with progress bars and rich formatting
-- **Cross-Platform**: Works on Linux, macOS, and Windows
-- **Active Development**: Regular updates and improvements
-- **Comprehensive Docs**: Extensive documentation with examples
-- **Modular Design**: Clean, maintainable codebase
-
----
-
-## Features
-
-### Core Features
-
-- **Video Downloads**: Support for all major video platforms
-- **Audio Extraction**: Convert videos to high-quality audio
-- **Social Media**: Download from Instagram, TikTok, Twitter, Facebook
-- **Music Platforms**: Spotify, SoundCloud, Apple Music support
-- **Streaming Services**: Twitch, Dailymotion, Vimeo, and more
-- **Batch Processing**: Download multiple URLs or entire playlists
-- **Concurrent Downloads**: Multiple simultaneous downloads
-- **Format Conversion**: Multiple output formats (MP4, MKV, MP3, FLAC, etc.)
+🎮 **Streaming Platforms**
+- Twitch (VODs, Clips, Live)
+- YouTube Live
+- Facebook Live
+- And 1000+ more sites!
 
 ### Advanced Features
 
-- **Thumbnail Embedding**: Automatic album art and video thumbnails
-- **Metadata Tagging**: ID3 tags, artist, album, year, genre
-- **Proxy Support**: HTTP/HTTPS/SOCKS proxy configuration
-- **Authentication**: Login support for premium content
-- **Quality Selection**: Choose specific quality (4K, 1080p, 720p, etc.)
-- **Progress Tracking**: Real-time download progress with ETA
-- **Auto Retry**: Intelligent retry logic for failed downloads
-- **Subtitle Support**: Download and embed subtitles
-- **Archive Mode**: Skip previously downloaded files
+✅ **Smart URL Handling**
+- YouTube Mix/Radio playlists (auto-extract single video)
+- Playlist support with selection options
+- Batch downloads from file
+- Parallel processing
 
-### User Interface
+✅ **Quality & Format**
+- Choose quality: Best, 4K, 1080p, 720p, 480p, 360p
+- Multiple formats: MP4, MKV, MP3, FLAC, M4A, OPUS
+- Custom format strings for advanced users
+- Audio language selection
 
-- **Rich CLI**: Beautiful terminal interface with colors and formatting
-- **Progress Bars**: Real-time download progress visualization
-- **Search Integration**: Search and download directly
-- **Interactive Mode**: User-friendly interactive prompts
-- **Verbose Logging**: Detailed logs for troubleshooting
+✅ **User Experience**
+- Interactive mode for beginners
+- Non-interactive mode for automation
+- Real-time progress tracking
+- Beautiful terminal UI with Rich
+- Comprehensive error messages
+
+✅ **Metadata & Thumbnails**
+- Auto-embed album art
+- ID3 tags (artist, title, album, year)
+- Thumbnail embedding
+- Spotify/Apple Music cover art fetching
 
 ---
 
-## Supported Platforms
+## 📦 Installation
+
+### ⚡ Quick Install (Recommended)
+
+Install in just **2 commands** - no virtual environment needed!
+
+```bash
+git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+cd ULTIMATE-MEDIA-DOWNLOADER
+./scripts/install.sh
+```
+
+**Windows users:**
+```batch
+git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+cd ULTIMATE-MEDIA-DOWNLOADER
+scripts\install.bat
+```
+
+That's it! Now use from anywhere:
+
+```bash
+umd <URL>
+```
+
+### What Gets Installed
+
+✅ No virtual environment needed  
+✅ Global `umd` command available everywhere  
+✅ All dependencies handled automatically  
+✅ FFmpeg installed/verified  
+✅ Downloads directory created at `~/Downloads/UltimateDownloader`  
+
+**Installation time**: 2-5 minutes
+
+---
+
+### 📋 Prerequisites
+
+Before installing, ensure you have:
+
+- **Python 3.9+** - [Download here](https://www.python.org/downloads/)
+- **Git** - [Download here](https://git-scm.com/downloads)
+- **FFmpeg** (optional, will be prompted during installation)
+
+Check your Python version:
+```bash
+python3 --version
+```
+
+---
+
+### 🔧 Alternative Installation Methods
+
+<details>
+<summary><b>Method 1: Using pipx (Manual)</b></summary>
+
+```bash
+# Install pipx if not already installed
+brew install pipx  # macOS
+# or
+pip install --user pipx  # Linux/Windows
+
+# Clone and install
+git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+cd ULTIMATE-MEDIA-DOWNLOADER
+pipx install -e .
+```
+
+</details>
+
+<details>
+<summary><b>Method 2: Using pip</b></summary>
+
+```bash
+git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+cd ULTIMATE-MEDIA-DOWNLOADER
+pip3 install -e .
+```
+
+</details>
+
+<details>
+<summary><b>Method 3: Virtual Environment</b></summary>
+
+```bash
+git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+cd ULTIMATE-MEDIA-DOWNLOADER
+python3 -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install -r requirements.txt
+python ultimate_downloader.py <URL>
+```
+
+</details>
+
+---
+
+### 🖥️ Platform-Specific Installation
+
+<details>
+<summary><b>🍎 macOS</b></summary>
+
+```bash
+# Install prerequisites
+brew install python@3.11 ffmpeg pipx
+
+# Clone and install
+git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+cd ULTIMATE-MEDIA-DOWNLOADER
+./scripts/install.sh
+```
+
+If `umd` command not found, add to PATH:
+```bash
+echo 'export PATH="$PATH:$HOME/Library/Python/3.11/bin"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+</details>
+
+<details>
+<summary><b>🐧 Linux (Ubuntu/Debian)</b></summary>
+
+```bash
+# Install prerequisites
+sudo apt update
+sudo apt install -y python3 python3-pip ffmpeg git
+
+# Clone and install
+git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+cd ULTIMATE-MEDIA-DOWNLOADER
+./scripts/install.sh
+```
+
+If `umd` command not found, add to PATH:
+```bash
+echo 'export PATH="$PATH:$HOME/.local/bin"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+</details>
+
+<details>
+<summary><b>🪟 Windows</b></summary>
+
+**Step 1: Install Prerequisites**
+1. Install Python from [python.org](https://www.python.org/downloads/) (Check "Add Python to PATH")
+2. Install Git from [git-scm.com](https://git-scm.com/downloads)
+3. Install FFmpeg:
+   - Using Chocolatey: `choco install ffmpeg`
+   - Or download from [ffmpeg.org](https://ffmpeg.org/download.html)
+
+**Step 2: Install Ultimate Media Downloader**
+```batch
+git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+cd ULTIMATE-MEDIA-DOWNLOADER
+scripts\install.bat
+```
+
+</details>
+
+---
+
+### ✅ Verify Installation
+
+```bash
+# Check if installed
+umd --version
+
+# Show help
+umd --help
+
+# Test with a video
+umd "https://www.youtube.com/watch?v=dQw4w9WgXcQ" --info
+```
+
+---
+
+### 📖 Detailed Installation Guide
+
+For comprehensive installation instructions, troubleshooting, and platform-specific guides, see:
+
+**[📖 Complete Installation Guide](INSTALLATION_GUIDE.md)**
+
+---
+
+## 🚀 Quick Start
+
+### Basic Usage
+
+```bash
+# Interactive mode (easiest for beginners)
+umd
+
+# Download a video
+umd "https://youtube.com/watch?v=VIDEO_ID"
+
+# Download audio only as MP3
+umd "https://youtube.com/watch?v=VIDEO_ID" --audio-only --format mp3
+
+# Download in specific quality
+umd "URL" --quality 1080p
+
+# Download entire playlist
+umd "https://youtube.com/playlist?list=PLAYLIST_ID"
+
+# Show all available options
+umd --help
+```
+
+### Advanced Examples
+
+```bash
+# Download with metadata and thumbnail
+umd "URL" --audio-only --embed-metadata --embed-thumbnail
+
+# Batch download from file
+umd --batch-file urls.txt --audio-only
+
+# Parallel batch download
+umd --batch-file urls.txt --optimized-batch --max-concurrent 5
+
+# Custom output directory
+umd "URL" --output /path/to/folder
+
+# Show available formats
+umd "URL" --show-formats
+
+# Download specific quality video
+umd "URL" --quality 1080p --format mp4
+```
+
+### Download Locations
+
+Downloads are automatically saved to:
+```
+~/Downloads/UltimateDownloader/
+├── Artist Name - Song Title.mp3
+├── Video Title.mp4
+├── Playlist Name/
+│   ├── Song 1.mp3
+│   ├── Song 2.mp3
+│   └── Song 3.mp3
+└── Album Name/
+    └── tracks...
+```
+
+For more examples and detailed usage, see **[Quick Start Guide](QUICKSTART.md)**
+
+---
+
+## 🌐 Supported Platforms
+
+<details>
+<summary><b>Click to see full list of 1000+ supported platforms</b></summary>
 
 ### Video Platforms
-YouTube, Vimeo, Dailymotion, Twitch, Facebook, Reddit, Twitter/X, Imgur
+- YouTube (Videos, Playlists, Live Streams, Shorts)
+- Vimeo (Videos, Private content)
+- Dailymotion
+- Twitch (VODs, Clips, Streams)
+- Facebook (Videos, Live)
+- And many more...
 
 ### Social Media
-Instagram, TikTok, Snapchat, Pinterest
+- Instagram (Posts, Reels, IGTV, Stories)
+- TikTok (Videos, User content)
+- Twitter/X (Video tweets)
+- Reddit (Videos)
+- Snapchat
 
 ### Music Platforms
-Spotify, SoundCloud, Apple Music, Bandcamp, Mixcloud
+- Spotify (Tracks, Albums, Playlists - via YouTube search)
+- SoundCloud (Tracks, Playlists, Sets)
+- Apple Music (Tracks, Albums - via YouTube search)
+- Bandcamp
+- Mixcloud
 
 ### Streaming Services
-Twitch, Streamable, Vidme, Coub
+- Twitch
+- YouTube Live
+- Facebook Live
+- And more...
 
-### Educational & Professional
-TED Talks, Lynda
+**Total: 1000+ supported sites via yt-dlp**
 
-### Generic Support
-- **1000+ Sites**: Via yt-dlp, supports most sites with embedded videos
-- **M3U8 Streams**: HLS stream downloads
-- **DASH/MPD**: MPEG-DASH support
-- **Direct URLs**: Direct video/audio file URLs
+Use `umd --list-platforms` to see detailed platform support.
 
-For the complete list and platform-specific guides, see [USER_GUIDE.md](docs/USER_GUIDE.md#platform-specific-guides)
+</details>
 
 ---
 
-## System Requirements
+## 📚 Documentation
+
+### User Documentation
+
+- **[Installation Guide](INSTALLATION_GUIDE.md)** - Comprehensive installation instructions
+- **[Quick Start Guide](QUICKSTART.md)** - Get started in 5 minutes
+- **[User Guide](docs/USER_GUIDE.md)** - Complete usage manual
+- **[What's New](WHATS_NEW.md)** - Latest changes and features
+
+### Technical Documentation
+
+- **[API Reference](docs/API_REFERENCE.md)** - Developer documentation
+- **[Architecture](docs/ARCHITECTURE.md)** - Technical deep dive
+- **[Project Structure](docs/PROJECT_STRUCTURE.md)** - File organization
+- **[Contributing Guide](CONTRIBUTING.md)** - How to contribute
+
+### Guides & Troubleshooting
+
+- **[YouTube Mix Fix](docs/guides/YOUTUBE_MIX_FIX.md)** - Fix YouTube Mix issues
+- **[Troubleshooting](docs/guides/TROUBLESHOOTING.md)** - Common problems and solutions
+- **[FAQ](docs/FAQ.md)** - Frequently asked questions
+
+---
+
+## 🎯 Use Cases
+
+### For Music Lovers
+```bash
+# Download Spotify playlist as MP3 with metadata
+umd "SPOTIFY_PLAYLIST_URL" --audio-only --format mp3 --embed-metadata
+
+# Download album in FLAC quality
+umd "ALBUM_URL" --audio-only --format flac
+```
+
+### For Content Creators
+```bash
+# Download 4K video for editing
+umd "URL" --quality 4k --format mp4
+
+# Download entire channel
+umd "CHANNEL_URL" --playlist
+```
+
+### For Researchers
+```bash
+# Batch download educational content
+umd --batch-file lectures.txt --quality 1080p
+
+# Download with subtitles
+umd "URL" --write-subs --sub-lang en
+```
+
+### For Automation
+```bash
+# Automated batch download (non-interactive)
+umd --batch-file daily_downloads.txt --no-interactive --optimized-batch
+```
+
+---
+
+## 🛠️ System Requirements
 
 ### Minimum Requirements
-
 - **Operating System**: Linux, macOS 10.12+, Windows 10+
 - **Python**: 3.9 or higher
 - **RAM**: 2GB minimum, 4GB recommended
@@ -138,326 +466,110 @@ For the complete list and platform-specific guides, see [USER_GUIDE.md](docs/USE
 - **Internet**: Stable internet connection
 
 ### Required Software
-
 - **Python 3.9+**: Core runtime
-- **FFmpeg**: Video/audio processing (auto-installed by setup script)
+- **FFmpeg**: Video/audio processing (can be auto-installed)
 - **pip**: Python package manager
 
-For detailed requirements, see [USER_GUIDE.md](docs/USER_GUIDE.md#prerequisites)
-
 ---
 
-## Installation
-
-### Method 1: Automated Setup (Recommended)
-
-The easiest way to get started:
-
-#### Linux / macOS
-
-```bash
-# Clone the repository
-git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
-cd ULTIMATE-MEDIA-DOWNLOADER
-
-# Run setup script (one command does everything!)
-chmod +x setup.sh
-./setup.sh
-
-# Activate environment
-source activate-env.sh
-```
-
-#### Windows
-
-```batch
-# Clone the repository
-git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
-cd ULTIMATE-MEDIA-DOWNLOADER
-
-# Run setup script (one command does everything!)
-setup.bat
-
-# Activate environment
-activate-env.bat
-```
-
-**The setup script automatically:**
-- [x] Detects your operating system (Linux/macOS/Windows)
-- [x] Checks and installs Python 3.9+ if needed
-- [x] Installs FFmpeg for video processing (auto-install on Linux/macOS, manual on Windows)
-- [x] Creates isolated virtual environment
-- [x] Installs all Python packages
-- [x] Creates configuration files
-- [x] Runs verification tests
-
-**Estimated time**: 3-5 minutes
-
-**Note for Windows users:** 
-- Make sure Python is added to PATH during installation
-- FFmpeg must be installed manually from [ffmpeg.org](https://ffmpeg.org/download.html) or via package managers like Chocolatey (`choco install ffmpeg`) or Scoop (`scoop install ffmpeg`)
-
-### Method 2: Manual Installation
-
-<details>
-<summary>Click to expand manual installation instructions</summary>
-
-#### Linux (Ubuntu/Debian)
-
-```bash
-sudo apt update
-sudo apt install python3 python3-pip python3-venv ffmpeg
-git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
-cd ULTIMATE-MEDIA-DOWNLOADER
-python3 -m venv venv
-source venv/bin/activate
-pip3 install -r requirements.txt
-```
-
-#### macOS
-
-```bash
-brew install python@3.11 ffmpeg
-git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
-cd ULTIMATE-MEDIA-DOWNLOADER
-python3 -m venv venv
-source venv/bin/activate
-pip3 install -r requirements.txt
-```
-
-#### Windows
-
-```batch
-# Install Python from python.org and FFmpeg from ffmpeg.org
-git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
-cd ULTIMATE-MEDIA-DOWNLOADER
-python -m venv venv
-venv\Scripts\activate
-pip install -r requirements.txt
-```
-
-**Tip:** Use the automated setup script `setup.bat` for easier installation!
-
-</details>
-
-For troubleshooting installation issues, see [USER_GUIDE.md](docs/USER_GUIDE.md#troubleshooting)
-
----
-
-## Quick Start
-
-### Basic Usage
-
-#### Linux / macOS
-
-```bash
-# Activate environment (if not already activated)
-source activate-env.sh
-
-# Download a video
-python3 ultimate_downloader.py "YOUR_VIDEO_URL"
-
-# Download audio only
-python3 ultimate_downloader.py -a "https://www.youtube.com/watch?v=VIDEO_ID"
-
-# Download playlist
-python3 ultimate_downloader.py -p "https://www.youtube.com/playlist?list=PLAYLIST_ID"
-
-# Interactive mode
-python3 ultimate_downloader.py -i
-```
-
-#### Windows
-
-```batch
-# Activate environment (if not already activated)
-activate-env.bat
-
-# Download a video
-python ultimate_downloader.py "YOUR_VIDEO_URL"
-
-# Download audio only
-python ultimate_downloader.py -a "https://www.youtube.com/watch?v=VIDEO_ID"
-
-# Download playlist
-python ultimate_downloader.py -p "https://www.youtube.com/playlist?list=PLAYLIST_ID"
-
-# Interactive mode
-python ultimate_downloader.py -i
-```
-
-### Common Examples
-
-```bash
-# Download best quality video
-python3 ultimate_downloader.py "VIDEO_URL"
-
-# Download specific quality
-python3 ultimate_downloader.py --quality 1080 "VIDEO_URL"
-
-# Extract audio as MP3
-python3 ultimate_downloader.py -a "VIDEO_URL"
-
-# Download with subtitles
-python3 ultimate_downloader.py --subtitles "VIDEO_URL"
-
-# Custom output directory
-python3 ultimate_downloader.py -o ~/Downloads/Videos "VIDEO_URL"
-
-# Download with proxy
-python3 ultimate_downloader.py --proxy "http://proxy:port" "VIDEO_URL"
-```
-
-For more examples and advanced usage, see [USER_GUIDE.md](docs/USER_GUIDE.md) and [QUICK_REFERENCE.md](QUICK_REFERENCE.md)
-
----
-
-## Documentation
-
-### Quick Access
-
-- **[Documentation Index](docs/INDEX.md)** - Central hub for all documentation
-- **[User Guide](docs/USER_GUIDE.md)** - Comprehensive user manual
-- **[Quick Reference](QUICK_REFERENCE.md)** - Common commands cheat sheet
-- **[API Reference](docs/API_REFERENCE.md)** - Developer API documentation
-- **[Architecture](docs/ARCHITECTURE.md)** - System design and components
-- **[Project Structure](docs/PROJECT_STRUCTURE.md)** - Code organization
-- **[Flowcharts](docs/FLOWCHARTS.md)** - Visual process flows
-
-### For Different Users
-
-- **New User?** → Start with [Installation](docs/USER_GUIDE.md#installation) and [Quick Start](#-quick-start)
-- **Developer?** → Check [API Reference](docs/API_REFERENCE.md) and [Architecture](docs/ARCHITECTURE.md)
-- **Contributor?** → Read [Contributing Guide](CONTRIBUTING.md)
-- **Need Help?** → See [Troubleshooting](docs/USER_GUIDE.md#troubleshooting) and [FAQ](docs/USER_GUIDE.md#faq)
-
----
-
-## Contributing
+## 🤝 Contributing
 
 We welcome contributions! Here's how you can help:
 
-### Ways to Contribute
+1. 🍴 Fork the repository
+2. 🔨 Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. 💾 Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. 📤 Push to the branch (`git push origin feature/AmazingFeature`)
+5. 🎉 Open a Pull Request
 
-1. **Report Bugs**: Open an issue with details
-2. **Suggest Features**: Share your ideas
-3. **Improve Documentation**: Fix typos, add examples
-4. **Submit Code**: Fix bugs or add features
-5. **Translations**: Help translate the UI
+See **[CONTRIBUTING.md](CONTRIBUTING.md)** for detailed guidelines.
 
-### Quick Start for Contributors
+### Development Setup
 
 ```bash
-# Fork the repository and clone your fork
+# Clone your fork
 git clone https://github.com/YOUR_USERNAME/ULTIMATE-MEDIA-DOWNLOADER.git
 cd ULTIMATE-MEDIA-DOWNLOADER
 
-# Create a branch
-git checkout -b feature/your-feature-name
+# Create virtual environment
+python3 -m venv venv
+source venv/bin/activate
 
-# Make changes and commit
-git add .
-git commit -m "Description of changes"
+# Install development dependencies
+pip install -r requirements-dev.txt
 
-# Push and create pull request
-git push origin feature/your-feature-name
+# Run tests
+pytest
 ```
-
-For detailed guidelines, see [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ---
 
-## License
+## 📝 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## Disclaimer
+## ⚠️ Disclaimer
 
-**IMPORTANT**: This tool is provided for educational and personal use only.
+This tool is for personal use only. Users are responsible for complying with copyright laws and terms of service of the platforms they download from. The developers assume no liability for misuse of this software.
 
-### Legal Considerations
-
-- [x] **Allowed**: Downloading content you own or have permission to download
-- [x] **Allowed**: Downloading public domain or Creative Commons content
-- [x] **Allowed**: Personal backups of purchased content
-- [ ] **Not Allowed**: Downloading copyrighted content without permission
-- [ ] **Not Allowed**: Redistributing downloaded content
-- [ ] **Not Allowed**: Commercial use without proper licenses
-
-### User Responsibilities
-
-By using this software, you agree to:
-1. Comply with all applicable laws and regulations
-2. Respect copyright and intellectual property rights
-3. Follow the terms of service of content platforms
-4. Use the tool ethically and responsibly
-5. Not use it for piracy or unauthorized distribution
-
-### No Warranty
-
-This software is provided "as is" without warranty of any kind. The authors are not responsible for any misuse or legal consequences.
+**Please respect:**
+- Copyright laws and fair use policies
+- Platform terms of service
+- Content creator rights
+- Regional restrictions and DRM
 
 ---
 
-## Acknowledgments
+## 🙏 Acknowledgments
 
-This project is built with amazing open-source tools:
-
-- [yt-dlp](https://github.com/yt-dlp/yt-dlp) - Core download engine
+Built with:
+- [yt-dlp](https://github.com/yt-dlp/yt-dlp) - Media extraction engine
 - [Rich](https://github.com/Textualize/rich) - Beautiful terminal formatting
-- [Mutagen](https://github.com/quodlibet/mutagen) - Audio metadata
-- [Spotipy](https://github.com/plamere/spotipy) - Spotify API
 - [FFmpeg](https://ffmpeg.org/) - Media processing
+- [SpotDL](https://github.com/spotDL/spotify-downloader) - Spotify integration
 
 Special thanks to all contributors and the open-source community!
 
 ---
 
-## Contact & Support
+## 📞 Support & Contact
 
-- **Bug Reports**: [GitHub Issues](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues)
-- **Feature Requests**: [GitHub Discussions](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/discussions)
-- **Documentation**: [docs/INDEX.md](docs/INDEX.md)
-- **Repository**: https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER
-
----
-
-## Project Statistics
-
-| Metric | Count |
-|--------|-------|
-| **Total Lines of Code** | 8,195+ lines |
-| **Python Modules** | 5 core modules |
-| **Supported Platforms** | 1000+ |
-| **Documentation Lines** | 4,000+ lines |
-| **Code Examples** | 50+ examples |
-
-For detailed statistics, see [PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md)
+- 🐛 **Bug Reports**: [Open an issue](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues)
+- 💡 **Feature Requests**: [Start a discussion](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/discussions)
+- 📧 **Contact**: [Create an issue](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues)
+- ⭐ **Show Support**: [Star the repository](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER)
 
 ---
 
-## Recent Updates
+## 🚀 Roadmap
 
-### Version 2.0.0 (October 2025) - Current
-- [x] Complete documentation overhaul
-- [x] New API Reference documentation
-- [x] Modular code structure
-- [x] Enhanced Spotify integration
-- [x] Improved error handling
-- [x] Rich CLI interface
+- [ ] GUI interface
+- [ ] Browser extension
+- [ ] Docker support
+- [ ] Multi-language support
+- [ ] Advanced scheduling
+- [ ] Cloud storage integration
+- [ ] Mobile app
 
-📖 For complete version history, see [CHANGELOG.md](CHANGELOG.md)
+---
+
+## 📊 Statistics
+
+- **Lines of Code**: 5000+
+- **Supported Platforms**: 1000+
+- **Active Users**: Growing
+- **Last Updated**: October 2025
 
 ---
 
 <div align="center">
 
-**Made with ❤️ by [Nitish Kumar](https://github.com/NK2552003)**
+**Made with ❤️ by [NK2552003](https://github.com/NK2552003)**
 
-If you find this project useful, please consider giving it a star!
+⭐ Star this repository if you find it useful!
 
-[⬆ Back to Top](#ultimate-media-downloader-)
+[Report Bug](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues) • [Request Feature](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues) • [Documentation](docs/INDEX.md)
 
 </div>

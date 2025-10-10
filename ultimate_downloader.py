@@ -134,7 +134,10 @@ from utils import (
 
 
 class UltimateMediaDownloader:
-    def __init__(self, output_dir="downloads"):
+    def __init__(self, output_dir=None):
+        # Default to system Downloads folder if no output_dir specified
+        if output_dir is None:
+            output_dir = Path.home() / "Downloads" / "UltimateDownloader"
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
         self.cancelled = False
@@ -191,8 +194,11 @@ class UltimateMediaDownloader:
             'prefer_free_formats': False,  # Prefer higher quality formats even if not free
             'format_sort': ['quality', 'res', 'fps', 'hdr:12', 'codec:vp9.2', 'size', 'br', 'asr', 'proto'],
             
-            # File naming and organization
-            'outtmpl': str(self.output_dir / '%(artist,uploader)s - %(title)s.%(ext)s'),
+            # File naming and organization - use simpler template to avoid long filenames
+            'outtmpl': str(self.output_dir / '%(uploader)s - %(title).100B.%(ext)s'),
+            'restrictfilenames': False,  # Allow unicode characters but sanitize problematic ones
+            'windowsfilenames': True,  # Sanitize filenames for Windows compatibility (removes :, ?, etc.)
+            'trim_file_name': 200,  # Limit filename length to 200 characters
             
             # Metadata and cover art - write intermediate files but clean them later
             'writeinfojson': False,  # Don't keep JSON files
@@ -4813,7 +4819,15 @@ class UltimateMediaDownloader:
                     )
                     
                     if choice == "Download as playlist (all videos/songs)":
-                        return self.download_playlist(url, quality, audio_only, output_format, custom_format, interactive=interactive)
+                        result = self.download_playlist(url, quality, audio_only, output_format, custom_format, interactive=interactive)
+                        if result is None and "RD" in url and "list=" in url:
+                            # YouTube Mix/Radio playlist - extract single video
+                            print("→ Extracting single video from Mix/Radio URL...")
+                            url = self.clean_url(url, keep_playlist=False)
+                            print(f"◎ Extracted video URL: {url}")
+                            # Continue to single video download below
+                        else:
+                            return result
                     elif choice == "Download single video (select from list)":
                         # Let user select which video from the playlist
                         selected_url = self.select_video_from_playlist(url)
@@ -4825,7 +4839,13 @@ class UltimateMediaDownloader:
                             return None
                     elif choice == "Show playlist contents first":
                         playlist_info = self.show_playlist_contents(url)
-                        if playlist_info:
+                        if playlist_info is None and "RD" in url and "list=" in url:
+                            # YouTube Mix/Radio playlist - extract single video
+                            print("→ Extracting single video from Mix/Radio URL...")
+                            url = self.clean_url(url, keep_playlist=False)
+                            print(f"◎ Extracted video URL: {url}")
+                            # Continue to single video download
+                        elif playlist_info:
                             # Ask again after showing contents
                             download_choice = self.prompt_user_choice(
                                 "Now what would you like to do?",
@@ -4851,12 +4871,102 @@ class UltimateMediaDownloader:
                     # Non-interactive mode: download entire playlist automatically
                     print("ℹ  Playlist URL detected: downloading entire playlist automatically")
                     print("◎ Tip: Use --no-playlist flag to download single item only")
-                    return self.download_playlist(url, quality, audio_only, output_format, custom_format, interactive=False)
+                    
+                    # Try to download playlist, but fallback to single video if it fails
+                    try:
+                        result = self.download_playlist(url, quality, audio_only, output_format, custom_format, interactive=False)
+                        if result is None and "RD" in url and "list=" in url:
+                            # Playlist extraction failed (likely YouTube Mix), extract single video
+                            print("→ Playlist extraction failed, attempting to download single video instead...")
+                            url = self.clean_url(url, keep_playlist=False)
+                            print(f"◎ Extracted video URL: {url}")
+                            # Continue to single video download below
+                        else:
+                            return result
+                    except Exception as e:
+                        if "unviewable" in str(e).lower():
+                            print("→ YouTube Mix/Radio playlist detected, extracting single video...")
+                            url = self.clean_url(url, keep_playlist=False)
+                            print(f"◎ Extracted video URL: {url}")
+                            # Continue to single video download below
+                        else:
+                            raise
             
             # Platform-specific handling already done above for spotify/apple_music
             
+            # For YouTube single videos, ask if user wants audio or video (if not already specified)
+            if platform == 'youtube' and not self.is_playlist_url(url):
+                if not audio_only and not custom_format and output_format is None:
+                    # Ask user if they want audio or video
+                    media_type_options = ["🎵 Audio Only (MP3/FLAC)", "🎬 Video + Audio (MP4)", "⚙️  Advanced (Custom Settings)"]
+                    
+                    if RICH_AVAILABLE and self.console:
+                        self.console.print("\n[bold cyan]❓ What would you like to download?[/bold cyan]")
+                    else:
+                        print("\n❓ What would you like to download?")
+                    
+                    media_choice = self.prompt_user_choice(
+                        "Select download type:",
+                        media_type_options,
+                        default=media_type_options[0]
+                    )
+                    
+                    if media_choice == "🎵 Audio Only (MP3/FLAC)":
+                        audio_only = True
+                        # Ask for audio format
+                        audio_format_options = ["MP3 (Universal)", "FLAC (Lossless)", "M4A (Apple)", "OPUS (High Efficiency)"]
+                        format_choice = self.prompt_user_choice(
+                            "Select audio format:",
+                            audio_format_options,
+                            default=audio_format_options[0]
+                        )
+                        
+                        if format_choice == "MP3 (Universal)":
+                            output_format = "mp3"
+                        elif format_choice == "FLAC (Lossless)":
+                            output_format = "flac"
+                        elif format_choice == "M4A (Apple)":
+                            output_format = "m4a"
+                        elif format_choice == "OPUS (High Efficiency)":
+                            output_format = "opus"
+                        
+                        if RICH_AVAILABLE and self.console:
+                            self.console.print(f"[green]✓ Selected:[/green] Audio only ({output_format.upper()})")
+                        else:
+                            print(f"✓ Selected: Audio only ({output_format.upper()})")
+                    
+                    elif media_choice == "🎬 Video + Audio (MP4)":
+                        audio_only = False
+                        output_format = "mp4"
+                        
+                        # Ask for quality
+                        quality_options = ["Best Available", "1080p (Full HD)", "720p (HD)", "480p (SD)"]
+                        quality_choice = self.prompt_user_choice(
+                            "Select video quality:",
+                            quality_options,
+                            default=quality_options[0]
+                        )
+                        
+                        if quality_choice == "Best Available":
+                            quality = "best"
+                        elif quality_choice == "1080p (Full HD)":
+                            quality = "1080p"
+                        elif quality_choice == "720p (HD)":
+                            quality = "720p"
+                        elif quality_choice == "480p (SD)":
+                            quality = "480p"
+                        
+                        if RICH_AVAILABLE and self.console:
+                            self.console.print(f"[green]✓ Selected:[/green] Video ({quality})")
+                        else:
+                            print(f"✓ Selected: Video ({quality})")
+                    
+                    elif media_choice == "⚙️  Advanced (Custom Settings)":
+                        # Fall through to interactive format selection below
+                        pass
+            
             # Interactive format selection
-            if interactive and not custom_format:
+            if interactive and not custom_format and media_choice == "⚙️  Advanced (Custom Settings)" if 'media_choice' in locals() else (interactive and not custom_format):
                 quality, audio_only, output_format, custom_format = self.prompt_format_selection(url)
             
             # Detect and prompt for audio language selection (YouTube videos)
@@ -5489,7 +5599,15 @@ class UltimateMediaDownloader:
                 return info
                 
         except Exception as e:
+            error_msg = str(e)
             print(f"✗ Error extracting playlist: {e}")
+            
+            # Check if this is a YouTube Mix/Radio playlist error
+            if "unviewable" in error_msg.lower() or "mix" in url.lower() or "RD" in url:
+                print("ℹ  This appears to be a YouTube Mix/Radio playlist (unviewable)")
+                print("→ Attempting to extract single video from the URL...")
+                return None  # Signal that we should try single video extraction
+            
             return None
     
     def select_video_from_playlist(self, url):
@@ -5620,7 +5738,8 @@ class UltimateMediaDownloader:
             # Show playlist contents first
             playlist_info = self.show_playlist_contents(url)
             if not playlist_info:
-                return
+                # Return None to signal failure (caller can try single video download)
+                return None
             
             total_videos = len([e for e in playlist_info.get('entries', []) if e])
             
@@ -6498,8 +6617,8 @@ Report issues: Create an issue on the GitHub repository
     parser.add_argument('-a', '--audio-only', action='store_true',
                        help='Download audio only')
     parser.add_argument('-f', '--format', help='Output format (mp4, mp3, mkv, wav, flac, etc.)')
-    parser.add_argument('-o', '--output', default='downloads',
-                       help='Output directory (default: downloads)')
+    parser.add_argument('-o', '--output', default=None,
+                       help='Output directory (default: ~/Downloads/UltimateDownloader)')
     parser.add_argument('-p', '--playlist', action='store_true',
                        help='Download playlist (with interactive options by default)')
     parser.add_argument('--no-playlist', action='store_true',
