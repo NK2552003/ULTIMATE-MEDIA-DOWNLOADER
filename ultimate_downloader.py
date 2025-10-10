@@ -4,6 +4,8 @@ Ultimate Multi-Platform Media Downloader
 Supports YouTube, Spotify, Apple Music, SoundCloud, and many other platforms
 """
 
+__version__ = "2.0.0"
+
 import os
 import sys
 import argparse
@@ -6728,6 +6730,11 @@ Report issues: Create an issue on the GitHub repository
                        help='File containing URLs to download (one per line)')
     parser.add_argument('--optimized-batch', action='store_true',
                        help='Use optimized parallel batch downloading')
+    
+    # Version argument
+    parser.add_argument('-v', '--version', action='version',
+                       version=f'Ultimate Media Downloader v{__version__}',
+                       help='Show program version and exit')
     
     args = parser.parse_args()
     
