@@ -4835,8 +4835,15 @@ class UltimateMediaDownloader:
                             url = selected_url
                             print(f"◎ Downloading selected video: {url}")
                         else:
-                            print("✗ No video selected, cancelling download")
-                            return None
+                            # Check if this is a Mix/Radio playlist (unviewable)
+                            if "RD" in url and "list=" in url:
+                                print("→ Extracting single video from Mix/Radio URL...")
+                                url = self.clean_url(url, keep_playlist=False)
+                                print(f"◎ Extracted video URL: {url}")
+                                # Continue to single video download below
+                            else:
+                                print("✗ No video selected, cancelling download")
+                                return None
                     elif choice == "Show playlist contents first":
                         playlist_info = self.show_playlist_contents(url)
                         if playlist_info is None and "RD" in url and "list=" in url:
@@ -4854,7 +4861,24 @@ class UltimateMediaDownloader:
                             )
                             
                             if download_choice == "Download entire playlist":
-                                return self.download_playlist(url, quality, audio_only, output_format, custom_format, interactive=interactive)
+                                try:
+                                    result = self.download_playlist(url, quality, audio_only, output_format, custom_format, interactive=interactive)
+                                    if result is None and "RD" in url and "list=" in url:
+                                        # YouTube Mix/Radio playlist - extract single video
+                                        print("→ Extracting single video from Mix/Radio URL...")
+                                        url = self.clean_url(url, keep_playlist=False)
+                                        print(f"◎ Extracted video URL: {url}")
+                                        # Continue to single video download below
+                                    else:
+                                        return result
+                                except Exception as e:
+                                    if "unviewable" in str(e).lower() or ("mix" in url.lower() and "list=" in url):
+                                        print("→ YouTube Mix/Radio playlist detected (unviewable), extracting single video...")
+                                        url = self.clean_url(url, keep_playlist=False)
+                                        print(f"◎ Extracted video URL: {url}")
+                                        # Continue to single video download below
+                                    else:
+                                        raise
                             elif download_choice == "Download single video (select from list)":
                                 # Let user select which video from the playlist
                                 selected_url = self.select_video_from_playlist(url)
@@ -4862,8 +4886,15 @@ class UltimateMediaDownloader:
                                     url = selected_url
                                     print(f"◎ Downloading selected video: {url}")
                                 else:
-                                    print("✗ No video selected, cancelling download")
-                                    return None
+                                    # Check if this is a Mix/Radio playlist (unviewable)
+                                    if "RD" in url and "list=" in url:
+                                        print("→ Extracting single video from Mix/Radio URL...")
+                                        url = self.clean_url(url, keep_playlist=False)
+                                        print(f"◎ Extracted video URL: {url}")
+                                        # Continue to single video download below
+                                    else:
+                                        print("✗ No video selected, cancelling download")
+                                        return None
                             elif download_choice == "Cancel":
                                 print("✗ Download cancelled by user")
                                 return None
@@ -5714,7 +5745,15 @@ class UltimateMediaDownloader:
                         print("⚠ Please enter a valid number or 'c' to cancel")
                         
         except Exception as e:
+            error_msg = str(e)
             print(f"✗ Error selecting video from playlist: {e}")
+            
+            # Check if this is a YouTube Mix/Radio playlist error
+            if "unviewable" in error_msg.lower() or "mix" in url.lower() or "RD" in url:
+                print("ℹ  This appears to be a YouTube Mix/Radio playlist (unviewable)")
+                print("→ Cannot select from unviewable playlist. Will extract single video from URL.")
+                return None  # Signal that we should try single video extraction
+            
             return None
     
     def download_playlist(self, url, quality="best", audio_only=False, output_format=None, custom_format=None, max_downloads=None, start_index=1, interactive=True):
