@@ -64,19 +64,19 @@ pip3 uninstall -y yt-dlp spotdl colorama requests
 
 When you uninstall, the following are removed:
 
-- ✅ The `umd` command
-- ✅ Python package `ultimate-downloader`
-- ✅ Package dependencies (if installed via script)
-- ✅ Virtual environment (if created)
+- The `umd` command
+- Python package `ultimate-downloader`
+- Package dependencies (if installed via script)
+- Virtual environment (if created)
 
 ## What Stays on Your System
 
 These items are **NOT** removed during uninstallation:
 
-- ✅ **Your downloaded files** in `~/Downloads/UltimateDownloader`
-- ✅ Configuration files (if you created any)
-- ✅ Python itself
-- ✅ ffmpeg (if you installed it)
+- **Your downloaded files** in `~/Downloads/UltimateDownloader`
+- Configuration files (if you created any)
+- Python itself
+- ffmpeg (if you installed it)
 
 ---
 
@@ -90,7 +90,7 @@ If you want to completely remove everything including downloaded files:
 rm -rf ~/Downloads/UltimateDownloader
 ```
 
-⚠️ **Warning**: This will permanently delete all your downloaded media files!
+️ **Warning**: This will permanently delete all your downloaded media files!
 
 ### Remove Configuration Files
 
@@ -144,7 +144,7 @@ brew untap NK2552003/ultimate-downloader
 ## Troubleshooting Uninstallation
 
 ### "Command not found: umd" after uninstall
-✅ **Good!** This means the uninstallation was successful.
+ **Good!** This means the uninstallation was successful.
 
 ### Package still appears when running `pip list`
 Try:
@@ -191,9 +191,9 @@ Or see the [Installation Guide](INSTALL.md) for more options.
 
 If you experience issues during uninstallation:
 
-1. 📖 Check the [Troubleshooting Section](#troubleshooting-uninstallation) above
-2. 🐛 [Open an issue](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues) on GitHub
-3. 💬 Include:
+1. Check the [Troubleshooting Section](#troubleshooting-uninstallation) above
+2. [Open an issue](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues) on GitHub
+3. Include:
    - Your operating system
    - Python version (`python3 --version`)
    - Installation method you used
@@ -205,11 +205,11 @@ If you experience issues during uninstallation:
 
 Before you go, we'd love to hear why you're uninstalling:
 
-- 🐛 Found a bug? [Report it](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues)
-- 💡 Missing a feature? [Request it](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues)
-- 📝 Just sharing feedback? [Start a discussion](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/discussions)
+- Found a bug? [Report it](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues)
+- Missing a feature? [Request it](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues)
+- Just sharing feedback? [Start a discussion](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/discussions)
 
-Thank you for trying Ultimate Media Downloader! 🙏
+Thank you for trying Ultimate Media Downloader! 
 
 ---
 

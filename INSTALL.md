@@ -1,6 +1,6 @@
 # Installation Guide - Ultimate Media Downloader
 
-> 📖 **New!** For comprehensive installation instructions, see [INSTALLATION_GUIDE.md](INSTALLATION_GUIDE.md)
+> **New!** For comprehensive installation instructions, see [INSTALLATION_GUIDE.md](INSTALLATION_GUIDE.md)
 
 ## Quick Installation (Recommended)
 
@@ -20,11 +20,11 @@ scripts\install.bat
 ```
 
 This will:
-- ✅ Install the package with all dependencies
-- ✅ Create the `umd` command for easy access
-- ✅ Set up the downloads directory at `~/Downloads/UltimateDownloader`
-- ✅ No virtual environment needed!
-- ✅ Works globally from any directory
+- Install the package with all dependencies
+- Create the `umd` command for easy access
+- Set up the downloads directory at `~/Downloads/UltimateDownloader`
+- No virtual environment needed!
+- Works globally from any directory
 
 ## Usage After Installation
 
@@ -149,14 +149,14 @@ Install FFmpeg:
 
 ## Features
 
-- ✅ **1000+ Platforms**: YouTube, Spotify, Instagram, TikTok, SoundCloud, and more
-- ✅ **No Virtual Environment**: Runs directly after installation
-- ✅ **Single Command**: Just type `umd` from anywhere
-- ✅ **Automatic Downloads Folder**: Saves to `~/Downloads/UltimateDownloader`
-- ✅ **High Quality**: Download videos up to 4K, audio up to FLAC
-- ✅ **Batch Downloads**: Download multiple URLs at once
-- ✅ **Metadata Embedding**: Automatic metadata and thumbnail embedding
-- ✅ **Interactive Mode**: Guided experience for beginners
+- **1000+ Platforms**: YouTube, Spotify, Instagram, TikTok, SoundCloud, and more
+- **No Virtual Environment**: Runs directly after installation
+- **Single Command**: Just type `umd` from anywhere
+- **Automatic Downloads Folder**: Saves to `~/Downloads/UltimateDownloader`
+- **High Quality**: Download videos up to 4K, audio up to FLAC
+- **Batch Downloads**: Download multiple URLs at once
+- **Metadata Embedding**: Automatic metadata and thumbnail embedding
+- **Interactive Mode**: Guided experience for beginners
 
 ## Support
 

@@ -617,7 +617,7 @@ Contributors will be:
 - Mentioned in release notes
 - Credited in relevant documentation
 
-Thank you for contributing! 🎉
+Thank you for contributing! 
 
 ---
 

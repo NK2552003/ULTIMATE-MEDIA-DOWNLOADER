@@ -1,10 +1,10 @@
-# 🚀 Quick Start from GitHub
+# Quick Start from GitHub
 
 Get Ultimate Media Downloader up and running in **under 5 minutes**!
 
 ---
 
-## ⚡ Installation (3 Steps)
+## Installation (3 Steps)
 
 ### Step 1: Prerequisites
 
@@ -36,10 +36,10 @@ scripts\install.bat
 ```
 
 The installer will:
-- ✅ Check Python and FFmpeg
-- ✅ Install all dependencies
-- ✅ Create the `umd` command
-- ✅ Set up downloads folder
+- Check Python and FFmpeg
+- Install all dependencies
+- Create the `umd` command
+- Set up downloads folder
 
 **Time required**: 2-5 minutes
 
@@ -51,11 +51,11 @@ The installer will:
 umd --help
 ```
 
-If you see the help menu, you're ready to go! 🎉
+If you see the help menu, you're ready to go! 
 
 ---
 
-## 🎬 First Download
+## First Download
 
 Try these commands:
 
@@ -82,7 +82,7 @@ umd "https://www.instagram.com/reel/REEL_ID"
 
 ---
 
-## 📍 Where Are My Downloads?
+## Where Are My Downloads?
 
 All downloads are saved to:
 ```
@@ -148,14 +148,14 @@ chmod +x scripts/install.sh
 
 ---
 
-## 📚 Next Steps
+## Next Steps
 
 Now that you're set up:
 
 ### Learn More
-- 📖 [Quick Start Guide](QUICKSTART.md) - Common usage examples
-- 📘 [User Guide](docs/USER_GUIDE.md) - Complete manual
-- 🎯 [What's New](WHATS_NEW.md) - Latest features
+- [Quick Start Guide](QUICKSTART.md) - Common usage examples
+- [User Guide](docs/USER_GUIDE.md) - Complete manual
+- [What's New](WHATS_NEW.md) - Latest features
 
 ### Common Commands
 ```bash
@@ -192,24 +192,24 @@ umd "URL" --info
 
 ---
 
-## 🌟 Supported Platforms
+## Supported Platforms
 
-- ✅ YouTube (Videos, Playlists, Live, Shorts)
-- ✅ Spotify (via YouTube search)
-- ✅ Instagram (Posts, Reels, Stories)
-- ✅ TikTok
-- ✅ Twitter/X
-- ✅ Facebook
-- ✅ SoundCloud
-- ✅ Twitch
-- ✅ Vimeo
-- ✅ And 1000+ more!
+- YouTube (Videos, Playlists, Live, Shorts)
+- Spotify (via YouTube search)
+- Instagram (Posts, Reels, Stories)
+- TikTok
+- Twitter/X
+- Facebook
+- SoundCloud
+- Twitch
+- Vimeo
+- And 1000+ more!
 
 Full list: `umd --list-platforms`
 
 ---
 
-## 💡 Pro Tips
+## Pro Tips
 
 1. **Use Interactive Mode** when starting out - it guides you through options
 2. **Batch downloads** - Create a text file with URLs (one per line) and use `--batch-file`
@@ -219,7 +219,7 @@ Full list: `umd --list-platforms`
 
 ---
 
-## 🔄 Updating
+## Updating
 
 To update to the latest version:
 
@@ -231,7 +231,7 @@ git pull
 
 ---
 
-## 🗑️ Uninstalling
+## ️ Uninstalling
 
 To uninstall:
 
@@ -243,7 +243,7 @@ Or see [UNINSTALL.md](UNINSTALL.md) for complete instructions.
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Want to contribute? Great! See [CONTRIBUTING.md](CONTRIBUTING.md)
 
@@ -253,12 +253,12 @@ Want to contribute? Great! See [CONTRIBUTING.md](CONTRIBUTING.md)
 
 If you find this useful:
 - ⭐ Star the repository
-- 🐛 Report bugs
-- 💡 Suggest features
-- 📢 Share with others
+- Report bugs
+- Suggest features
+- Share with others
 
 ---
 
-**Happy Downloading! 🎉**
+**Happy Downloading! **
 
 [View Full Documentation](docs/INDEX.md) | [Report Issues](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues) | [GitHub](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER)

@@ -1,10 +1,10 @@
 # Ultimate Media Downloader - Quick Start Guide
 
-## ✅ Installation Complete!
+## Installation Complete!
 
 Your Ultimate Media Downloader is now installed and ready to use with a single command: **`umd`**
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Interactive Mode (Easiest)
 ```bash
@@ -27,14 +27,14 @@ umd "https://www.youtube.com/watch?v=VIDEO_ID" --audio-only
 umd "https://www.youtube.com/watch?v=VIDEO_ID" --quality 1080p
 ```
 
-## 📁 Where are my downloads?
+## Where are my downloads?
 
 All files are automatically saved to:
 ```
 ~/Downloads/UltimateDownloader/
 ```
 
-## 🎵 Common Use Cases
+## Common Use Cases
 
 ### Download YouTube Music as MP3
 ```bash
@@ -71,7 +71,7 @@ umd "YOUTUBE_URL" --quality best --format mp4
 umd "YOUTUBE_URL" --audio-only --format flac
 ```
 
-## 🎯 Pro Tips
+## Pro Tips
 
 ### Batch Download Multiple URLs
 Create a text file with one URL per line (e.g., `urls.txt`):
@@ -106,7 +106,7 @@ umd "URL" --show-formats
 umd "URL" --info
 ```
 
-## 🛠️ All Options
+## ️ All Options
 
 View all available options:
 ```bash
@@ -135,7 +135,7 @@ umd --help
 - `mkv` - High quality container
 - `webm` - Web optimized
 
-## 🌐 Supported Platforms
+## Supported Platforms
 
 - YouTube (videos, playlists, live streams)
 - Spotify (via YouTube search)
@@ -149,7 +149,7 @@ umd --help
 - Apple Music (via YouTube search)
 - And 1000+ more!
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 ### Command not found: umd
 Restart your terminal or run:
@@ -177,20 +177,20 @@ or
 pipx uninstall ultimate-downloader
 ```
 
-## 📚 More Information
+## More Information
 
 - Full Documentation: See `docs/` folder
 - GitHub: https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER
 - Issues: Report on GitHub Issues page
 
-## 🎉 Enjoy!
+## Enjoy!
 
 You can now download media from 1000+ platforms with just one command: **`umd`**
 
 No more:
-- ❌ Activating virtual environments
-- ❌ Running long Python commands
-- ❌ Navigating to project directories
-- ❌ Specifying download folders
+- Activating virtual environments
+- Running long Python commands
+- Navigating to project directories
+- Specifying download folders
 
-Just type: **`umd <URL>`** and you're done! ✨
+Just type: **`umd <URL>`** and you're done! 
