@@ -6,21 +6,21 @@ Complete set of Windows batch files for installing and managing Ultimate Media D
 
 ---
 
-## 📁 Files Created/Available
+## Files Created/Available
 
-### 1. **install.bat** ✨ (NEW)
+### 1. **install.bat**  (NEW)
 **Location**: `scripts/install.bat`  
 **Purpose**: Quick installation with pipx (recommended method)  
 **Size**: ~4.1 KB
 
 **Features**:
-- ✅ Checks Python installation and version
-- ✅ Verifies FFmpeg (with installation instructions if missing)
-- ✅ Installs using pipx (or falls back to pip)
-- ✅ Creates global `umd` command
-- ✅ Sets up downloads directory
-- ✅ Provides PATH configuration instructions
-- ✅ User-friendly error messages
+- Checks Python installation and version
+- Verifies FFmpeg (with installation instructions if missing)
+- Installs using pipx (or falls back to pip)
+- Creates global `umd` command
+- Sets up downloads directory
+- Provides PATH configuration instructions
+- User-friendly error messages
 
 **Usage**:
 ```batch
@@ -30,16 +30,16 @@ scripts\install.bat
 
 ---
 
-### 2. **uninstall.bat** ✨ (NEW)
+### 2. **uninstall.bat**  (NEW)
 **Location**: `scripts/uninstall.bat`  
 **Purpose**: Clean uninstallation  
 **Size**: ~1.5 KB
 
 **Features**:
-- ✅ Confirms before uninstalling
-- ✅ Tries pipx first, falls back to pip
-- ✅ Preserves downloaded files
-- ✅ Clear success messages
+- Confirms before uninstalling
+- Tries pipx first, falls back to pip
+- Preserves downloaded files
+- Clear success messages
 
 **Usage**:
 ```batch
@@ -55,10 +55,10 @@ scripts\uninstall.bat
 **Size**: ~16 KB
 
 **Features**:
-- ✅ Creates virtual environment
-- ✅ Installs all dependencies
-- ✅ Creates config.json
-- ✅ More control for developers
+- Creates virtual environment
+- Installs all dependencies
+- Creates config.json
+- More control for developers
 
 **Usage**:
 ```batch
@@ -80,30 +80,30 @@ scripts\activate-env.bat
 
 ---
 
-## 🎯 Which Script to Use?
+## Which Script to Use?
 
 ### For End Users (Recommended)
 ```batch
 scripts\install.bat
 ```
 **Why?**
-- ✅ Simplest installation
-- ✅ No need to activate environment
-- ✅ Global `umd` command
-- ✅ Works from any directory
+- Simplest installation
+- No need to activate environment
+- Global `umd` command
+- Works from any directory
 
 ### For Developers
 ```batch
 scripts\setup.bat
 ```
 **Why?**
-- ✅ Isolated environment
-- ✅ Full control
-- ✅ Good for development/testing
+- Isolated environment
+- Full control
+- Good for development/testing
 
 ---
 
-## 📝 Installation Comparison
+## Installation Comparison
 
 | Feature | install.bat | setup.bat |
 |---------|-------------|-----------|
@@ -116,11 +116,11 @@ scripts\setup.bat
 
 ---
 
-## 🚀 Quick Start for Windows Users
+## Quick Start for Windows Users
 
 ### Step 1: Install Git & Python
 1. Install Python from [python.org](https://www.python.org/downloads/)
-   - ⚠️ Check "Add Python to PATH"
+   - ️ Check "Add Python to PATH"
 2. Install Git from [git-scm.com](https://git-scm.com/downloads)
 
 ### Step 2: Clone Repository
@@ -141,7 +141,7 @@ umd <URL>
 
 ---
 
-## 🛠️ Troubleshooting
+## ️ Troubleshooting
 
 ### "Python is not recognized"
 **Solution**: Add Python to PATH
@@ -181,7 +181,7 @@ scoop install ffmpeg
 
 ---
 
-## 🔄 Update Process
+## Update Process
 
 To update to latest version:
 
@@ -193,7 +193,7 @@ scripts\install.bat
 
 ---
 
-## 🗑️ Uninstallation
+## ️ Uninstallation
 
 ### Quick Uninstall
 ```batch
@@ -212,29 +212,29 @@ pip uninstall ultimate-downloader
 
 ---
 
-## 📋 Batch File Features
+## Batch File Features
 
 ### Error Handling
 All batch files include:
-- ✅ Exit codes for automation
-- ✅ Error messages with solutions
-- ✅ Graceful fallbacks
+- Exit codes for automation
+- Error messages with solutions
+- Graceful fallbacks
 
 ### User Experience
-- ✅ Clear progress indicators ([1/5], [2/5], etc.)
-- ✅ Color-coded output (OK, WARNING, ERROR)
-- ✅ Pause at the end for reading
-- ✅ Confirmation prompts for destructive actions
+- Clear progress indicators ([1/5], [2/5], etc.)
+- Color-coded output (OK, WARNING, ERROR)
+- Pause at the end for reading
+- Confirmation prompts for destructive actions
 
 ### Compatibility
-- ✅ Works on Windows 10/11
-- ✅ Compatible with Command Prompt
-- ✅ Compatible with PowerShell
-- ✅ Supports both Python 3.9-3.13
+- Works on Windows 10/11
+- Compatible with Command Prompt
+- Compatible with PowerShell
+- Supports both Python 3.9-3.13
 
 ---
 
-## 🎨 Batch File Structure
+## Batch File Structure
 
 Each batch file follows this structure:
 
@@ -253,7 +253,7 @@ pause  # So user can read output
 
 ---
 
-## ✅ Testing Checklist
+## Testing Checklist
 
 Before committing:
 - [x] install.bat creates global `umd` command
@@ -269,7 +269,7 @@ Before committing:
 
 ---
 
-## 📊 File Sizes
+## File Sizes
 
 - `install.bat`: 4.1 KB
 - `uninstall.bat`: 1.5 KB
@@ -280,24 +280,24 @@ Before committing:
 
 ---
 
-## 🎯 Key Improvements in New Files
+## Key Improvements in New Files
 
 ### install.bat
-- ✅ Uses pipx for better isolation
-- ✅ Automatic PATH detection
-- ✅ Better FFmpeg instructions
-- ✅ Clearer error messages
-- ✅ Matches install.sh functionality
+- Uses pipx for better isolation
+- Automatic PATH detection
+- Better FFmpeg instructions
+- Clearer error messages
+- Matches install.sh functionality
 
 ### uninstall.bat
-- ✅ Tries multiple methods
-- ✅ Confirms before action
-- ✅ Clear about what's preserved
-- ✅ Matches uninstall.sh functionality
+- Tries multiple methods
+- Confirms before action
+- Clear about what's preserved
+- Matches uninstall.sh functionality
 
 ---
 
-## 📚 Documentation References
+## Documentation References
 
 These batch files are documented in:
 - [README.md](../README.md) - Main documentation
@@ -306,7 +306,7 @@ These batch files are documented in:
 
 ---
 
-## 🤝 Consistency with Unix Scripts
+## Consistency with Unix Scripts
 
 The Windows batch files mirror the Unix shell scripts:
 
@@ -317,11 +317,11 @@ The Windows batch files mirror the Unix shell scripts:
 | `setup.sh` | `setup.bat` | Virtual environment setup |
 | `activate-env.sh` | `activate-env.bat` | Activate environment |
 
-**Result**: Consistent experience across all platforms! 🎉
+**Result**: Consistent experience across all platforms! 
 
 ---
 
-## 💡 Usage Tips
+## Usage Tips
 
 1. **Always run from project root or scripts folder**
 2. **Use install.bat for simplest experience**
@@ -331,6 +331,6 @@ The Windows batch files mirror the Unix shell scripts:
 
 ---
 
-**All Windows batch files are ready for production use!** ✅
+**All Windows batch files are ready for production use!** 
 
 Users can now install Ultimate Media Downloader on Windows as easily as on macOS/Linux!

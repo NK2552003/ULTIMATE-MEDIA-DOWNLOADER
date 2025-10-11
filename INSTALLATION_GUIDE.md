@@ -1,4 +1,4 @@
-# 📦 Installation Guide - Ultimate Media Downloader
+# Installation Guide - Ultimate Media Downloader
 
 This guide provides step-by-step instructions to install Ultimate Media Downloader from GitHub.
 
@@ -75,12 +75,12 @@ umd <URL>
 
 ### What the Installer Does
 
-✅ Checks for Python 3.9+ installation  
-✅ Verifies FFmpeg (prompts to install if missing)  
-✅ Installs `pipx` if not present  
-✅ Installs the package globally  
-✅ Creates the `umd` command  
-✅ Sets up downloads directory at `~/Downloads/UltimateDownloader`  
+ Checks for Python 3.9+ installation  
+ Verifies FFmpeg (prompts to install if missing)  
+ Installs `pipx` if not present  
+ Installs the package globally  
+ Creates the `umd` command  
+ Sets up downloads directory at `~/Downloads/UltimateDownloader`  
 
 **Installation time**: 2-5 minutes
 
@@ -170,7 +170,7 @@ python ultimate_downloader.py <URL>
 
 ## Platform-Specific Instructions
 
-### 🍎 macOS
+### macOS
 
 #### Prerequisites Installation
 
@@ -209,7 +209,7 @@ source ~/.zshrc
 
 ---
 
-### 🐧 Linux
+### Linux
 
 #### Ubuntu/Debian
 
@@ -271,7 +271,7 @@ source ~/.bashrc
 
 1. **Install Python**
    - Download from [python.org](https://www.python.org/downloads/)
-   - ⚠️ **Important**: Check "Add Python to PATH" during installation
+   - ️ **Important**: Check "Add Python to PATH" during installation
 
 2. **Install Git**
    - Download from [git-scm.com](https://git-scm.com/downloads)
@@ -497,10 +497,10 @@ pip3 uninstall ultimate-downloader
 
 If you encounter issues not covered here:
 
-1. 📖 Check the [User Guide](docs/USER_GUIDE.md)
-2. 📋 See [Troubleshooting Guide](docs/guides/TROUBLESHOOTING.md)
-3. 🐛 [Open an issue](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues) on GitHub
-4. 💬 Include:
+1. Check the [User Guide](docs/USER_GUIDE.md)
+2. See [Troubleshooting Guide](docs/guides/TROUBLESHOOTING.md)
+3. [Open an issue](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues) on GitHub
+4. Include:
    - Your OS and version
    - Python version (`python3 --version`)
    - Error messages
@@ -512,11 +512,11 @@ If you encounter issues not covered here:
 
 After successful installation:
 
-- 📖 Read the [Quick Start Guide](QUICKSTART.md)
-- 🎓 Explore the [User Guide](docs/USER_GUIDE.md)
-- 💡 Check [What's New](WHATS_NEW.md) for latest features
-- 🌟 Star the project on [GitHub](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER)
+- Read the [Quick Start Guide](QUICKSTART.md)
+- Explore the [User Guide](docs/USER_GUIDE.md)
+- Check [What's New](WHATS_NEW.md) for latest features
+- Star the project on [GitHub](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER)
 
 ---
 
-**Happy Downloading! 🎉**
+**Happy Downloading! **

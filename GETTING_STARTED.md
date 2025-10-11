@@ -1,6 +1,6 @@
-# 🎯 Getting Started - Navigation Guide
+# Getting Started - Navigation Guide
 
-## 📚 Quick Links
+## Quick Links
 
 | What do you want to do? | Go here |
 |-------------------------|---------|
@@ -14,7 +14,7 @@
 
 ---
 
-## 🚀 For First-Time Users
+## For First-Time Users
 
 ### Step 1: Install
 ```bash
@@ -33,7 +33,7 @@ Read the [Quick Start Guide](QUICKSTART.md) for common examples.
 
 ---
 
-## 📖 Documentation Structure
+## Documentation Structure
 
 ```
 📚 Documentation
@@ -56,7 +56,7 @@ Read the [Quick Start Guide](QUICKSTART.md) for common examples.
 
 ---
 
-## 🎯 Common Tasks
+## Common Tasks
 
 ### I want to...
 
@@ -64,32 +64,32 @@ Read the [Quick Start Guide](QUICKSTART.md) for common examples.
 ```bash
 umd "https://youtube.com/watch?v=VIDEO_ID"
 ```
-📖 More: [QUICKSTART.md](QUICKSTART.md#basic-commands)
+ More: [QUICKSTART.md](QUICKSTART.md#basic-commands)
 
 #### Download audio only
 ```bash
 umd "URL" --audio-only --format mp3
 ```
-📖 More: [QUICKSTART.md](QUICKSTART.md#download-audio)
+ More: [QUICKSTART.md](QUICKSTART.md#download-audio)
 
 #### Download a playlist
 ```bash
 umd "PLAYLIST_URL"
 ```
-📖 More: [docs/USER_GUIDE.md](docs/USER_GUIDE.md#playlist-downloads)
+ More: [docs/USER_GUIDE.md](docs/USER_GUIDE.md#playlist-downloads)
 
 #### Batch download multiple URLs
 ```bash
 umd --batch-file urls.txt
 ```
-📖 More: [docs/USER_GUIDE.md](docs/USER_GUIDE.md#batch-downloads)
+ More: [docs/USER_GUIDE.md](docs/USER_GUIDE.md#batch-downloads)
 
 #### Troubleshoot an issue
-📖 See: [docs/guides/](docs/guides/) or [GitHub Issues](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues)
+ See: [docs/guides/](docs/guides/) or [GitHub Issues](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues)
 
 ---
 
-## 🔧 For Developers
+## For Developers
 
 ### Understanding the Code
 
@@ -116,25 +116,25 @@ umd --batch-file urls.txt
 
 ---
 
-## 🎓 Learning Path
+## Learning Path
 
 ### Beginner
-1. ✅ [README.md](README.md) - Overview
-2. ✅ [INSTALL.md](INSTALL.md) - Installation
-3. ✅ [QUICKSTART.md](QUICKSTART.md) - Basic usage
+1. [README.md](README.md) - Overview
+2. [INSTALL.md](INSTALL.md) - Installation
+3. [QUICKSTART.md](QUICKSTART.md) - Basic usage
 
 ### Intermediate
-4. ✅ [docs/USER_GUIDE.md](docs/USER_GUIDE.md) - Comprehensive guide
-5. ✅ [WHATS_NEW.md](WHATS_NEW.md) - New features
+4. [docs/USER_GUIDE.md](docs/USER_GUIDE.md) - Comprehensive guide
+5. [WHATS_NEW.md](WHATS_NEW.md) - New features
 
 ### Advanced
-6. ✅ [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) - Technical details
-7. ✅ [docs/API_REFERENCE.md](docs/API_REFERENCE.md) - API docs
-8. ✅ [CONTRIBUTING.md](CONTRIBUTING.md) - Contribute code
+6. [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) - Technical details
+7. [docs/API_REFERENCE.md](docs/API_REFERENCE.md) - API docs
+8. [CONTRIBUTING.md](CONTRIBUTING.md) - Contribute code
 
 ---
 
-## 📞 Getting Help
+## Getting Help
 
 ### Something not working?
 
@@ -150,7 +150,7 @@ umd --batch-file urls.txt
 
 ---
 
-## 🌟 Quick Commands Reference
+## Quick Commands Reference
 
 ```bash
 # Interactive mode (easiest)
@@ -180,7 +180,7 @@ umd --batch-file urls.txt
 
 ---
 
-## 📂 Project Organization
+## Project Organization
 
 ```
 ULTIMATE-MEDIA-DOWNLOADER/
@@ -192,11 +192,11 @@ ULTIMATE-MEDIA-DOWNLOADER/
 └── 📁 demo_video/       → Demo videos
 ```
 
-**Clean & organized** ✨
+**Clean & organized** 
 
 ---
 
-## 🎉 Ready to Start?
+## Ready to Start?
 
 ### Option 1: Quick Install
 ```bash
@@ -209,7 +209,7 @@ umd
 ```
 
 ### Option 3: Read First
-[📖 README.md](README.md)
+[ README.md](README.md)
 
 ---
 
@@ -217,7 +217,7 @@ umd
 
 **Questions?** Check the [docs/](docs/) folder or [open an issue](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues)
 
-**Happy Downloading!** 🎬🎵📱
+**Happy Downloading!** 
 
 [⬆ Back to Top](#-getting-started---navigation-guide)
 

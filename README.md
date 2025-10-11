@@ -1,12 +1,12 @@
 <div align="center">
 
-# 🎬 Ultimate Media Downloader
+# Ultimate Media Downloader
 
-[![Python Version](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20macOS%20%7C%20Windows-lightgrey.svg)](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER)
-[![Maintained](https://img.shields.io/badge/maintained-yes-brightgreen.svg)](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/commits/main)
-[![Last Updated](https://img.shields.io/badge/updated-October%202025-blue.svg)](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER)
+[](https://www.python.org/downloads/)
+[](LICENSE)
+[](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER)
+[](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/commits/main)
+[](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER)
 
 **Download media from 1000+ platforms with just one command: `umd`**
 
@@ -16,24 +16,24 @@
 
 ---
 
-## 🌟 Overview
+## Overview
 
 **Ultimate Media Downloader** is a professional-grade, open-source media downloading tool that supports over 1000+ platforms including YouTube, Spotify, SoundCloud, Instagram, TikTok, and many more. Built with Python and featuring a beautiful Rich CLI interface, it provides enterprise-level features with consumer-friendly simplicity.
 
 ### Why Choose Ultimate Media Downloader?
 
-- 🚀 **One Command**: Install once, use `umd` from anywhere
-- 🎵 **1000+ Platforms**: YouTube, Spotify, Instagram, TikTok, SoundCloud, and more
-- 🎯 **No Virtual Environment**: Clean installation with `pipx`
-- 📁 **Auto Organization**: Downloads saved to `~/Downloads/UltimateDownloader`
-- 🎨 **Beautiful UI**: Modern CLI with progress bars and rich formatting
-- ⚡ **Fast Downloads**: Concurrent downloads with resume support
-- 🎭 **High Quality**: 4K/8K video, 320kbps audio, metadata embedding
-- 🛠️ **Active Development**: Regular updates and improvements
+- **One Command**: Install once, use `umd` from anywhere
+- **1000+ Platforms**: YouTube, Spotify, Instagram, TikTok, SoundCloud, and more
+- **No Virtual Environment**: Clean installation with `pipx`
+- **Auto Organization**: Downloads saved to `~/Downloads/UltimateDownloader`
+- **Beautiful UI**: Modern CLI with progress bars and rich formatting
+- **Fast Downloads**: Concurrent downloads with resume support
+- **High Quality**: 4K/8K video, 320kbps audio, metadata embedding
+- ️ **Active Development**: Regular updates and improvements
 
 ---
 
-## 📺 Demo
+## Demo
 
 <div align="center">
 
@@ -45,29 +45,29 @@ https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/blob/main/demo_video/demo
 
 ---
 
-## ✨ Features
+## Features
 
 ### Core Capabilities
 
-🎬 **Video Downloads**
+ **Video Downloads**
 - YouTube (4K/8K), Vimeo, Dailymotion
 - Live streams and premieres
 - Age-restricted content support
 - Custom quality selection
 
-🎵 **Audio Downloads**
+ **Audio Downloads**
 - Spotify (via YouTube search)
 - SoundCloud, Apple Music
 - MP3, FLAC, M4A, OPUS formats
 - Automatic metadata & cover art embedding
 
-📱 **Social Media**
+ **Social Media**
 - Instagram (Posts, Reels, IGTV, Stories)
 - TikTok (Videos, User content)
 - Twitter/X (Video tweets)
 - Facebook (Videos, Live streams)
 
-🎮 **Streaming Platforms**
+ **Streaming Platforms**
 - Twitch (VODs, Clips, Live)
 - YouTube Live
 - Facebook Live
@@ -75,26 +75,26 @@ https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/blob/main/demo_video/demo
 
 ### Advanced Features
 
-✅ **Smart URL Handling**
+ **Smart URL Handling**
 - YouTube Mix/Radio playlists (auto-extract single video)
 - Playlist support with selection options
 - Batch downloads from file
 - Parallel processing
 
-✅ **Quality & Format**
+ **Quality & Format**
 - Choose quality: Best, 4K, 1080p, 720p, 480p, 360p
 - Multiple formats: MP4, MKV, MP3, FLAC, M4A, OPUS
 - Custom format strings for advanced users
 - Audio language selection
 
-✅ **User Experience**
+ **User Experience**
 - Interactive mode for beginners
 - Non-interactive mode for automation
 - Real-time progress tracking
 - Beautiful terminal UI with Rich
 - Comprehensive error messages
 
-✅ **Metadata & Thumbnails**
+ **Metadata & Thumbnails**
 - Auto-embed album art
 - ID3 tags (artist, title, album, year)
 - Thumbnail embedding
@@ -102,9 +102,9 @@ https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/blob/main/demo_video/demo
 
 ---
 
-## 📦 Installation
+## Installation
 
-### ⚡ Quick Install (Recommended)
+### Quick Install (Recommended)
 
 Install in just **2 commands** - no virtual environment needed!
 
@@ -129,17 +129,17 @@ umd <URL>
 
 ### What Gets Installed
 
-✅ No virtual environment needed  
-✅ Global `umd` command available everywhere  
-✅ All dependencies handled automatically  
-✅ FFmpeg installed/verified  
-✅ Downloads directory created at `~/Downloads/UltimateDownloader`  
+ No virtual environment needed  
+ Global `umd` command available everywhere  
+ All dependencies handled automatically  
+ FFmpeg installed/verified  
+ Downloads directory created at `~/Downloads/UltimateDownloader`  
 
 **Installation time**: 2-5 minutes
 
 ---
 
-### 📋 Prerequisites
+### Prerequisites
 
 Before installing, ensure you have:
 
@@ -154,7 +154,7 @@ python3 --version
 
 ---
 
-### 🔧 Alternative Installation Methods
+### Alternative Installation Methods
 
 <details>
 <summary><b>Method 1: Using pipx (Manual)</b></summary>
@@ -200,10 +200,10 @@ python ultimate_downloader.py <URL>
 
 ---
 
-### 🖥️ Platform-Specific Installation
+### ️ Platform-Specific Installation
 
 <details>
-<summary><b>🍎 macOS</b></summary>
+<summary><b> macOS</b></summary>
 
 ```bash
 # Install prerequisites
@@ -224,7 +224,7 @@ source ~/.zshrc
 </details>
 
 <details>
-<summary><b>🐧 Linux (Ubuntu/Debian)</b></summary>
+<summary><b> Linux (Ubuntu/Debian)</b></summary>
 
 ```bash
 # Install prerequisites
@@ -266,7 +266,7 @@ scripts\install.bat
 
 ---
 
-### ✅ Verify Installation
+### Verify Installation
 
 ```bash
 # Check if installed
@@ -281,15 +281,15 @@ umd "https://www.youtube.com/watch?v=dQw4w9WgXcQ" --info
 
 ---
 
-### 📖 Detailed Installation Guide
+### Detailed Installation Guide
 
 For comprehensive installation instructions, troubleshooting, and platform-specific guides, see:
 
-**[📖 Complete Installation Guide](INSTALLATION_GUIDE.md)**
+**[ Complete Installation Guide](INSTALLATION_GUIDE.md)**
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Basic Usage
 
@@ -354,7 +354,7 @@ For more examples and detailed usage, see **[Quick Start Guide](QUICKSTART.md)**
 
 ---
 
-## 🌐 Supported Platforms
+## Supported Platforms
 
 <details>
 <summary><b>Click to see full list of 1000+ supported platforms</b></summary>
@@ -395,7 +395,7 @@ Use `umd --list-platforms` to see detailed platform support.
 
 ---
 
-## 📚 Documentation
+## Documentation
 
 ### User Documentation
 
@@ -419,7 +419,7 @@ Use `umd --list-platforms` to see detailed platform support.
 
 ---
 
-## 🎯 Use Cases
+## Use Cases
 
 ### For Music Lovers
 ```bash
@@ -456,7 +456,7 @@ umd --batch-file daily_downloads.txt --no-interactive --optimized-batch
 
 ---
 
-## 🛠️ System Requirements
+## ️ System Requirements
 
 ### Minimum Requirements
 - **Operating System**: Linux, macOS 10.12+, Windows 10+
@@ -472,15 +472,15 @@ umd --batch-file daily_downloads.txt --no-interactive --optimized-batch
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions! Here's how you can help:
 
-1. 🍴 Fork the repository
-2. 🔨 Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. 💾 Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. 📤 Push to the branch (`git push origin feature/AmazingFeature`)
-5. 🎉 Open a Pull Request
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 See **[CONTRIBUTING.md](CONTRIBUTING.md)** for detailed guidelines.
 
@@ -504,13 +504,13 @@ pytest
 
 ---
 
-## 📝 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## ⚠️ Disclaimer
+## ️ Disclaimer
 
 This tool is for personal use only. Users are responsible for complying with copyright laws and terms of service of the platforms they download from. The developers assume no liability for misuse of this software.
 
@@ -522,7 +522,7 @@ This tool is for personal use only. Users are responsible for complying with cop
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 Built with:
 - [yt-dlp](https://github.com/yt-dlp/yt-dlp) - Media extraction engine
@@ -534,16 +534,16 @@ Special thanks to all contributors and the open-source community!
 
 ---
 
-## 📞 Support & Contact
+## Support & Contact
 
-- 🐛 **Bug Reports**: [Open an issue](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues)
-- 💡 **Feature Requests**: [Start a discussion](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/discussions)
-- 📧 **Contact**: [Create an issue](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues)
+- **Bug Reports**: [Open an issue](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues)
+- **Feature Requests**: [Start a discussion](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/discussions)
+- **Contact**: [Create an issue](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues)
 - ⭐ **Show Support**: [Star the repository](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER)
 
 ---
 
-## 🚀 Roadmap
+## Roadmap
 
 - [ ] GUI interface
 - [ ] Browser extension
@@ -555,7 +555,7 @@ Special thanks to all contributors and the open-source community!
 
 ---
 
-## 📊 Statistics
+## Statistics
 
 - **Lines of Code**: 5000+
 - **Supported Platforms**: 1000+
@@ -566,7 +566,7 @@ Special thanks to all contributors and the open-source community!
 
 <div align="center">
 
-**Made with ❤️ by [NK2552003](https://github.com/NK2552003)**
+**Made with ️ by [NK2552003](https://github.com/NK2552003)**
 
 ⭐ Star this repository if you find it useful!
 
