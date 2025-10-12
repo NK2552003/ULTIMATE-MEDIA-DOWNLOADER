@@ -136,13 +136,14 @@ from utils import (
 
 
 class UltimateMediaDownloader:
-    def __init__(self, output_dir=None):
+    def __init__(self, output_dir=None, verbose=False):
         # Default to system Downloads folder if no output_dir specified
         if output_dir is None:
             output_dir = Path.home() / "Downloads" / "UltimateDownloader"
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
         self.cancelled = False
+        self.verbose = verbose
         
         # Initialize Rich console for beautiful output
         self.console = Console() if RICH_AVAILABLE else None
@@ -184,9 +185,10 @@ class UltimateMediaDownloader:
             'keepvideo': False,
             'noplaylist': False,
             'ignoreerrors': False,  # Changed to False to catch errors properly
-            'no_warnings': False,  # Show warnings to help diagnose issues
-            'quiet': False,  # Show output for better error visibility
+            'no_warnings': not self.verbose,  # Show warnings in verbose mode
+            'quiet': not self.verbose,  # Show full output in verbose mode
             'no_color': False,  # Allow colors in our custom progress
+            'verbose': self.verbose,  # Enable verbose output if requested
             'extractaudio': False,
             'audioformat': 'best',  # Changed from 'mp3' to 'best' for higher quality
             'concurrent_fragments': 8,  # Enable parallel fragment downloads
@@ -219,8 +221,8 @@ class UltimateMediaDownloader:
             'continue_dl': True,
             'part': True,
             
-            # Custom logger to suppress verbose output
-            'logger': QuietLogger(),
+            # Custom logger to suppress verbose output (unless verbose mode is enabled)
+            'logger': None if self.verbose else QuietLogger(),
         }
         
         # Initialize Spotify client if available
@@ -6731,15 +6733,17 @@ Report issues: Create an issue on the GitHub repository
     parser.add_argument('--optimized-batch', action='store_true',
                        help='Use optimized parallel batch downloading')
     
-    # Version argument
+    # Version and debug arguments
     parser.add_argument('-v', '--version', action='version',
                        version=f'Ultimate Media Downloader v{__version__}',
                        help='Show program version and exit')
+    parser.add_argument('--verbose', action='store_true',
+                       help='Enable verbose output for debugging')
     
     args = parser.parse_args()
     
     # Create downloader instance
-    downloader = UltimateMediaDownloader(args.output)
+    downloader = UltimateMediaDownloader(args.output, verbose=args.verbose)
     ui = ModernUI()
     
     # Show beautiful welcome banner only in interactive mode
