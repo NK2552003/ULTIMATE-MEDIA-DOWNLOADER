@@ -419,7 +419,7 @@ Use `umd --list-platforms` to see detailed platform support.
 
 ---
 
-## 🔧 How It Works
+## How It Works
 
 Ultimate Media Downloader uses a sophisticated multi-layered architecture to provide seamless media downloading from thousands of platforms.
 
@@ -547,7 +547,7 @@ sequenceDiagram
 
 ---
 
-## 🚀 How I Created It
+## How I Created It
 
 This project was built through careful planning, iterative development, and community feedback. Here's the journey:
 
@@ -560,82 +560,23 @@ graph LR
     C --> D[Phase 4: Optimization<br/>2024-Q4]
     D --> E[Phase 5: Polish & Release<br/>2025-Q1]
     
-    style A fill:#E3F2FD,stroke:#1976D2,stroke-width:2px
-    style B fill:#F3E5F5,stroke:#7B1FA2,stroke-width:2px
-    style C fill:#E8F5E9,stroke:#388E3C,stroke-width:2px
-    style D fill:#FFF3E0,stroke:#F57C00,stroke-width:2px
-    style E fill:#FCE4EC,stroke:#C2185B,stroke-width:2px
+    style A fill:#E3F2FD,stroke:#1976D2,stroke-width:2px,color:#000
+    style B fill:#F3E5F5,stroke:#7B1FA2,stroke-width:2px,color:#000
+    style C fill:#E8F5E9,stroke:#388E3C,stroke-width:2px,color:#000
+    style D fill:#FFF3E0,stroke:#F57C00,stroke-width:2px,color:#000
+    style E fill:#FCE4EC,stroke:#C2185B,stroke-width:2px,color:#000
 ```
 
-#### 📅 Development Phases
+#### Development Phases
 
 | Phase | Period | Key Achievements |
 |-------|--------|------------------|
-| **🎯 Phase 1: Planning** | 2024-Q1 | • Research & Ideation<br/>• Studied yt-dlp capabilities<br/>• Analyzed user needs<br/>• Designed architecture |
-| **🔨 Phase 2: Core Development** | 2024-Q2 | • Built CLI Interface<br/>• Integrated yt-dlp<br/>• Added FFmpeg support<br/>• Created download manager |
-| **🚀 Phase 3: Feature Expansion** | 2024-Q3 | • Added Spotify support<br/>• Implemented metadata embedding<br/>• Built Rich UI interface<br/>• Added batch downloads |
-| **⚡ Phase 4: Optimization** | 2024-Q4 | • Parallel downloads<br/>• Error handling<br/>• Installation scripts<br/>• Cross-platform support |
+| **Phase 1: Planning** | 2024-Q1 | • Research & Ideation<br/>• Studied yt-dlp capabilities<br/>• Analyzed user needs<br/>• Designed architecture |
+| **Phase 2: Core Development** | 2024-Q2 | • Built CLI Interface<br/>• Integrated yt-dlp<br/>• Added FFmpeg support<br/>• Created download manager |
+| **Phase 3: Feature Expansion** | 2024-Q3 | • Added Spotify support<br/>• Implemented metadata embedding<br/>• Built Rich UI interface<br/>• Added batch downloads |
+| **Phase 4: Optimization** | 2024-Q4 | • Parallel downloads<br/>• Error handling<br/>• Installation scripts<br/>• Cross-platform support |
 | **✨ Phase 5: Polish & Release** | 2025-Q1 | • Documentation<br/>• Testing & bug fixes<br/>• Public release<br/>• Community feedback |
 
-### Technology Stack Decision Process
-
-```mermaid
-mindmap
-  root((Ultimate Media<br/>Downloader))
-    Core Technologies
-      Python 3.9+
-        Easy to maintain
-        Rich ecosystem
-        Cross-platform
-      yt-dlp
-        1000+ platforms
-        Active development
-        Robust extraction
-      FFmpeg
-        Industry standard
-        Format conversion
-        Metadata support
-    
-    User Interface
-      Rich Library
-        Beautiful CLI
-        Progress tracking
-        Color formatting
-      Interactive Mode
-        Beginner friendly
-        Step-by-step
-      Non-Interactive
-        Automation ready
-        Batch processing
-    
-    Architecture Choices
-      Modular Design
-        Easy to extend
-        Maintainable code
-        Clear separation
-      Error Handling
-        Comprehensive logging
-        User-friendly messages
-        Graceful failures
-      Performance
-        Concurrent downloads
-        Optimized batching
-        Resume support
-    
-    Distribution
-      pipx Installation
-        No venv needed
-        Global command
-        Clean install
-      Cross-platform
-        macOS support
-        Linux support
-        Windows support
-      Package Management
-        setup.py
-        requirements.txt
-        Automated scripts
-```
 
 ### Key Development Decisions
 
