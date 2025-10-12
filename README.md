@@ -554,39 +554,28 @@ This project was built through careful planning, iterative development, and comm
 ### Development Timeline
 
 ```mermaid
-timeline
-    title Ultimate Media Downloader Development Journey
+graph LR
+    A[Phase 1: Planning<br/>2024-Q1] --> B[Phase 2: Core Development<br/>2024-Q2]
+    B --> C[Phase 3: Feature Expansion<br/>2024-Q3]
+    C --> D[Phase 4: Optimization<br/>2024-Q4]
+    D --> E[Phase 5: Polish & Release<br/>2025-Q1]
     
-    section Phase 1: Planning
-        2024-Q1 : Research & Ideation
-               : Studied yt-dlp capabilities
-               : Analyzed user needs
-               : Designed architecture
-    
-    section Phase 2: Core Development
-        2024-Q2 : Built CLI Interface
-               : Integrated yt-dlp
-               : Added FFmpeg support
-               : Created download manager
-    
-    section Phase 3: Feature Expansion
-        2024-Q3 : Added Spotify support
-               : Implemented metadata embedding
-               : Built Rich UI interface
-               : Added batch downloads
-    
-    section Phase 4: Optimization
-        2024-Q4 : Parallel downloads
-               : Error handling
-               : Installation scripts
-               : Cross-platform support
-    
-    section Phase 5: Polish & Release
-        2025-Q1 : Documentation
-               : Testing & bug fixes
-               : Public release
-               : Community feedback
+    style A fill:#E3F2FD,stroke:#1976D2,stroke-width:2px
+    style B fill:#F3E5F5,stroke:#7B1FA2,stroke-width:2px
+    style C fill:#E8F5E9,stroke:#388E3C,stroke-width:2px
+    style D fill:#FFF3E0,stroke:#F57C00,stroke-width:2px
+    style E fill:#FCE4EC,stroke:#C2185B,stroke-width:2px
 ```
+
+#### 📅 Development Phases
+
+| Phase | Period | Key Achievements |
+|-------|--------|------------------|
+| **🎯 Phase 1: Planning** | 2024-Q1 | • Research & Ideation<br/>• Studied yt-dlp capabilities<br/>• Analyzed user needs<br/>• Designed architecture |
+| **🔨 Phase 2: Core Development** | 2024-Q2 | • Built CLI Interface<br/>• Integrated yt-dlp<br/>• Added FFmpeg support<br/>• Created download manager |
+| **🚀 Phase 3: Feature Expansion** | 2024-Q3 | • Added Spotify support<br/>• Implemented metadata embedding<br/>• Built Rich UI interface<br/>• Added batch downloads |
+| **⚡ Phase 4: Optimization** | 2024-Q4 | • Parallel downloads<br/>• Error handling<br/>• Installation scripts<br/>• Cross-platform support |
+| **✨ Phase 5: Polish & Release** | 2025-Q1 | • Documentation<br/>• Testing & bug fixes<br/>• Public release<br/>• Community feedback |
 
 ### Technology Stack Decision Process
 
