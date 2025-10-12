@@ -11,7 +11,7 @@ Get Ultimate Media Downloader up and running in **under 5 minutes**!
 Make sure you have:
 - **Python 3.9+** installed ([Download](https://www.python.org/downloads/))
 - **Git** installed ([Download](https://git-scm.com/downloads))
-
+- **ffmpeg** installed ([Download](https://ffmpeg.org/))
 Check your Python version:
 ```bash
 python3 --version
