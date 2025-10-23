@@ -7,8 +7,12 @@ Provides common helper functions used across the application
 import os
 import re
 import json
+import warnings
 from pathlib import Path
 from urllib.parse import urlparse, parse_qs
+
+# Suppress warnings
+warnings.filterwarnings('ignore')
 
 
 def sanitize_filename(filename):
