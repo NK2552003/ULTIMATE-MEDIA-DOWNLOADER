@@ -100,9 +100,16 @@ class GenericSiteDownloader:
         else:
             self.ua = None
         
-        # Proxy support
+        # Proxy support with rotation
         self.proxies = proxies or []
         self.current_proxy_index = 0
+        self.failed_proxies = set()
+        
+        # Rate limiting to avoid IP bans
+        self.last_request_time = 0
+        self.min_request_interval = 1.5  # Minimum seconds between requests
+        self.request_count = 0
+        self.max_requests_per_proxy = 10  # Rotate proxy after N requests
         
         # Common video file extensions and patterns
         self.video_extensions = ['.mp4', '.webm', '.m3u8', '.mpd', '.mkv', '.avi', '.mov', '.flv', '.m4v', '.ts']
@@ -116,6 +123,28 @@ class GenericSiteDownloader:
         
         # SSL context that bypasses verification
         self.ssl_context = self._create_permissive_ssl_context()
+    
+    def _rate_limit(self):
+        """Implement rate limiting to avoid IP restrictions"""
+        current_time = time.time()
+        time_since_last = current_time - self.last_request_time
+        
+        if time_since_last < self.min_request_interval:
+            sleep_time = self.min_request_interval - time_since_last
+            if self.verbose:
+                print(f"⏱️  Rate limiting: sleeping {sleep_time:.1f}s")
+            time.sleep(sleep_time)
+        
+        self.last_request_time = time.time()
+        self.request_count += 1
+        
+        # Rotate proxy after max requests to avoid IP restrictions
+        if self.proxies and self.request_count >= self.max_requests_per_proxy:
+            self.request_count = 0
+            old_index = self.current_proxy_index
+            self._rotate_proxy()
+            if self.verbose:
+                print(f"🔄 Rotated proxy from {old_index} to {self.current_proxy_index}")
     
     def _create_permissive_ssl_context(self):
         """Create SSL context that bypasses certificate verification"""
@@ -210,17 +239,48 @@ class GenericSiteDownloader:
         }
     
     def _get_proxy(self) -> Optional[Dict[str, str]]:
-        """Get next proxy from the list in rotation"""
+        """Get next proxy from the list in rotation, avoiding failed ones"""
         if not self.proxies:
             return None
         
-        proxy = self.proxies[self.current_proxy_index]
-        self.current_proxy_index = (self.current_proxy_index + 1) % len(self.proxies)
+        # Try to find a working proxy
+        attempts = 0
+        max_attempts = len(self.proxies)
         
+        while attempts < max_attempts:
+            proxy = self.proxies[self.current_proxy_index]
+            
+            # Skip failed proxies
+            if proxy not in self.failed_proxies:
+                return {
+                    'http': proxy,
+                    'https': proxy
+                }
+            
+            self._rotate_proxy()
+            attempts += 1
+        
+        # All proxies failed, reset failed set and try again
+        if self.verbose:
+            print("⚠️  All proxies marked as failed, resetting...")
+        self.failed_proxies.clear()
+        
+        proxy = self.proxies[self.current_proxy_index]
         return {
             'http': proxy,
             'https': proxy
         }
+    
+    def _rotate_proxy(self):
+        """Rotate to next proxy"""
+        self.current_proxy_index = (self.current_proxy_index + 1) % len(self.proxies)
+    
+    def _mark_proxy_failed(self, proxy: str):
+        """Mark a proxy as failed"""
+        if proxy:
+            self.failed_proxies.add(proxy)
+            if self.verbose:
+                print(f"❌ Marked proxy as failed: {proxy}")
     
     def download(self, url: str, output_filename: Optional[str] = None) -> Optional[str]:
         """
@@ -234,6 +294,7 @@ class GenericSiteDownloader:
         print(f"📁 Output: {self.output_dir}")
         if self.proxies:
             print(f"🔒 Proxies: {len(self.proxies)} configured")
+        print(f"🛡️  Rate limiting enabled to avoid IP restrictions")
         print(f"{'='*80}\n")
         
         methods = [
@@ -252,6 +313,9 @@ class GenericSiteDownloader:
         
         for method_name, method_func in methods:
             try:
+                # Apply rate limiting before each attempt
+                self._rate_limit()
+                
                 print(f"\n🔧 Trying {method_name}...")
                 result = method_func(url, output_filename)
                 if result:
@@ -259,14 +323,13 @@ class GenericSiteDownloader:
                     print(f"📥 Downloaded: {result}")
                     return result
                 else:
-                    print(f"⚠️  {method_name} failed, trying next method...")
+                    if not self.verbose:
+                        pass  # Suppress failure messages in quiet mode
             except Exception as e:
                 if self.verbose:
                     import traceback
                     print(f"❌ {method_name} error: {str(e)}")
                     traceback.print_exc()
-                else:
-                    print(f"⚠️  {method_name} failed")
                 continue
         
         print(f"\n❌ All methods failed for: {url}")

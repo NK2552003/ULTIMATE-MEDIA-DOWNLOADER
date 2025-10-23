@@ -7,8 +7,12 @@ Uses mathematical precision and logarithmic scaling for accurate differentiation
 
 import re
 import math
+import warnings
 from datetime import datetime
 from difflib import SequenceMatcher
+
+# Suppress warnings
+warnings.filterwarnings('ignore')
 
 
 class YouTubeScorer:

@@ -17,6 +17,15 @@ from pathlib import Path
 from datetime import datetime
 from urllib.parse import urlparse, parse_qs
 import signal
+import warnings
+
+# Suppress all warnings globally
+warnings.filterwarnings('ignore')
+os.environ['PYTHONWARNINGS'] = 'ignore'
+
+# Suppress specific library warnings
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 import yt_dlp
 import requests
@@ -149,6 +158,9 @@ class UltimateMediaDownloader:
         self.console = Console() if RICH_AVAILABLE else None
         self.current_progress = None
         
+        # Initialize custom logger for counting warnings
+        self.quiet_logger = QuietLogger()
+        
         # Platform-specific configurations
         self.platform_configs = {
             'youtube': {
@@ -179,13 +191,13 @@ class UltimateMediaDownloader:
         self.default_ydl_opts = {
             # Performance optimizations
             'socket_timeout': 30,
-            'retries': 10,
-            'fragment_retries': 10,
+            'retries': 15,  # Increased retries for better reliability
+            'fragment_retries': 15,
             'skip_unavailable_fragments': True,
             'keepvideo': False,
             'noplaylist': False,
             'ignoreerrors': False,  # Changed to False to catch errors properly
-            'no_warnings': not self.verbose,  # Show warnings in verbose mode
+            'no_warnings': True,  # Always suppress warnings - we count them now
             'quiet': not self.verbose,  # Show full output in verbose mode
             'no_color': False,  # Allow colors in our custom progress
             'verbose': self.verbose,  # Enable verbose output if requested
@@ -193,6 +205,14 @@ class UltimateMediaDownloader:
             'audioformat': 'best',  # Changed from 'mp3' to 'best' for higher quality
             'concurrent_fragments': 8,  # Enable parallel fragment downloads
             'http_chunk_size': 10485760,  # 10MB chunks for faster downloads
+            
+            # Anti-restriction measures
+            'geo_bypass': True,  # Bypass geographic restrictions
+            'geo_bypass_country': 'US',
+            'nocheckcertificate': True,  # Ignore SSL certificate errors
+            'sleep_interval': 1,  # Sleep between downloads to avoid rate limiting
+            'max_sleep_interval': 3,
+            'sleep_interval_requests': 1,  # Sleep between requests
             
             # Quality settings for high-quality audio
             'prefer_free_formats': False,  # Prefer higher quality formats even if not free
@@ -211,8 +231,8 @@ class UltimateMediaDownloader:
             'writeautomaticsub': False,
             'subtitleslangs': ['en'],
             
-            # Enhanced user agent for better compatibility
-            'user_agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15',
+            # Enhanced user agent rotation for better compatibility and anti-detection
+            'user_agent': self._get_random_user_agent(),
             
             # Cache for faster repeated operations
             'cachedir': str(self.output_dir / '.cache'),
@@ -222,7 +242,7 @@ class UltimateMediaDownloader:
             'part': True,
             
             # Custom logger to suppress verbose output (unless verbose mode is enabled)
-            'logger': None if self.verbose else QuietLogger(),
+            'logger': None if self.verbose else self.quiet_logger,
         }
         
         # Initialize Spotify client if available
@@ -283,6 +303,19 @@ class UltimateMediaDownloader:
         # Skip browser automation - it's unreliable across platforms
         # Use enhanced HTTP scraping instead
         return None
+    
+    def _get_random_user_agent(self):
+        """Get a random user agent to avoid detection"""
+        import random
+        user_agents = [
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+            'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Safari/605.1.15',
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:122.0) Gecko/20100101 Firefox/122.0',
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 Edg/130.0.0.0',
+        ]
+        return random.choice(user_agents)
     
     def print_rich(self, message, style="bold cyan"):
         """Print with Rich formatting if available, fallback to plain print"""
@@ -4318,9 +4351,13 @@ class UltimateMediaDownloader:
                 print(f"Please enter a number between 1 and {len(choices)}")
     
     def prompt_format_selection(self, url):
-        """Interactive format selection"""
+        """Interactive format selection with auto-detected qualities"""
         print("\n◎ FORMAT SELECTION")
         print("=" * 50)
+        
+        # First, try to detect available qualities
+        print("🔍 Detecting available video qualities...")
+        info = self.get_supported_formats(url, timeout=20)
         
         # Ask for media type
         media_types = ["Video (with audio)", "Audio only"]
@@ -4332,7 +4369,7 @@ class UltimateMediaDownloader:
         
         audio_only = media_choice == "Audio only"
         
-        # Ask for quality with enhanced audio format options
+        # Ask for quality with enhanced audio format options or detected video qualities
         if audio_only:
             quality_options = [
                 "Best lossless (FLAC)",
@@ -4374,7 +4411,46 @@ class UltimateMediaDownloader:
             
             return quality_map[quality_choice], audio_only, format_map[quality_choice], None
         else:
-            quality_options = ["Best available", "4K (2160p)", "1440p", "1080p", "720p", "480p", "360p", "Custom"]
+            # Build quality options from detected formats
+            quality_options = ["Best available"]
+            detected_qualities = set()
+            
+            if info and 'formats' in info:
+                # Extract unique video heights from formats
+                for fmt in info['formats']:
+                    if fmt.get('vcodec') != 'none' and fmt.get('height'):
+                        height = fmt.get('height')
+                        if height >= 2160:
+                            detected_qualities.add("4K (2160p)")
+                        elif height >= 1440:
+                            detected_qualities.add("1440p")
+                        elif height >= 1080:
+                            detected_qualities.add("1080p")
+                        elif height >= 720:
+                            detected_qualities.add("720p")
+                        elif height >= 480:
+                            detected_qualities.add("480p")
+                        elif height >= 360:
+                            detected_qualities.add("360p")
+                
+                # Sort detected qualities by resolution (descending)
+                quality_order = ["4K (2160p)", "1440p", "1080p", "720p", "480p", "360p"]
+                for q in quality_order:
+                    if q in detected_qualities:
+                        quality_options.append(f"{q} ✓ (available)")
+            
+            # Add standard options that weren't detected
+            standard_qualities = ["4K (2160p)", "1440p", "1080p", "720p", "480p", "360p"]
+            for q in standard_qualities:
+                if f"{q} ✓ (available)" not in quality_options:
+                    quality_options.append(q)
+            
+            quality_options.append("Custom")
+            
+            # Show detected qualities if any
+            if detected_qualities:
+                print(f"\n✓ Detected available qualities: {', '.join(sorted(detected_qualities, reverse=True))}")
+            
             quality_choice = self.prompt_user_choice(
                 "Select video quality:", 
                 quality_options, 
@@ -4384,6 +4460,9 @@ class UltimateMediaDownloader:
             if quality_choice == "Custom":
                 custom_format = input("Enter custom format (e.g., 'best[height<=720]'): ").strip()
                 return "best", audio_only, None, custom_format if custom_format else None
+            
+            # Map the choice back to simple quality name
+            quality_choice_clean = quality_choice.replace(" ✓ (available)", "")
             
             quality_map = {
                 "Best available": "best",
@@ -4412,7 +4491,7 @@ class UltimateMediaDownloader:
                 "Keep original": None
             }
             
-            return quality_map[quality_choice], audio_only, format_map[format_choice], None
+            return quality_map[quality_choice_clean], audio_only, format_map[format_choice], None
     
     def get_supported_formats(self, url, timeout=30):
         """Get all available formats for a URL with timeout"""
@@ -6898,6 +6977,10 @@ Report issues: Create an issue on the GitHub repository
         no_playlist=args.no_playlist,
         audio_language=args.audio_language
     )
+    
+    # Print warning summary at the end
+    if not args.verbose and hasattr(downloader, 'quiet_logger'):
+        downloader.quiet_logger.print_summary()
 
 if __name__ == "__main__":    
     main()
