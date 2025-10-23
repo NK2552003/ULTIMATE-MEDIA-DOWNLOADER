@@ -5311,13 +5311,13 @@ class UltimateMediaDownloader:
                 # Enhanced check: Also verify if any file was actually downloaded
                 if download_succeeded and info:
                     title = info.get('title', 'Unknown')
-                    uploader = info.get('uploader', 'Unknown')
+                    uploader = info.get('uploader') or 'Unknown'
                     
                     # Look for downloaded files with multiple patterns
                     # yt-dlp sanitizes filenames, replacing characters like | with ｜
                     # Clean the strings for glob patterns - remove special glob characters
-                    title_clean = title[:40].replace('|', '').replace('/', '').replace('\\', '').replace('*', '').replace('?', '').replace('[', '').replace(']', '')
-                    uploader_clean = uploader[:20].replace('|', '').replace('/', '').replace('\\', '').replace('*', '').replace('?', '').replace('[', '').replace(']', '')
+                    title_clean = (title or 'Unknown')[:40].replace('|', '').replace('/', '').replace('\\', '').replace('*', '').replace('?', '').replace('[', '').replace(']', '')
+                    uploader_clean = (uploader or 'Unknown')[:20].replace('|', '').replace('/', '').replace('\\', '').replace('*', '').replace('?', '').replace('[', '').replace(']', '')
                     
                     # Search for files with any of these extensions
                     extensions = ['.mp3', '.m4a', '.webm', '.mp4', '.mkv', '.flac', '.opus']
