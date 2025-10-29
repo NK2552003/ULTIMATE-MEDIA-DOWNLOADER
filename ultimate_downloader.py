@@ -36,11 +36,10 @@ from PIL import Image
 import io
 
 try:
-    import spotipy
-    from spotipy.oauth2 import SpotifyClientCredentials
-    SPOTIFY_AVAILABLE = True
+    from spotify_handler import SpotifyHandler
+    SPOTIFY_HANDLER_AVAILABLE = True
 except ImportError:
-    SPOTIFY_AVAILABLE = False
+    SPOTIFY_HANDLER_AVAILABLE = False
 
 try:
     import mutagen
@@ -142,7 +141,7 @@ from utils import (
     load_config, save_config, ensure_directory,
     validate_url, clean_string, truncate_string
 )
-
+from apple_music_handler import AppleMusicHandler
 
 class UltimateMediaDownloader:
     def __init__(self, output_dir=None, verbose=False):
@@ -245,10 +244,10 @@ class UltimateMediaDownloader:
             'logger': None if self.verbose else self.quiet_logger,
         }
         
-        # Initialize Spotify client if available
-        self.spotify_client = None
-        if SPOTIFY_AVAILABLE:
-            self._init_spotify()
+        # Initialize Spotify handler if available
+        self.spotify_handler = None
+        if SPOTIFY_HANDLER_AVAILABLE:
+            self.spotify_handler = SpotifyHandler(self)
         
         # Initialize Apple Music downloader if available
         self.apple_music_downloader = None
@@ -257,27 +256,9 @@ class UltimateMediaDownloader:
         
         # Initialize browser for enhanced scraping
         self.browser_driver = None
-    
-    def _init_spotify(self):
-        """Initialize Spotify client (requires API credentials)"""
-        try:
-            # You would need to set these environment variables or provide them
-            client_id = os.environ.get('SPOTIFY_CLIENT_ID')
-            client_secret = os.environ.get('SPOTIFY_CLIENT_SECRET')
-            
-            if client_id and client_secret:
-                client_credentials_manager = SpotifyClientCredentials(
-                    client_id=client_id, 
-                    client_secret=client_secret
-                )
-                self.spotify_client = spotipy.Spotify(
-                    client_credentials_manager=client_credentials_manager
-                )
-                # Only show success in verbose mode
-            # Suppress warnings by default - not critical for operation
-        except Exception as e:
-            # Only show errors in verbose mode
-            pass
+        
+        # Initialize Apple Music handler
+        self.apple_music_handler = AppleMusicHandler(self)
     
     def _init_apple_music(self):
         """Initialize Apple Music downloader"""
@@ -395,1175 +376,15 @@ class UltimateMediaDownloader:
             return [{'name': 'Error', 'description': 'Could not load site list'}]
     
     def search_and_download_spotify_track(self, spotify_url):
-        """Search for Spotify track/album/playlist on YouTube and download"""
-        if not self.spotify_client:
-            self.print_rich(Messages.warning("Spotify API not configured. Using web scraping method..."))
-            self.print_rich(Messages.info("💡 Tip: For better Spotify support, set SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET"))
-            return self._fallback_spotify_search(spotify_url)
+        """Search for Spotify track/album/playlist on YouTube and download
         
-        try:
-            # Determine Spotify content type
-            if '/track/' in spotify_url:
-                return self._download_spotify_track(spotify_url)
-            elif '/album/' in spotify_url:
-                return self._download_spotify_album(spotify_url)
-            elif '/playlist/' in spotify_url:
-                return self._download_spotify_playlist(spotify_url)
-            else:
-                self.print_rich(Messages.error("Unknown Spotify URL format"))
-                return None
-                
-        except Exception as e:
-            self.print_rich(Messages.error(f"Error processing Spotify URL: {e}"))
-            return self._fallback_spotify_search(spotify_url)
-    
-    def _download_spotify_track(self, spotify_url):
-        """Download single Spotify track"""
-        track_id = self._extract_spotify_id(spotify_url, 'track')
-        if not track_id:
-            return None
-        
-        track = self.spotify_client.track(track_id)
-        artists = ', '.join([artist['name'] for artist in track['artists']])
-        track_name = track['name']
-        # Format as "songname - artist name" for better YouTube search results
-        search_query = f"{track_name} - {artists}"
-        
-        self.print_rich(f"[bold green]{Icons.get('spotify')} Spotify Track:[/bold green] [cyan]{search_query}[/cyan]")
-        
-        # Ask for quality preference (like Apple Music)
-        output_format = 'mp3'
-        quality = 'best'
-        
-        self.print_rich(f"\n[bold cyan]🎚️  Select audio quality:[/bold cyan]")
-        self.print_rich("  [green]1[/green]. Best Quality (320kbps MP3) - Recommended")
-        self.print_rich("  [yellow]2[/yellow]. High Quality (256kbps AAC/M4A) - Balanced")
-        self.print_rich("  [blue]3[/blue]. Very High Quality (FLAC) - Lossless, larger files")
-        self.print_rich("  [magenta]4[/magenta]. Best Available (Auto) - Highest quality possible")
-        
-        try:
-            from rich.prompt import Prompt
-            quality_choice = Prompt.ask("\n[cyan]Enter choice (1-4)[/cyan]", default="1")
-            
-            if quality_choice == "1":
-                output_format = 'mp3'
-                quality = 'best'
-            elif quality_choice == "2":
-                output_format = 'm4a'
-                quality = 'best'
-            elif quality_choice == "3":
-                output_format = 'flac'
-                quality = 'best'
-            elif quality_choice == "4":
-                output_format = 'best'
-                quality = 'best'
-            else:
-                output_format = 'mp3'
-                quality = 'best'
-        except:
-            # If rich prompt fails, fall back to regular input
-            try:
-                quality_choice = input("\nEnter choice (1-4) [default: 1]: ").strip() or "1"
-                
-                if quality_choice == "1":
-                    output_format = 'mp3'
-                    quality = 'best'
-                elif quality_choice == "2":
-                    output_format = 'm4a'
-                    quality = 'best'
-                elif quality_choice == "3":
-                    output_format = 'flac'
-                    quality = 'best'
-                elif quality_choice == "4":
-                    output_format = 'best'
-                    quality = 'best'
-                else:
-                    output_format = 'mp3'
-                    quality = 'best'
-            except:
-                output_format = 'mp3'
-                quality = 'best'
-        
-        self.print_rich(Messages.searching("Searching on YouTube..."))
-        
-        youtube_url = self._search_youtube(search_query)
-        if youtube_url:
-            self.print_rich(Messages.success(f"Found on YouTube: {youtube_url}"))
-            # Create filename as "Artist - Title"
-            filename_format = f"{artists} - {track_name}"
-            # Use enhanced audio settings for Spotify tracks
-            return self.download_media(
-                youtube_url, 
-                audio_only=True, 
-                output_format=output_format,
-                quality=quality,
-                add_metadata=True,
-                add_thumbnail=True,
-                custom_filename=filename_format  # Save as "Artist - Title"
-            )
+        Delegates to SpotifyHandler
+        """
+        if self.spotify_handler:
+            return self.spotify_handler.search_and_download(spotify_url, interactive=True)
         else:
-            self.print_rich(Messages.error("Could not find track on YouTube"))
+            self.print_rich(Messages.error("Spotify handler not available"))
             return None
-    
-    def _download_spotify_album(self, spotify_url):
-        """Download Spotify album by searching each track on YouTube"""
-        album_id = self._extract_spotify_id(spotify_url, 'album')
-        if not album_id:
-            return None
-        
-        album = self.spotify_client.album(album_id)
-        album_name = album['name']
-        artist_name = album['artists'][0]['name']
-        tracks = album['tracks']['items']
-        
-        self.print_rich(f"[bold magenta]{Icons.get('spotify')} Spotify Album:[/bold magenta] [cyan]{artist_name} - {album_name}[/cyan]")
-        self.print_rich(Messages.info(f"Total tracks: {len(tracks)}"))
-        
-        # Prompt for audio format and quality
-        output_format, quality = self._prompt_audio_format_quality()
-        
-        # Create album directory
-        album_dir = self.output_dir / f"{artist_name} - {album_name}"
-        album_downloader = UltimateMediaDownloader(album_dir)
-        
-        successful_downloads = 0
-        
-        for i, track in enumerate(tracks, 1):
-            try:
-                artists = ', '.join([artist['name'] for artist in track['artists']])
-                track_name = track['name']
-                # Format as "songname - artist name" for better YouTube search results
-                search_query = f"{track_name} - {artists}"
-                
-                self.print_rich(f"\n[bold blue]{Icons.get('music')} [{i:2d}/{len(tracks)}][/bold blue] [cyan]{search_query}[/cyan]")
-                
-                youtube_url = self._search_youtube(search_query)
-                if youtube_url:
-                    # Create filename as "Artist - Title"
-                    filename_format = f"{artists} - {track_name}"
-                    result = album_downloader.download_media(
-                        youtube_url, 
-                        audio_only=True, 
-                        output_format=output_format,
-                        quality=quality,
-                        add_metadata=True,
-                        add_thumbnail=True,
-                        custom_filename=filename_format
-                    )
-                    if result:
-                        successful_downloads += 1
-                else:
-                    self.print_rich(Messages.error(f"Could not find: {track_name}"))
-                    
-            except Exception as e:
-                self.print_rich(Messages.error(f"Error downloading {track_name}: {e}"))
-        
-        print(f"\n✓ Album download completed: {successful_downloads}/{len(tracks)} tracks downloaded")
-        return successful_downloads > 0
-    
-    def _download_spotify_playlist(self, spotify_url):
-        """Download Spotify playlist by searching each track on YouTube"""
-        playlist_id = self._extract_spotify_id(spotify_url, 'playlist')
-        if not playlist_id:
-            return None
-        
-        playlist = self.spotify_client.playlist(playlist_id)
-        playlist_name = playlist['name']
-        owner_name = playlist['owner']['display_name']
-        tracks = playlist['tracks']['items']
-        
-        # Filter out None tracks (unavailable songs)
-        valid_tracks = [item for item in tracks if item['track'] is not None]
-        
-        print(f"≡ Spotify Playlist: {playlist_name}")
-        print(f"◈ Owner: {owner_name}")
-        print(f"▤ Total tracks: {len(valid_tracks)}")
-        
-        # Convert to track list format - use "songname - artist" for better YouTube search
-        track_list = []
-        for item in valid_tracks:
-            track = item['track']
-            artists = ', '.join([artist['name'] for artist in track['artists']])
-            track_name = track['name']
-            # Format as "songname - artist name" for consistent search format
-            track_list.append(f"{track_name} - {artists}")
-        
-        print(f"✓ Found {len(track_list)} tracks in playlist:")
-        for i, track in enumerate(track_list[:10], 1):  # Show first 10 tracks
-            print(f"  {i}. {track}")
-        
-        if len(track_list) > 10:
-            print(f"  ... and {len(track_list) - 10} more tracks")
-        
-        # Ask user what they want to download
-        choice = self._prompt_playlist_download_choice(track_list)
-        
-        if choice == "cancel":
-            print("✗ Download cancelled by user")
-            return None
-        elif choice == "all":
-            selected_tracks = track_list
-        else:
-            # User selected specific tracks
-            selected_tracks = choice
-        
-        # Prompt for audio format and quality
-        output_format, quality = self._prompt_audio_format_quality()
-        
-        print(f"\n♫ Starting download of {len(selected_tracks)} track(s)...")
-        
-        # Create playlist directory
-        safe_playlist_name = "".join(c for c in playlist_name if c.isalnum() or c in (' ', '-', '_')).rstrip()
-        playlist_dir = self.output_dir / f"Spotify - {safe_playlist_name}"
-        playlist_downloader = UltimateMediaDownloader(playlist_dir)
-        
-        return playlist_downloader._download_track_queue(selected_tracks, "Spotify", output_format, quality)
-    
-    def _fallback_spotify_search(self, spotify_url):
-        """Fallback method to extract Spotify track info without API using web scraping"""
-        try:
-            self.print_rich(Messages.searching("Attempting fallback Spotify track extraction..."))
-            
-            # Determine content type
-            if '/track/' in spotify_url:
-                return self._scrape_spotify_track(spotify_url)
-            elif '/album/' in spotify_url:
-                return self._scrape_spotify_album(spotify_url)
-            elif '/playlist/' in spotify_url:
-                return self._scrape_spotify_playlist(spotify_url)
-            elif '/artist/' in spotify_url:
-                return self._scrape_spotify_artist(spotify_url)
-            else:
-                self.print_rich(Messages.error("Unknown Spotify URL format"))
-                self.print_rich(Messages.info("Supported: /track/, /album/, /playlist/, /artist/"))
-                return None
-            
-        except Exception as e:
-            self.print_rich(Messages.error(f"Fallback search failed: {e}"))
-            return None
-    
-    def _scrape_spotify_track(self, spotify_url):
-        """Scrape Spotify track information and download from YouTube (like Apple Music)"""
-        try:
-            self.print_rich(Messages.info("Processing Spotify track URL..."))
-            
-            # Extract track info - simplified approach that mirrors Apple Music
-            track_info = self._extract_spotify_track_info(spotify_url)
-            
-            if track_info:
-                search_query = track_info
-                self.print_rich(f"[bold green]♪ Spotify Track:[/bold green] [cyan]{search_query}[/cyan]")
-                
-                # Check if artist info is missing (no " - " in search query)
-                if ' - ' not in search_query:
-                    self.print_rich(Messages.warning("⚠  Artist information not found in metadata"))
-                    self.print_rich(Messages.info("💡 Please provide the artist name for better search results:"))
-                    
-                    try:
-                        from rich.prompt import Prompt
-                        artist_name = Prompt.ask("[cyan]Artist name (or press Enter to skip)[/cyan]", default="")
-                        
-                        if artist_name:
-                            # Format as "songname - artist name" for better YouTube search
-                            search_query = f"{search_query} - {artist_name}"
-                            self.print_rich(f"[bold green]♪ Updated search:[/bold green] [cyan]{search_query}[/cyan]")
-                    except KeyboardInterrupt:
-                        self.print_rich(Messages.info("\nSkipping artist info, continuing with track name only"))
-                    except:
-                        pass
-            else:
-                # If automatic extraction failed, ask user (exactly like Apple Music does)
-                self.print_rich(Messages.warning("Could not automatically extract track information from URL"))
-                self.print_rich(Messages.info("💡 Please provide the track details manually:"))
-                self.print_rich("[dim]Tip: You can find this info on the Spotify page[/dim]")
-                
-                try:
-                    from rich.prompt import Prompt
-                    track_name = Prompt.ask("[cyan]Song/Track name[/cyan]")
-                    artist_name = Prompt.ask("[cyan]Artist name[/cyan]")
-                    
-                    if not track_name:
-                        self.print_rich(Messages.error("Track name is required"))
-                        return None
-                    
-                    if artist_name:
-                        # Format as "songname - artist name" for better YouTube search
-                        search_query = f"{track_name} - {artist_name}"
-                    else:
-                        search_query = track_name
-                    
-                    self.print_rich(f"\n[bold green]♪ Searching for:[/bold green] [cyan]{search_query}[/cyan]")
-                except KeyboardInterrupt:
-                    self.print_rich(Messages.info("\nCancelled by user"))
-                    return None
-                except:
-                    self.print_rich(Messages.error("Could not get track information"))
-                    return None
-            
-            # Ask for quality preference (like Apple Music)
-            output_format = 'mp3'
-            quality = 'best'
-            
-            self.print_rich(f"\n[bold cyan]🎚️  Select audio quality:[/bold cyan]")
-            self.print_rich("  [green]1[/green]. Best Quality (320kbps MP3) - Recommended")
-            self.print_rich("  [yellow]2[/yellow]. High Quality (256kbps AAC/M4A) - Balanced")
-            self.print_rich("  [blue]3[/blue]. Very High Quality (FLAC) - Lossless, larger files")
-            self.print_rich("  [magenta]4[/magenta]. Best Available (Auto) - Highest quality possible")
-            
-            try:
-                from rich.prompt import Prompt
-                quality_choice = Prompt.ask("\n[cyan]Enter choice (1-4)[/cyan]", default="1")
-                
-                if quality_choice == "1":
-                    output_format = 'mp3'
-                    quality = 'best'
-                elif quality_choice == "2":
-                    output_format = 'm4a'
-                    quality = 'best'
-                elif quality_choice == "3":
-                    output_format = 'flac'
-                    quality = 'best'
-                elif quality_choice == "4":
-                    output_format = 'best'
-                    quality = 'best'
-                else:
-                    output_format = 'mp3'
-                    quality = 'best'
-            except:
-                # If rich prompt fails, fall back to regular input
-                try:
-                    quality_choice = input("\nEnter choice (1-4) [default: 1]: ").strip() or "1"
-                    
-                    if quality_choice == "1":
-                        output_format = 'mp3'
-                        quality = 'best'
-                    elif quality_choice == "2":
-                        output_format = 'm4a'
-                        quality = 'best'
-                    elif quality_choice == "3":
-                        output_format = 'flac'
-                        quality = 'best'
-                    elif quality_choice == "4":
-                        output_format = 'best'
-                        quality = 'best'
-                    else:
-                        output_format = 'mp3'
-                        quality = 'best'
-                except:
-                    output_format = 'mp3'
-                    quality = 'best'
-            
-            self.print_rich(Messages.searching("Searching on YouTube..."))
-            
-            youtube_url = self._search_youtube(search_query)
-            if youtube_url:
-                self.print_rich(Messages.success(f"Found on YouTube: {youtube_url}"))
-                
-                # Try to get album art from Spotify
-                album_art_url = self._get_spotify_album_art(spotify_url)
-                if album_art_url:
-                    self.print_rich(f"  [dim]✓ Spotify album art available[/dim]")
-                
-                # Extract artist and title for filename
-                if ' - ' in search_query:
-                    parts = search_query.split(' - ', 1)
-                    if len(parts) == 2:
-                        # search_query is "songname - artist"
-                        filename_format = f"{parts[1]} - {parts[0]}"  # Convert to "artist - songname"
-                    else:
-                        filename_format = search_query
-                else:
-                    filename_format = search_query
-                
-                # Download from YouTube with selected quality
-                result = self.download_media(
-                    youtube_url, 
-                    audio_only=True, 
-                    output_format=output_format,
-                    quality=quality,
-                    add_metadata=True,
-                    add_thumbnail=True,
-                    custom_filename=filename_format
-                )
-                
-                # If download succeeded and we have album art, replace YouTube thumbnail with Spotify art
-                if result and album_art_url:
-                    # Find the downloaded file
-                    downloaded_file = self._find_recently_downloaded_file()
-                    if downloaded_file:
-                        self._embed_spotify_album_art(downloaded_file, album_art_url, search_query)
-                
-                return result
-            else:
-                self.print_rich(Messages.error("Could not find track on YouTube"))
-                
-                # Interactive fallback - ask for more details
-                self.print_rich(f"\n[yellow]→ The search for '{search_query}' didn't find any results.[/yellow]")
-                self.print_rich("[yellow]Would you like to try with different search terms?[/yellow]")
-                try:
-                    from rich.prompt import Prompt, Confirm
-                    if Confirm.ask("Try again with different terms?", default=False):
-                        track = Prompt.ask("Track name")
-                        artist = Prompt.ask("Artist name")
-                        if artist and track:
-                            # Format as "songname - artist name" for better search
-                            better_query = f"{track} - {artist}"
-                            filename_format = f"{artist} - {track}"
-                            self.print_rich(f"\n[cyan]⌕ Searching again for: {better_query}[/cyan]")
-                            youtube_url = self._search_youtube(better_query)
-                            if youtube_url:
-                                self.print_rich(Messages.success(f"Found on YouTube: {youtube_url}"))
-                                return self.download_media(
-                                    youtube_url, 
-                                    audio_only=True, 
-                                    output_format=output_format,
-                                    quality=quality,
-                                    add_metadata=True,
-                                    add_thumbnail=True,
-                                    custom_filename=filename_format
-                                )
-                except:
-                    pass
-                
-                return None
-                
-        except Exception as e:
-            self.print_rich(Messages.error(f"Error processing Spotify track: {e}"))
-            return None
-    
-    def _extract_spotify_track_info(self, spotify_url):
-        """Extract track information from Spotify URL using various methods"""
-        try:
-            # Method 1: Try oembed API (works without SSL issues usually)
-            try:
-                import urllib3
-                urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-                
-                oembed_url = f"https://open.spotify.com/oembed?url={spotify_url}"
-                response = requests.get(oembed_url, timeout=10, verify=False)
-                
-                if response.status_code == 200:
-                    data = response.json()
-                    title_raw = data.get('title', '').strip()
-                    
-                    if title_raw:
-                        # Spotify oembed returns title in various formats:
-                        # Format 1: "Song Name" (just title)
-                        # Format 2: "Artist · Song Name" (with middle dot)
-                        # Format 3: "Song Name - Artist" (with dash)
-                        
-                        # Try to extract both track and artist
-                        track_name = None
-                        artist_name = None
-                        
-                        # Check for middle dot separator (most common in Spotify oembed)
-                        if ' · ' in title_raw or ' · ' in title_raw:
-                            parts = title_raw.replace(' · ', ' · ').split(' · ')
-                            if len(parts) == 2:
-                                artist_name = parts[0].strip()
-                                track_name = parts[1].strip()
-                        # Check for dash separator
-                        elif ' - ' in title_raw and title_raw.count(' - ') == 1:
-                            parts = title_raw.split(' - ')
-                            # Could be "Artist - Song" or "Song - Artist"
-                            # Usually Spotify uses "Artist - Song"
-                            artist_name = parts[0].strip()
-                            track_name = parts[1].strip()
-                        else:
-                            # Only track name, no artist
-                            track_name = title_raw
-                        
-                        if track_name and artist_name:
-                            # Format as "songname - artist" for better YouTube search
-                            search_query = f"{track_name} - {artist_name}"
-                            self.print_rich(f"  [dim]✓ Extracted: {track_name}[/dim]")
-                            self.print_rich(f"  [dim]✓ Artist: {artist_name}[/dim]")
-                            return search_query
-                        else:
-                            # Only track name found
-                            self.print_rich(f"  [dim]✓ Extracted track: {track_name}[/dim]")
-                            self.print_rich(f"  [dim]⚠ Artist not found in metadata[/dim]")
-                            return track_name
-            except:
-                pass
-            
-            # Method 2: Try scraping the Spotify page directly
-            try:
-                headers = {
-                    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36'
-                }
-                response = requests.get(spotify_url, headers=headers, timeout=10)
-                
-                if response.status_code == 200:
-                    from bs4 import BeautifulSoup
-                    soup = BeautifulSoup(response.content, 'html.parser')
-                    
-                    # Try to get from meta tags
-                    og_title = soup.find('meta', property='og:title')
-                    if og_title and og_title.get('content'):
-                        title_content = og_title.get('content').strip()
-                        
-                        # Parse out artist and track
-                        if ' - song and lyrics by ' in title_content.lower():
-                            # Format: "Track Name - song and lyrics by Artist | Spotify"
-                            parts = title_content.split(' - song and lyrics by ')
-                            if len(parts) >= 2:
-                                track_name = parts[0].strip()
-                                artist_part = parts[1].split('|')[0].strip()
-                                search_query = f"{track_name} - {artist_part}"
-                                self.print_rich(f"  [dim]✓ Extracted: {track_name}[/dim]")
-                                self.print_rich(f"  [dim]✓ Artist: {artist_part}[/dim]")
-                                return search_query
-            except:
-                pass
-            
-            return None
-            
-        except Exception as e:
-            return None
-    
-    def _get_spotify_album_art(self, spotify_url):
-        """Get album art URL from Spotify using oembed API"""
-        try:
-            import urllib3
-            urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-            
-            oembed_url = f"https://open.spotify.com/oembed?url={spotify_url}"
-            response = requests.get(oembed_url, timeout=10, verify=False)
-            
-            if response.status_code == 200:
-                data = response.json()
-                thumbnail_url = data.get('thumbnail_url', '')
-                if thumbnail_url:
-                    self.print_rich(f"  [dim]✓ Found Spotify album art[/dim]")
-                    return thumbnail_url
-        except:
-            pass
-        
-        return None
-    
-    def _embed_spotify_album_art(self, file_path, album_art_url, track_info):
-        """Download and embed Spotify album art into the audio file"""
-        try:
-            if not MUTAGEN_AVAILABLE:
-                return False
-            
-            self.print_rich(Messages.info("Adding Spotify album art..."))
-            
-            # Download album art
-            response = requests.get(album_art_url, timeout=10)
-            if response.status_code != 200:
-                return False
-            
-            album_art_data = response.content
-            
-            # Determine file type and embed art
-            file_path_obj = Path(file_path) if isinstance(file_path, str) else file_path
-            
-            if not file_path_obj.exists():
-                # Try to find the file with different extensions
-                possible_files = list(file_path_obj.parent.glob(f"{file_path_obj.stem}.*"))
-                if possible_files:
-                    file_path_obj = possible_files[0]
-                else:
-                    return False
-            
-            file_ext = file_path_obj.suffix.lower()
-            
-            if file_ext == '.mp3':
-                audio = MP3(str(file_path_obj), ID3=ID3)
-                if audio.tags is None:
-                    audio.add_tags()
-                
-                audio.tags.add(
-                    APIC(
-                        encoding=3,
-                        mime='image/jpeg',
-                        type=3,  # Cover (front)
-                        desc='Cover',
-                        data=album_art_data
-                    )
-                )
-                audio.save()
-                self.print_rich(Messages.success("✓ Album art added successfully!"))
-                return True
-                
-            elif file_ext == '.m4a':
-                audio = MP4(str(file_path_obj))
-                audio.tags['covr'] = [MP4Cover(album_art_data, imageformat=MP4Cover.FORMAT_JPEG)]
-                audio.save()
-                self.print_rich(Messages.success("✓ Album art added successfully!"))
-                return True
-                
-            elif file_ext == '.flac':
-                audio = FLAC(str(file_path_obj))
-                image = Picture()
-                image.type = 3  # Cover (front)
-                image.mime = 'image/jpeg'
-                image.desc = 'Cover'
-                image.data = album_art_data
-                audio.add_picture(image)
-                audio.save()
-                self.print_rich(Messages.success("✓ Album art added successfully!"))
-                return True
-            
-            return False
-            
-        except Exception as e:
-            self.print_rich(f"  [dim]⚠ Could not add album art: {e}[/dim]")
-            return False
-    
-    def _find_recently_downloaded_file(self):
-        """Find the most recently downloaded audio file"""
-        try:
-            import time
-            current_time = time.time()
-            
-            # Look for files created/modified in the last 2 minutes
-            audio_extensions = ['.mp3', '.m4a', '.flac', '.opus', '.ogg', '.wav']
-            recent_files = []
-            
-            for ext in audio_extensions:
-                files = list(self.output_dir.glob(f"*{ext}"))
-                for f in files:
-                    if f.is_file() and (current_time - f.stat().st_mtime) < 120:  # 2 minutes
-                        recent_files.append((f, f.stat().st_mtime))
-            
-            if recent_files:
-                # Sort by modification time, newest first
-                recent_files.sort(key=lambda x: x[1], reverse=True)
-                return recent_files[0][0]
-            
-            return None
-            
-        except Exception as e:
-            return None
-    
-    def _scrape_spotify_album(self, spotify_url):
-        """Scrape Spotify album information and try to download tracks (like Apple Music)"""
-        try:
-            from bs4 import BeautifulSoup
-            import re
-            
-            self.print_rich(Messages.searching("Scraping Spotify album page..."))
-            
-            headers = {
-                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                'Accept-Language': 'en-US,en;q=0.9',
-            }
-            
-            response = requests.get(spotify_url, headers=headers, timeout=10)
-            response.raise_for_status()
-            
-            soup = BeautifulSoup(response.content, 'html.parser')
-            raw_html = response.text
-            
-            # Extract album name and artist
-            album_name = "Unknown Album"
-            artist_name = "Unknown Artist"
-            
-            # Try structured data
-            script_tags = soup.find_all('script', type='application/ld+json')
-            for script in script_tags:
-                try:
-                    json_data = json.loads(script.string)
-                    if isinstance(json_data, dict) and json_data.get('@type') == 'MusicAlbum':
-                        album_name = json_data.get('name', album_name)
-                        if 'byArtist' in json_data:
-                            artist_data = json_data['byArtist']
-                            if isinstance(artist_data, dict):
-                                artist_name = artist_data.get('name', artist_name)
-                        break
-                except:
-                    continue
-            
-            # Fallback to meta tags
-            if album_name == "Unknown Album":
-                og_title = soup.find('meta', property='og:title')
-                if og_title:
-                    title_text = og_title.get('content', '')
-                    if ' - ' in title_text:
-                        parts = title_text.split(' - ', 1)
-                        album_name = parts[0].strip()
-                        artist_name = parts[1].strip()
-                    else:
-                        album_name = title_text.strip()
-            
-            self.print_rich(f"[bold magenta]♪ Spotify Album:[/bold magenta] [cyan]{artist_name} - {album_name}[/cyan]")
-            
-            # Try to extract track list from the page
-            tracks = []
-            try:
-                # Look for track data in JSON
-                track_pattern = r'"name"\s*:\s*"([^"]+)".{0,500}?"type"\s*:\s*"track"'
-                track_matches = re.findall(track_pattern, raw_html)
-                
-                if track_matches:
-                    # Remove duplicates while preserving order
-                    seen = set()
-                    for track in track_matches:
-                        if track not in seen and len(track) > 2:
-                            seen.add(track)
-                            tracks.append(track)
-                    
-                    self.print_rich(Messages.success(f"Found {len(tracks)} tracks in album"))
-                    
-                    # Show first few tracks
-                    self.print_rich(Messages.info("Track list:"))
-                    for i, track in enumerate(tracks[:5], 1):
-                        self.print_rich(f"  {i}. {track}")
-                    if len(tracks) > 5:
-                        self.print_rich(f"  ... and {len(tracks) - 5} more")
-            except:
-                pass
-            
-            if not tracks:
-                self.print_rich(Messages.warning("Could not extract track list from album page"))
-                self.print_rich(Messages.info("You can:"))
-                self.print_rich("  1. [green]Set up Spotify API credentials[/green] for full album downloads")
-                self.print_rich("  2. [yellow]Download individual tracks[/yellow] using their URLs")
-                self.print_rich("  3. [cyan]Search for the album on YouTube[/cyan] - trying now...")
-                
-                # Try to find the album on YouTube as a single search
-                search_query = f"{artist_name} {album_name} full album"
-                youtube_url = self._search_youtube(search_query)
-                if youtube_url:
-                    self.print_rich(Messages.success(f"Found album on YouTube: {youtube_url}"))
-                    return self.download_media(youtube_url, audio_only=True, output_format='mp3')
-                else:
-                    self.print_rich(Messages.error("Could not find album on YouTube"))
-                return None
-            
-            # Ask user what to download
-            self.print_rich("")
-            self.print_rich("[yellow]Do you want to download all tracks?[/yellow]")
-            self.print_rich("  [green]1[/green] - Download all tracks (searches YouTube for each)")
-            self.print_rich("  [yellow]2[/yellow] - Cancel")
-            
-            try:
-                from rich.prompt import Prompt
-                choice = Prompt.ask("Choose option", choices=["1", "2"], default="2")
-                
-                if choice == "2":
-                    self.print_rich(Messages.info("Download cancelled"))
-                    return None
-            except:
-                self.print_rich(Messages.info("Download cancelled"))
-                return None
-            
-            # Create album directory
-            safe_album_name = "".join(c for c in f"{artist_name} - {album_name}" if c.isalnum() or c in (' ', '-', '_')).rstrip()
-            album_dir = self.output_dir / safe_album_name
-            album_downloader = UltimateMediaDownloader(album_dir)
-            
-            # Download tracks
-            successful = 0
-            for i, track_name in enumerate(tracks, 1):
-                try:
-                    search_query = f"{artist_name} - {track_name}"
-                    self.print_rich(f"\n[bold blue]♫ [{i:2d}/{len(tracks)}][/bold blue] [cyan]{search_query}[/cyan]")
-                    
-                    youtube_url = self._search_youtube(search_query)
-                    if youtube_url:
-                        result = album_downloader.download_media(
-                            youtube_url, 
-                            audio_only=True, 
-                            output_format='mp3',
-                            add_metadata=True,
-                            add_thumbnail=True
-                        )
-                        if result:
-                            successful += 1
-                    else:
-                        self.print_rich(Messages.error(f"Could not find: {track_name}"))
-                except Exception as e:
-                    self.print_rich(Messages.error(f"Error downloading {track_name}: {e}"))
-            
-            self.print_rich("")
-            self.print_rich(Messages.success(f"Album download completed: {successful}/{len(tracks)} tracks downloaded"))
-            return successful > 0
-            
-        except Exception as e:
-            self.print_rich(Messages.error(f"Error scraping Spotify album: {e}"))
-            import traceback
-            traceback.print_exc()
-            return None
-    
-    def _scrape_spotify_artist(self, spotify_url):
-        """Handle Spotify artist URLs with helpful guidance"""
-        try:
-            artist_name = "this artist"
-            
-            # Try to get artist name from oembed API
-            try:
-                oembed_url = f"https://open.spotify.com/oembed?url={spotify_url}"
-                response = requests.get(oembed_url, timeout=5, verify=False)
-                
-                if response.status_code == 200:
-                    data = response.json()
-                    artist_name = data.get('title', 'this artist').strip()
-            except:
-                # If oembed fails, try to extract from URL or use generic name
-                pass
-            
-            self.print_rich(f"[bold cyan]🎤 Spotify Artist Link Detected[/bold cyan]")
-            self.print_rich("")
-            
-            # Provide helpful guidance
-            self.print_rich(Panel.fit(
-                "[bold yellow]📌 Spotify Artist Download Information[/bold yellow]\n\n"
-                f"You've provided a link to: [cyan]{artist_name}[/cyan]\n\n"
-                "[bold]Artist pages cannot be downloaded directly.[/bold]\n"
-                "You need to specify what content you want to download:\n\n"
-                "[bold green]✓ What You Can Download:[/bold green]\n\n"
-                "[bold cyan]1. Individual Tracks (Easiest)[/bold cyan]\n"
-                "   • Go to the artist's Spotify page\n"
-                "   • Click on any song\n"
-                "   • Copy the track URL\n"
-                "   • Format: [green]https://open.spotify.com/track/...[/green]\n"
-                "   • [yellow]✓ Works immediately - no API needed![/yellow]\n\n"
-                "[bold cyan]2. Full Albums[/bold cyan]\n"
-                "   • Browse the artist's albums on Spotify\n"
-                "   • Click on an album\n"
-                "   • Copy the album URL\n"
-                "   • Format: [green]https://open.spotify.com/album/...[/green]\n"
-                "   • Requires: Spotify API credentials\n\n"
-                "[bold cyan]3. Playlists[/bold cyan]\n"
-                "   • Find playlists featuring this artist\n"
-                "   • Copy the playlist URL\n"
-                "   • Format: [green]https://open.spotify.com/playlist/...[/green]\n"
-                "   • Requires: Python 3.10+ OR Spotify API\n\n"
-                "[bold cyan]4. Alternative: YouTube Search[/bold cyan]\n"
-                f"   • Search YouTube directly for the artist\n"
-                f"   • Use: [green]ytsearch:\"{artist_name} top songs\"[/green]\n"
-                "   • Or browse YouTube and copy video URLs\n\n"
-                "[bold yellow]💡 Quick Tip:[/bold yellow]\n"
-                "For the best experience with single tracks, just copy any song URL\n"
-                "from the artist's page - it works without any additional setup!",
-                title=f"🎵 Cannot Download Artist Page Directly",
-                border_style="yellow"
-            ))
-            
-            return None
-            
-        except Exception as e:
-            self.print_rich(Messages.warning("Spotify artist pages cannot be downloaded directly"))
-            self.print_rich("")
-            self.print_rich(Messages.info("Please provide one of these instead:"))
-            self.print_rich("  • [green]Track URL[/green] - https://open.spotify.com/track/... (works instantly!)")
-            self.print_rich("  • [yellow]Album URL[/yellow] - https://open.spotify.com/album/... (needs API)")
-            self.print_rich("  • [cyan]Playlist URL[/cyan] - https://open.spotify.com/playlist/... (needs API or Python 3.10+)")
-            return None
-    
-    def _scrape_spotify_playlist(self, spotify_url):
-        """Scrape Spotify playlist information from web page"""
-        try:
-            self.print_rich(Messages.searching("Fetching playlist information..."))
-            
-            # Extract playlist ID
-            playlist_id = self._extract_spotify_id(spotify_url, 'playlist')
-            if not playlist_id:
-                self.print_rich(Messages.error("Could not extract playlist ID"))
-                return None
-            
-            # Try to get playlist data from Spotify's public API (no auth required for public playlists)
-            api_url = f"https://api.spotify.com/v1/playlists/{playlist_id}"
-            
-            headers = {
-                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
-                'Accept': 'application/json',
-            }
-            
-            # First, get playlist name from the web page
-            web_response = requests.get(spotify_url, headers=headers, timeout=10)
-            playlist_name = "Spotify Playlist"
-            
-            if web_response.status_code == 200:
-                from bs4 import BeautifulSoup
-                soup = BeautifulSoup(web_response.content, 'html.parser')
-                og_title = soup.find('meta', property='og:title')
-                if og_title:
-                    playlist_name = og_title.get('content', 'Spotify Playlist').strip()
-            
-            # Try using spotdl if available
-            try:
-                import spotdl
-                self.print_rich(Messages.success("Using spotdl for playlist download..."))
-                return self._download_spotify_with_spotdl(spotify_url, playlist_name)
-            except ImportError:
-                pass
-            
-            # If spotdl is not available, provide installation instructions
-            self.print_rich(Messages.warning(f"Cannot download playlist: {playlist_name}"))
-            self.print_rich("")
-            self.print_rich(Panel.fit(
-                "[bold yellow]📌 Spotify Playlist Download Options:[/bold yellow]\n\n"
-                "[bold cyan]Option 1: Use spotdl (Recommended)[/bold cyan]\n"
-                "  Install: [green]pip install spotdl[/green]\n"
-                "  Then run this downloader again\n\n"
-                "[bold cyan]Option 2: Configure Spotify API[/bold cyan]\n"
-                "  1. Go to: https://developer.spotify.com/dashboard\n"
-                "  2. Create an app and get Client ID & Secret\n"
-                "  3. Set environment variables:\n"
-                "     [green]export SPOTIFY_CLIENT_ID='your_id'[/green]\n"
-                "     [green]export SPOTIFY_CLIENT_SECRET='your_secret'[/green]\n\n"
-                "[bold cyan]Option 3: Use Individual Track URLs[/bold cyan]\n"
-                "  Download tracks one by one using their Spotify URLs",
-                title="🎵 Spotify Playlist Support",
-                border_style="yellow"
-            ))
-            
-            return None
-            
-        except Exception as e:
-            self.print_rich(Messages.error(f"Error processing Spotify playlist: {e}"))
-            return None
-    
-    def _download_spotify_with_spotdl(self, spotify_url, playlist_name):
-        """Download Spotify content using spotdl Python module or web scraping"""
-        try:
-            # Check Python version
-            import sys
-            if sys.version_info < (3, 10):
-                self.print_rich(Messages.warning("spotdl requires Python 3.10+. Using alternative method..."))
-                return self._download_spotify_playlist_manual(spotify_url, playlist_name)
-            
-            from spotdl import Spotdl
-            
-            # Create playlist directory
-            safe_playlist_name = "".join(c for c in playlist_name if c.isalnum() or c in (' ', '-', '_')).rstrip()
-            playlist_dir = self.output_dir / f"Spotify - {safe_playlist_name}"
-            playlist_dir.mkdir(parents=True, exist_ok=True)
-            
-            self.print_rich(Messages.info(f"Downloading to: {playlist_dir}"))
-            self.print_rich(Messages.searching("Initializing spotdl..."))
-            
-            # Configure logging - allow spotdl's output to show
-            import logging
-            logging.getLogger('urllib3').setLevel(logging.ERROR)
-            logging.getLogger('requests').setLevel(logging.ERROR)
-            # Don't suppress spotdl logging - let it show progress
-            
-            # Configure spotdl options
-            options = {
-                'output': str(playlist_dir / '{artist} - {title}.{output-ext}'),
-                'format': 'mp3',
-                'bitrate': '320k',
-                'threads': 4,
-            }
-            
-            # Initialize Spotdl
-            spotdl_client = Spotdl(
-                client_id='5f573c9620494bae87890c0f08a60293',  # Public client ID
-                client_secret='212476d9b0f3472eaa762d90b19b0ba8',  # Public client secret
-                downloader_settings=options
-            )
-            
-            self.print_rich(Messages.searching("Fetching playlist tracks..."))
-            
-            # Get songs from URL
-            songs = spotdl_client.search([spotify_url])
-            
-            if not songs:
-                self.print_rich(Messages.error("No tracks found in playlist"))
-                return False
-            
-            total_tracks = len(songs)
-            self.print_rich(Messages.success(f"Found {total_tracks} tracks in playlist\n"))
-            
-            # Display the playlist tracks
-            if RICH_AVAILABLE and self.console:
-                self.console.print("[bold cyan]📋 Playlist Tracks:[/bold cyan]\n")
-                for i, song in enumerate(songs, 1):
-                    song_display = f"{song.name[:50]}..." if len(song.name) > 50 else song.name
-                    artist_display = f"{song.artist[:30]}..." if len(song.artist) > 30 else song.artist
-                    self.console.print(f"  [dim]{i:2d}.[/dim] [cyan]{song_display}[/cyan] [dim]-[/dim] [yellow]{artist_display}[/yellow]")
-                self.console.print()
-            else:
-                print("\n📋 Playlist Tracks:\n")
-                for i, song in enumerate(songs, 1):
-                    print(f"  {i:2d}. {song.name} - {song.artist}")
-                print()
-            
-            # Download songs with individual progress bars
-            successful = 0
-            failed = 0
-            
-            if RICH_AVAILABLE and self.console:
-                self.console.print("[bold green]▸ Starting Downloads...[/bold green]\n")
-                
-                for i, song in enumerate(songs, 1):
-                    # Truncate long names to prevent display issues
-                    song_display = f"{song.name[:45]}..." if len(song.name) > 45 else song.name
-                    artist_display = f"{song.artist[:30]}..." if len(song.artist) > 30 else song.artist
-                    
-                    # Show current track header
-                    print(f"\n[{i}/{total_tracks}] {song_display} - {artist_display}")
-                    
-                    try:
-                        # Download the song - spotdl will show its own progress bar
-                        result = spotdl_client.downloader.download_song(song)
-                        
-                        # Check if download was actually successful
-                        if result and hasattr(result, 'success') and not result.success:
-                            failed += 1
-                            print(f"✗ Failed to download\n")
-                        else:
-                            # Verify file was created
-                            expected_file = playlist_dir / f"{song.artist} - {song.name}.mp3"
-                            if expected_file.exists():
-                                successful += 1
-                                print(f"✓ Downloaded successfully\n")
-                            else:
-                                failed += 1
-                                print(f"✗ Download failed - file not found\n")
-                        
-                    except Exception as e:
-                        failed += 1
-                        error_msg = str(e)[:150]
-                        print(f"✗ Error: {error_msg}\n")
-            else:
-                for i, song in enumerate(songs, 1):
-                    try:
-                        print(f"[{i}/{total_tracks}] Downloading: {song.name} - {song.artist}")
-                        spotdl_client.downloader.download_song(song)
-                        successful += 1
-                    except Exception as e:
-                        print(f"✗ Error downloading {song.name}: {e}")
-                        failed += 1
-            
-            # Summary
-            self.print_rich("")
-            self.print_rich(Messages.success(f"✓ Playlist download complete!"))
-            self.print_rich(Messages.info(f"Successfully downloaded: {successful}/{total_tracks} tracks"))
-            if failed > 0:
-                self.print_rich(Messages.warning(f"Failed to download: {failed} tracks"))
-            
-            return successful > 0
-                
-        except ImportError as e:
-            self.print_rich(Messages.error(f"spotdl import error: {e}"))
-            return False
-        except Exception as e:
-            error_msg = str(e)
-            if 'Python version' in error_msg or 'Deprecated' in error_msg:
-                self.print_rich(Messages.warning("spotdl requires Python 3.10+. Using alternative method..."))
-                return self._download_spotify_playlist_manual(spotify_url, playlist_name)
-            else:
-                self.print_rich(Messages.error(f"Error using spotdl: {e}"))
-                return False
-    
-    def _download_spotify_playlist_manual(self, spotify_url, playlist_name):
-        """Manual download method using web scraping when spotdl is not available"""
-        try:
-            self.print_rich(Messages.searching("Fetching playlist using alternative method..."))
-            
-            # Use a simple web request to get the playlist embed
-            playlist_id = self._extract_spotify_id(spotify_url, 'playlist')
-            if not playlist_id:
-                self.print_rich(Messages.error("Could not extract playlist ID"))
-                return False
-            
-            # Try to get track list using Spotify's public API (no auth needed for some data)
-            try:
-                # Use oembed endpoint which doesn't require auth
-                oembed_url = f"https://open.spotify.com/oembed?url={spotify_url}"
-                headers = {
-                    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36'
-                }
-                
-                response = requests.get(oembed_url, headers=headers, timeout=10)
-                if response.status_code == 200:
-                    data = response.json()
-                    # Get basic info from oembed
-                    self.print_rich(Messages.info(f"Playlist: {data.get('title', playlist_name)}"))
-            except:
-                pass
-            
-            # Since we can't get the full track list without API, provide instructions
-            self.print_rich("")
-            self.print_rich(Panel.fit(
-                "[bold yellow]⚠️  Spotify Playlist Download Limitation[/bold yellow]\n\n"
-                "Without Spotify API credentials or Python 3.10+, playlist downloads are limited.\n\n"
-                "[bold cyan]Available Options:[/bold cyan]\n\n"
-                "[bold green]1. Upgrade to Python 3.10 or higher[/bold green]\n"
-                "   • spotdl will work automatically with Python 3.10+\n"
-                "   • Run: [green]python --version[/green] to check your version\n\n"
-                "[bold green]2. Set up Spotify API credentials[/bold green]\n"
-                "   • Go to: https://developer.spotify.com/dashboard\n"
-                "   • Create an app and get Client ID & Secret\n"
-                "   • Set environment variables:\n"
-                "     [green]export SPOTIFY_CLIENT_ID='your_id'[/green]\n"
-                "     [green]export SPOTIFY_CLIENT_SECRET='your_secret'[/green]\n\n"
-                "[bold green]3. Download tracks individually[/bold green]\n"
-                "   • Get each track's Spotify URL\n"
-                "   • Download them one by one (works without API)\n\n"
-                "[bold green]4. Use external tools[/bold green]\n"
-                "   • Install: [green]pip install spotdl[/green] (requires Python 3.10+)\n"
-                "   • Or use: [green]youtube-dl[/green] with search",
-                title="🎵 Spotify Playlist Options",
-                border_style="yellow"
-            ))
-            
-            return False
-            
-        except Exception as e:
-            self.print_rich(Messages.error(f"Error in manual download: {e}"))
-            return False
-    
-    def _extract_tracks_from_json(self, data, tracks=None):
-        """Recursively extract track information from JSON data"""
-        if tracks is None:
-            tracks = []
-        
-        if isinstance(data, dict):
-            # Check if this is a track object
-            if 'name' in data and ('artists' in data or 'artist' in data):
-                track_info = {
-                    'name': data.get('name'),
-                    'artist': data.get('artist') or (data.get('artists', [{}])[0].get('name') if data.get('artists') else 'Unknown'),
-                }
-                tracks.append(track_info)
-            
-            # Recursively search nested dictionaries
-            for value in data.values():
-                if isinstance(value, (dict, list)):
-                    self._extract_tracks_from_json(value, tracks)
-        
-        elif isinstance(data, list):
-            for item in data:
-                if isinstance(item, (dict, list)):
-                    self._extract_tracks_from_json(item, tracks)
-        
-        return tracks
-    
-    def _extract_spotify_id(self, url, content_type):
-        """Extract Spotify ID from URL for different content types"""
-        patterns = {
-            'track': [
-                rf'spotify\.com/track/([a-zA-Z0-9]+)',
-                rf'open\.spotify\.com/track/([a-zA-Z0-9]+)',
-            ],
-            'album': [
-                rf'spotify\.com/album/([a-zA-Z0-9]+)',
-                rf'open\.spotify\.com/album/([a-zA-Z0-9]+)',
-            ],
-            'playlist': [
-                rf'spotify\.com/playlist/([a-zA-Z0-9]+)',
-                rf'open\.spotify\.com/playlist/([a-zA-Z0-9]+)',
-            ],
-            'artist': [
-                rf'spotify\.com/artist/([a-zA-Z0-9]+)',
-                rf'open\.spotify\.com/artist/([a-zA-Z0-9]+)',
-            ]
-        }
-        
-        for pattern in patterns.get(content_type, []):
-            match = re.search(pattern, url)
-            if match:
-                return match.group(1)
-        
-        return None
     
     def _search_youtube(self, query, max_results=1):
         """Search for a track on YouTube with animated spinner"""
@@ -1618,514 +439,11 @@ class UltimateMediaDownloader:
         return None
     
     def search_and_download_apple_music_track(self, apple_music_url, interactive=True):
-        """Enhanced Apple Music downloader with multiple strategies"""
-        print(f"♪ Processing Apple Music URL: {apple_music_url}")
+        """Enhanced Apple Music downloader with multiple strategies
         
-        # First, detect content type from URL
-        content_type = None
-        if '/song/' in apple_music_url:
-            content_type = 'song'
-            print("→ Detected: Single Song")
-        elif '/album/' in apple_music_url:
-            content_type = 'album'
-            print("→ Detected: Album")
-        elif '/playlist/' in apple_music_url:
-            content_type = 'playlist'
-            print("→ Detected: Playlist")
-        elif '/artist/' in apple_music_url:
-            content_type = 'artist'
-            print("→ Detected: Artist")
-        else:
-            print("⚠  Unknown Apple Music URL format, will attempt to detect...")
-        
-        # Strategy 1: Try direct Apple Music download if available
-        if self.apple_music_downloader and GAMDL_AVAILABLE:
-            print("◎ Attempting direct Apple Music download...")
-            try:
-                result = self._download_apple_music_direct(apple_music_url)
-                if result:
-                    return result
-                else:
-                    print("⚠  Direct download failed, falling back to YouTube search")
-            except Exception as e:
-                print(f"⚠  Direct Apple Music download error: {e}")
-        
-        # Strategy 2: Enhanced metadata extraction + YouTube search based on content type
-        try:
-            if content_type == 'song':
-                print("♫ Processing as single song...")
-                return self._download_apple_music_track_enhanced(apple_music_url, interactive=interactive)
-            elif content_type == 'album':
-                print("◎ Processing as album...")
-                # Prompt for format and quality
-                output_format, quality = self._prompt_audio_format_quality()
-                return self._download_apple_music_album_enhanced(apple_music_url, output_format=output_format)
-            elif content_type == 'playlist':
-                print("≡ Processing as playlist...")
-                return self._download_apple_music_playlist_enhanced(apple_music_url)
-            elif content_type == 'artist':
-                print("♪ Processing artist's albums...")
-                return self._download_apple_music_artist_albums_enhanced(apple_music_url)
-            else:
-                print("✗ Unknown Apple Music URL format")
-                return self._fallback_apple_music_search(apple_music_url)
-                
-        except Exception as e:
-            print(f"✗ Error processing Apple Music URL: {e}")
-            import traceback
-            traceback.print_exc()
-            return self._fallback_apple_music_search(apple_music_url)
-    
-    def _download_apple_music_track(self, apple_music_url):
-        """Download single Apple Music track by searching on YouTube"""
-        try:
-            # First try to scrape the full title and artist from the page
-            scraped_info = self._scrape_apple_music_title(apple_music_url)
-            
-            if scraped_info:
-                search_query = scraped_info
-                print(f"♪ Apple Music Track: {search_query}")
-            else:
-                # Fallback to extracting from URL
-                track_info = self._extract_apple_music_info(apple_music_url)
-                if not track_info:
-                    return self._fallback_apple_music_search(apple_music_url)
-                
-                search_query = track_info
-                print(f"♪ Apple Music Track: {search_query}")
-                print(f"� Tip: Search might be more accurate with full artist name")
-            
-            print(f"�⌕ Searching on YouTube...")
-            
-            youtube_url = self._search_youtube(search_query)
-            if youtube_url:
-                print(f"✓ Found on YouTube: {youtube_url}")
-                return self.download_media(youtube_url, audio_only=True, output_format='mp3')
-            else:
-                print("✗ Could not find track on YouTube")
-                
-                # If simple search failed and we only have track name, ask for artist
-                if ' - ' not in search_query:
-                    print(f"\n→ The search for '{search_query}' was too generic.")
-                    print(f"Please provide the artist name for better results:")
-                    try:
-                        artist = input("Artist name (or press Enter to skip): ").strip()
-                        if artist:
-                            better_query = f"{artist} - {search_query}"
-                            print(f"\n⌕ Searching again for: {better_query}")
-                            youtube_url = self._search_youtube(better_query)
-                            if youtube_url:
-                                print(f"✓ Found on YouTube: {youtube_url}")
-                                return self.download_media(youtube_url, audio_only=True, output_format='mp3')
-                    except:
-                        pass
-                
-                return None
-                
-        except Exception as e:
-            print(f"✗ Error downloading Apple Music track: {e}")
-            return None
-    
-    def _download_apple_music_album(self, apple_music_url):
-        """Download Apple Music album by searching each track on YouTube"""
-        try:
-            # For Apple Music albums, we'll try to extract the album info
-            # and search for the album name + artist on YouTube
-            album_info = self._extract_apple_music_info(apple_music_url)
-            if not album_info:
-                return self._fallback_apple_music_search(apple_music_url)
-            
-            print(f"♪ Apple Music Album: {album_info}")
-            print(f"⌕ Searching for album on YouTube...")
-            
-            # Search for the album as a playlist or individual tracks
-            search_query = f"{album_info} full album"
-            youtube_url = self._search_youtube(search_query)
-            
-            if youtube_url:
-                print(f"✓ Found album on YouTube: {youtube_url}")
-                return self.download_media(youtube_url, audio_only=True, output_format='mp3')
-            else:
-                print("✗ Could not find album on YouTube")
-                print("→ Try downloading individual tracks instead")
-                return None
-                
-        except Exception as e:
-            print(f"✗ Error downloading Apple Music album: {e}")
-            return None
-    
-    def _download_apple_music_playlist(self, apple_music_url):
-        """Download Apple Music playlist by extracting and searching individual tracks"""
-        try:
-            # Extract playlist info and individual tracks
-            playlist_info = self._extract_apple_music_info(apple_music_url)
-            if not playlist_info:
-                return self._fallback_apple_music_search(apple_music_url)
-            
-            print(f"♪ Apple Music Playlist: {playlist_info}")
-            print(f"⌕ Extracting individual tracks from playlist...")
-            
-            # Get individual tracks from the playlist
-            tracks = self._extract_apple_music_playlist_tracks(apple_music_url)
-            
-            if not tracks:
-                print("✗ Could not extract individual tracks from playlist")
-                print("� Falling back to single playlist search...")
-                return self._fallback_playlist_search(apple_music_url, playlist_info)
-            
-            print(f"✓ Found {len(tracks)} tracks in playlist:")
-            for i, track in enumerate(tracks[:10], 1):  # Show first 10 tracks
-                print(f"  {i}. {track}")
-            
-            if len(tracks) > 10:
-                print(f"  ... and {len(tracks) - 10} more tracks")
-            
-            # Ask user what they want to download
-            choice = self._prompt_playlist_download_choice(tracks)
-            
-            if choice == "cancel":
-                print("✗ Download cancelled by user")
-                return None
-            elif choice == "all":
-                selected_tracks = tracks
-            else:
-                # User selected specific tracks
-                selected_tracks = choice
-            
-            # Prompt for audio format and quality
-            output_format, quality = self._prompt_audio_format_quality()
-            
-            print(f"\n♫ Starting download of {len(selected_tracks)} track(s)...")
-            return self._download_track_queue(selected_tracks, "Apple Music", output_format, quality)
-                    
-        except Exception as e:
-            print(f"✗ Error downloading Apple Music playlist: {e}")
-            return None
-    
-    def _extract_apple_music_info(self, apple_music_url):
-        """Extract track/album/playlist info from Apple Music URL"""
-        try:
-            import urllib.parse
-            import re
-            
-            # Try to extract info from the URL structure
-            
-            # Parse the URL to extract meaningful information
-            if '/song/' in apple_music_url:
-                # For individual songs, try to extract from URL path
-                # URL format: https://music.apple.com/us/song/song-name/id
-                parts = apple_music_url.split('/')
-                
-                # Find the song name (comes after 'song' and before the ID)
-                song_name = None
-                for i, part in enumerate(parts):
-                    if part == 'song' and i + 1 < len(parts):
-                        # Get the next part which should be the song name
-                        song_name_part = parts[i + 1]
-                        # Skip if it's just a number (ID)
-                        if not song_name_part.isdigit():
-                            song_name = urllib.parse.unquote(song_name_part)
-                            song_name = song_name.replace('-', ' ').replace('_', ' ')
-                            # Clean up the name
-                            song_name = re.sub(r'\s+', ' ', song_name).strip()
-                            break
-                
-                if song_name and len(song_name) > 2:
-                    return song_name
-            
-            elif '/album/' in apple_music_url:
-                # For albums, extract album name
-                parts = apple_music_url.split('/')
-                album_part = [part for part in parts if part and part != 'album' and part != 'us' and part != 'music.apple.com']
-                if album_part:
-                    album_name = urllib.parse.unquote(album_part[-1] if album_part else '')
-                    album_name = album_name.replace('-', ' ').replace('_', ' ')
-                    if album_name:
-                        return album_name
-            
-            elif '/playlist/' in apple_music_url:
-                # For playlists, extract playlist name
-                parts = apple_music_url.split('/')
-                playlist_part = [part for part in parts if part and part != 'playlist' and part != 'us' and part != 'music.apple.com']
-                if playlist_part:
-                    playlist_name = urllib.parse.unquote(playlist_part[-1] if playlist_part else '')
-                    playlist_name = playlist_name.replace('-', ' ').replace('_', ' ')
-                    if playlist_name and not playlist_name.startswith('pl.'):
-                        return playlist_name
-            
-            # If we can't extract from URL, try to make a web request to get the title
-            return self._scrape_apple_music_title(apple_music_url)
-            
-        except Exception as e:
-            print(f"✗ Error extracting Apple Music info: {e}")
-            return None
-    
-    def _scrape_apple_music_title(self, apple_music_url):
-        """Try to scrape the title AND artist from Apple Music page using enhanced extraction"""
-        try:
-            from bs4 import BeautifulSoup
-            import re
-            
-            print("◎ Scraping Apple Music page for song details...")
-            
-            # Try cloudscraper first for better success rate
-            if CLOUDSCRAPER_AVAILABLE:
-                try:
-                    scraper = cloudscraper.create_scraper()
-                    response = scraper.get(apple_music_url, timeout=15)
-                    print(f"  📡 Response status: {response.status_code} (via cloudscraper)")
-                except:
-                    # Fallback to regular requests
-                    headers = {
-                        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-                        'Accept-Language': 'en-US,en;q=0.9',
-                        'Accept-Encoding': 'gzip, deflate, br',
-                        'Connection': 'keep-alive',
-                        'Upgrade-Insecure-Requests': '1',
-                    }
-                    response = requests.get(apple_music_url, headers=headers, timeout=15)
-                    print(f"  📡 Response status: {response.status_code}")
-            else:
-                headers = {
-                    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-                    'Accept-Language': 'en-US,en;q=0.9',
-                    'Accept-Encoding': 'gzip, deflate, br',
-                    'Connection': 'keep-alive',
-                    'Upgrade-Insecure-Requests': '1',
-                }
-                response = requests.get(apple_music_url, headers=headers, timeout=15)
-                print(f"  📡 Response status: {response.status_code}")
-            
-            if response.status_code == 200:
-                soup = BeautifulSoup(response.content, 'lxml')
-                raw_html = response.text
-                
-                title = None
-                artist = None
-                
-                # Try the enhanced regex extraction first (most reliable for single songs)
-                print("  ⌕ Trying enhanced regex extraction...")
-                artist_title_pattern = r'"artistName"\s*:\s*"((?:[^"\\]|\\.)*)".{0,2000}?"title"\s*:\s*"((?:[^"\\]|\\.)*)"'
-                matches = re.findall(artist_title_pattern, raw_html, re.DOTALL)
-                
-                if matches:
-                    # Filter out metadata titles and find the actual song
-                    metadata_keywords = ['performing artists', 'composer', 'producer', 'writer', 'artist info']
-                    
-                    for artist_raw, title_raw in matches:
-                        title_check = title_raw.lower().strip()
-                        # Skip metadata entries
-                        if any(keyword in title_check for keyword in metadata_keywords):
-                            continue
-                        
-                        # This looks like the actual song
-                        artist = artist_raw.replace(r'\"', '"').replace(r'\\', '\\').strip()
-                        title = title_raw.replace(r'\"', '"').replace(r'\\', '\\').strip()
-                        print(f"  ✓ Found via regex - Artist: {artist}, Title: {title}")
-                        break
-                
-                # If regex didn't work, fall back to other methods
-                if not artist or not title:
-                    # Strategy 1: Try description meta tag FIRST (most reliable and clean)
-                    print("  ⌕ Trying description meta tag...")
-                    desc_meta = soup.find('meta', attrs={'name': 'description'})
-                    if desc_meta and desc_meta.get('content'):
-                        desc = desc_meta.get('content')
-                        # Pattern: "Listen to [Title] by [Artist] on Apple Music"
-                        desc_match = re.search(r'Listen to (.+?) by (.+?) on Apple Music', desc, re.IGNORECASE)
-                        if desc_match:
-                            title = desc_match.group(1).strip()
-                            artist = desc_match.group(2).strip()
-                            # Remove any trailing duration info
-                            artist = re.sub(r'\.\s*\d{4}\.\s*Duration:.*$', '', artist).strip()
-                            print(f"  ✓ Found from description - Title: {title}, Artist: {artist}")
-                    
-                    # Strategy 2: Try og:title and music:musician as fallback
-                    if not title or not artist:
-                        print("  ⌕ Trying meta tags...")
-                        
-                        # Get title from og:title
-                        og_title = soup.find('meta', property='og:title')
-                        if og_title and og_title.get('content') and not title:
-                            raw_title = og_title.get('content').strip()
-                            # Clean up - remove " by Artist..." suffix and Apple Music references
-                            title = re.sub(r'\s+by\s+.+?\s+on\s+Apple\s+Music.*$', '', raw_title, flags=re.IGNORECASE)
-                            title = title.replace(' - Apple Music', '').replace(' on Apple Music', '').replace('‎', '')
-                            title = title.strip()
-                            print(f"  ✓ Found title from og:title: {title}")
-                        
-                        # Get artist from music:musician
-                        music_musician = soup.find('meta', property='music:musician')
-                        if music_musician and music_musician.get('content') and not artist:
-                            artist_value = music_musician.get('content').strip()
-                            # Check if it's a URL (not useful)
-                            if not artist_value.startswith('http'):
-                                artist = artist_value
-                                print(f"  ✓ Found artist from music:musician: {artist}")
-                            else:
-                                print(f"  ⚠  music:musician is a URL, skipping")
-                    
-                    # Strategy 3: Try Twitter card meta tags
-                    if not title:
-                        print("  ⌕ Trying Twitter card...")
-                        twitter_title = soup.find('meta', attrs={'name': 'twitter:title'})
-                        if twitter_title and twitter_title.get('content'):
-                            title = twitter_title.get('content').strip()
-                            title = title.replace(' - Apple Music', '').replace('‎', '')
-                            print(f"  ✓ Found title in Twitter card: {title}")
-                    
-                    # Strategy 4: Try page title as last resort
-                    if not title:
-                        print("  ⌕ Trying page title...")
-                        page_title = soup.find('title')
-                        if page_title:
-                            full_title = page_title.get_text().strip()
-                            # Usually format: "Title - Song by Artist - Apple Music"
-                            match = re.search(r'(.+?)\s*-\s*(?:Song|Single)\s+by\s+(.+?)\s*-\s*Apple Music', full_title)
-                            if match:
-                                title = match.group(1).strip()
-                                artist = match.group(2).strip()
-                                print(f"  ✓ Extracted from page title: {title} by {artist}")
-                            else:
-                                # Just clean up whatever we got
-                                title = full_title.replace(' - Apple Music', '').replace('‎', '').strip()
-                                print(f"  ⚠  Got title from page: {title}")
-                    
-                    # Strategy 5: Look in JSON-LD structured data
-                    if not title or not artist:
-                        print("  ⌕ Trying JSON-LD structured data...")
-                        scripts = soup.find_all('script', type='application/ld+json')
-                        for script in scripts:
-                            try:
-                                import json
-                                data = json.loads(script.string)
-                                if isinstance(data, dict):
-                                    if data.get('@type') == 'MusicRecording':
-                                        if not title and data.get('name'):
-                                            title = data['name']
-                                            print(f"  ✓ Found title in JSON-LD: {title}")
-                                        if not artist and data.get('byArtist'):
-                                            if isinstance(data['byArtist'], dict):
-                                                artist = data['byArtist'].get('name', '')
-                                            elif isinstance(data['byArtist'], list) and data['byArtist']:
-                                                artist = data['byArtist'][0].get('name', '')
-                                            if artist:
-                                                print(f"  ✓ Found artist in JSON-LD: {artist}")
-                            except:
-                                continue
-                
-                # Final result
-                if title and artist:
-                    # Format as "Title - Artist" for better YouTube search results
-                    result = f"{title} - {artist}"
-                    print(f"\n♫ Complete info: {result}")
-                    return result
-                elif title:
-                    print(f"\n♫ Found title only: {title}")
-                    print(f"  ⚠  Artist not found, search may be less accurate")
-                    return title
-                else:
-                    print("  ✗ Could not extract title")
-            else:
-                print(f"  ✗ Failed to fetch page (status {response.status_code})")
-            
-        except ImportError:
-            print("✗ BeautifulSoup not installed. Run: pip install beautifulsoup4 lxml")
-        except Exception as e:
-            print(f"⚠  Scraping error: {e}")
-        
-        return None
-    
-    def _fallback_apple_music_search(self, apple_music_url):
-        """Fallback method when we can't extract Apple Music track info"""
-        try:
-            print("⌕ Attempting fallback Apple Music extraction...")
-            print("⚠  Could not extract track information from Apple Music URL")
-            print("→ Try copying the song/album/artist name and searching manually")
-            print(f"⚲ Original URL: {apple_music_url}")
-            
-            # Ask user for manual input
-            user_input = input("\n♫ Please enter the song/album name and artist (or press Enter to skip): ").strip()
-            if user_input:
-                print(f"⌕ Searching YouTube for: {user_input}")
-                youtube_url = self._search_youtube(user_input)
-                if youtube_url:
-                    print(f"✓ Found on YouTube: {youtube_url}")
-                    return self.download_media(youtube_url, audio_only=True, output_format='mp3')
-                else:
-                    print("✗ Could not find on YouTube")
-            
-            return None
-            
-        except Exception as e:
-            print(f"✗ Fallback search failed: {e}")
-            return None
-    
-    def _extract_apple_music_playlist_tracks(self, apple_music_url):
-        """Extract individual tracks from Apple Music playlist"""
-        try:
-            from bs4 import BeautifulSoup
-            import json
-            import re
-            
-            print("◎ Fetching playlist tracks from Apple Music...")
-            
-            # Since Apple Music heavily uses JavaScript, let's try a different approach
-            # We'll provide some common Bad Bunny songs for this example
-            # In a real implementation, you might want to use Selenium for JavaScript rendering
-            # For other playlists, try web scraping approach
-            headers = {
-                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36',
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-                'Accept-Language': 'en-US,en;q=0.5',
-                'Accept-Encoding': 'gzip, deflate',
-                'Connection': 'keep-alive',
-            }
-            
-            response = requests.get(apple_music_url, headers=headers, timeout=20)
-            
-            if response.status_code != 200:
-                print(f"✗ Failed to fetch playlist page (status: {response.status_code})")
-                return None
-            
-            soup = BeautifulSoup(response.content, 'html.parser')
-            tracks = []
-            
-            # Try to extract from page title or description for hints about content
-            title_element = soup.find('title')
-            if title_element:
-                title_text = title_element.get_text()
-                print(f"▭ Page title: {title_text}")
-                
-                # Try to infer artist from title
-                if title_text:
-                    # Look for artist name in title
-                    artist_match = re.search(r'([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)', title_text)
-                    if artist_match:
-                        potential_artist = artist_match.group(1)
-                        print(f"♪ Potential artist detected: {potential_artist}")
-                        
-                        # Provide some common tracks for detected artists
-                        if "bad bunny" in potential_artist.lower():
-                            return [
-                                "Bad Bunny - Tití Me Preguntó",
-                                "Bad Bunny - Me Porto Bonito", 
-                                "Bad Bunny - Moscow Mule",
-                                "Bad Bunny - Después de la Playa",
-                                "Bad Bunny - Ojitos Lindos"
-                            ]
-            
-            # If we can't extract tracks, return None to fall back to playlist search
-            print("✗ Could not extract individual tracks from this Apple Music playlist")
-            print("→ This might be due to JavaScript-heavy content loading")
-            print("⟳ Will fall back to searching for the entire playlist")
-            return None
-            
-        except Exception as e:
-            print(f"✗ Error extracting playlist tracks: {e}")
-            return None
+        Delegates to AppleMusicHandler
+        """
+        return self.apple_music_handler.search_and_download(apple_music_url, interactive=interactive)
     
     def _prompt_playlist_download_choice(self, tracks):
         """Prompt user to choose which tracks to download"""
@@ -2210,12 +528,20 @@ class UltimateMediaDownloader:
         print("=" * 60)
         
         for i, track in enumerate(tracks, 1):
-            print(f"\n[{i}/{len(tracks)}] ♫ Processing: {track}")
+            # Convert dictionary track to string format
+            if isinstance(track, dict):
+                artist = track.get('artist', 'Unknown Artist')
+                title = track.get('title', 'Unknown Title')
+                track_str = f"{artist} - {title}"
+            else:
+                track_str = str(track)
+            
+            print(f"\n[{i}/{len(tracks)}] ♫ Processing: {track_str}")
             
             try:
                 # Search for the track on YouTube
-                print(f"⌕ Searching YouTube for: {track}")
-                youtube_url = self._search_youtube_for_music(track)
+                print(f"⌕ Searching YouTube for: {track_str}")
+                youtube_url = self._search_youtube_for_music(track_str)
                 
                 if youtube_url:
                     print(f"✓ Found: {youtube_url}")
@@ -2255,69 +581,6 @@ class UltimateMediaDownloader:
         print(f"▸ Location: {self.output_dir}")
         
         return successful_downloads > 0
-    
-    def _search_youtube_for_music(self, track_query, max_results=8):
-        """Enhanced YouTube search specifically for music tracks with quality scoring"""
-        # Clean up the track query for better search results
-        cleaned_query = self._clean_track_query(track_query)
-        
-        search_variations = [
-            f"{cleaned_query} official audio",
-            cleaned_query,
-            f"{cleaned_query} official video",
-            f"{cleaned_query} lyrics",
-            f"{cleaned_query} music"
-        ]
-        
-        best_match = None
-        best_score = 0
-        all_candidates = []  # Store all candidates for comparison
-        
-        for variation in search_variations:
-            print(f"  ⌕ Trying: {variation}")
-            
-            # Search for multiple results to find the best one
-            results = self._search_youtube_multiple(variation, max_results=max_results)
-            
-            if results:
-                # Score each result and track all candidates
-                for result_url in results:
-                    score = self._score_youtube_result(result_url, track_query)
-                    all_candidates.append((result_url, score))
-                    
-                    if score > best_score:
-                        best_score = score
-                        best_match = result_url
-                
-                # If we found a very good match (high score), use it immediately
-                if best_match and best_score > 150:  # High threshold for excellent match (increased due to new scoring scale)
-                    print(f"  ✓ Found excellent match with score: {best_score}")
-                    return best_match
-        
-        # After all searches, select the absolute best by re-evaluating top candidates
-        if all_candidates:
-            # Remove duplicates while keeping highest score
-            unique_candidates = {}
-            for url, score in all_candidates:
-                if url not in unique_candidates or score > unique_candidates[url]:
-                    unique_candidates[url] = score
-            
-            # Sort by score descending to get the best match
-            sorted_candidates = sorted(unique_candidates.items(), key=lambda x: x[1], reverse=True)
-            
-            if sorted_candidates:
-                best_match, best_score = sorted_candidates[0]
-                print(f"  ✓ Selected best match with score: {best_score}")
-                
-                # Show runner-up if available (for debugging/transparency)
-                if len(sorted_candidates) > 1:
-                    runner_up_score = sorted_candidates[1][1]
-                    print(f"    (Runner-up score: {runner_up_score})")
-                
-                return best_match
-        
-        # Return best match even if score is low
-        return best_match
     
     def _search_youtube_multiple(self, query, max_results=5):
         """Search YouTube and return multiple results"""
@@ -2485,1241 +748,210 @@ class UltimateMediaDownloader:
         print("✗ Could not find suitable playlist on YouTube")
         return None
 
-    # ===== APPLE MUSIC ARTIST ALBUMS =====
-
-    def _download_apple_music_artist_albums_enhanced(self, artist_url):
-        """Extract Apple Music artist albums, prompt user selection, and download albums/tracks."""
-        try:
-            from bs4 import BeautifulSoup
-            import urllib.parse
-
-            print("♪ Extracting artist albums from Apple Music…")
-
-            headers = {
-                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36',
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-            }
-
-            resp = requests.get(artist_url, headers=headers, timeout=20)
-            if resp.status_code != 200:
-                print(f"✗ Failed to load artist page (HTTP {resp.status_code})")
-                return None
-
-            soup = BeautifulSoup(resp.content, 'html.parser')
-
-            # Collect album links
-            albums = {}
-            for a in soup.find_all('a', href=True):
-                href = a['href']
-                if '/album/' in href:
-                    # Build absolute URL if needed
-                    full = href if href.startswith('http') else urllib.parse.urljoin('https://music.apple.com/', href.lstrip('/'))
-                    title = a.get_text(strip=True)
-                    # Filter out empty titles and duplicates by URL
-                    if full not in albums:
-                        albums[full] = title or full
-
-            album_items = [(url, title) for url, title in albums.items()]
-            if not album_items:
-                print("✗ No albums found on artist page. Try opening specific album URL.")
-                return None
-
-            # Deduplicate and sort by title
-            album_items.sort(key=lambda x: x[1].lower())
-
-            print(f"✓ Found {len(album_items)} album(s) for this artist")
-
-            # Interactive selection: all, range, pick some
-            print("\n◎ Albums:")
-            for i, (_, title) in enumerate(album_items, 1):
-                print(f"  {i:3d}. {title}")
-
-            print("\nWhat would you like to download?")
-            print("  1. All albums")
-            print("  2. Select range (e.g., 1-3)")
-            print("  3. Choose specific (e.g., 1,3,5)")
-            print("  4. Cancel")
-
-            choice = input("Enter choice (1-4): ").strip()
-            selected = []
-            if choice == '1' or choice == '':
-                selected = album_items
-            elif choice == '2':
-                rng = input("Enter range (start-end): ").strip()
-                try:
-                    s, e = [int(x) for x in rng.split('-', 1)]
-                    selected = album_items[max(0, s-1):min(len(album_items), e)]
-                except Exception:
-                    print("✗ Invalid range")
-                    return None
-            elif choice == '3':
-                lst = input("Enter indices (comma separated): ").strip()
-                try:
-                    idxs = sorted({int(x.strip())-1 for x in lst.split(',') if x.strip()})
-                    selected = [album_items[i] for i in idxs if 0 <= i < len(album_items)]
-                except Exception:
-                    print("✗ Invalid selection")
-                    return None
-            else:
-                print("✗ Cancelled")
-                return None
-
-            if not selected:
-                print("✗ Nothing selected")
-                return None
-
-            # Ask for quality and format selection
-            print(f"\n◨ QUALITY & FORMAT OPTIONS")
-            print("=" * 50)
             
-            # Audio format selection
-            format_options = [
-                "FLAC (Lossless, Largest file)",
-                "WAV (Lossless, Uncompressed)",
-                "OPUS (High quality, Smaller)",
-                "MP3 320kbps (Standard)",
-                "M4A/AAC (Apple format)",
-            ]
             
-            print("\nSelect audio format:")
-            for i, opt in enumerate(format_options, 1):
-                print(f"  {i}. {opt}")
             
-            format_choice = input(f"\nEnter choice (1-{len(format_options)}) [default: 4]: ").strip() or "4"
             
-            format_map = {
-                "1": "flac",
-                "2": "wav",
-                "3": "opus",
-                "4": "mp3",
-                "5": "m4a",
-            }
             
-            output_format = format_map.get(format_choice, "mp3")
             
-            # Ask about track limits per album
-            print(f"\n🔢 TRACK LIMIT OPTIONS")
-            print("=" * 50)
-            print("\nSome albums may have many tracks (e.g., compilations with 20+ songs).")
-            print("Do you want to limit tracks per album?")
-            print("  1. No limit (download all tracks from each album)")
-            print("  2. Limit to first N tracks per album")
             
-            limit_choice = input("\nEnter choice (1-2) [default: 1]: ").strip() or "1"
             
-            max_tracks_per_album = None
-            if limit_choice == "2":
-                try:
-                    max_tracks_input = input("Enter maximum tracks per album (e.g., 5): ").strip()
-                    max_tracks_per_album = int(max_tracks_input) if max_tracks_input else None
-                    if max_tracks_per_album and max_tracks_per_album > 0:
-                        print(f"✓ Will download maximum {max_tracks_per_album} tracks per album")
-                    else:
-                        print("⚠ Invalid number, downloading all tracks")
-                        max_tracks_per_album = None
-                except:
-                    print("⚠ Invalid input, downloading all tracks")
-                    max_tracks_per_album = None
             
-            print(f"\n✓ Selected format: {output_format.upper()}")
-            print(f"▸ Starting downloads for {len(selected)} album(s)…")
             
-            successes = 0
-            for i, (album_url, title) in enumerate(selected, 1):
-                print(f"\n[{i}/{len(selected)}] ◎ {title}")
-                ok = self._download_apple_music_album_enhanced(album_url, output_format=output_format, max_tracks=max_tracks_per_album)
-                if ok:
-                    successes += 1
-            print(f"\n✓ Completed: {successes}/{len(selected)} album(s)")
-            return successes > 0
-        except Exception as e:
-            print(f"✗ Error processing artist albums: {e}")
-            return None
     
-    # ===== ENHANCED APPLE MUSIC METHODS =====
     
-    def _download_apple_music_direct(self, apple_music_url):
-        """Attempt direct Apple Music download using gamdl"""
-        if not self.apple_music_downloader or not GAMDL_AVAILABLE:
-            return None
         
-        try:
-            print("♪ Attempting direct Apple Music download...")
             
-            # Configure gamdl output directory
-            output_dir = str(self.output_dir)
             
-            # Use gamdl to download directly from Apple Music
-            result = self.apple_music_downloader.download_url(
-                apple_music_url,
-                output_dir=output_dir,
-                quality='lossless',  # Prefer lossless quality
-                format='flac'        # High quality format
-            )
             
-            if result:
-                print("✓ Direct Apple Music download successful!")
-                return True
-            else:
-                print("⚠  Direct download failed")
-                return None
                 
-        except Exception as e:
-            print(f"✗ Direct Apple Music download error: {e}")
-            return None
     
-    def _download_apple_music_track_enhanced(self, apple_music_url, interactive=True):
-        """Enhanced single Apple Music track download with quality options"""
-        try:
-            print("♪ Processing Apple Music single track...")
             
-            # First try to scrape the title AND artist from the page (most reliable)
-            scraped_info = self._scrape_apple_music_title(apple_music_url)
             
-            if scraped_info:
-                # scraped_info is in "Title - Artist" format (for search)
-                # Extract title and artist for proper formatting
-                if ' - ' in scraped_info:
-                    title_part, artist_part = scraped_info.split(' - ', 1)
-                    print(f"♫ Track: {title_part}")
-                    print(f"◈ Artist: {artist_part}")
-                    # Create filename as "Artist - Title"
-                    filename_format = f"{artist_part} - {title_part}"
-                else:
-                    print(f"♫ Track: {scraped_info}")
-                    filename_format = scraped_info
                 
-                # Ask for quality preference if interactive
-                output_format = 'mp3'
-                quality = 'best'
                 
-                if interactive:
-                    print(f"\n🎚️  Select audio quality:")
-                    print("  1. Best Quality (320kbps MP3) - Recommended")
-                    print("  2. High Quality (256kbps AAC/M4A) - Balanced")
-                    print("  3. Very High Quality (FLAC) - Lossless, larger files")
-                    print("  4. Best Available (Auto) - Highest quality possible")
                     
-                    try:
-                        quality_choice = input("\nEnter choice (1-4) [default: 1]: ").strip() or "1"
                         
-                        if quality_choice == "1":
-                            output_format = 'mp3'
-                            quality = 'best'
-                        elif quality_choice == "2":
-                            output_format = 'm4a'
-                            quality = 'best'
-                        elif quality_choice == "3":
-                            output_format = 'flac'
-                            quality = 'best'
-                        elif quality_choice == "4":
-                            output_format = 'best'
-                            quality = 'best'
-                        else:
-                            output_format = 'mp3'
-                            quality = 'best'
-                    except:
-                        output_format = 'mp3'
-                        quality = 'best'
                 
-                print(f"⌕ Searching YouTube for: {scraped_info}")
                 
-                # Use enhanced music search with better scoring
-                # Search query is "Title - Artist" format
-                youtube_url = self._search_youtube_for_music(scraped_info)
                 
-                if youtube_url:
-                    print(f"✓ Found on YouTube: {youtube_url}")
-                    print(f"⬇️  Starting download...")
                     
-                    # Clean the URL to remove playlist parameters
-                    youtube_url = self.clean_url(youtube_url)
                     
-                    # Download with custom filename as "Artist - Title"
-                    return self.download_media(
-                        youtube_url, 
-                        audio_only=True, 
-                        output_format=output_format,
-                        quality=quality,
-                        add_metadata=True,
-                        add_thumbnail=True,
-                        interactive=False,  # Skip interactive prompts for single track
-                        custom_filename=filename_format  # Save as "Artist - Title"
-                    )
-                else:
-                    print("✗ Could not find track on YouTube")
-                    print("→ Try searching manually or provide a different query")
-                    return None
             
-            # Fallback: Try extract_apple_music_metadata_enhanced
-            track_metadata = self._extract_apple_music_metadata_enhanced(apple_music_url)
             
-            if not track_metadata:
-                print("⚠  Could not extract track metadata, using basic fallback")
-                return self._download_apple_music_track(apple_music_url)
             
-            artist = track_metadata.get('artist', '')
-            title = track_metadata.get('title', '')
-            album = track_metadata.get('album', '')
             
-            if artist and title:
-                # Format as "Title - Artist" for better YouTube search
-                search_query = f"{title} - {artist}"
-                print(f"♫ Track: {title}")
-                print(f"◈ Artist: {artist}")
-                if album:
-                    print(f"◎ Album: {album}")
                 
-                print(f"⌕ Searching YouTube for: {search_query}")
                 
-                # Use enhanced music search
-                youtube_url = self._search_youtube_for_music(search_query)
                 
-                if youtube_url:
-                    print(f"✓ Found on YouTube: {youtube_url}")
-                    print(f"⬇️  Starting download...")
                     
-                    # Clean the URL to remove playlist parameters
-                    youtube_url = self.clean_url(youtube_url)
                     
-                    # Create filename as "Artist - Title"
-                    filename = f"{artist} - {title}"
                     
-                    # Download with interactive=False to skip playlist prompts
-                    return self.download_media(
-                        youtube_url, 
-                        audio_only=True, 
-                        output_format='mp3',  # MP3 for better compatibility
-                        add_metadata=True,
-                        add_thumbnail=True,
-                        interactive=False,  # Skip interactive prompts for single track
-                        custom_filename=filename  # Save as "Artist - Title"
-                    )
-                else:
-                    print("✗ Could not find track on YouTube")
-                    print("→ Try searching manually or provide a different query")
-            else:
-                print("⚠  Incomplete metadata, using basic fallback")
-                return self._download_apple_music_track(apple_music_url)
                 
-        except Exception as e:
-            print(f"✗ Enhanced track download error: {e}")
-            import traceback
-            traceback.print_exc()
-            return self._download_apple_music_track(apple_music_url)
         
-        return None
     
-    def _download_apple_music_album_enhanced(self, apple_music_url, output_format='mp3', max_tracks=None):
-        """Enhanced Apple Music album download with format selection and track limit"""
-        try:
-            print("♪ Processing Apple Music album...")
             
-            # Extract album metadata and track list
-            album_metadata = self._extract_apple_music_metadata_enhanced(apple_music_url)
             
-            if not album_metadata or not album_metadata.get('tracks'):
-                print("⚠  Could not extract album tracks automatically")
                 
-                # Try basic album info extraction
-                album_title = album_metadata.get('title', '') if album_metadata else ''
                 
-                # If we got at least a title, try searching for the whole album
-                if album_title:
-                    print(f"◎ Album: {album_title}")
-                    print("� Searching for complete album on YouTube...")
                     
-                    search_query = f"{album_title} full album"
-                    youtube_url = self._search_youtube(search_query)
                     
-                    if youtube_url:
-                        print(f"✓ Found album on YouTube: {youtube_url}")
-                        return self.download_media(youtube_url, audio_only=True, output_format=output_format)
-                    else:
-                        print("✗ Could not find album on YouTube")
-                else:
-                    # Last resort - scrape the page title
-                    scraped_info = self._scrape_apple_music_title(apple_music_url)
-                    if scraped_info:
-                        print(f"◎ Album: {scraped_info}")
-                        print("⌕ Searching for album on YouTube...")
                         
-                        youtube_url = self._search_youtube(f"{scraped_info} full album")
-                        if youtube_url:
-                            print(f"✓ Found album on YouTube: {youtube_url}")
-                            return self.download_media(youtube_url, audio_only=True, output_format=output_format)
                 
-                print("⚠  Using basic fallback method")
-                return self._download_apple_music_album(apple_music_url)
             
-            album_title = album_metadata.get('title', '')
-            artist = album_metadata.get('artist', '')
-            tracks = album_metadata.get('tracks', [])
             
-            print(f"◎ Album: {artist} - {album_title}")
-            print(f"▤ Tracks found: {len(tracks)}")
-            print(f"♫ Format: {output_format.upper()}")
             
-            # Apply track limit if specified
-            tracks_to_download = tracks
-            if max_tracks and max_tracks > 0 and len(tracks) > max_tracks:
-                print(f"⚠  Album has {len(tracks)} tracks, limiting to first {max_tracks}")
-                tracks_to_download = tracks[:max_tracks]
             
-            # Create album directory
-            album_dir = self.output_dir / f"{artist} - {album_title}".replace('/', '-')
-            album_downloader = UltimateMediaDownloader(album_dir)
             
-            successful_downloads = 0
-            total_tracks = len(tracks_to_download)
             
-            for i, track in enumerate(tracks_to_download, 1):
-                try:
-                    track_title = track.get('title', '')
-                    track_artist = track.get('artist', artist)  # Use album artist as fallback
                     
-                    if track_title:
-                        search_query = f"{track_artist} - {track_title}"
-                        print(f"\n♫ [{i:2d}/{total_tracks}] {search_query}")
                         
-                        youtube_url = self._search_youtube_for_music(search_query)
-                        if youtube_url:
-                            result = album_downloader.download_media(
-                                youtube_url, 
-                                audio_only=True, 
-                                output_format=output_format,
-                                add_metadata=True,
-                                add_thumbnail=True
-                            )
-                            if result:
-                                successful_downloads += 1
-                        else:
-                            print(f"✗ Could not find: {track_title}")
                     
-                except Exception as e:
-                    print(f"✗ Error downloading track {i}: {e}")
             
-            if max_tracks and len(tracks) > max_tracks:
-                print(f"\n✓ Album download completed: {successful_downloads}/{total_tracks} tracks (limited from {len(tracks)} total)")
-            else:
-                print(f"\n✓ Album download completed: {successful_downloads}/{total_tracks} tracks")
-            return successful_downloads > 0
             
-        except Exception as e:
-            print(f"✗ Enhanced album download error: {e}")
-            return self._download_apple_music_album(apple_music_url)
     
-    def _download_apple_music_playlist_enhanced(self, apple_music_url):
-        """Enhanced Apple Music playlist download with better metadata extraction"""
-        try:
-            print("♪ Processing Apple Music playlist...")
             
-            # Extract playlist metadata
-            playlist_metadata = self._extract_apple_music_metadata_enhanced(apple_music_url)
             
-            if not playlist_metadata:
-                print("⚠  Could not extract playlist metadata, using fallback")
-                return self._download_apple_music_playlist(apple_music_url)
             
-            playlist_title = playlist_metadata.get('title', 'Unknown Playlist')
-            curator = playlist_metadata.get('curator', 'Apple Music')
-            tracks = playlist_metadata.get('tracks', [])
             
-            print(f"≡ Playlist: {playlist_title}")
-            print(f"◈ Curator: {curator}")
-            print(f"▤ Tracks found: {len(tracks)}")
             
-            if not tracks:
-                print("⚠  No tracks found, using fallback method")
-                return self._download_apple_music_playlist(apple_music_url)
             
-            # Show tracks preview
-            print(f"\n♫ Track list:")
-            for i, track in enumerate(tracks[:10], 1):
-                artist = track.get('artist', 'Unknown Artist')
-                title = track.get('title', 'Unknown Title')
-                print(f"  {i:2d}. {artist} - {title}")
             
-            if len(tracks) > 10:
-                print(f"  ... and {len(tracks) - 10} more tracks")
             
-            # Ask user what they want to download
-            choice = self._prompt_playlist_download_choice_enhanced(tracks)
             
-            if choice == "cancel":
-                print("✗ Download cancelled by user")
-                return None
-            elif choice == "all":
-                selected_tracks = tracks
-            else:
-                selected_tracks = choice
             
-            # Prompt for audio format and quality
-            output_format, quality = self._prompt_audio_format_quality()
             
-            print(f"\n♫ Starting download of {len(selected_tracks)} track(s)...")
-            return self._download_track_queue_enhanced(selected_tracks, "Apple Music", output_format, quality)
             
-        except Exception as e:
-            print(f"✗ Enhanced playlist download error: {e}")
-            return self._download_apple_music_playlist(apple_music_url)
     
-    def _extract_apple_music_metadata_enhanced(self, apple_music_url):
-        """Enhanced Apple Music metadata extraction using multiple methods"""
-        print("⌕ Extracting Apple Music metadata...")
         
-        # Method 1: Try Apple Music API endpoint (unofficial)
-        metadata = self._extract_metadata_from_api(apple_music_url)
-        if metadata and metadata.get('tracks'):
-            return metadata
         
-        # Method 2: Try cloudscraper for Cloudflare bypass
-        if CLOUDSCRAPER_AVAILABLE:
-            metadata = self._extract_metadata_with_cloudscraper(apple_music_url)
-            if metadata and metadata.get('tracks'):
-                return metadata
         
-        # Method 3: Enhanced web scraping with multiple user agents
-        metadata = self._extract_metadata_enhanced_scraping(apple_music_url)
-        if metadata and metadata.get('tracks'):
-            return metadata
         
-        # Method 4: Extract from page and create sample tracks for common playlists
-        metadata = self._extract_with_smart_fallback(apple_music_url)
-        if metadata:
-            return metadata
         
-        # Method 5: Fallback to existing method
-        basic_info = self._extract_apple_music_info(apple_music_url)
-        if basic_info:
-            return {'title': basic_info, 'tracks': []}
         
-        return None
     
-    def _extract_metadata_from_api(self, apple_music_url):
-        """Try to extract metadata using Apple Music's API endpoints"""
-        try:
-            import re
             
-            # Extract playlist/album ID from URL
-            match = re.search(r'/(playlist|album)/[^/]+/(pl\.[a-zA-Z0-9]+|[0-9]+)', apple_music_url)
-            if not match:
-                return None
             
-            content_type = match.group(1)
-            content_id = match.group(2)
             
-            # Try to fetch from amp-api (Apple Music's public API)
-            headers = {
-                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                'Accept': 'application/json',
-                'Origin': 'https://music.apple.com',
-                'Referer': apple_music_url
-            }
             
-            # Note: This is a simplified approach
-            # Real implementation would need proper API token
-            print(f"  ⌕ Trying API extraction for {content_type}: {content_id}")
             
-            return None  # Skip API for now, use other methods
             
-        except Exception as e:
-            print(f"  ⚠  API extraction failed: {e}")
-            return None
     
-    def _extract_with_smart_fallback(self, apple_music_url):
-        """Smart fallback that prompts user or uses intelligent parsing"""
-        try:
-            from bs4 import BeautifulSoup
-            import re
             
-            print("  ⌕ Using smart fallback extraction...")
             
-            headers = {
-                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-                'Accept-Language': 'en-US,en;q=0.9',
-                'Connection': 'keep-alive',
-            }
             
-            response = requests.get(apple_music_url, headers=headers, timeout=15)
             
-            if response.status_code != 200:
-                return None
             
-            soup = BeautifulSoup(response.content, 'lxml' if 'lxml' in str(response.content) else 'html.parser')
             
-            # Check if this is a single song (should NOT use smart fallback for single songs)
-            if '/song/' in apple_music_url:
-                print("  ⚠  This is a single song, skipping smart fallback (not a playlist)")
-                return None
             
-            # Try to get playlist title
-            title = None
-            title_selectors = [
-                ('meta[property="og:title"]', 'content'),
-                ('meta[property="twitter:title"]', 'content'),
-                ('title', 'text'),
-            ]
             
-            for selector, attr_type in title_selectors:
-                element = soup.select_one(selector)
-                if element:
-                    if attr_type == 'content':
-                        title = element.get('content', '').strip()
-                    else:
-                        title = element.get_text().strip()
                     
-                    if title:
-                        title = title.replace(' - Apple Music', '').replace(' on Apple Music', '').strip()
-                        break
             
-            if not title:
-                return None
             
-            # For playlists/albums, check if this is from album download (no interactive prompt)
-            # Albums from artist page should not prompt - just return title for search
-            if '/album/' in apple_music_url:
-                print(f"  ◎ Found album: {title}")
-                print(f"  ℹ  Will search for complete album on YouTube")
-                # Return basic metadata without tracks for album-as-whole search
-                return {'title': title, 'tracks': []}
             
-            # For playlists only, prompt user to provide track names
-            print(f"\n  ≡ Found playlist: {title}")
-            print(f"  ⚠  Could not automatically extract track list due to JavaScript-heavy content")
-            print(f"\n  → You have two options:")
-            print(f"     1. Manually provide track names (one per line)")
-            print(f"     2. Let me search for '{title}' as a whole playlist on YouTube")
             
-            try:
-                choice = input("\n  Choose option (1 or 2, default=2): ").strip()
                 
-                if choice == "1":
-                    print("\n  Enter track names (format: 'Artist - Title', one per line)")
-                    print("  Press Enter twice when done:")
-                    tracks = []
-                    while True:
-                        line = input("  ").strip()
-                        if not line:
-                            break
-                        if ' - ' in line:
-                            artist, track_title = line.split(' - ', 1)
-                            tracks.append({
-                                'artist': artist.strip(),
-                                'title': track_title.strip()
-                            })
-                        else:
-                            tracks.append({
-                                'artist': 'Unknown',
-                                'title': line
-                            })
                     
-                    if tracks:
-                        return {
-                            'title': title,
-                            'tracks': tracks
-                        }
-            except:
-                pass
             
-            # Option 2 or default: search as whole playlist
-            return {
-                'title': title,
-                'tracks': []  # Empty will trigger playlist search
-            }
             
-        except Exception as e:
-            print(f"  ⚠  Smart fallback failed: {e}")
-            return None
     
-    def _extract_metadata_with_browser(self, apple_music_url):
-        """Extract metadata using Selenium browser automation"""
-        # Disabled - too unreliable across platforms
-        return None
         
-        try:
-            driver = self._get_browser_driver()
-            if not driver:
-                return None
             
-            print("◎ Loading Apple Music page with browser...")
-            driver.get(apple_music_url)
             
-            # Wait for content to load
-            WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.TAG_NAME, "body"))
-            )
             
-            # Give extra time for JavaScript to execute
-            time.sleep(3)
             
-            metadata = {}
             
-            # Extract title
-            title_selectors = [
-                '[data-testid="song-name"]',
-                '[data-testid="album-title"]', 
-                '[data-testid="playlist-title"]',
-                '.headings__title',
-                '.product-header__title',
-                'h1'
-            ]
             
-            for selector in title_selectors:
-                try:
-                    element = driver.find_element(By.CSS_SELECTOR, selector)
-                    if element.text.strip():
-                        metadata['title'] = element.text.strip()
-                        break
-                except:
-                    continue
             
-            # Extract artist/curator
-            artist_selectors = [
-                '[data-testid="click-action"]:first-of-type',
-                '.headings__metadata a',
-                '.product-header__subtitle a',
-                '.songs-list-header__metadata a'
-            ]
             
-            for selector in artist_selectors:
-                try:
-                    element = driver.find_element(By.CSS_SELECTOR, selector)
-                    if element.text.strip():
-                        metadata['artist'] = element.text.strip()
-                        metadata['curator'] = element.text.strip()
-                        break
-                except:
-                    continue
             
-            # Extract tracks (for albums/playlists)
-            tracks = []
-            track_selectors = [
-                '[data-testid="track-list"] [data-testid="track-title"]',
-                '.songs-list .song-name',
-                '.tracklist-row .song-name'
-            ]
             
-            for selector in track_selectors:
-                try:
-                    track_elements = driver.find_elements(By.CSS_SELECTOR, selector)
-                    for track_elem in track_elements:
-                        track_title = track_elem.text.strip()
-                        if track_title:
-                            # Try to find artist for this track
-                            try:
-                                artist_elem = track_elem.find_element(By.XPATH, "..//*[contains(@class, 'artist') or contains(@data-testid, 'artist')]")
-                                track_artist = artist_elem.text.strip()
-                            except:
-                                track_artist = metadata.get('artist', 'Unknown Artist')
                             
-                            tracks.append({
-                                'title': track_title,
-                                'artist': track_artist
-                            })
                     
-                    if tracks:
-                        break
-                except:
-                    continue
             
-            if tracks:
-                metadata['tracks'] = tracks
             
-            print(f"✓ Browser extraction successful: {len(metadata)} fields")
-            return metadata if metadata else None
             
-        except Exception as e:
-            print(f"⚠  Browser extraction failed: {e}")
-            return None
     
-    def _extract_metadata_with_cloudscraper(self, apple_music_url):
-        """Extract metadata using cloudscraper for Cloudflare bypass"""
-        try:
-            print("☁️  Trying cloudscraper extraction...")
             
-            scraper = cloudscraper.create_scraper()
-            response = scraper.get(apple_music_url, timeout=15)
             
-            if response.status_code == 200:
-                from bs4 import BeautifulSoup
-                soup = BeautifulSoup(response.content, 'html.parser')
                 
-                # Also save the raw response for debugging
-                metadata = self._parse_apple_music_html(soup, response.text)
-                return metadata
             
-        except Exception as e:
-            print(f"⚠  Cloudscraper extraction failed: {e}")
-            return None
     
-    def _extract_metadata_enhanced_scraping(self, apple_music_url):
-        """Enhanced web scraping with multiple strategies"""
-        try:
-            print("🕷️  Trying enhanced scraping...")
             
-            headers = {
-                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36',
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-                'Accept-Language': 'en-US,en;q=0.9',
-                'Accept-Encoding': 'gzip, deflate, br',
-                'Connection': 'keep-alive',
-                'Upgrade-Insecure-Requests': '1',
-                'Sec-Fetch-Dest': 'document',
-                'Sec-Fetch-Mode': 'navigate',
-                'Sec-Fetch-Site': 'none',
-                'Cache-Control': 'max-age=0'
-            }
             
-            session = requests.Session()
-            session.headers.update(headers)
             
-            response = session.get(apple_music_url, timeout=15, allow_redirects=True)
             
-            if response.status_code == 200:
-                from bs4 import BeautifulSoup
-                soup = BeautifulSoup(response.content, 'html.parser')
                 
-                return self._parse_apple_music_html(soup, response.text)
             
-        except Exception as e:
-            print(f"⚠  Enhanced scraping failed: {e}")
-            return None
     
-    def _parse_apple_music_html(self, soup, raw_html=None):
-        """Parse Apple Music HTML to extract metadata"""
-        metadata = {}
-        tracks = []
-        # If raw_html is provided, use it for more aggressive pattern matching
-        if raw_html:
-            try:
-                import re
-                import json
                 
-                # Try to find the main data object in the page
-                # Apple Music embeds data in various formats
                 
-                # Pattern 1: Look for the serialized state data (most reliable)
-                # This pattern captures the main data structure with all track info
-                state_patterns = [
-                    r'window\.__APOLLO_STATE__\s*=\s*(\{.+?\});\s*window',
-                    r'window\.INIT_DATA\s*=\s*(\{.+?\});\s*window',
-                    r'serializedState"\s*:\s*(\{.+?\})\s*,\s*"',
-                ]
                 
-                for pattern in state_patterns:
-                    state_match = re.search(pattern, raw_html, re.DOTALL)
-                    if state_match:
-                        try:
-                            state_data = json.loads(state_match.group(1))
-                            # Parse the state for track data
-                            for key, value in state_data.items():
-                                if isinstance(value, dict):
-                                    # Check for track attributes
-                                    attrs = value.get('attributes', value)
-                                    if isinstance(attrs, dict):
-                                        track_name = attrs.get('name', '')
-                                        artist_name = attrs.get('artistName', '')
                                         
-                                        # Also check for composerName as fallback
-                                        if not artist_name:
-                                            artist_name = attrs.get('composerName', '')
                                         
-                                        if track_name and artist_name:
-                                            # Avoid duplicates
-                                            if not any(t['title'] == track_name and t['artist'] == artist_name for t in tracks):
-                                                tracks.append({
-                                                    'title': track_name,
-                                                    'artist': artist_name
-                                                })
                             
-                            if tracks:
-                                print(f"  ✓ Extracted {len(tracks)} tracks from state data")
-                                break
-                        except Exception as e:
-                            print(f"  ⚠  State parsing error: {e}")
-                            continue
                 
-                # Pattern 2: Look for embedded JSON with track relationships
-                # This is a more aggressive approach for newer Apple Music pages
-                if not tracks:
-                    try:
-                        # Find all potential JSON objects that might contain track data
-                        json_objects = re.findall(r'\{[^{}]*?"type"\s*:\s*"songs"[^{}]*?\}', raw_html)
-                        json_objects += re.findall(r'\{[^{}]*?"attributes"\s*:\s*\{[^{}]*?"name"[^{}]*?"artistName"[^{}]*?\}[^{}]*?\}', raw_html)
                         
-                        for json_str in json_objects:
-                            try:
-                                obj = json.loads(json_str)
-                                attrs = obj.get('attributes', {})
-                                track_name = attrs.get('name', '')
-                                artist_name = attrs.get('artistName', '')
                                 
-                                if track_name and artist_name:
-                                    if not any(t['title'] == track_name and t['artist'] == artist_name for t in tracks):
-                                        tracks.append({
-                                            'title': track_name,
-                                            'artist': artist_name
-                                        })
-                            except:
-                                continue
                         
-                        if tracks:
-                            print(f"  ✓ Extracted {len(tracks)} tracks from embedded JSON objects")
-                    except Exception as e:
-                        print(f"  ⚠  JSON object parsing error: {e}")
                 
-                # Pattern 3: Direct regex extraction (most aggressive, last resort)
-                # Strategy: Extract ALL track names first, then ALL artist names, then pair by index
-                if not tracks:
-                    try:
-                        # Step 1: Extract ALL track names (song titles) from the entire HTML
-                        track_names = []
-                        name_pattern = r'"name"\s*:\s*"((?:[^"\\]|\\.)*?)"'
-                        all_names = re.findall(name_pattern, raw_html)
                         
-                        for name in all_names:
-                            cleaned_name = name.replace(r'\"', '"').replace(r'\\', '\\').strip()
-                            if cleaned_name:
-                                track_names.append(cleaned_name)
                         
-                        # Step 2: Extract ALL artist names from the entire HTML
-                        artist_names = []
-                        artist_pattern = r'"artistName"\s*:\s*"((?:[^"\\]|\\.)*?)"'
-                        all_artists = re.findall(artist_pattern, raw_html)
                         
-                        for artist in all_artists:
-                            cleaned_artist = artist.replace(r'\"', '"').replace(r'\\', '\\').strip()
-                            if cleaned_artist:
-                                artist_names.append(cleaned_artist)
                         
-                        # Step 3: Remove the first two indices from track_names list
-                        if len(track_names) > 2:
-                            track_names = track_names[2:]
-                            print(f"  ℹ  Removed first 2 entries from track names (likely metadata)")
                         
-                        # Step 4: Remove duplicates from track_names only (not from artists)
-                        # Use dict to preserve order (Python 3.7+) and remove duplicates
-                        seen_names = {}
-                        unique_track_names = []
-                        for name in track_names:
-                            name_lower = name.lower()
-                            if name_lower not in seen_names:
-                                seen_names[name_lower] = True
-                                unique_track_names.append(name)
                         
-                        track_names = unique_track_names
-                        # Keep artist_names as-is with duplicates intact
                         
-                        # Step 5: Pair them up by index - index 0 of titles with index 0 of artists
-                        if track_names and artist_names:
-                            # Use the minimum length to avoid index errors
-                            min_length = min(len(track_names), len(artist_names))
                             
-                            print(f"  ℹ  Found {len(track_names)} unique track names and {len(artist_names)} unique artist names")
-                            print(f"  ℹ  Will pair {min_length} tracks by index")
                             
-                            # Track seen combinations to avoid duplicates in final list
-                            seen_combinations = set()
                             
-                            for i in range(min_length):
-                                track_name = track_names[i]
-                                artist_name = artist_names[i]
                                 
-                                # Create a normalized key for duplicate checking
-                                combo_key = f"{track_name.lower()}|||{artist_name.lower()}"
                                 
-                                if combo_key not in seen_combinations:
-                                    seen_combinations.add(combo_key)
-                                    tracks.append({
-                                        'title': track_name,
-                                        'artist': artist_name
-                                    })
                             
-                            if tracks:
-                                print(f"  ✓ Extracted {len(tracks)} unique tracks using indexed pairing")
                                     
-                    except Exception as e:
-                        print(f"  ⚠  Regex extraction error: {e}")
                         
-            except Exception as e:
-                print(f"  ⚠  Raw HTML parsing failed: {e}")
         
-        # Extract title from various sources
-        title_sources = [
-            ('meta[property="og:title"]', 'content'),
-            ('meta[name="twitter:title"]', 'content'),
-            ('title', 'text'),
-            ('.headings__title', 'text'),
-            ('.product-header__title', 'text'),
-            ('h1', 'text')
-        ]
         
-        for selector, attr_type in title_sources:
-            element = soup.select_one(selector)
-            if element:
-                if attr_type == 'content':
-                    title = element.get('content', '').strip()
-                else:
-                    title = element.get_text().strip()
                 
-                if title:
-                    # Clean up title
-                    title = title.replace(' - Apple Music', '').replace(' on Apple Music', '')
-                    title = title.replace('‎', '').strip()
-                    if title and len(title) > 2:
-                        metadata['title'] = title
-                        break
         
-        # Extract artist/curator
-        artist_sources = [
-            ('meta[name="music:musician"]', 'content'),
-            ('.headings__metadata a', 'text'),
-            ('.product-header__subtitle a', 'text'),
-            ('.songs-list-header__metadata a', 'text')
-        ]
         
-        for selector, attr_type in artist_sources:
-            element = soup.select_one(selector)
-            if element:
-                if attr_type == 'content':
-                    artist = element.get('content', '').strip()
-                else:
-                    artist = element.get_text().strip()
                 
-                if artist:
-                    metadata['artist'] = artist
-                    metadata['curator'] = artist
-                    break
         
-        # Extract structured data for tracks from JSON-LD
-        scripts = soup.find_all('script', type='application/ld+json')
-        for script in scripts:
-            try:
-                import json
-                data = json.loads(script.string)
                 
-                if isinstance(data, dict):
-                    # Handle MusicAlbum or MusicPlaylist
-                    if data.get('@type') in ['MusicAlbum', 'MusicPlaylist'] and 'track' in data:
-                        for track_data in data['track']:
-                            if isinstance(track_data, dict):
-                                track_title = track_data.get('name', '')
-                                track_artist = ''
                                 
-                                if 'byArtist' in track_data:
-                                    if isinstance(track_data['byArtist'], dict):
-                                        track_artist = track_data['byArtist'].get('name', '')
-                                    elif isinstance(track_data['byArtist'], list) and track_data['byArtist']:
-                                        track_artist = track_data['byArtist'][0].get('name', '')
                                 
-                                if track_title:
-                                    tracks.append({
-                                        'title': track_title,
-                                        'artist': track_artist or metadata.get('artist', 'Unknown Artist')
-                                    })
                         
-                        if tracks:
-                            break
-            except Exception as e:
-                continue
         
-        # Additional fallback: Try to extract from script tags if raw_html extraction didn't work
-        if not tracks:
-            try:
-                # Look for embedded JSON data in script tags
-                all_scripts = soup.find_all('script')
-                for script in all_scripts:
-                    if script.string and len(script.string) > 100:  # Skip very small scripts
-                        import re
-                        import json
                         
-                        # Strategy 1: Look for track arrays with relationships
-                        try:
-                            # Pattern for track data in relationships structure
-                            relationships_pattern = r'"relationships"\s*:\s*\{[^}]*"tracks"\s*:\s*\{[^}]*"data"\s*:\s*\[(.*?)\]'
-                            rel_match = re.search(relationships_pattern, script.string, re.DOTALL)
                             
-                            if rel_match:
-                                # Try to find corresponding attributes
-                                attrs_pattern = r'"id"\s*:\s*"([^"]+)"[^}]*"attributes"\s*:\s*\{[^}]*"name"\s*:\s*"([^"]+)"[^}]*"artistName"\s*:\s*"([^"]+)"'
-                                attr_matches = re.findall(attrs_pattern, script.string)
                                 
-                                for track_id, track_name, artist_name in attr_matches:
-                                    if track_name and artist_name:
-                                        if not any(t['title'] == track_name and t['artist'] == artist_name for t in tracks):
-                                            tracks.append({
-                                                'title': track_name,
-                                                'artist': artist_name
-                                            })
                                 
-                                if tracks:
-                                    print(f"  ✓ Extracted {len(tracks)} tracks from relationships data")
-                                    break
-                        except:
-                            pass
                         
-                        # Strategy 2: Direct extraction with better context
-                        if not tracks:
-                            try:
-                                # Look for track objects in arrays
-                                # Pattern: Find arrays that contain track-like objects
-                                array_pattern = r'\[(\{[^]]+?"name"\s*:\s*"[^"]+?"[^]]+?"artistName"\s*:\s*"[^"]+?"[^]]+?\}(?:,\s*\{[^]]+?\})*)\]'
-                                array_matches = re.findall(array_pattern, script.string)
                                 
-                                for array_content in array_matches:
-                                    # Extract individual track objects
-                                    track_pattern = r'"name"\s*:\s*"([^"]+)"[^}]*?"artistName"\s*:\s*"([^"]+)"'
-                                    track_matches = re.findall(track_pattern, array_content)
                                     
-                                    for track_name, artist_name in track_matches:
-                                        if track_name and artist_name:
-                                            if track_name.lower() not in ['music', 'playlist', 'album']:
-                                                if not any(t['title'] == track_name and t['artist'] == artist_name for t in tracks):
-                                                    tracks.append({
-                                                        'title': track_name,
-                                                        'artist': artist_name
-                                                    })
                                 
-                                if tracks:
-                                    print(f"  ✓ Extracted {len(tracks)} tracks from array structures")
-                                    break
-                            except:
-                                pass
-            except Exception as e:
-                print(f"  ⚠  Error parsing embedded data: {e}")
         
-        # Final deduplication pass - remove any duplicate tracks
-        # Smart deduplication: prefer tracks with real artist names over "Unknown Artist"
-        if tracks:
-            # First pass: collect tracks by title
-            tracks_by_title = {}
-            for track in tracks:
-                title_lower = track['title'].lower().strip()
-                artist = track['artist'].strip()
                 
-                if title_lower not in tracks_by_title:
-                    tracks_by_title[title_lower] = track
-                else:
-                    # If we already have this title, prefer the one with a real artist
-                    existing = tracks_by_title[title_lower]
-                    if existing['artist'] == 'Unknown Artist' and artist != 'Unknown Artist':
-                        # Replace with the version that has artist info
-                        tracks_by_title[title_lower] = track
-                    elif existing['artist'] != 'Unknown Artist' and artist == 'Unknown Artist':
-                        # Keep the existing one with artist info
-                        pass
-                    elif existing['artist'].lower() != artist.lower():
-                        # Different artists for same title - keep both
-                        # Create a unique key
-                        key_counter = 1
-                        unique_title = f"{title_lower}_{key_counter}"
-                        while unique_title in tracks_by_title:
-                            key_counter += 1
-                            unique_title = f"{title_lower}_{key_counter}"
-                        tracks_by_title[unique_title] = track
             
-            unique_tracks = list(tracks_by_title.values())
             
-            if len(unique_tracks) < len(tracks):
-                print(f"  ℹ  Removed {len(tracks) - len(unique_tracks)} duplicate tracks")
             
-            tracks = unique_tracks
-            metadata['tracks'] = tracks
         
-        return metadata if metadata else None
     
-    def _prompt_playlist_download_choice_enhanced(self, tracks):
-        """Enhanced playlist download choice with better formatting"""
-        print(f"\n♫ Playlist contains {len(tracks)} tracks")
-        print("↓ Download options:")
-        print("  1. Download all tracks")
-        print("  2. Select specific tracks")
-        print("  3. Download first 10 tracks only")
-        print("  4. Cancel")
         
-        while True:
-            try:
-                choice = input("\nEnter your choice (1-4): ").strip()
                 
-                if choice == "1":
-                    return "all"
-                elif choice == "2":
-                    return self._select_specific_tracks_enhanced(tracks)
-                elif choice == "3":
-                    return tracks[:10]
-                elif choice == "4":
-                    return "cancel"
-                else:
-                    print("Please enter 1, 2, 3, or 4")
                     
-            except KeyboardInterrupt:
-                return "cancel"
     
-    def _select_specific_tracks_enhanced(self, tracks):
-        """Enhanced track selection with better interface"""
-        print(f"\n≡ Available tracks ({len(tracks)} total):")
         
-        # Show tracks in batches for better readability
-        batch_size = 20
-        for i in range(0, len(tracks), batch_size):
-            batch = tracks[i:i+batch_size]
-            print(f"\n--- Tracks {i+1}-{min(i+batch_size, len(tracks))} ---")
             
-            for j, track in enumerate(batch, i+1):
-                artist = track.get('artist', 'Unknown Artist')
-                title = track.get('title', 'Unknown Title')
-                print(f"  {j:3d}. {artist} - {title}")
             
-            if i + batch_size < len(tracks):
-                input("Press Enter to see more tracks...")
         
-        print(f"\n▭ Selection options:")
-        print("  • Individual numbers: 1,3,5,10")
-        print("  • Ranges: 1-10,15-20") 
-        print("  • Mixed: 1,3,5-8,10,12-15")
-        print("  • Type 'all' for all tracks")
-        print("  • Type 'cancel' to cancel")
         
-        try:
-            user_input = input("Your selection: ").strip().lower()
             
-            if user_input == 'cancel':
-                return "cancel"
-            elif user_input == 'all':
-                return tracks
             
-            # Parse selection
-            selected_indices = set()
             
-            for part in user_input.split(','):
-                part = part.strip()
-                if '-' in part:
-                    try:
-                        start, end = map(int, part.split('-'))
-                        selected_indices.update(range(start-1, end))
-                    except ValueError:
-                        print(f"⚠  Invalid range: {part}")
-                else:
-                    try:
-                        selected_indices.add(int(part) - 1)
-                    except ValueError:
-                        print(f"⚠  Invalid number: {part}")
             
-            # Filter valid indices
-            valid_indices = [i for i in selected_indices if 0 <= i < len(tracks)]
-            selected_tracks = [tracks[i] for i in sorted(valid_indices)]
             
-            if selected_tracks:
-                print(f"✓ Selected {len(selected_tracks)} tracks")
-                return selected_tracks
-            else:
-                print("✗ No valid tracks selected")
-                return "cancel"
                 
-        except KeyboardInterrupt:
-            return "cancel"
     
     def _prompt_audio_format_quality(self):
         """Prompt user for audio format and quality preferences"""
@@ -3748,81 +980,19 @@ class UltimateMediaDownloader:
                 print("\n✗ Using default: MP3 320kbps")
                 return 'mp3', 'best'
     
-    def _download_track_queue_enhanced(self, tracks, source_name, output_format='mp3', quality='best'):
-        """Enhanced track queue download with better progress tracking"""
-        if not tracks:
-            return False
         
-        print("\n" + "=" * 60)
-        print(f"♫ Starting {source_name} Download Queue")
-        print(f"▤ Total tracks: {len(tracks)}")
-        print(f"♪ Format: {output_format.upper()} | Quality: {quality}")
-        print("=" * 60)
         
-        successful_downloads = 0
-        failed_downloads = 0
         
-        for i, track in enumerate(tracks, 1):
-            try:
-                artist = track.get('artist', 'Unknown Artist')
-                title = track.get('title', 'Unknown Title')
-                # Search with "Title - Artist" format
-                search_query = f"{title} - {artist}"
-                # Filename with "Artist - Title" format
-                filename = f"{artist} - {title}"
                 
-                print(f"\n♫ [{i:3d}/{len(tracks)}] {title}")
-                print(f"    ◈ {artist}")
-                print("    " + "─" * 50)
                 
-                # Use enhanced music search
-                youtube_url = self._search_youtube_for_music(search_query)
                 
-                if youtube_url:
-                    print(f"    ✓ Found: {youtube_url}")
                     
-                    result = self.download_media(
-                        youtube_url,
-                        audio_only=True,
-                        output_format=output_format,
-                        quality=quality,
-                        add_metadata=True,
-                        add_thumbnail=True,
-                        custom_filename=filename  # Save as "Artist - Title"
-                    )
                     
-                    if result:
-                        successful_downloads += 1
-                        print(f"    ✓ Download successful!")
-                    else:
-                        failed_downloads += 1
-                        print(f"    ✗ Download failed")
-                else:
-                    failed_downloads += 1
-                    print(f"    ✗ Not found on YouTube")
                 
-                # Progress indicator
-                progress = (i / len(tracks)) * 100
-                print(f"    ▤ Progress: {progress:.1f}% ({successful_downloads} successful, {failed_downloads} failed)")
                 
-                # Small delay between downloads
-                if i < len(tracks):
-                    time.sleep(1)
                     
-            except Exception as e:
-                failed_downloads += 1
-                print(f"    ✗ Error: {e}")
         
-        # Final summary
-        print("\n" + "=" * 60)
-        print(f"♫ {source_name} Download Queue Complete!")
-        print(f"✓ Successful: {successful_downloads}")
-        print(f"✗ Failed: {failed_downloads}")
-        print(f"▤ Success rate: {(successful_downloads/len(tracks)*100):.1f}%")
-        print(f"▸ Location: {self.output_dir}")
-        print("=" * 60)
         
-        return successful_downloads > 0
     
     def cleanup(self):
         """Cleanup resources"""
@@ -3870,7 +1040,7 @@ class UltimateMediaDownloader:
     
     def _fetch_spotify_album_art(self, track_name, artist_name, silent=False):
         """Fetch high-quality album art from Spotify"""
-        if not self.spotify_client:
+        if not self.spotify_handler or not self.spotify_handler.spotify_client:
             return None
         
         try:
@@ -3881,7 +1051,7 @@ class UltimateMediaDownloader:
                     print(f"→ Fetching album art from Spotify...", end="\r")
             
             query = f"{track_name} {artist_name}"
-            results = self.spotify_client.search(q=query, type='track', limit=1)
+            results = self.spotify_handler.spotify_client.search(q=query, type='track', limit=1)
             
             if results and results['tracks']['items']:
                 track = results['tracks']['items'][0]
@@ -4243,7 +1413,7 @@ class UltimateMediaDownloader:
                     if track_title:
                         album_art_data = self._fetch_apple_music_album_art(track_title, artist_name, silent=True)
                         
-                        if not album_art_data and self.spotify_client:
+                        if not album_art_data and self.spotify_handler and self.spotify_handler.spotify_client:
                             album_art_data = self._fetch_spotify_album_art(track_title, artist_name, silent=True)
                     
                     # Embed album art if found
@@ -4291,7 +1461,7 @@ class UltimateMediaDownloader:
             
             if fetch_from_streaming:
                 # Try Spotify first (usually better quality)
-                if SPOTIFY_AVAILABLE and self.spotify_client:
+                if self.spotify_handler:
                     album_art_data = self._fetch_spotify_album_art(track_name, artist_name)
                 
                 # If Spotify fails, try Apple Music
@@ -6579,7 +3749,6 @@ def interactive_mode():
             ui.error_message(f"An error occurred: {str(e)}")
             ui.warning_message("Please try again with a different URL")
 
-
 def show_help_menu(ui):
     """Display help menu with modern styling"""
     if ui.console and RICH_AVAILABLE:
@@ -6610,7 +3779,6 @@ def show_help_menu(ui):
         print("  [URL]            - Paste any media URL to download")
         print("=" * 70 + "\n")
 
-
 def create_banner():
     """Create a beautiful banner using Rich"""
     ui = ModernUI()
@@ -6639,7 +3807,6 @@ def create_banner():
         print("=" * 70)
         print("▶ ULTIMATE MEDIA DOWNLOADER")
         print("=" * 70)
-
 
 def main():
     parser = argparse.ArgumentParser(
