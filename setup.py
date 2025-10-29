@@ -32,7 +32,9 @@ setup(
         'utils',
         'ui_components',
         'youtube_scorer',
-        'generic_downloader'
+        'generic_downloader',
+        'spotify_handler',
+        'apple_music_handler'
     ],
     install_requires=requirements,
     entry_points={
