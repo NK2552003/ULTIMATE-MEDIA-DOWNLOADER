@@ -1,10 +1,7 @@
-<div style="background-color: #ffff99; padding: 10px; border: 1px solid #ffcc00; margin-bottom: 20px;">
-<strong>⚠️ Disclaimer:</strong> This tool is for personal use only. Users are responsible for complying with copyright laws and terms of service of the platforms they download from. The developers assume no liability for misuse of this software.
-</div>
-
 <div align="center">
     <h1>Ultimate Media Downloader</h1>
     <b>Download media from 1000+ platforms with one command: <code>umd</code></b></br></br>
+    <img src="Images/1.png" alt="Ultimate Media Downloader" width="100%"/><br/><br/>
     <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.9%2B-blue.svg" alt="Python Version"></a>
     <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
     <a href="https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER"><img src="https://img.shields.io/github/stars/NK2552003/ULTIMATE-MEDIA-DOWNLOADER?style=social" alt="GitHub Stars"></a>
@@ -13,6 +10,14 @@
 </div>
 
 ---
+><strong>⚠️ Disclaimer</strong>
+This software is provided for educational and personal use only. Users are responsible for complying with the terms of service of any websites or platforms from which they download content. The authors and contributors of this software:
+ >- Do not endorse or encourage copyright infringement
+ >- Are not responsible for any misuse of this software
+ >- Recommend users only download content they have the right to access
+ >- Advise users to respect intellectual property rights and applicable laws
+ >
+>By using this software, you agree to use it responsibly and in compliance with all applicable laws and regulations in your jurisdiction.
 
 ## Overview
 
