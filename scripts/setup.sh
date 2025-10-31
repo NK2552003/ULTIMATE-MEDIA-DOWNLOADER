@@ -626,6 +626,14 @@ import yt_dlp
 import requests
 import rich
 from generic_downloader import GenericSiteDownloader
+from cli_args import create_argument_parser
+from ui_components import ModernUI, Icons
+from ui_display import display_info
+from logger import QuietLogger
+from utils import sanitize_filename
+from spotify_handler import SpotifyHandler
+from apple_music_handler import AppleMusicHandler
+from youtube_scorer import YouTubeScorer
 print('All imports successful')
 " && print_success "All imports working" || print_warning "Some imports failed"
 }
@@ -687,6 +695,37 @@ show_post_install_info() {
     echo ""
     echo -e "  ${GREEN}•${NC} Proxy: Configure proxy in ${YELLOW}config.json${NC}"
     echo -e "  ${GREEN}•${NC} Output: Customize download directory and quality"
+    echo ""
+    echo -e "${CYAN}╔════════════════════════════════════════════════════════════════════╗${NC}"
+    echo -e "${CYAN}║                       INSTALLED MODULES                            ║${NC}"
+    echo -e "${CYAN}╚════════════════════════════════════════════════════════════════════╝${NC}"
+    echo ""
+    echo -e "  ${GREEN}Core Engine:${NC}"
+    echo -e "    • ultimate_downloader   - Main media downloader engine"
+    echo -e "    • cli_args             - Command-line argument parser"
+    echo ""
+    echo -e "  ${GREEN}Utility Modules:${NC}"
+    echo -e "    • browser_utils        - Browser automation & user agent management"
+    echo -e "    • platform_utils       - Platform detection & configuration"
+    echo -e "    • ui_utils             - Rich console output utilities"
+    echo -e "    • logger               - Advanced logging system"
+    echo -e "    • utils                - General utility functions"
+    echo ""
+    echo -e "  ${GREEN}UI & Display:${NC}"
+    echo -e "    • ui_components        - UI component library"
+    echo -e "    • ui_display           - Display & formatting utilities"
+    echo -e "    • progress_display     - Progress bar management"
+    echo ""
+    echo -e "  ${GREEN}Platform Handlers:${NC}"
+    echo -e "    • spotify_handler      - Spotify track/playlist integration"
+    echo -e "    • apple_music_handler  - Apple Music support"
+    echo -e "    • generic_downloader   - Generic website downloader"
+    echo ""
+    echo -e "  ${GREEN}Analysis Tools:${NC}"
+    echo -e "    • youtube_scorer       - YouTube search result ranking"
+    echo -e "    • file_manager         - File organization utilities"
+    echo -e "    • url_validator        - URL validation & parsing"
+    echo -e "    • platform_info        - Platform information utilities"
     echo ""
     echo -e "${CYAN}╔════════════════════════════════════════════════════════════════════╗${NC}"
     echo -e "${CYAN}║                        DOCUMENTATION                               ║${NC}"

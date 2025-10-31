@@ -27,7 +27,7 @@ Pillow>=11.2.1                     # Image processing for thumbnails :contentRef
 # -------------------------------------------------------------------------
 spotipy>=2.25.1                   # Spotify API wrapper :contentReference[oaicite:4]{index=4}  
 youtube-search-python>=1.6.6     # YouTube search without API key  
-spotdl>=4.4.2                     # Spotify to YouTube downloader  
+spotdl>=3.9.6                     # Spotify to YouTube downloader  
 
 # Advanced Web Scraping & Downloading
 # -------------------------------------------------------------------------

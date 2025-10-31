@@ -31,10 +31,19 @@ setup(
         'logger',
         'utils',
         'ui_components',
+        'ui_display',
+        'cli_args',
         'youtube_scorer',
         'generic_downloader',
         'spotify_handler',
-        'apple_music_handler'
+        'apple_music_handler',
+        'progress_display',
+        'file_manager',
+        'url_validator',
+        'platform_info',
+        'browser_utils',
+        'platform_utils',
+        'ui_utils'
     ],
     install_requires=requirements,
     entry_points={

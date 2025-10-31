@@ -111,6 +111,21 @@ echo ======================================================================
 echo   Installation Complete! 🎉
 echo ======================================================================
 echo.
+echo Core Modules Installed:
+echo   - ultimate_downloader    (Main downloader engine)
+echo   - browser_utils          (Browser and user agent utilities)
+echo   - platform_utils         (Platform detection and configuration)
+echo   - ui_utils               (Rich console output utilities)
+echo   - cli_args              (Command-line argument parser)
+echo   - ui_components         (UI component library)
+echo   - ui_display            (Display and formatting utilities)
+echo   - logger                (Logging system)
+echo   - utils                 (Utility functions)
+echo   - spotify_handler       (Spotify integration)
+echo   - apple_music_handler   (Apple Music support)
+echo   - youtube_scorer        (YouTube search scoring)
+echo   - generic_downloader    (Generic download handler)
+echo.
 echo Usage:
 echo   umd ^<URL^>                    # Download media from URL
 echo   umd                          # Start interactive mode

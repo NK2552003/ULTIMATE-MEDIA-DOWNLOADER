@@ -143,6 +143,17 @@ from utils import (
 )
 from apple_music_handler import AppleMusicHandler
 
+# Import new refactored modules
+from progress_display import ProgressDisplay, DurationFormatter
+from file_manager import FileManager
+from url_validator import URLValidator
+from platform_info import PlatformInfo
+
+# Import newly created utility modules
+from browser_utils import get_random_user_agent, get_browser_driver, format_duration as format_duration_util
+from platform_utils import detect_platform as detect_platform_util, get_supported_sites, get_platform_config
+from ui_utils import RichConsoleWrapper
+
 class UltimateMediaDownloader:
     def __init__(self, output_dir=None, verbose=False):
         # Default to system Downloads folder if no output_dir specified
@@ -160,31 +171,9 @@ class UltimateMediaDownloader:
         # Initialize custom logger for counting warnings
         self.quiet_logger = QuietLogger()
         
-        # Platform-specific configurations
-        self.platform_configs = {
-            'youtube': {
-                'extractors': ['youtube', 'youtu.be'],
-                'formats': ['mp4', 'webm', 'mp3', 'wav', 'flac']
-            },
-            'spotify': {
-                'extractors': ['spotify'],
-                'formats': ['mp3', 'wav', 'flac'],
-                'note': 'Spotify tracks will be searched on YouTube for download'
-            },
-            'soundcloud': {
-                'extractors': ['soundcloud'],
-                'formats': ['mp3', 'wav', 'flac']
-            },
-            'apple_music': {
-                'extractors': ['apple', 'itunes'],
-                'formats': ['mp3', 'wav', 'flac'],
-                'note': 'Apple Music tracks will be searched on YouTube for download'
-            },
-            'generic': {
-                'extractors': ['generic'],
-                'formats': ['mp4', 'mp3', 'wav']
-            }
-        }
+        # Platform-specific configurations (import from platform_utils module)
+        from platform_utils import PLATFORM_CONFIGS
+        self.platform_configs = PLATFORM_CONFIGS.copy()
         
         # Enhanced yt-dlp configuration for maximum performance and quality
         self.default_ydl_opts = {
@@ -280,97 +269,70 @@ class UltimateMediaDownloader:
             pass
     
     def _get_browser_driver(self):
-        """Get or create browser driver for enhanced scraping"""
-        # Skip browser automation - it's unreliable across platforms
-        # Use enhanced HTTP scraping instead
-        return None
+        """Get or create browser driver for enhanced scraping
+        
+        Delegates to browser_utils module for implementation
+        """
+        return get_browser_driver()
     
     def _get_random_user_agent(self):
-        """Get a random user agent to avoid detection"""
-        import random
-        user_agents = [
-            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
-            'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
-            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Safari/605.1.15',
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:122.0) Gecko/20100101 Firefox/122.0',
-            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 Edg/130.0.0.0',
-        ]
-        return random.choice(user_agents)
+        """Get a random user agent to avoid detection
+        
+        Delegates to browser_utils module for implementation
+        """
+        return get_random_user_agent()
+    
+    def _format_duration(self, seconds):
+        """Format duration in seconds to human-readable format
+        
+        Delegates to browser_utils module for implementation.
+        
+        Args:
+            seconds (int/float): Duration in seconds
+            
+        Returns:
+            str: Formatted duration (e.g., "1:23:45" or "1:23")
+        """
+        return format_duration_util(seconds)
     
     def print_rich(self, message, style="bold cyan"):
-        """Print with Rich formatting if available, fallback to plain print"""
-        if RICH_AVAILABLE and self.console:
-            self.console.print(message, style=style)
-        else:
-            print(message)
+        """Print with Rich formatting if available, fallback to plain print
+        
+        Delegates to ui_utils module for implementation
+        """
+        wrapper = RichConsoleWrapper()
+        wrapper.print_rich(message, style)
     
     def print_panel(self, content, title=None, style="bold blue", border_style="cyan"):
-        """Print a beautiful panel with Rich if available"""
-        if RICH_AVAILABLE and self.console:
-            self.console.print(Panel(content, title=title, style=style, border_style=border_style, box=box.ROUNDED))
-        else:
-            if title:
-                print(f"\n{'='*60}")
-                print(f"  {title}")
-                print('='*60)
-            print(content)
-            print('='*60)
+        """Print a beautiful panel with Rich if available
+        
+        Delegates to ui_utils module for implementation
+        """
+        wrapper = RichConsoleWrapper()
+        wrapper.print_panel(content, title, style, border_style)
     
     def print_table(self, title, headers, rows, style="cyan"):
-        """Print a beautiful table with Rich if available"""
-        if RICH_AVAILABLE and self.console:
-            table = Table(title=title, box=box.ROUNDED, style=style)
-            for header in headers:
-                table.add_column(header, style="bold")
-            for row in rows:
-                table.add_row(*[str(cell) for cell in row])
-            self.console.print(table)
-        else:
-            print(f"\n{title}")
-            print("-" * 60)
-            print(" | ".join(headers))
-            print("-" * 60)
-            for row in rows:
-                print(" | ".join(str(cell) for cell in row))
-            print("-" * 60)
+        """Print a beautiful table with Rich if available
+        
+        Delegates to ui_utils module for implementation
+        """
+        wrapper = RichConsoleWrapper()
+        wrapper.print_table(title, headers, rows, style)
     
     def detect_platform(self, url):
-        """Detect the platform from URL"""
-        url_lower = url.lower()
+        """Detect the platform from URL
         
-        if any(domain in url_lower for domain in ['youtube.com', 'youtu.be', 'm.youtube.com']):
-            return 'youtube'
-        elif 'spotify.com' in url_lower:
-            return 'spotify'
-        elif 'soundcloud.com' in url_lower:
-            return 'soundcloud'
-        elif any(domain in url_lower for domain in ['music.apple.com', 'itunes.apple.com']):
-            return 'apple_music'
-        elif any(domain in url_lower for domain in ['tiktok.com', 'instagram.com', 'facebook.com', 'twitter.com', 'x.com']):
-            return 'social_media'
-        else:
-            return 'generic'
+        Delegates to platform_utils module for implementation
+        """
+        return detect_platform_util(url)
     
     def get_supported_sites(self):
-        """Get list of all supported sites"""
+        """Get list of all supported sites
+        
+        Delegates to platform_utils module for implementation
+        """
         try:
-            # Return a curated list of major supported platforms
-            # This avoids the internal API issue and provides cleaner output
-            major_sites = [
-                {'name': 'YouTube', 'description': 'YouTube videos, playlists, channels'},
-                {'name': 'Spotify', 'description': 'Spotify tracks, albums, playlists (via YouTube search)'},
-                {'name': 'SoundCloud', 'description': 'SoundCloud tracks and playlists'},
-                {'name': 'TikTok', 'description': 'TikTok videos'},
-                {'name': 'Instagram', 'description': 'Instagram posts, reels, IGTV'},
-                {'name': 'Twitter', 'description': 'Twitter videos'},
-                {'name': 'Facebook', 'description': 'Facebook videos'},
-                {'name': 'Vimeo', 'description': 'Vimeo videos'},
-                {'name': 'Twitch', 'description': 'Twitch VODs and clips'},
-                {'name': 'Apple Music', 'description': 'Apple Music tracks (via YouTube search)'},
-                {'name': 'Generic', 'description': 'many other video and audio platforms'}
-            ]
-            return major_sites
+            return get_supported_sites()
         except Exception as e:
             print(f"Error getting supported sites: {e}")
             return [{'name': 'Error', 'description': 'Could not load site list'}]
@@ -747,212 +709,6 @@ class UltimateMediaDownloader:
         
         print("✗ Could not find suitable playlist on YouTube")
         return None
-
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-    
-    
-        
-            
-            
-            
-                
-    
-            
-            
-                
-                
-                    
-                        
-                
-                
-                
-                    
-                    
-            
-            
-            
-            
-                
-                
-                
-                    
-                    
-                    
-                
-        
-    
-            
-            
-                
-                
-                    
-                    
-                        
-                
-            
-            
-            
-            
-            
-            
-                    
-                        
-                    
-            
-            
-    
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-    
-        
-        
-        
-        
-        
-        
-    
-            
-            
-            
-            
-            
-            
-    
-            
-            
-            
-            
-            
-            
-            
-            
-                    
-            
-            
-            
-            
-                
-                    
-            
-            
-    
-        
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-                            
-                    
-            
-            
-            
-    
-            
-            
-                
-            
-    
-            
-            
-            
-            
-                
-            
-    
-                
-                
-                
-                                        
-                                        
-                            
-                
-                        
-                                
-                        
-                
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                            
-                            
-                            
-                                
-                                
-                            
-                                    
-                        
-        
-        
-                
-        
-        
-                
-        
-                
-                                
-                                
-                        
-        
-                        
-                            
-                                
-                                
-                        
-                                
-                                    
-                                
-        
-                
-            
-            
-            
-        
-    
-        
-                
-                    
-    
-        
-            
-            
-        
-        
-            
-            
-            
-            
-            
-                
-    
     def _prompt_audio_format_quality(self):
         """Prompt user for audio format and quality preferences"""
         print(f"\n🎚️  Select audio quality:")
@@ -979,21 +735,6 @@ class UltimateMediaDownloader:
             except KeyboardInterrupt:
                 print("\n✗ Using default: MP3 320kbps")
                 return 'mp3', 'best'
-    
-        
-        
-        
-                
-                
-                
-                    
-                    
-                
-                
-                    
-        
-        
-    
     def cleanup(self):
         """Cleanup resources"""
         if self.browser_driver:
@@ -2033,12 +1774,10 @@ class UltimateMediaDownloader:
             
             # Show beautiful download start panel
             if RICH_AVAILABLE and self.console:
-                download_info = f"""
-[bold cyan]Platform:[/bold cyan] [yellow]{platform.upper()}[/yellow]
+                download_info = f"""[bold cyan]Platform:[/bold cyan] [yellow]{platform.upper()}[/yellow]
 [bold cyan]Quality:[/bold cyan] [green]{quality}[/green]
 [bold cyan]Mode:[/bold cyan] [magenta]{'Audio Only' if audio_only else 'Video + Audio'}[/magenta]
-[bold cyan]Format:[/bold cyan] [blue]{output_format if output_format else 'Auto'}[/blue]
-"""
+[bold cyan]Format:[/bold cyan] [blue]{output_format if output_format else 'Auto'}[/blue]"""
                 self.print_panel(download_info, title="▸ Starting Download", border_style="green")
             else:
                 print(f"◎ Detected platform: {platform.upper()}")
@@ -2425,8 +2164,8 @@ class UltimateMediaDownloader:
                     'add_chapters': True,
                 }])
             
-            # Add progress hook
-            ydl_opts['progress_hooks'] = [self._progress_hook]
+            # Add progress hook using new ProgressDisplay module
+            ydl_opts['progress_hooks'] = [ProgressDisplay.progress_hook]
             
             # Download
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -2538,26 +2277,20 @@ class UltimateMediaDownloader:
                 if not self.cancelled and download_succeeded:
                     # Show beautiful completion message
                     if RICH_AVAILABLE and self.console:
-                        completion_msg = """
-[bold green]✦ Download completed successfully! ✦[/bold green]
-
-[cyan]🎉 Your media is ready![/cyan]
-"""
+                        completion_msg = """[bold green]✦ Download completed successfully! ✦[/bold green]
+[cyan]🎉 Your media is ready![/cyan]"""
                         self.print_panel(completion_msg, title="🎊 SUCCESS", border_style="green")
                     else:
                         print("\n✓ Download completed successfully!")
                 elif not self.cancelled and not download_succeeded:
                     # Download failed
                     if RICH_AVAILABLE and self.console:
-                        error_msg = """
-[bold red]✗ Download failed![/bold red]
-
+                        error_msg = """[bold red]✗ Download failed![/bold red]
 [yellow]⚠  The video could not be downloaded. Possible reasons:[/yellow]
 [dim]• The URL is not supported or requires authentication
 • The video is private, deleted, or region-restricted
 • The site has anti-bot protection enabled
-• Network connection issues[/dim]
-"""
+• Network connection issues[/dim]"""
                         self.print_panel(error_msg, title="❌ DOWNLOAD FAILED", border_style="red")
                     else:
                         print("\n✗ Download failed!")
@@ -3371,285 +3104,27 @@ class UltimateMediaDownloader:
             print(f"⚠  Error extracting artist info: {e}")
             return None
     
-    def _progress_hook(self, d):
-        """Enhanced progress hook for download status with better formatting and Rich support"""
-        if d['status'] == 'downloading':
-            if 'total_bytes' in d and d['total_bytes']:
-                percent = d['downloaded_bytes'] / d['total_bytes'] * 100
-                speed = d.get('speed', 0)
-                eta = d.get('eta', 0)
-                
-                # Enhanced speed formatting
-                if speed:
-                    if speed > 1024 * 1024:  # MB/s
-                        speed_str = f"{speed/1024/1024:.1f}MB/s"
-                    else:  # KB/s
-                        speed_str = f"{speed/1024:.0f}KB/s"
-                else:
-                    speed_str = "---KB/s"
-                
-                # Enhanced ETA formatting
-                if eta:
-                    if eta > 3600:  # Hours
-                        eta_str = f"{eta//3600}h{(eta%3600)//60:02d}m"
-                    elif eta > 60:  # Minutes
-                        eta_str = f"{eta//60}m{eta%60:02d}s"
-                    else:  # Seconds
-                        eta_str = f"{eta:2.0f}s"
-                else:
-                    eta_str = "--:--"
-                
-                # Calculate downloaded size with better formatting
-                downloaded_mb = d['downloaded_bytes'] / 1024 / 1024
-                total_mb = d['total_bytes'] / 1024 / 1024
-                
-                # Create progress bar
-                bar_length = 30
-                filled_length = int(bar_length * percent / 100)
-                
-                # Create simple progress bar using plain text with ANSI colors
-                bar = '━' * filled_length + '░' * (bar_length - filled_length)
-                
-                # Use ANSI color codes for compatibility
-                # Yellow ▼, Green %, Cyan progress/sizes, Magenta speed, Blue ETA
-                progress_line = (
-                    f"\r\033[1;33m▼\033[0m "  # Yellow ▼
-                    f"\033[1;32m{percent:5.1f}%\033[0m "  # Green %
-                    f"[\033[36m{bar[:filled_length]}\033[0m"  # Cyan filled
-                    f"\033[2;37m{bar[filled_length:]}\033[0m] "  # Dim white empty
-                    f"\033[1;36m{downloaded_mb:6.1f}/{total_mb:6.1f}MB\033[0m "  # Cyan sizes
-                    f"| \033[1;35m{speed_str:>10}\033[0m "  # Magenta speed
-                    f"| ETA: \033[1;34m{eta_str}\033[0m"  # Blue ETA
-                )
-                
-                print(progress_line, end="", flush=True)
-            else:
-                # Fallback for unknown total size
-                downloaded_mb = d.get('downloaded_bytes', 0) / 1024 / 1024
-                speed = d.get('speed', 0)
-                speed_str = f"{speed/1024/1024:.1f}MB/s" if speed else "---KB/s"
-                
-                # Use ANSI colors
-                progress_line = (
-                    f"\r\033[1;33m▼\033[0m "  # Yellow ▼
-                    f"Downloaded: \033[1;36m{downloaded_mb:6.1f}MB\033[0m "  # Cyan size
-                    f"| \033[1;35m{speed_str:>10}\033[0m"  # Magenta speed
-                )
-                
-                print(progress_line, end="", flush=True)
-                
-        elif d['status'] == 'finished':
-            filename = os.path.basename(d['filename'])
-            # Clear the progress line completely before printing completion
-            print("\r" + " " * 120, end="\r", flush=True)
-            print(f"\033[1;32m✓\033[0m Download complete: \033[32m{filename}\033[0m")
-            
-        elif d['status'] == 'error':
-            error_msg = d.get('error', 'Unknown error')
-            print("\r" + " " * 120, end="\r", flush=True)
-            print(f"\033[1;31m✗\033[0m Download error: \033[31m{error_msg}\033[0m")
-            
-        elif d['status'] == 'processing':
-            # Processing happens quickly, no need to show
-            pass
-    
-    def _format_duration(self, seconds):
-        """Format duration in human readable format"""
-        if not seconds or seconds == 'Unknown':
-            return "Unknown"
-        
-        try:
-            seconds = int(seconds)
-            hours = seconds // 3600
-            minutes = (seconds % 3600) // 60
-            secs = seconds % 60
-            
-            if hours > 0:
-                return f"{hours}h {minutes}m {secs}s"
-            elif minutes > 0:
-                return f"{minutes}m {secs}s"
-            else:
-                return f"{secs}s"
-        except:
-            return "Unknown"
-    
     def _cleanup_intermediate_files(self, info, audio_only=False, output_format=None, keep_file=None):
-        """Clean up intermediate files (thumbnails, json, etc.) after download completes"""
-        try:
-            if not info:
-                return
-            
-            title = info.get('title', 'Unknown')
-            uploader = info.get('uploader', 'Unknown')
-            
-            # Determine the main output file extension
-            main_ext = output_format.lower() if output_format else ('mp3' if audio_only else 'mp4')
-            main_filename_base = f"{uploader} - {title}"
-            
-            # Get the actual file we want to keep (absolute path)
-            keep_file_path = Path(keep_file).resolve() if keep_file else None
-            
-            # List of intermediate file extensions to clean up
-            intermediate_extensions = [
-                '.jpg', '.jpeg', '.png', '.webp',  # Thumbnails
-                '.info.json',  # Info JSON
-                '.description',  # Description files
-                '.annotations.xml',  # Annotations
-                '.webm', '.m4a', '.part',  # Temp video/audio files
-            ]
-            
-            # If audio_only, also remove video files that might remain
-            if audio_only:
-                intermediate_extensions.extend(['.mp4', '.mkv', '.webm', '.avi', '.mov'])
-            
-            print("\n🧹 Cleaning up intermediate files...")
-            cleaned_count = 0
-            
-            # Search for and remove intermediate files
-            for file_path in self.output_dir.iterdir():
-                if file_path.is_file():
-                    file_name = file_path.name
-                    file_stem = file_path.stem
-                    
-                    # NEVER delete the file we want to keep
-                    if keep_file_path and file_path.resolve() == keep_file_path:
-                        continue
-                    
-                    # Check if this is an intermediate file related to our download
-                    for ext in intermediate_extensions:
-                        if file_name.endswith(ext):
-                            # Make sure it's related to this download
-                            if main_filename_base in file_name or title in file_name:
-                                try:
-                                    file_path.unlink()
-                                    cleaned_count += 1
-                                    print(f"  🗑️  Removed: {file_name}")
-                                except Exception as e:
-                                    print(f"  ⚠  Could not remove {file_name}: {e}")
-                                break
-            
-            if cleaned_count > 0:
-                print(f"✓ Cleaned up {cleaned_count} intermediate file(s)")
-            else:
-                print("✓ No intermediate files to clean")
-                
-        except Exception as e:
-            print(f"⚠  Cleanup error: {e}")
+        """Clean up intermediate files - uses FileManager module"""
+        FileManager.cleanup_intermediate_files(
+            self.output_dir, info, audio_only, output_format, keep_file
+        )
     
     def check_url_support(self, url, silent=False):
-        """Check if URL is supported"""
-        try:
-            platform = self.detect_platform(url)
-            if not silent:
-                print(f"◎ Detected platform: {platform.upper()}")
-
-            # Treat Apple Music and Spotify as supported (handled via search/metadata)
-            if platform in ("apple_music", "spotify"):
-                if not silent:
-                    print("✓ URL supported via enhanced handler (YouTube search + metadata)")
-                return True
-            
-            # Try to extract info to check if URL is supported
-            with yt_dlp.YoutubeDL({'quiet': True, 'no_warnings': True}) as ydl:
-                try:
-                    # Try to extract basic info without downloading
-                    info = ydl.extract_info(url, download=False, process=False)
-                    if info:
-                        extractor_name = info.get('extractor', 'Unknown')
-                        print(f"✓ URL supported by extractor: {extractor_name}")
-                        
-                        # Show basic info if available
-                        if info.get('title'):
-                            print(f"▶ Title: {info.get('title')}")
-                        if info.get('uploader'):
-                            print(f"◈ Uploader: {info.get('uploader')}")
-                        
-                        # Show platform-specific info
-                        if platform in self.platform_configs:
-                            config = self.platform_configs[platform]
-                            print(f"≡ Supported formats: {', '.join(config['formats'])}")
-                            if 'note' in config:
-                                print(f"▭ Note: {config['note']}")
-                        
-                        return True
-                    else:
-                        print("✗ URL not supported - no info extracted")
-                        return False
-                        
-                except yt_dlp.DownloadError as e:
-                    if "Unsupported URL" in str(e) or "No suitable extractor" in str(e):
-                        print("✗ URL not supported by any extractor")
-                        print(f"→ Tip: Try checking if the URL is correct and accessible")
-                        return False
-                    else:
-                        # Other errors might still mean the URL is supported
-                        print(f"⚠  URL might be supported but encountered error: {e}")
-                        return True
-                        
-        except Exception as e:
-            print(f"✗ Error checking URL support: {e}")
-            print("→ Tip: The URL might still work, try downloading it directly")
-            return False
+        """Check if URL is supported - delegates to URLValidator module"""
+        url_validator = URLValidator(self.platform_configs)
+        return url_validator.check_url_support(url, self.detect_platform, silent)
     
     def list_supported_platforms(self):
-        """List all supported platforms with details"""
-        if RICH_AVAILABLE and self.console:
-            # Create beautiful table with Rich
-            table = Table(
-                title="🌍 Supported Platforms",
-                box=box.ROUNDED,
-                border_style="cyan",
-                header_style="bold magenta"
-            )
-            
-            table.add_column("Platform", style="bold yellow", no_wrap=True)
-            table.add_column("Domains", style="cyan")
-            table.add_column("Content Types", style="green")
-            
-            major_platforms = [
-                ("▶ YouTube", "youtube.com, youtu.be", "Videos, playlists, live streams"),
-                ("♫ Spotify", "spotify.com", "Tracks, albums, playlists"),
-                ("♫ SoundCloud", "soundcloud.com", "Tracks, playlists, uploads"),
-                ("♪ Apple Music", "music.apple.com", "Tracks, albums"),
-                ("📸 Instagram", "instagram.com", "Videos, reels, IGTV"),
-                ("▭ TikTok", "tiktok.com", "Videos, user content"),
-                ("◐ Twitter/X", "twitter.com, x.com", "Video tweets"),
-                ("📘 Facebook", "facebook.com", "Videos, live streams"),
-                ("▶ Vimeo", "vimeo.com", "Videos, private content"),
-                ("▧ Twitch", "twitch.tv", "VODs, clips, streams"),
-            ]
-            
-            for platform, domains, content in major_platforms:
-                table.add_row(platform, domains, content)
-            
-            self.console.print(table)
-            self.console.print(f"\n[bold green]▤ Total supported sites: {len(self.get_supported_sites())} platforms[/bold green]")
-            self.console.print("[yellow]→ Use --check-support <URL> to verify URL compatibility[/yellow]")
-        else:
-            print("\n🌍 SUPPORTED PLATFORMS")
-            print("=" * 60)
-            
-            major_platforms = [
-                ("YouTube", "youtube.com, youtu.be", "Videos, playlists, live streams"),
-                ("Spotify", "spotify.com", "Tracks, albums, playlists (via YouTube search)"),
-                ("SoundCloud", "soundcloud.com", "Tracks, playlists, user uploads"),
-                ("Apple Music", "music.apple.com", "Tracks, albums (via YouTube search)"),
-                ("Instagram", "instagram.com", "Videos, reels, IGTV"),
-                ("TikTok", "tiktok.com", "Videos, user uploads"),
-                ("Twitter/X", "twitter.com, x.com", "Videos from tweets"),
-                ("Facebook", "facebook.com", "Videos, live streams"),
-                ("Vimeo", "vimeo.com", "Videos, private videos"),
-                ("Twitch", "twitch.tv", "VODs, clips, live streams"),
-            ]
-            
-            for name, domains, content in major_platforms:
-                print(f"▶ {name:12} | {domains:25} | {content}")
-            
-            print(f"\n▤ Total supported sites: {len(self.get_supported_sites())} platforms")
-            print("→ Use --check-support <URL> to verify if a specific URL is supported")
+        """List all supported platforms - delegates to PlatformInfo module"""
+        platform_info = PlatformInfo(self.console if RICH_AVAILABLE else None)
+        total_sites = len(self.get_supported_sites())
+        platform_info.display_platforms_rich(total_sites) if RICH_AVAILABLE else platform_info.display_platforms_plain(total_sites)
 
 def interactive_mode():
     """Interactive mode with modern UI and professional design"""
+    from ui_display import show_help_menu
+    
     downloader = UltimateMediaDownloader()
     ui = ModernUI()
     
@@ -3749,244 +3224,13 @@ def interactive_mode():
             ui.error_message(f"An error occurred: {str(e)}")
             ui.warning_message("Please try again with a different URL")
 
-def show_help_menu(ui):
-    """Display help menu with modern styling"""
-    if ui.console and RICH_AVAILABLE:
-        help_table = Table(title="[bold cyan]▭ COMMAND REFERENCE[/bold cyan]", 
-                          box=box.ROUNDED, border_style="cyan", show_header=True)
-        
-        help_table.add_column("Command", style="yellow", justify="left")
-        help_table.add_column("Aliases", style="dim", justify="left")
-        help_table.add_column("Description", style="white", justify="left")
-        
-        help_table.add_row("help", "h", "Show this help menu")
-        help_table.add_row("platforms", "p", "List all supported platforms")
-        help_table.add_row("clear", "cls", "Clear the screen")
-        help_table.add_row("quit", "exit, q", "Exit the application")
-        help_table.add_row("[URL]", "-", "Paste any media URL to download")
-        
-        ui.console.print()
-        ui.console.print(help_table)
-        ui.console.print()
-    else:
-        print("\n" + "=" * 70)
-        print("▭ COMMAND REFERENCE")
-        print("=" * 70)
-        print("  help, h          - Show this help menu")
-        print("  platforms, p     - List all supported platforms")
-        print("  clear, cls       - Clear the screen")
-        print("  quit, exit, q    - Exit the application")
-        print("  [URL]            - Paste any media URL to download")
-        print("=" * 70 + "\n")
 
-def create_banner():
-    """Create a beautiful banner using Rich"""
-    ui = ModernUI()
-    
-    if RICH_AVAILABLE and ui.console:
-        # Create feature table
-        feature_grid = Table.grid(padding=(0, 2))
-        feature_grid.add_column(justify="center", style="cyan")
-        feature_grid.add_column(justify="center", style="magenta")
-        feature_grid.add_column(justify="center", style="green")
-        feature_grid.add_column(justify="center", style="yellow")
-        
-        feature_grid.add_row("▶ Videos", "♪ Music", "▭ Social", "⚡ Fast")
-        
-        panel = Panel(
-            Align.center(feature_grid),
-            title="[bold white]▶ ULTIMATE MEDIA DOWNLOADER[/bold white]",
-            subtitle="[dim]Professional Edition[/dim]",
-            border_style="bright_cyan",
-            box=box.DOUBLE,
-            padding=(1, 2)
-        )
-        
-        ui.console.print(panel)
-    else:
-        print("=" * 70)
-        print("▶ ULTIMATE MEDIA DOWNLOADER")
-        print("=" * 70)
 
 def main():
-    parser = argparse.ArgumentParser(
-        description=f"{Icons.get('video')} Ultimate Multi-Platform Media Downloader\n\nA powerful, feature-rich downloader supporting many platforms including YouTube, Spotify, Instagram, TikTok, SoundCloud, Apple Music, and more!",
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog=f"""
-{'═'*79}
-{Icons.get('book')} USAGE EXAMPLES
-{'═'*79}
-
-{Icons.get('target')} BASIC USAGE:
-  • Interactive Mode (Recommended for Beginners):
-    python ultimate_downloader.py
-
-  • Download Single Video/Audio:
-    python ultimate_downloader.py "https://www.youtube.com/watch?v=VIDEO_ID"
-
-  • Get Media Information:
-    python ultimate_downloader.py "URL" --info --show-formats
-
-{Icons.get('audio')} AUDIO DOWNLOADS:
-  • High-Quality MP3 (320kbps):
-    python ultimate_downloader.py "URL" --audio-only --format mp3
-
-  • Lossless FLAC Audio:
-    python ultimate_downloader.py "URL" --audio-only --format flac
-
-  • Download Spotify Track (via YouTube Search):
-    python ultimate_downloader.py "https://open.spotify.com/track/TRACK_ID" \\
-        --audio-only --format mp3
-
-{Icons.get('video')} VIDEO DOWNLOADS:
-  • Specific Quality:
-    python ultimate_downloader.py "URL" --quality 1080p
-
-  • Best Available Quality:
-    python ultimate_downloader.py "URL" --quality best --format mp4
-
-  • Custom Format (Advanced):
-    python ultimate_downloader.py "URL" \\
-        --custom-format "bestvideo[height<=720]+bestaudio[ext=m4a]"
-
-{Icons.get('playlist')} PLAYLIST DOWNLOADS:
-  • Download Entire Playlist (Default for playlist URLs):
-    python ultimate_downloader.py "PLAYLIST_URL"
-
-  • Download Only Single Video from Playlist:
-    python ultimate_downloader.py "PLAYLIST_URL" --no-playlist
-
-  • Interactive Playlist Download:
-    python ultimate_downloader.py "PLAYLIST_URL" --playlist
-
-  • Download First 10 Videos (Non-Interactive):
-    python ultimate_downloader.py "PLAYLIST_URL" --playlist \\
-        --max-downloads 10 --no-interactive
-
-  • Download Specific Range:
-    python ultimate_downloader.py "PLAYLIST_URL" --playlist \\
-        --start-index 5 --max-downloads 15
-
-{Icons.get('package')} BATCH DOWNLOADS:
-  • Download Multiple URLs from File:
-    python ultimate_downloader.py --batch-file urls.txt --audio-only
-
-  • Optimized Parallel Batch Download:
-    python ultimate_downloader.py --batch-file urls.txt \\
-        --optimized-batch --max-concurrent 5
-
-{Icons.get('art')} ADVANCED FEATURES:
-  • Embed Metadata & Thumbnails:
-    python ultimate_downloader.py "URL" --audio-only --format mp3 \\
-        --embed-metadata --embed-thumbnail
-
-  • Download with Custom Output Directory:
-    python ultimate_downloader.py "URL" --output /path/to/downloads
-
-{'═'*79}
-{Icons.get('world')} SUPPORTED PLATFORMS
-{'═'*79}
-
-  {Icons.get('completed')} YouTube (Videos, Playlists, Live Streams)
-  {Icons.get('completed')} Spotify (Tracks, Albums, Playlists - via YouTube search)
-  {Icons.get('completed')} Apple Music (Tracks, Albums - via YouTube search)
-  {Icons.get('completed')} SoundCloud (Tracks, Playlists, User Uploads)
-  {Icons.get('completed')} Instagram (Videos, Reels, IGTV)
-  {Icons.get('completed')} TikTok (Videos, User Content)
-  {Icons.get('completed')} Twitter/X (Videos from Tweets)
-  {Icons.get('completed')} Facebook (Videos, Live Streams)
-  {Icons.get('completed')} Vimeo (Videos, Private Content)
-  {Icons.get('completed')} Twitch (VODs, Clips, Live Streams)
-  {Icons.get('completed')} And many more platforms!
-
-  Use --list-platforms to see all supported sites
-  Use --check-support <URL> to verify URL compatibility
-
-{'═'*79}
-{Icons.get('tip')} TIPS & BEST PRACTICES
-{'═'*79}
-
-  • For best audio quality, use: --audio-only --format flac
-  • For universal compatibility, use: --format mp4 (video) or --format mp3 (audio)
-  • Use interactive mode for guided downloading experience
-  • Batch downloads support parallel processing with --optimized-batch
-  • Always check available formats with --show-formats before downloading
-
-{'═'*79}
-{Icons.get('book')} For more information, visit: https://github.com/yt-dlp/yt-dlp
-Report issues: Create an issue on the GitHub repository
-{'═'*79}
-        """
-    )
+    from cli_args import parse_arguments
+    from ui_display import show_help_menu
     
-    parser.add_argument('url', nargs='?', help='Media URL to download (if not provided, starts interactive mode)')
-    parser.add_argument('-q', '--quality', default='best',
-                       choices=['best', 'worst', '4k', '2160p', '1440p', '1080p', '720p', '480p', '360p'],
-                       help='Video quality (default: best)')
-    parser.add_argument('-a', '--audio-only', action='store_true',
-                       help='Download audio only')
-    parser.add_argument('-f', '--format', help='Output format (mp4, mp3, mkv, wav, flac, etc.)')
-    parser.add_argument('-o', '--output', default=None,
-                       help='Output directory (default: ~/Downloads/UltimateDownloader)')
-    parser.add_argument('-p', '--playlist', action='store_true',
-                       help='Download playlist (with interactive options by default)')
-    parser.add_argument('--no-playlist', action='store_true',
-                       help='Download only single video from playlist URL')
-    parser.add_argument('-m', '--max-downloads', type=int,
-                       help='Maximum number of videos to download from playlist')
-    parser.add_argument('-s', '--start-index', type=int, default=1,
-                       help='Start index for playlist download (default: 1)')
-    parser.add_argument('-i', '--info', action='store_true',
-                       help='Show media info without downloading')
-    parser.add_argument('--show-formats', action='store_true',
-                       help='Show all available formats and qualities')
-    parser.add_argument('--custom-format', help='Custom format selector for advanced users')
-    parser.add_argument('--timeout', type=int, default=60,
-                       help='Timeout for operations in seconds (default: 60)')
-    parser.add_argument('--check-support', action='store_true',
-                       help='Check if URL is supported')
-    parser.add_argument('--list-platforms', action='store_true',
-                       help='List all supported platforms')
-    parser.add_argument('--interactive', action='store_true',
-                       help='Force interactive mode even when URL is provided')
-    parser.add_argument('--no-interactive', action='store_true',
-                       help='Disable interactive prompts (use provided args only)')
-    
-    # Enhanced audio quality options
-    parser.add_argument('--audio-format', 
-                       choices=['mp3', 'flac', 'opus', 'm4a', 'aac', 'wav'],
-                       help='Audio format (auto-selects best quality for format)')
-    parser.add_argument('--audio-quality', 
-                       choices=['best', 'high', 'medium', 'low'],
-                       default='best',
-                       help='Audio quality level (default: best)')
-    parser.add_argument('--audio-language', '--audio-lang',
-                       help='Preferred audio language code (e.g., en, es, fr) for videos with multiple audio tracks')
-    
-    # Performance and metadata options
-    parser.add_argument('--max-concurrent', type=int, default=3,
-                       help='Maximum concurrent downloads for batch operations (default: 3)')
-    parser.add_argument('--embed-metadata', action='store_true',
-                       help='Embed metadata and cover art in audio files')
-    parser.add_argument('--embed-thumbnail', action='store_true',
-                       help='Embed thumbnail/cover art in audio files')
-    parser.add_argument('--prefer-artist-art', action='store_true',
-                       help='Try to get artist cover art instead of video thumbnail')
-    
-    # Batch download options
-    parser.add_argument('--batch-file', 
-                       help='File containing URLs to download (one per line)')
-    parser.add_argument('--optimized-batch', action='store_true',
-                       help='Use optimized parallel batch downloading')
-    
-    # Version and debug arguments
-    parser.add_argument('-v', '--version', action='version',
-                       version=f'Ultimate Media Downloader v{__version__}',
-                       help='Show program version and exit')
-    parser.add_argument('--verbose', action='store_true',
-                       help='Enable verbose output for debugging')
-    
-    args = parser.parse_args()
+    args = parse_arguments()
     
     # Create downloader instance
     downloader = UltimateMediaDownloader(args.output, verbose=args.verbose)

@@ -335,7 +335,7 @@ if %errorlevel% equ 0 (
 )
 
 call :print_step "Testing imports..."
-python -c "import yt_dlp; import requests; import rich; from generic_downloader import GenericSiteDownloader; print('All imports successful')" >nul 2>&1
+python -c "import yt_dlp; import requests; import rich; from generic_downloader import GenericSiteDownloader; from cli_args import create_argument_parser; from ui_components import ModernUI, Icons; from ui_display import display_info; from logger import QuietLogger; from utils import sanitize_filename; from spotify_handler import SpotifyHandler; from apple_music_handler import AppleMusicHandler; from youtube_scorer import YouTubeScorer; print('All imports successful')" >nul 2>&1
 if %errorlevel% equ 0 (
     call :print_success "All imports working"
 ) else (
@@ -397,6 +397,37 @@ echo   * User Guide:           docs\USER_GUIDE.md
 echo   * API Reference:        docs\API_REFERENCE.md
 echo   * Complete Index:       docs\INDEX.md
 echo   * Troubleshooting:      docs\USER_GUIDE.md#troubleshooting
+echo.
+echo ========================================================================
+echo                       INSTALLED MODULES                                
+echo ========================================================================
+echo.
+echo   Core Engine:
+echo     * ultimate_downloader   - Main media downloader engine
+echo     * cli_args             - Command-line argument parser
+echo.
+echo   Utility Modules:
+echo     * browser_utils        - Browser automation and user agent management
+echo     * platform_utils       - Platform detection and configuration
+echo     * ui_utils             - Rich console output utilities
+echo     * logger               - Advanced logging system
+echo     * utils                - General utility functions
+echo.
+echo   UI and Display:
+echo     * ui_components        - UI component library
+echo     * ui_display           - Display and formatting utilities
+echo     * progress_display     - Progress bar management
+echo.
+echo   Platform Handlers:
+echo     * spotify_handler      - Spotify track/playlist integration
+echo     * apple_music_handler  - Apple Music support
+echo     * generic_downloader   - Generic website downloader
+echo.
+echo   Analysis Tools:
+echo     * youtube_scorer       - YouTube search result ranking
+echo     * file_manager         - File organization utilities
+echo     * url_validator        - URL validation and parsing
+echo     * platform_info        - Platform information utilities
 echo.
 echo ========================================================================
 echo                      INSTALLATION SUMMARY                              
