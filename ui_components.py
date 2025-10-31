@@ -124,11 +124,7 @@ class ModernUI:
     
     def create_ascii_logo(self):
         """Create ASCII art logo"""
-        if PYFIGLET_AVAILABLE:
-            fig = Figlet(font='slant', width=80)
-            return fig.renderText('DOWNLOADER')
-        else:
-            return """
+        return """
 ██████╗  ██████╗ ██╗    ██╗███╗   ██╗██╗      ██████╗  █████╗ ██████╗ ███████╗██████╗ 
 ██╔══██╗██╔═══██╗██║    ██║████╗  ██║██║     ██╔═══██╗██╔══██╗██╔══██╗██╔════╝██╔══██╗
 ██║  ██║██║   ██║██║ █╗ ██║██╔██╗ ██║██║     ██║   ██║███████║██║  ██║█████╗  ██████╔╝
