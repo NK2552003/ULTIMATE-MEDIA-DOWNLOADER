@@ -1,10 +1,8 @@
 # Installation Guide - Ultimate Media Downloader
 
-> **New!** For comprehensive installation instructions, see [INSTALLATION_GUIDE.md](INSTALLATION_GUIDE.md)
+## Quick Install (Recommended)
 
-## Quick Installation (Recommended)
-
-Install from GitHub in just 2 commands:
+Install globally in just **2 commands** - no virtual environment needed!
 
 ```bash
 git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
@@ -19,151 +17,221 @@ cd ULTIMATE-MEDIA-DOWNLOADER
 scripts\install.bat
 ```
 
-This will:
-- Install the package with all dependencies
-- Create the `umd` command for easy access
-- Set up the downloads directory at `~/Downloads/UltimateDownloader`
-- No virtual environment needed!
-- Works globally from any directory
+**What happens:**
+- ✅ Checks Python 3.9+ and FFmpeg
+- ✅ Installs with pipx (global access)
+- ✅ Creates `umd` command everywhere
+- ✅ Sets up `~/Downloads/UltimateDownloader/`
+- ⏱️ Takes 2-5 minutes
 
-## Usage After Installation
+## Prerequisites
 
-Once installed, you can use the downloader from anywhere with just one word:
+### Required Software
+- **Python 3.9+** - [Download here](https://www.python.org/downloads/)
+- **Git** - [Download here](https://git-scm.com/downloads)
+- **FFmpeg** (auto-installed if missing)
+
+Check Python version:
+```bash
+python3 --version
+```
+
+### System Requirements
+- **OS**: Linux, macOS 10.12+, Windows 10+
+- **RAM**: 2GB minimum, 4GB recommended
+- **Storage**: 100MB for install + space for downloads
+
+## Installation Methods
+
+### Method 1: Quick Install (Recommended)
+
+**macOS/Linux:**
+```bash
+git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+cd ULTIMATE-MEDIA-DOWNLOADER
+./scripts/install.sh
+```
+
+**Windows:**
+```batch
+git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+cd ULTIMATE-MEDIA-DOWNLOADER
+scripts\install.bat
+```
+
+### Method 2: Using pipx (Manual)
 
 ```bash
-umd <URL>
+# Install pipx if needed
+python3 -m pip install --user pipx
+
+# Clone and install
+git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+cd ULTIMATE-MEDIA-DOWNLOADER
+pipx install -e .
 ```
 
-### Examples:
+### Method 3: Using pip
 
 ```bash
-# Interactive mode (easiest)
-umd
-
-# Download a video
-umd "https://www.youtube.com/watch?v=VIDEO_ID"
-
-# Download audio only
-umd "https://www.youtube.com/watch?v=VIDEO_ID" --audio-only
-
-# Download with specific quality
-umd "https://www.youtube.com/watch?v=VIDEO_ID" --quality 1080p
-
-# Download audio in MP3 format
-umd "https://www.youtube.com/watch?v=VIDEO_ID" --audio-only --format mp3
-
-# Download playlist
-umd "https://www.youtube.com/playlist?list=PLAYLIST_ID"
-
-# Show all options
-umd --help
+git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+cd ULTIMATE-MEDIA-DOWNLOADER
+pip3 install -e .
 ```
 
-## Download Location
-
-All files will be automatically downloaded to:
-```
-~/Downloads/UltimateDownloader/
-```
-
-You can specify a different location with the `--output` flag:
-```bash
-umd <URL> --output /path/to/your/folder
-```
-
-## Homebrew Installation (Alternative - macOS)
-
-For Homebrew users, you can create a local tap:
+### Method 4: Virtual Environment
 
 ```bash
-# Create a local Homebrew tap
-mkdir -p $(brew --repository)/Library/Taps/homebrew/homebrew-local
-cp ultimate-downloader.rb $(brew --repository)/Library/Taps/homebrew/homebrew-local/
-
-# Install via Homebrew
-brew install ultimate-downloader
+git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+cd ULTIMATE-MEDIA-DOWNLOADER
+python3 -m venv venv
+source venv/bin/activate  # Linux/macOS
+# or: venv\Scripts\activate  # Windows
+pip install -r requirements.txt
+python ultimate_downloader.py <URL>
 ```
 
-Then use it with:
+## Platform-Specific Setup
+
+### macOS
+
+**Prerequisites:**
 ```bash
-umd <URL>
+brew install python@3.11 ffmpeg pipx
 ```
 
-## Uninstallation
-
-To uninstall the package:
-
+**Install:**
 ```bash
-./uninstall.sh
+git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+cd ULTIMATE-MEDIA-DOWNLOADER
+./scripts/install.sh
 ```
 
-Or manually:
+**Add to PATH if needed:**
 ```bash
-pip3 uninstall ultimate-downloader
-```
-
-Your downloaded files will NOT be deleted.
-
-## Requirements
-
-- Python 3.9 or higher
-- FFmpeg (for audio conversion)
-  - macOS: `brew install ffmpeg`
-  - Linux: `sudo apt install ffmpeg`
-  - Windows: Download from https://ffmpeg.org/
-
-## Troubleshooting
-
-### Command not found: umd
-
-If you get "command not found" after installation, add Python's bin directory to your PATH:
-
-**macOS:**
-```bash
-export PATH="$PATH:$HOME/Library/Python/3.x/bin"
-echo 'export PATH="$PATH:$HOME/Library/Python/3.x/bin"' >> ~/.zshrc
+echo 'export PATH="$PATH:$HOME/Library/Python/3.11/bin"' >> ~/.zshrc
 source ~/.zshrc
 ```
 
-**Linux:**
+### Linux (Ubuntu/Debian)
+
+**Prerequisites:**
 ```bash
-export PATH="$PATH:$HOME/.local/bin"
+sudo apt update
+sudo apt install -y python3 python3-pip ffmpeg git
+```
+
+**Install:**
+```bash
+git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+cd ULTIMATE-MEDIA-DOWNLOADER
+./scripts/install.sh
+```
+
+**Add to PATH if needed:**
+```bash
 echo 'export PATH="$PATH:$HOME/.local/bin"' >> ~/.bashrc
 source ~/.bashrc
 ```
 
-### Permission denied
+### Windows
 
-If you get permission errors:
-```bash
-chmod +x install.sh
-./install.sh
+**Prerequisites:**
+1. Install Python from [python.org](https://www.python.org/downloads/) (check "Add to PATH")
+2. Install Git from [git-scm.com](https://git-scm.com/downloads)
+3. Install FFmpeg:
+   - `choco install ffmpeg` (Chocolatey)
+   - Or download from [ffmpeg.org](https://ffmpeg.org/download.html)
+
+**Install:**
+```batch
+git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+cd ULTIMATE-MEDIA-DOWNLOADER
+scripts\install.bat
 ```
 
-### FFmpeg not found
+## Verification
 
-Install FFmpeg:
-- macOS: `brew install ffmpeg`
-- Ubuntu/Debian: `sudo apt install ffmpeg`
-- CentOS/RHEL: `sudo yum install ffmpeg`
+After installation, verify everything works:
 
-## Features
+```bash
+# Check command is available
+umd --version
 
-- **1000+ Platforms**: YouTube, Spotify, Instagram, TikTok, SoundCloud, and more
-- **No Virtual Environment**: Runs directly after installation
-- **Single Command**: Just type `umd` from anywhere
-- **Automatic Downloads Folder**: Saves to `~/Downloads/UltimateDownloader`
-- **High Quality**: Download videos up to 4K, audio up to FLAC
-- **Batch Downloads**: Download multiple URLs at once
-- **Metadata Embedding**: Automatic metadata and thumbnail embedding
-- **Interactive Mode**: Guided experience for beginners
+# Show help
+umd --help
+
+# Test download (optional)
+umd "https://www.youtube.com/watch?v=dQw4w9WgXcQ" --info
+```
+
+## Download Location
+
+All downloads are automatically saved to:
+```
+~/Downloads/UltimateDownloader/
+```
+
+## Troubleshooting
+
+### "Command not found: umd"
+**Solution:** Restart terminal or add to PATH
+
+**macOS/Linux:**
+```bash
+source ~/.zshrc  # or ~/.bashrc
+```
+
+**Windows:** Restart Command Prompt
+
+### "FFmpeg not found"
+**macOS:**
+```bash
+brew install ffmpeg
+```
+
+**Linux:**
+```bash
+sudo apt install ffmpeg
+```
+
+**Windows:**
+```batch
+choco install ffmpeg
+```
+
+### Permission denied
+**Linux/macOS:**
+```bash
+chmod +x scripts/install.sh
+./scripts/install.sh
+```
+
+### Python version too old
+Install Python 3.9+ from [python.org](https://www.python.org/downloads/)
+
+## Uninstallation
+
+To uninstall:
+```bash
+./scripts/uninstall.sh
+```
+
+Or manually:
+```bash
+pipx uninstall ultimate-downloader
+# or
+pip3 uninstall ultimate-downloader
+```
+
+## Next Steps
+
+After installation:
+- Read [USAGE.md](USAGE.md) for examples
+- Run `umd --help` for all options
+- Try `umd` for interactive mode
 
 ## Support
 
-For issues, feature requests, or questions:
-- GitHub: https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER
-- Documentation: See `docs/` folder
-
-## License
-
-MIT License - see LICENSE file for details
+- **Issues**: [GitHub Issues](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/discussions)
