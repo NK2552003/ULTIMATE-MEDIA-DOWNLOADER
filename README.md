@@ -1,3 +1,7 @@
+<div style="background-color: #ffff99; padding: 10px; border: 1px solid #ffcc00; margin-bottom: 20px;">
+<strong>⚠️ Disclaimer:</strong> This tool is for personal use only. Users are responsible for complying with copyright laws and terms of service of the platforms they download from. The developers assume no liability for misuse of this software.
+</div>
+
 <div align="center">
     <h1>Ultimate Media Downloader</h1>
     <b>Download media from 1000+ platforms with one command: <code>umd</code></b></br></br>
