@@ -412,6 +412,8 @@ pytest
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+For information about third-party licenses used in this project, see [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).
+
 ---
 
 ## ️ Disclaimer
