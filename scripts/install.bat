@@ -32,7 +32,7 @@ echo [OK] Python %PYTHON_VERSION% found
 echo.
 echo [2/5] Checking FFmpeg installation...
 ffmpeg -version >nul 2>&1
-if errorlevel 1 (
+if %errorlevel% neq 0 (
     echo WARNING: FFmpeg is not installed.
     echo FFmpeg is required for audio conversion and video processing.
     echo.
@@ -52,17 +52,17 @@ echo [3/5] Installing Python package...
 
 REM Check if pipx is available
 where pipx >nul 2>&1
-if not errorlevel 1 (
+if %errorlevel% equ 0 (
     echo Using pipx for installation...
     pipx install -e . --force
-    if errorlevel 1 (
+    if %errorlevel% neq 0 (
         echo ERROR: pipx installation failed
         exit /b 1
     )
 ) else (
     echo pipx not found. Installing with pip...
     python -m pip install --user -e .
-    if errorlevel 1 (
+    if %errorlevel% neq 0 (
         echo ERROR: Failed to install package
         echo.
         echo You can install pipx first for better isolation:
@@ -80,24 +80,34 @@ echo [OK] Package installed successfully
 echo.
 echo [4/5] Verifying installation...
 
-REM Check if umd command is available
+REM Try to detect the Python user scripts directory and create a launcher for 'umd'
+for /f "delims=" %%S in ('python -c "import sysconfig;print(sysconfig.get_path('scripts'))"') do set "SCRIPTS_DIR=%%S"
+if defined SCRIPTS_DIR (
+    echo Detected Python scripts directory: %SCRIPTS_DIR%
+    if exist "%SCRIPTS_DIR%" (
+        echo Creating launcher 'umd.cmd' in %SCRIPTS_DIR%...
+        > "%SCRIPTS_DIR%\umd.cmd" echo @echo off
+        >> "%SCRIPTS_DIR%\umd.cmd" echo python -m ultimate_downloader %*
+        echo [OK] Created launcher: %SCRIPTS_DIR%\umd.cmd
+    ) else (
+        echo Note: Python scripts directory does not exist: %SCRIPTS_DIR%
+    )
+) else (
+    echo Could not detect Python scripts directory automatically.
+)
+
+REM Check if umd command is available in PATH
 where umd >nul 2>&1
-if not errorlevel 1 (
+if %errorlevel% equ 0 (
     echo [OK] 'umd' command is available
 ) else (
     echo WARNING: 'umd' command not found in PATH
     echo.
-    echo You may need to add Python Scripts to your PATH:
+    echo You may need to add the Python Scripts directory to your PATH.
+    echo To find the correct directory, run:
+    echo   python -c "import sysconfig;print(sysconfig.get_path('scripts'))"
+    echo Then add that path to your PATH environment variable and restart your terminal.
     echo.
-    echo 1. Open System Properties ^> Environment Variables
-    echo 2. Add these paths to your PATH variable:
-    echo    %%APPDATA%%\Python\Python311\Scripts
-    echo    %%USERPROFILE%%\AppData\Roaming\Python\Python311\Scripts
-    echo.
-    echo Or run this in PowerShell (as Administrator):
-    echo    [Environment]::SetEnvironmentVariable("Path", $env:Path + ";%%APPDATA%%\Python\Python311\Scripts", "User")
-    echo.
-    echo After updating PATH, restart your terminal.
 )
 
 echo.
