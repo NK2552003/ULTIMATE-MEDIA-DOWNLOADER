@@ -20,7 +20,7 @@ This software is provided for educational and personal use only. Users are respo
 
 ## Overview
 
-Ultimate Media Downloader is a professional-grade, open-source media downloading tool supporting 100+ platforms (YouTube, Spotify, SoundCloud, Instagram, TikTok, and more). Built with Python, it features a beautiful Rich CLI interface and enterprise-level capabilities with consumer-friendly simplicity.
+Ultimate Media Downloader is a professional-grade, open-source media downloading tool supporting 100+ platforms (YouTube, Spotify, SoundCloud, Instagram, TikTok,Apple Music and more). Built with Python, it features a beautiful Rich CLI interface and enterprise-level capabilities with consumer-friendly simplicity.
 
 ### Why Choose Ultimate Media Downloader?
 
