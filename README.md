@@ -27,7 +27,7 @@ Ultimate Media Downloader is a professional-grade, open-source media downloading
 | Feature                | Description |
 |------------------------|-------------|
 | **One Command**        | Install once, use <code>umd</code> from anywhere |
-| **100+ Platforms**    | YouTube, Spotify, Instagram, TikTok, SoundCloud, and more |
+| **100+ Platforms**    | YouTube, Spotify,Apple Music, Instagram, TikTok, SoundCloud, and more |
 | **No Virtual Env**     | Clean installation with <code>pipx</code> |
 | **Auto Organization**  | Downloads saved to <code>~/Downloads/UltimateDownloader</code> |
 | **Beautiful UI**       | Modern CLI with progress bars and rich formatting |
