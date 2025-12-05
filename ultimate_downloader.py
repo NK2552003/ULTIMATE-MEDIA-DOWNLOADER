@@ -653,7 +653,7 @@ class UltimateMediaDownloader:
             try:
                 # Search for the track on YouTube
                 print(f"⌕ Searching YouTube for: {track_str}")
-                youtube_url = self._search_youtube_for_music(track_str)
+                youtube_url = self._search_youtube(track_str)
                 
                 if youtube_url:
                     print(f"✓ Found: {youtube_url}")

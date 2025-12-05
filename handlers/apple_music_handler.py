@@ -204,7 +204,7 @@ class AppleMusicHandler:
             print(f"⌕ Searching YouTube for: {scraped_info}")
             
             # Search on YouTube
-            youtube_url = self.downloader._search_youtube_for_music(scraped_info)
+            youtube_url = self.downloader._search_youtube(scraped_info)
             
             if youtube_url:
                 print(f"✓ Found on YouTube: {youtube_url}")
