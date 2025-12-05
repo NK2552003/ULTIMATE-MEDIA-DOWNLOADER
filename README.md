@@ -422,6 +422,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 For information about third-party licenses used in this project, see [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).
 
+## CI/CD & Releases
+
+- CI runs on pushes/PRs to `main` to compile the code and smoke-test the CLI help output.
+- Tagged releases (`vX.Y.Z`) build OS-specific zip bundles (Linux, macOS, Windows) and attach them along with wheel/sdist artifacts; see `docs/CI_CD.md` for details.
+
 ---
 
 ## ️ Disclaimer

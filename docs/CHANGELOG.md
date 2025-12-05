@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- CI/CD automation with GitHub Actions for smoke testing and tagged releases that publish OS-specific zip bundles plus Python distributions.
+
 ### Planned
 - GUI interface (Electron/PyQt)
 - Browser extension
