@@ -2975,7 +2975,7 @@ class UltimateMediaDownloader:
                 elif not audio_only and output_format.lower() in ['mp4', 'mkv', 'avi', 'webm', 'mov']:
                     ydl_opts['merge_output_format'] = output_format.lower()
             
-            ydl_opts['progress_hooks'] = [self._progress_hook]
+            ydl_opts['progress_hooks'] = [ProgressDisplay.progress_hook]
             
             # Track current file for metadata enhancement
             self._current_playlist_dir = str(self.output_dir / playlist_info.get('title', 'Unknown'))
