@@ -1,8 +1,8 @@
 class Umd < Formula
   desc "Download media from 1000+ platforms with one command"
   homepage "https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER"
-  url "https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/archive/refs/tags/v2.0.0.tar.gz"
-  sha256 "PLACEHOLDER_SHA256_HASH"  # Run: curl -sL https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/archive/refs/tags/v2.0.0.tar.gz | shasum -a 256
+  url "https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/archive/refs/tags/v2.0.4.tar.gz"
+  sha256 "5681fff5cfc9d7c9bf3b74c03c7b6906e65eb0de21ae864d96d87ea372ca0d7d"
   license "MIT"
   revision 0
 
