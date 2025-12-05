@@ -47,8 +47,8 @@ try:
 except ImportError:
     RICH_AVAILABLE = False
 
-from utils import sanitize_filename
-from ui_components import Icons, Messages
+from utils.utils import sanitize_filename
+from utils.ui_components import Icons, Messages
 
 
 class SpotifyHandler:

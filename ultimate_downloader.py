@@ -36,10 +36,34 @@ from PIL import Image
 import io
 
 try:
-    from spotify_handler import SpotifyHandler
+    from handlers.spotify_handler import SpotifyHandler
     SPOTIFY_HANDLER_AVAILABLE = True
 except ImportError:
     SPOTIFY_HANDLER_AVAILABLE = False
+
+try:
+    from handlers.pornhub_handler import PornhubHandler
+    PORNHUB_HANDLER_AVAILABLE = True
+except ImportError:
+    PORNHUB_HANDLER_AVAILABLE = False
+
+try:
+    from handlers.xnxx_handler import XNXXHandler
+    XNXX_HANDLER_AVAILABLE = True
+except ImportError:
+    XNXX_HANDLER_AVAILABLE = False
+
+try:
+    from handlers.tumblr_handler import TumblrHandler
+    TUMBLR_HANDLER_AVAILABLE = True
+except ImportError:
+    TUMBLR_HANDLER_AVAILABLE = False
+
+try:
+    from handlers.xhamster_handler import XHamsterHandler
+    XHAMSTER_HANDLER_AVAILABLE = True
+except ImportError:
+    XHAMSTER_HANDLER_AVAILABLE = False
 
 try:
     import mutagen
@@ -134,25 +158,25 @@ except ImportError:
 
 # Import reusable components from separate modules
 from logger import QuietLogger
-from ui_components import Icons, Messages, ModernUI
-from utils import (
+from utils.ui_components import Icons, Messages, ModernUI
+from utils.utils import (
     sanitize_filename, format_bytes, format_duration, 
     detect_platform, is_playlist_url, extract_video_id,
     load_config, save_config, ensure_directory,
     validate_url, clean_string, truncate_string
 )
-from apple_music_handler import AppleMusicHandler
+from handlers.apple_music_handler import AppleMusicHandler
 
 # Import new refactored modules
-from progress_display import ProgressDisplay, DurationFormatter
-from file_manager import FileManager
-from url_validator import URLValidator
+from utils.progress_display import ProgressDisplay, DurationFormatter
+from utils.file_manager import FileManager
+from utils.url_validator import URLValidator
 from platform_info import PlatformInfo
 
 # Import newly created utility modules
-from browser_utils import get_random_user_agent, get_browser_driver, format_duration as format_duration_util
-from platform_utils import detect_platform as detect_platform_util, get_supported_sites, get_platform_config
-from ui_utils import RichConsoleWrapper
+from utils.browser_utils import get_random_user_agent, get_browser_driver, format_duration as format_duration_util
+from utils.platform_utils import detect_platform as detect_platform_util, get_supported_sites, get_platform_config
+from utils.ui_utils import RichConsoleWrapper
 
 class UltimateMediaDownloader:
     def __init__(self, output_dir=None, verbose=False):
@@ -172,7 +196,7 @@ class UltimateMediaDownloader:
         self.quiet_logger = QuietLogger()
         
         # Platform-specific configurations (import from platform_utils module)
-        from platform_utils import PLATFORM_CONFIGS
+        from utils.platform_utils import PLATFORM_CONFIGS
         self.platform_configs = PLATFORM_CONFIGS.copy()
         
         # Enhanced yt-dlp configuration for maximum performance and quality
@@ -237,6 +261,26 @@ class UltimateMediaDownloader:
         self.spotify_handler = None
         if SPOTIFY_HANDLER_AVAILABLE:
             self.spotify_handler = SpotifyHandler(self)
+        
+        # Initialize Pornhub handler if available
+        self.pornhub_handler = None
+        if PORNHUB_HANDLER_AVAILABLE:
+            self.pornhub_handler = PornhubHandler(self)
+        
+        # Initialize XNXX handler if available
+        self.xnxx_handler = None
+        if XNXX_HANDLER_AVAILABLE:
+            self.xnxx_handler = XNXXHandler(self)
+        
+        # Initialize Tumblr handler if available
+        self.tumblr_handler = None
+        if TUMBLR_HANDLER_AVAILABLE:
+            self.tumblr_handler = TumblrHandler(self)
+        
+        # Initialize xHamster handler if available
+        self.xhamster_handler = None
+        if XHAMSTER_HANDLER_AVAILABLE:
+            self.xhamster_handler = XHamsterHandler(self)
         
         # Initialize Apple Music downloader if available
         self.apple_music_downloader = None
@@ -347,6 +391,112 @@ class UltimateMediaDownloader:
         else:
             self.print_rich(Messages.error("Spotify handler not available"))
             return None
+    
+    def search_and_download_pornhub(self, url, quality="best", interactive=True):
+        """Download video from Pornhub
+        
+        Delegates to PornhubHandler
+        
+        Args:
+            url: Pornhub URL
+            quality: Video quality (best, 1080p, 720p, etc.)
+            interactive: Whether to prompt for options
+        """
+        if self.pornhub_handler:
+            return self.pornhub_handler.search_and_download(url, interactive=interactive)
+        else:
+            self.print_rich(Messages.error("Pornhub handler not available"))
+            # Try using yt-dlp directly as fallback
+            self.print_rich("[yellow]Attempting download with yt-dlp directly...[/yellow]")
+            try:
+                ydl_opts = self.default_ydl_opts.copy()
+                ydl_opts['format'] = 'bestvideo+bestaudio/best'
+                ydl_opts['http_headers'] = {
+                    'Cookie': 'age_verified=1; accessAgeDisclaimerPH=1; accessPH=1',
+                }
+                with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                    ydl.download([url])
+                return True
+            except Exception as e:
+                self.print_rich(f"[red]✗ Download failed: {str(e)}[/red]")
+                return None
+    
+    def search_and_download_xnxx(self, url, quality="best", interactive=True):
+        """Download video from XNXX
+        
+        Delegates to XNXXHandler
+        
+        Args:
+            url: XNXX URL
+            quality: Video quality (best, 1080p, 720p, etc.)
+            interactive: Whether to prompt for options
+        """
+        if self.xnxx_handler:
+            return self.xnxx_handler.search_and_download(url, interactive=interactive)
+        else:
+            self.print_rich(Messages.error("XNXX handler not available"))
+            # Try using yt-dlp directly as fallback
+            self.print_rich("[yellow]Attempting download with yt-dlp directly...[/yellow]")
+            try:
+                ydl_opts = self.default_ydl_opts.copy()
+                ydl_opts['format'] = 'bestvideo+bestaudio/best'
+                with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                    ydl.download([url])
+                return True
+            except Exception as e:
+                self.print_rich(f"[red]✗ Download failed: {str(e)}[/red]")
+                return None
+    
+    def search_and_download_tumblr(self, url, interactive=True):
+        """Download media from Tumblr
+        
+        Delegates to TumblrHandler
+        
+        Args:
+            url: Tumblr URL (blog or post)
+            interactive: Whether to prompt for options
+        """
+        if self.tumblr_handler:
+            return self.tumblr_handler.search_and_download(url, interactive=interactive)
+        else:
+            self.print_rich(Messages.error("Tumblr handler not available"))
+            # Try using yt-dlp directly as fallback for video posts
+            self.print_rich("[yellow]Attempting download with yt-dlp directly...[/yellow]")
+            try:
+                ydl_opts = self.default_ydl_opts.copy()
+                ydl_opts['format'] = 'best'
+                with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                    ydl.download([url])
+                return True
+            except Exception as e:
+                self.print_rich(f"[red]✗ Download failed: {str(e)}[/red]")
+                return None
+    
+    def search_and_download_xhamster(self, url, quality="best", interactive=True):
+        """Download content from xHamster
+        
+        Delegates to XHamsterHandler
+        
+        Args:
+            url: xHamster URL (video, channel, or gallery)
+            quality: Video quality (best, 1080p, 720p, etc.)
+            interactive: Whether to prompt for options
+        """
+        if self.xhamster_handler:
+            return self.xhamster_handler.search_and_download(url, interactive=interactive)
+        else:
+            self.print_rich(Messages.error("xHamster handler not available"))
+            # Try using yt-dlp directly as fallback
+            self.print_rich("[yellow]Attempting download with yt-dlp directly...[/yellow]")
+            try:
+                ydl_opts = self.default_ydl_opts.copy()
+                ydl_opts['format'] = 'bestvideo+bestaudio/best'
+                with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                    ydl.download([url])
+                return True
+            except Exception as e:
+                self.print_rich(f"[red]✗ Download failed: {str(e)}[/red]")
+                return None
     
     def _search_youtube(self, query, max_results=1):
         """Search for a track on YouTube with animated spinner"""
@@ -1782,11 +1932,19 @@ class UltimateMediaDownloader:
             else:
                 print(f"◎ Detected platform: {platform.upper()}")
             
-            # For Spotify/Apple Music, use enhanced handlers first
+            # For Spotify/Apple Music/Pornhub/XNXX/Tumblr/xHamster, use enhanced handlers first
             if platform == 'spotify':
                 return self.search_and_download_spotify_track(url)
             elif platform == 'apple_music':
                 return self.search_and_download_apple_music_track(url, interactive=interactive)
+            elif platform == 'pornhub':
+                return self.search_and_download_pornhub(url, quality=quality, interactive=interactive)
+            elif platform == 'xnxx':
+                return self.search_and_download_xnxx(url, quality=quality, interactive=interactive)
+            elif platform == 'tumblr':
+                return self.search_and_download_tumblr(url, interactive=interactive)
+            elif platform == 'xhamster':
+                return self.search_and_download_xhamster(url, quality=quality, interactive=interactive)
             
             # Check if URL might be a playlist
             if self.is_playlist_url(url):
@@ -3123,7 +3281,7 @@ class UltimateMediaDownloader:
 
 def interactive_mode():
     """Interactive mode with modern UI and professional design"""
-    from ui_display import show_help_menu
+    from utils.ui_display import show_help_menu
     
     downloader = UltimateMediaDownloader()
     ui = ModernUI()
@@ -3228,7 +3386,7 @@ def interactive_mode():
 
 def main():
     from cli_args import parse_arguments
-    from ui_display import show_help_menu
+    from utils.ui_display import show_help_menu
     
     args = parse_arguments()
     

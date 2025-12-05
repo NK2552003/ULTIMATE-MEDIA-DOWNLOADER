@@ -153,7 +153,7 @@ jobs:
           ]
 
           python_modules = [str(p) for p in root.glob('*.py')]
-          directories = ['docs', 'Formula']
+          directories = ['handlers', 'utils']
 
           for item in common_files + python_modules:
               src = root / item

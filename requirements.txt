@@ -1,10 +1,3 @@
-# =============================================================================
-# Ultimate Media Downloader - Python Requirements
-# Version: 2.0.0
-# Date: October 2, 2025
-# Python: >=3.9
-# =============================================================================
-
 # Core Video/Audio Downloading
 # -------------------------------------------------------------------------
 yt-dlp>=2025.09.26                # YouTube and 1000+ sites downloader :contentReference[oaicite:0]{index=0}  
@@ -64,15 +57,4 @@ mypy>=1.7.1                        # Static type checker
 
 # Optional: Apple Music Support
 # -------------------------------------------------------------------------
-gamdl                             # Uncomment to enable Apple Music downloads  
-                                   # (requires additional setup & subscription)
-# Platform-specific dependencies
-# -------------------------------------------------------------------------
-# Windows:
-# - pywin32>=306                   # Windows API access  
-#
-# Linux:
-# - python-magic>=0.4.27            # File type identification  
-#
-# macOS:
-# - pyobjc-framework-Cocoa>=10.0     # macOS framework bindings  
+gamdl                             

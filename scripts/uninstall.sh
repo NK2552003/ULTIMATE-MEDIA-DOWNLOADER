@@ -1,8 +1,8 @@
 #!/bin/bash
 # =============================================================================
 # Ultimate Media Downloader - Uninstall Script
-# Version: 2.0.0
-# Date: October 2025
+# Version: 1.0.0
+# Date: December 2025
 # Removes the Ultimate Media Downloader installation
 # =============================================================================
 
@@ -89,14 +89,28 @@ echo ""
 print_info "Modules removed:"
 echo "  • ultimate_downloader    - Main downloader engine"
 echo "  • cli_args              - Command-line argument parser"
-echo "  • ui_components         - UI component library"
-echo "  • ui_display            - Display and formatting utilities"
 echo "  • logger                - Logging system"
-echo "  • utils                 - Utility functions"
-echo "  • spotify_handler       - Spotify integration"
-echo "  • apple_music_handler   - Apple Music support"
 echo "  • youtube_scorer        - YouTube search scoring"
 echo "  • generic_downloader    - Generic download handler"
+echo ""
+echo "  Utils Package (utils/):"
+echo "  • ui_components         - UI component library"
+echo "  • ui_display            - Display and formatting utilities"
+echo "  • utils                 - Utility functions"
+echo "  • progress_display      - Progress bar utilities"
+echo "  • file_manager          - File management utilities"
+echo "  • url_validator         - URL validation utilities"
+echo "  • browser_utils         - Browser utilities"
+echo "  • platform_utils        - Platform detection utilities"
+echo "  • ui_utils              - UI helper utilities"
+echo ""
+echo "  Platform Handlers (handlers/):"
+echo "  • spotify_handler       - Spotify integration"
+echo "  • apple_music_handler   - Apple Music support"
+echo "  • pornhub_handler       - Pornhub support"
+echo "  • xnxx_handler          - XNXX support"
+echo "  • tumblr_handler        - Tumblr support"
+echo "  • xhamster_handler      - xHamster support"
 echo ""
 print_info "Your downloaded files are still in: ~/Downloads/UltimateDownloader"
 print_info "To remove downloads too, run: rm -rf ~/Downloads/UltimateDownloader"

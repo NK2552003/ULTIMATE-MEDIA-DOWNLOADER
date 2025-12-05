@@ -1,8 +1,8 @@
 @echo off
 REM =============================================================================
 REM Ultimate Media Downloader - Windows Uninstall Script
-REM Version: 2.0.0
-REM Date: October 2025
+REM Version: 1.0.0
+REM Date: December 2025
 REM Removes the Ultimate Media Downloader installation
 REM =============================================================================
 
@@ -88,10 +88,16 @@ echo   - ui_components         (UI component library)
 echo   - ui_display            (Display and formatting utilities)
 echo   - logger                (Logging system)
 echo   - utils                 (Utility functions)
-echo   - spotify_handler       (Spotify integration)
-echo   - apple_music_handler   (Apple Music support)
 echo   - youtube_scorer        (YouTube search scoring)
 echo   - generic_downloader    (Generic download handler)
+echo.
+echo   Platform Handlers (handlers/):
+echo   - spotify_handler       (Spotify integration)
+echo   - apple_music_handler   (Apple Music support)
+echo   - pornhub_handler       (Pornhub support)
+echo   - xnxx_handler          (XNXX support)
+echo   - tumblr_handler        (Tumblr support)
+echo   - xhamster_handler      (xHamster support)
 echo.
 echo [INFO] Your downloaded files are still in: %%USERPROFILE%%\Downloads\UltimateDownloader
 echo [INFO] To remove downloads too, run: rmdir /s /q "%%USERPROFILE%%\Downloads\UltimateDownloader"

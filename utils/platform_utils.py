@@ -6,6 +6,7 @@ This module provides platform detection utilities and stores platform-specific
 configurations for supported media platforms.
 """
 
+import re
 from typing import Dict, List, Any, Optional
 
 
@@ -29,6 +30,26 @@ PLATFORM_CONFIGS = {
         'formats': ['mp3', 'wav', 'flac'],
         'note': 'Apple Music tracks will be searched on YouTube for download'
     },
+    'pornhub': {
+        'extractors': ['pornhub', 'pornhubpremium'],
+        'formats': ['mp4', 'webm'],
+        'note': 'Pornhub videos, GIFs, albums, and channels'
+    },
+    'xnxx': {
+        'extractors': ['xnxx'],
+        'formats': ['mp4', 'webm'],
+        'note': 'XNXX videos from xnxx.com, xnxx.dev, xnxx.tv'
+    },
+    'tumblr': {
+        'extractors': ['tumblr'],
+        'formats': ['jpg', 'png', 'gif', 'mp4'],
+        'note': 'Tumblr blogs - images and videos'
+    },
+    'xhamster': {
+        'extractors': ['xhamster'],
+        'formats': ['mp4', 'webm', 'jpg', 'png'],
+        'note': 'xHamster videos, channels, and photo galleries'
+    },
     'generic': {
         'extractors': ['generic'],
         'formats': ['mp4', 'mp3', 'wav']
@@ -47,6 +68,10 @@ SUPPORTED_SITES = [
     {'name': 'Vimeo', 'description': 'Vimeo videos'},
     {'name': 'Twitch', 'description': 'Twitch VODs and clips'},
     {'name': 'Apple Music', 'description': 'Apple Music tracks (via YouTube search)'},
+    {'name': 'Pornhub', 'description': 'Pornhub videos, GIFs, albums, channels, models'},
+    {'name': 'XNXX', 'description': 'XNXX videos (xnxx.com, xnxx.dev, xnxx.tv)'},
+    {'name': 'Tumblr', 'description': 'Tumblr blogs - images and videos'},
+    {'name': 'xHamster', 'description': 'xHamster videos, channels, photo galleries'},
     {'name': 'Generic', 'description': 'many other video and audio platforms'}
 ]
 
@@ -59,7 +84,7 @@ def detect_platform(url: str) -> str:
         url (str): The URL to analyze
         
     Returns:
-        str: Platform name ('youtube', 'spotify', 'soundcloud', 'apple_music', 'social_media', 'generic')
+        str: Platform name ('youtube', 'spotify', 'soundcloud', 'apple_music', 'pornhub', 'social_media', 'generic')
     """
     url_lower = url.lower()
     
@@ -71,6 +96,14 @@ def detect_platform(url: str) -> str:
         return 'soundcloud'
     elif any(domain in url_lower for domain in ['music.apple.com', 'itunes.apple.com']):
         return 'apple_music'
+    elif any(domain in url_lower for domain in ['pornhub.com', 'pornhubpremium.com']):
+        return 'pornhub'
+    elif any(domain in url_lower for domain in ['xnxx.com', 'xnxx.dev', 'xnxx.tv']) or re.search(r'xnxx\d*\.(com|dev|tv|es)', url_lower):
+        return 'xnxx'
+    elif 'tumblr.com' in url_lower:
+        return 'tumblr'
+    elif re.search(r'(xhamster|xhwebsite|xhofficial|xhlocal|xhopen|xhtotal|megaxh|xhwide|xhtab|xhtime)\d*\.', url_lower):
+        return 'xhamster'
     elif any(domain in url_lower for domain in ['tiktok.com', 'instagram.com', 'facebook.com', 'twitter.com', 'x.com']):
         return 'social_media'
     else:

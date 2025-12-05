@@ -1,8 +1,8 @@
 #!/bin/bash
 # =============================================================================
 # Ultimate Media Downloader - Setup Script
-# Version: 2.0.0
-# Date: October 3, 2025
+# Version: 1.0.0
+# Date: December, 2025
 # Description: Automated setup script for Ultimate Media Downloader
 # Author: Nitish Kumar
 # Repository: https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER
@@ -627,12 +627,16 @@ import requests
 import rich
 from generic_downloader import GenericSiteDownloader
 from cli_args import create_argument_parser
-from ui_components import ModernUI, Icons
-from ui_display import display_info
+from utils.ui_components import ModernUI, Icons
+from utils.ui_display import show_help_menu
 from logger import QuietLogger
-from utils import sanitize_filename
-from spotify_handler import SpotifyHandler
-from apple_music_handler import AppleMusicHandler
+from utils.utils import sanitize_filename
+from handlers.spotify_handler import SpotifyHandler
+from handlers.apple_music_handler import AppleMusicHandler
+from handlers.pornhub_handler import PornhubHandler
+from handlers.xnxx_handler import XNXXHandler
+from handlers.tumblr_handler import TumblrHandler
+from handlers.xhamster_handler import XHamsterHandler
 from youtube_scorer import YouTubeScorer
 print('All imports successful')
 " && print_success "All imports working" || print_warning "Some imports failed"
@@ -716,9 +720,13 @@ show_post_install_info() {
     echo -e "    • ui_display           - Display & formatting utilities"
     echo -e "    • progress_display     - Progress bar management"
     echo ""
-    echo -e "  ${GREEN}Platform Handlers:${NC}"
+    echo -e "  ${GREEN}Platform Handlers (handlers/):${NC}"
     echo -e "    • spotify_handler      - Spotify track/playlist integration"
     echo -e "    • apple_music_handler  - Apple Music support"
+    echo -e "    • pornhub_handler      - Pornhub support"
+    echo -e "    • xnxx_handler         - XNXX support"
+    echo -e "    • tumblr_handler       - Tumblr support"
+    echo -e "    • xhamster_handler     - xHamster support"
     echo -e "    • generic_downloader   - Generic website downloader"
     echo ""
     echo -e "  ${GREEN}Analysis Tools:${NC}"

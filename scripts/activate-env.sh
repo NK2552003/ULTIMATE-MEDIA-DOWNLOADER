@@ -1,8 +1,8 @@
 #!/bin/bash
 # =============================================================================
 # Ultimate Media Downloader - Environment Activation Script
-# Version: 2.0.0
-# Date: October 2025
+# Version: 1.0.0
+# Date: December 2025
 # Description: Activates the virtual environment with all modules and deps
 # =============================================================================
 
@@ -36,10 +36,16 @@ if [ -f "venv/bin/activate" ]; then
     echo "  ✓ ui_display            - Display and formatting utilities"
     echo "  ✓ logger                - Logging and output system"
     echo "  ✓ utils                 - Utility functions"
-    echo "  ✓ spotify_handler       - Spotify integration"
-    echo "  ✓ apple_music_handler   - Apple Music support"
     echo "  ✓ youtube_scorer        - YouTube search scoring"
     echo "  ✓ generic_downloader    - Generic download handler"
+    echo ""
+    echo -e "${BLUE}Platform Handlers (handlers/):${NC}"
+    echo "  ✓ spotify_handler       - Spotify integration"
+    echo "  ✓ apple_music_handler   - Apple Music support"
+    echo "  ✓ pornhub_handler       - Pornhub support"
+    echo "  ✓ xnxx_handler          - XNXX support"
+    echo "  ✓ tumblr_handler        - Tumblr support"
+    echo "  ✓ xhamster_handler      - xHamster support"
     echo ""
     
     echo -e "${BLUE}You can now run:${NC}"

@@ -4,7 +4,7 @@ This module contains all argument parsing and configuration
 """
 
 import argparse
-from ui_components import Icons
+from utils.ui_components import Icons
 
 __version__ = "2.0.0"
 

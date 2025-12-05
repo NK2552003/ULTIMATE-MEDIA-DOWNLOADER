@@ -1,8 +1,8 @@
 @echo off
 REM =============================================================================
 REM Ultimate Media Downloader - Windows Setup Script
-REM Version: 2.0.0
-REM Date: October 6, 2025
+REM Version: 1.0.0
+REM Date: December, 2025
 REM Description: Automated setup script for Ultimate Media Downloader (Windows)
 REM Author: Nitish Kumar
 REM Repository: https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER
@@ -335,7 +335,7 @@ if %errorlevel% equ 0 (
 )
 
 call :print_step "Testing imports..."
-python -c "import yt_dlp; import requests; import rich; from generic_downloader import GenericSiteDownloader; from cli_args import create_argument_parser; from ui_components import ModernUI, Icons; from ui_display import display_info; from logger import QuietLogger; from utils import sanitize_filename; from spotify_handler import SpotifyHandler; from apple_music_handler import AppleMusicHandler; from youtube_scorer import YouTubeScorer; print('All imports successful')" >nul 2>&1
+python -c "import yt_dlp; import requests; import rich; from generic_downloader import GenericSiteDownloader; from cli_args import create_argument_parser; from utils.ui_components import ModernUI, Icons; from utils.ui_display import show_help_menu; from logger import QuietLogger; from utils.utils import sanitize_filename; from handlers.spotify_handler import SpotifyHandler; from handlers.apple_music_handler import AppleMusicHandler; from handlers.pornhub_handler import PornhubHandler; from handlers.xnxx_handler import XNXXHandler; from handlers.tumblr_handler import TumblrHandler; from handlers.xhamster_handler import XHamsterHandler; from youtube_scorer import YouTubeScorer; print('All imports successful')" >nul 2>&1
 if %errorlevel% equ 0 (
     call :print_success "All imports working"
 ) else (

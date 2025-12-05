@@ -3,7 +3,7 @@ UI Display functions for Ultimate Media Downloader
 Contains functions for displaying help menus, banners, and other UI elements
 """
 
-from ui_components import ModernUI, Icons
+from .ui_components import ModernUI, Icons
 
 try:
     from rich.console import Console

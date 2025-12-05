@@ -115,6 +115,24 @@ def detect_platform(url):
     if 'music.apple.com' in url_lower or 'itunes.apple.com' in url_lower:
         return 'apple_music'
     
+    # Pornhub
+    if 'pornhub.com' in url_lower or 'pornhubpremium.com' in url_lower:
+        return 'pornhub'
+    
+    # XNXX (including numbered domains like xnxx2.com, xnxx3.com)
+    if 'xnxx.com' in url_lower or 'xnxx.dev' in url_lower or 'xnxx.tv' in url_lower:
+        return 'xnxx'
+    if re.search(r'xnxx\d*\.(com|dev|tv|es)', url_lower):
+        return 'xnxx'
+    
+    # Tumblr
+    if 'tumblr.com' in url_lower:
+        return 'tumblr'
+    
+    # xHamster (including mirror sites)
+    if re.search(r'(xhamster|xhwebsite|xhofficial|xhlocal|xhopen|xhtotal|megaxh|xhwide|xhtab|xhtime)\d*\.', url_lower):
+        return 'xhamster'
+    
     # Instagram
     if 'instagram.com' in url_lower:
         return 'instagram'
