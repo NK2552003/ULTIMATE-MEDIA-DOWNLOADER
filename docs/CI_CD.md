@@ -1,6 +1,6 @@
 # CI/CD Guide
 
-This project ships two GitHub Actions workflows: a lightweight CI smoke test and a release pipeline that builds OS-targeted zip bundles with Python distributions attached to tagged releases.
+This project ships three GitHub Actions workflows: a lightweight CI smoke test, an auto-tag workflow, and a release pipeline that builds OS-targeted zip bundles with Python distributions attached to tagged releases.
 
 ## Workflows
 
@@ -22,6 +22,14 @@ This project ships two GitHub Actions workflows: a lightweight CI smoke test and
   - Creates an OS-specific zip bundle containing only the relevant install scripts.
   - Uploads the bundle as an artifact; Linux also uploads the Python distributions.
 - **Publish job**: downloads all artifacts and attaches them to a GitHub Release whose body is sourced from `docs/CHANGELOG.md`.
+
+### Auto Tag (`.github/workflows/auto-release.yml`)
+
+- **Triggers**: push to `main` or manual dispatch.
+- **What it does**:
+  - Reads the version from `setup.py`.
+  - Creates and pushes a tag `v<version>` if it does not already exist.
+  - Pushing the tag triggers the Release workflow above.
 
 ## Artifact naming and contents
 
