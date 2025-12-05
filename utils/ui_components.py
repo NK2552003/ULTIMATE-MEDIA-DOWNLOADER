@@ -156,7 +156,7 @@ class ModernUI:
             box=box.DOUBLE,
             padding=(1, 2),
             title="[bold white]▶ ULTIMATE MEDIA DOWNLOADER[/bold white]",
-            subtitle="[dim]v2.0 - Professional Edition[/dim]"
+            subtitle="[dim]v1.0 - Professional Edition[/dim]"
         )
         
         self.console.print(panel)
