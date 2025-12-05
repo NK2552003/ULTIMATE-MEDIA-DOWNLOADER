@@ -1,4 +1,4 @@
-name: Auto Tag and Release
+name: Auto Release
 
 on:
   push:
@@ -12,10 +12,17 @@ defaults:
 permissions:
   contents: write
 
+env:
+  PIP_DISABLE_PIP_VERSION_CHECK: 1
+
 jobs:
-  tag-and-trigger:
-    name: Tag current main and trigger release
+  prepare:
+    name: Prepare version and tag
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      tag: ${{ steps.tag.outputs.tag }}
+      tag_exists: ${{ steps.check.outputs.exists }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -37,25 +44,25 @@ jobs:
         id: tag
         run: |
           TARGET="v${{ steps.version.outputs.version }}"
-          echo "target_tag=$TARGET" >> "$GITHUB_OUTPUT"
+          echo "tag=$TARGET" >> "$GITHUB_OUTPUT"
           echo "Target tag: $TARGET"
 
       - name: Check if tag already exists
         id: check
         run: |
-          TARGET="${{ steps.tag.outputs.target_tag }}"
+          TARGET="${{ steps.tag.outputs.tag }}"
           if git rev-parse "$TARGET" >/dev/null 2>&1; then
             echo "exists=true" >> "$GITHUB_OUTPUT"
-            echo "Tag $TARGET already exists; skipping create."
+            echo "Tag $TARGET already exists; will reuse."
           else
             echo "exists=false" >> "$GITHUB_OUTPUT"
             echo "Tag $TARGET does not exist; will create."
           fi
 
-      - name: Create and push tag
+      - name: Create and push tag if missing
         if: steps.check.outputs.exists == 'false'
         env:
-          TARGET_TAG: ${{ steps.tag.outputs.target_tag }}
+          TARGET_TAG: ${{ steps.tag.outputs.tag }}
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
@@ -63,10 +70,177 @@ jobs:
           git push origin "$TARGET_TAG"
           echo "Pushed tag $TARGET_TAG"
 
-      - name: Notify
+  build:
+    name: Build & Package (${{ matrix.label }})
+    needs: prepare
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            label: Linux
+            artifact_suffix: linux
+            install_scripts: scripts/install.sh,scripts/setup.sh,scripts/activate-env.sh,scripts/uninstall.sh
+          - os: macos-latest
+            label: macOS
+            artifact_suffix: macos
+            install_scripts: scripts/install.sh,scripts/setup.sh,scripts/activate-env.sh,scripts/uninstall.sh
+          - os: windows-latest
+            label: Windows
+            artifact_suffix: windows
+            install_scripts: scripts\\install.bat,scripts\\setup.bat,scripts\\activate-env.bat,scripts\\uninstall.bat
+    env:
+      PACKAGE_VERSION: ${{ needs.prepare.outputs.version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Validate setup.py version matches prepared version
         run: |
-          if [ "${{ steps.check.outputs.exists }}" = "true" ]; then
-            echo "Tag already existed; no release triggered."
-          else
-            echo "Tag pushed; Release workflow will run from tag push."
+          EXPECTED="$PACKAGE_VERSION"
+          FOUND=$(python -c "import re, pathlib; text=pathlib.Path('setup.py').read_text(); m=re.search(r\"version=['\\\"]([^'\\\"]+)['\\\"]\", text); print(m.group(1) if m else '')")
+          if [ "$FOUND" != "$EXPECTED" ]; then
+            echo "setup.py version ($FOUND) does not match prepared version ($EXPECTED)" >&2
+            exit 1
           fi
+
+      - name: Install build dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install build
+          python -m pip install -r requirements.txt
+
+      - name: Bytecode compile (syntax check)
+        run: python -m compileall .
+
+      - name: Build wheel and sdist
+        run: python -m build --sdist --wheel --outdir dist
+
+      - name: Create OS-specific bundle
+        env:
+          ARTIFACT_SUFFIX: ${{ matrix.artifact_suffix }}
+          INSTALL_SCRIPTS: ${{ matrix.install_scripts }}
+        run: |
+          python - <<'PY'
+          import os
+          import shutil
+          from pathlib import Path
+
+          version = os.environ['PACKAGE_VERSION']
+          suffix = os.environ['ARTIFACT_SUFFIX']
+          install_scripts = [s.strip() for s in os.environ.get('INSTALL_SCRIPTS', '').split(',') if s.strip()]
+          root = Path('.')
+
+          bundle_root = Path('bundle') / suffix
+          if bundle_root.exists():
+              shutil.rmtree(bundle_root)
+          bundle_root.mkdir(parents=True)
+
+          common_files = [
+              'README.md',
+              'LICENSE',
+              'config.json',
+              'requirements.txt',
+              'setup.py',
+          ]
+
+          python_modules = [str(p) for p in root.glob('*.py')]
+          directories = ['docs', 'Formula']
+
+          for item in common_files + python_modules:
+              src = root / item
+              if not src.exists():
+                  continue
+              dest = bundle_root / item
+              dest.parent.mkdir(parents=True, exist_ok=True)
+              shutil.copy2(src, dest)
+
+          for directory in directories:
+              src_dir = root / directory
+              if src_dir.exists():
+                  shutil.copytree(src_dir, bundle_root / directory, dirs_exist_ok=True)
+
+          for script in install_scripts:
+              src = root / script
+              if src.exists():
+                  dest = bundle_root / 'scripts' / Path(script).name
+                  dest.parent.mkdir(parents=True, exist_ok=True)
+                  shutil.copy2(src, dest)
+
+          src_dist = root / 'dist'
+          dest_dist = bundle_root / 'dist'
+          dest_dist.mkdir(parents=True, exist_ok=True)
+          for artifact in src_dist.iterdir():
+              if artifact.is_file():
+                  shutil.copy2(artifact, dest_dist / artifact.name)
+
+          artifacts_dir = Path('artifacts')
+          artifacts_dir.mkdir(exist_ok=True)
+          base_name = artifacts_dir / f"ultimate-media-downloader-{version}-{suffix}"
+          archive_path = shutil.make_archive(str(base_name), 'zip', root_dir=bundle_root)
+          print(f"Created {archive_path}")
+          PY
+
+      - name: Upload OS bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: umd-${{ env.PACKAGE_VERSION }}-${{ matrix.artifact_suffix }}
+          path: artifacts/*.zip
+          if-no-files-found: error
+
+      - name: Upload Python distributions (Linux only)
+        if: matrix.artifact_suffix == 'linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-dist-${{ env.PACKAGE_VERSION }}
+          path: dist/*
+          if-no-files-found: error
+
+  publish:
+    name: Publish Release
+    needs: [prepare, build]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      RELEASE_TAG: ${{ needs.prepare.outputs.tag }}
+      PACKAGE_VERSION: ${{ needs.prepare.outputs.version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download OS bundles
+        uses: actions/download-artifact@v4
+        with:
+          pattern: umd-*
+          merge-multiple: true
+          path: downloaded
+
+      - name: Download Python distributions
+        uses: actions/download-artifact@v4
+        with:
+          name: python-dist-${{ env.PACKAGE_VERSION }}
+          path: downloaded
+        continue-on-error: true
+
+      - name: List release assets
+        run: ls -R downloaded
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ env.RELEASE_TAG }}
+          name: Ultimate Media Downloader v${{ env.PACKAGE_VERSION }}
+          body_path: docs/CHANGELOG.md
+          files: |
+            downloaded/**/*.zip
+            downloaded/**/*.whl
+            downloaded/**/*.tar.gz
