@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - CI/CD automation with GitHub Actions for smoke testing and tagged releases that publish OS-specific zip bundles plus Python distributions.
+- Auto-tag workflow that reads `setup.py` version and pushes matching `vX.Y.Z` tags on main, triggering releases automatically.
 
 ### Planned
 - GUI interface (Electron/PyQt)

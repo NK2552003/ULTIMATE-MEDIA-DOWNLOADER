@@ -1,0 +1,72 @@
+name: Auto Tag and Release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+permissions:
+  contents: write
+
+jobs:
+  tag-and-trigger:
+    name: Tag current main and trigger release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Read version from setup.py
+        id: version
+        run: |
+          VERSION=$(python -c "import re, pathlib; text=pathlib.Path('setup.py').read_text(); m=re.search(r\"version=['\\\"]([^'\\\"]+)['\\\"]\", text); print(m.group(1) if m else '')")
+          if [ -z "$VERSION" ]; then
+            echo "Could not read version from setup.py" >&2
+            exit 1
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Detected version $VERSION"
+
+      - name: Determine target tag
+        id: tag
+        run: |
+          TARGET="v${{ steps.version.outputs.version }}"
+          echo "target_tag=$TARGET" >> "$GITHUB_OUTPUT"
+          echo "Target tag: $TARGET"
+
+      - name: Check if tag already exists
+        id: check
+        run: |
+          TARGET="${{ steps.tag.outputs.target_tag }}"
+          if git rev-parse "$TARGET" >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "Tag $TARGET already exists; skipping create."
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "Tag $TARGET does not exist; will create."
+          fi
+
+      - name: Create and push tag
+        if: steps.check.outputs.exists == 'false'
+        env:
+          TARGET_TAG: ${{ steps.tag.outputs.target_tag }}
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git tag "$TARGET_TAG"
+          git push origin "$TARGET_TAG"
+          echo "Pushed tag $TARGET_TAG"
+
+      - name: Notify
+        run: |
+          if [ "${{ steps.check.outputs.exists }}" = "true" ]; then
+            echo "Tag already existed; no release triggered."
+          else
+            echo "Tag pushed; Release workflow will run from tag push."
+          fi
