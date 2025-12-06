@@ -58,14 +58,14 @@ Install in just **2 commands** - no virtual environment needed!
 ```bash
 git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
 cd ULTIMATE-MEDIA-DOWNLOADER
-./scripts/install.sh
+./scripts/setup.sh
 ```
 
 **Windows users:**
 ```batch
 git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
 cd ULTIMATE-MEDIA-DOWNLOADER
-scripts\install.bat
+scripts\setup.bat
 ```
 
 That's it! Now use from anywhere:
@@ -232,7 +232,7 @@ umd "https://www.youtube.com/watch?v=dQw4w9WgXcQ" --info
 
 For comprehensive installation instructions, troubleshooting, and platform-specific guides, see:
 
-**[📖 Installation Guide](docs/INSTALL.md)**
+**[📖 Installation Guide](documentations/INSTALLATION.md)**
 
 ---
 
@@ -301,70 +301,15 @@ For more examples and detailed usage, see **[Usage Guide](docs/USAGE.md)**
 
 ---
 
-## Supported Platforms
-
-<details>
-<summary><b>Click to see full list of 1000+ supported platforms</b></summary>
-
-### Video Platforms
-- YouTube (Videos, Playlists, Live Streams, Shorts)
-- Vimeo (Videos, Private content)
-- Dailymotion
-- Twitch (VODs, Clips, Streams)
-- Facebook (Videos, Live)
-- And many more...
-
-### Social Media
-- Instagram (Posts, Reels, IGTV, Stories)
-- TikTok (Videos, User content)
-- Twitter/X (Video tweets)
-- Reddit (Videos)
-- Snapchat
-
-### Music Platforms
-- Spotify (Tracks, Albums, Playlists - via YouTube search)
-- SoundCloud (Tracks, Playlists, Sets)
-- Apple Music (Tracks, Albums - via YouTube search)
-- Bandcamp
-- Mixcloud
-
-### Streaming Services
-- Twitch
-- YouTube Live
-- Facebook Live
-- And more...
-
-**Total: 1000+ supported sites via yt-dlp**
-
-Use `umd --list-platforms` to see detailed platform support.
-
-</details>
-
----
-
 ## Documentation
 
-### User Documentation
 
-- **[Installation Guide](docs/INSTALL.md)** - Comprehensive installation instructions
-- **[Usage Guide](docs/USAGE.md)** - Get started in 5 minutes
-- **[Command Reference](docs/COMMAND_REFERENCE.md)** - Complete command documentation
-- **[Project Summary](docs/PROJECT_SUMMARY.md)** - Overview of the project
-
-### Technical Documentation
-
-- **[Architecture](docs/ARCHITECTURE.md)** - System design and components
-- **[File Structure](docs/FILE_STRUCTURE.md)** - Project file organization
+- **[Installation Guide](documentations/INSTALLATION.md)** - Comprehensive installation instructions
+- **[Usage Guide](documentations/USAGE.md)** - Get started in 5 minutes
+- **[Architecture](documentations/ARCHITECTURE.md)** - System design and components
+- **[File Structure](documentations/FILE_STRUCTURE.md)** - Project file organization
 - **[Contributing Guide](CONTRIBUTING.md)** - How to contribute
-- **[Changelog](docs/CHANGELOG.md)** - Version history and updates
-
-### Installation & Setup Guides
-
-- **[Install Guide](docs/INSTALL.md)** - Installation instructions
-- **[Uninstall Guide](docs/UNINSTALL.md)** - How to remove the application
-- **[Windows Batch Files](docs/WINDOWS_BATCH_FILES.md)** - Windows installation help
-
----
+- **[Changelog](documentations/CHANGELOG.md)** - Version history and updates
 
 ## ️ System Requirements
 
@@ -396,50 +341,12 @@ See **[CONTRIBUTING.md](CONTRIBUTING.md)** for detailed guidelines.
 
 ---
 
-### Development Setup
-
-```bash
-# Clone your fork
-git clone https://github.com/YOUR_USERNAME/ULTIMATE-MEDIA-DOWNLOADER.git
-cd ULTIMATE-MEDIA-DOWNLOADER
-
-# Create virtual environment
-python3 -m venv venv
-source venv/bin/activate
-
-# Install development dependencies
-pip install -r requirements-dev.txt
-
-# Run tests
-pytest
-```
-
----
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 For information about third-party licenses used in this project, see [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).
 
-## CI/CD & Releases
-
-- CI runs on pushes/PRs to `main` to compile the code and smoke-test the CLI help output.
-- Tagged releases (`vX.Y.Z`) build OS-specific zip bundles (Linux, macOS, Windows) and attach them along with wheel/sdist artifacts; see `docs/CI_CD.md` for details.
-
----
-
-## ️ Disclaimer
-
-This tool is for personal use only. Users are responsible for complying with copyright laws and terms of service of the platforms they download from. The developers assume no liability for misuse of this software.
-
-**Please respect:**
-- Copyright laws and fair use policies
-- Platform terms of service
-- Content creator rights
-- Regional restrictions and DRM
-
----
 
 ## Acknowledgments
 
@@ -469,6 +376,6 @@ Special thanks to all contributors and the open-source community!
 
 ⭐ Star this repository if you find it useful!
 
-[Report Bug](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues) • [Request Feature](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues) • [Documentation](docs/INDEX.md)
+[Report Bug](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues) • [Request Feature](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues) • [Documentation](documentations/INDEX.md)
 
 </div>
