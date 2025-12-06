@@ -51,7 +51,7 @@ Before making changes, familiarize yourself with:
 
 ### Types of Contributions
 
-We welcome various types of contributions:
+I welcome various types of contributions:
 
 | Type | Description |
 |------|-------------|

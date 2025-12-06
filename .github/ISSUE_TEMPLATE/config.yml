@@ -1,0 +1,17 @@
+blank_issues_enabled: false
+contact_links:
+  - name: GitHub Discussions
+    url: https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/discussions
+    about: Got a general question or want to chat? Use Discussions instead of Issues!
+  
+  - name: Documentation
+    url: https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/tree/main/documentations
+    about: Check out our docs - your answer might already be there!
+  
+  - name: Security Issue
+    url: https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/security/advisories/new
+    about: Found a security vulnerability? Report it privately here (don't open a public issue!)
+  
+  - name: Wiki
+    url: https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/wiki
+    about: Check out our Wiki for guides and tutorials!
