@@ -419,10 +419,15 @@ echo     * ui_display           - Display and formatting utilities
 echo     * progress_display     - Progress bar management
 echo.
 echo   Platform Handlers:
-echo     * spotify_handler      - Spotify track/playlist integration
-echo     * apple_music_handler  - Apple Music support
-echo     * generic_downloader   - Generic website downloader
-echo.
+echo    * spotify_handler      - Spotify track/playlist integration
+echo    * apple_music_handler  - Apple Music support
+echo    * pornhub_handler      - Pornhub support
+echo    * xnxx_handler         - XNXX support
+echo    * tumblr_handler       - Tumblr support
+echo    * xhamster_handler     - xHamster support
+echo    * generic_downloader   - Generic website downloader
+echo    * hianime_handler      - HiAnime support
+
 echo   Analysis Tools:
 echo     * youtube_scorer       - YouTube search result ranking
 echo     * file_manager         - File organization utilities

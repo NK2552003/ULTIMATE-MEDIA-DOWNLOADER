@@ -141,6 +141,7 @@ echo   - pornhub_handler       (Pornhub support)
 echo   - xnxx_handler          (XNXX support)
 echo   - tumblr_handler        (Tumblr support)
 echo   - xhamster_handler      (xHamster support)
+echo   - hianime_handler       (HiAnime support)
 echo.
 echo Usage:
 echo   umd ^<URL^>                    # Download media from URL

@@ -41,7 +41,7 @@ Ultimate Media Downloader is a professional-grade, open-source media downloading
 
 | Type   | Platforms & Features |
 |--------|---------------------|
-| **Video** | YouTube (4K/8K), Vimeo, Dailymotion, Live streams, Age-restricted, Custom quality |
+| **Video** | YouTube (4K/8K), Vimeo, Dailymotion, Live streams, Age-restricted, Custom quality, HiAnime|
 | **Audio** | Spotify (via YouTube search), SoundCloud, Apple Music, 320kbps, FLAC, MP3 |
 | **Playlists** | YouTube, Spotify, SoundCloud, TikTok, Instagram, Batch download |
 | **Social** | Instagram, TikTok, Facebook, Twitter/X, Twitch, IGTV, Reels, Stories |
@@ -159,7 +159,7 @@ brew install python@3.11 ffmpeg pipx
 # Clone and install
 git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
 cd ULTIMATE-MEDIA-DOWNLOADER
-./scripts/install.sh
+./scripts/setup.sh
 ```
 
 If `umd` command not found, add to PATH:
@@ -206,7 +206,7 @@ source ~/.bashrc
 ```batch
 git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
 cd ULTIMATE-MEDIA-DOWNLOADER
-scripts\install.bat
+scripts\setup.bat
 ```
 
 </details>

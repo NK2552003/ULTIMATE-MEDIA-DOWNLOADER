@@ -50,6 +50,11 @@ PLATFORM_CONFIGS = {
         'formats': ['mp4', 'webm', 'jpg', 'png'],
         'note': 'xHamster videos, channels, and photo galleries'
     },
+    'hianime': {
+        'extractors': ['hianime', 'aniwatch', 'zoro'],
+        'formats': ['mp4', 'mkv'],
+        'note': 'HiAnime.to anime streaming - episodes and series'
+    },
     'generic': {
         'extractors': ['generic'],
         'formats': ['mp4', 'mp3', 'wav']
@@ -72,6 +77,7 @@ SUPPORTED_SITES = [
     {'name': 'XNXX', 'description': 'XNXX videos (xnxx.com, xnxx.dev, xnxx.tv)'},
     {'name': 'Tumblr', 'description': 'Tumblr blogs - images and videos'},
     {'name': 'xHamster', 'description': 'xHamster videos, channels, photo galleries'},
+    {'name': 'HiAnime', 'description': 'HiAnime.to anime streaming (episodes, series)'},
     {'name': 'Generic', 'description': 'many other video and audio platforms'}
 ]
 
@@ -104,6 +110,8 @@ def detect_platform(url: str) -> str:
         return 'tumblr'
     elif re.search(r'(xhamster|xhwebsite|xhofficial|xhlocal|xhopen|xhtotal|megaxh|xhwide|xhtab|xhtime)\d*\.', url_lower):
         return 'xhamster'
+    elif any(domain in url_lower for domain in ['hianime.to', 'hianime.sx', 'hianime.mn', 'aniwatch.to', 'zoro.to', 'kaido.to']):
+        return 'hianime'
     elif any(domain in url_lower for domain in ['tiktok.com', 'instagram.com', 'facebook.com', 'twitter.com', 'x.com']):
         return 'social_media'
     else:

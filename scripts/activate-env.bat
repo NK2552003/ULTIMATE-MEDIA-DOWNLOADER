@@ -33,6 +33,7 @@ if exist "%~dp0venv\Scripts\activate.bat" (
     echo   - xnxx_handler          (XNXX support)
     echo   - tumblr_handler        (Tumblr support)
     echo   - xhamster_handler      (xHamster support)
+    echo   - hianime_handler       (HiAnime support)
     echo.
     
     echo You can now run:

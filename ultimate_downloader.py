@@ -66,6 +66,12 @@ except ImportError:
     XHAMSTER_HANDLER_AVAILABLE = False
 
 try:
+    from handlers.hianime_handler import HiAnimeHandler
+    HIANIME_HANDLER_AVAILABLE = True
+except ImportError:
+    HIANIME_HANDLER_AVAILABLE = False
+
+try:
     import mutagen
     from mutagen.flac import FLAC, Picture
     from mutagen.mp3 import MP3
@@ -282,6 +288,11 @@ class UltimateMediaDownloader:
         if XHAMSTER_HANDLER_AVAILABLE:
             self.xhamster_handler = XHamsterHandler(self)
         
+        # Initialize HiAnime handler if available
+        self.hianime_handler = None
+        if HIANIME_HANDLER_AVAILABLE:
+            self.hianime_handler = HiAnimeHandler(self)
+        
         # Initialize Apple Music downloader if available
         self.apple_music_downloader = None
         if GAMDL_AVAILABLE:
@@ -491,6 +502,36 @@ class UltimateMediaDownloader:
             try:
                 ydl_opts = self.default_ydl_opts.copy()
                 ydl_opts['format'] = 'bestvideo+bestaudio/best'
+                with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                    ydl.download([url])
+                return True
+            except Exception as e:
+                self.print_rich(f"[red]✗ Download failed: {str(e)}[/red]")
+                return None
+    
+    def search_and_download_hianime(self, url, quality="best", interactive=True):
+        """Download anime from HiAnime.to
+        
+        Delegates to HiAnimeHandler
+        
+        Args:
+            url: HiAnime URL (anime page or episode)
+            quality: Video quality (best, 1080p, 720p, 480p, 360p)
+            interactive: Whether to prompt for options
+        """
+        if self.hianime_handler:
+            return self.hianime_handler.search_and_download(url, interactive=interactive)
+        else:
+            self.print_rich(Messages.error("HiAnime handler not available"))
+            # Try using yt-dlp directly as fallback
+            self.print_rich("[yellow]Attempting download with yt-dlp directly...[/yellow]")
+            try:
+                ydl_opts = self.default_ydl_opts.copy()
+                ydl_opts['format'] = 'bestvideo+bestaudio/best'
+                ydl_opts['http_headers'] = {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+                    'Referer': 'https://hianime.to/',
+                }
                 with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                     ydl.download([url])
                 return True
@@ -1945,6 +1986,8 @@ class UltimateMediaDownloader:
                 return self.search_and_download_tumblr(url, interactive=interactive)
             elif platform == 'xhamster':
                 return self.search_and_download_xhamster(url, quality=quality, interactive=interactive)
+            elif platform == 'hianime':
+                return self.search_and_download_hianime(url, quality=quality, interactive=interactive)
             
             # Check if URL might be a playlist
             if self.is_playlist_url(url):

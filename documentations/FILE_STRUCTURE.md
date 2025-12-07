@@ -37,6 +37,7 @@ graph TD
     HANDLERS --> H4[pornhub_handler.py]
     HANDLERS --> H5[xnxx_handler.py]
     HANDLERS --> H6[xhamster_handler.py]
+    HANDLERS --> H7[hianime_handler.py]
 
     UTILS --> U1[utils.py]
     UTILS --> U2[url_validator.py]
@@ -175,6 +176,7 @@ Location: `handlers/`
 | `pornhub_handler.py` | ~613 | Pornhub videos |
 | `xnxx_handler.py` | ~500 | XNXX videos |
 | `xhamster_handler.py` | ~500 | xHamster content |
+|`hianime_handler.py`| ~600| hianime series and videos or episodes|
 
 ### Handler Structure
 
@@ -343,6 +345,7 @@ graph LR
         SPOTIFY[spotify_handler.py]
         APPLE[apple_music_handler.py]
         TUMBLR[tumblr_handler.py]
+        HIANIME[hianime_handler.py]
     end
 
     subgraph "Utilities"
@@ -357,6 +360,7 @@ graph LR
     MAIN --> SPOTIFY
     MAIN --> APPLE
     MAIN --> TUMBLR
+    MAIN --> HIANIME
     MAIN --> UTILS
     MAIN --> URL_VAL
     MAIN --> UI_COMP

@@ -9,6 +9,7 @@ from .pornhub_handler import PornhubHandler
 from .xnxx_handler import XNXXHandler
 from .tumblr_handler import TumblrHandler
 from .xhamster_handler import XHamsterHandler
+from .hianime_handler import HiAnimeHandler
 
 __all__ = [
     'SpotifyHandler',
@@ -17,4 +18,5 @@ __all__ = [
     'XNXXHandler',
     'TumblrHandler',
     'XHamsterHandler',
+    'HiAnimeHandler',
 ]

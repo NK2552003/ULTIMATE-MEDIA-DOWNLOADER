@@ -55,6 +55,7 @@ graph TB
         PH[Pornhub Handler]
         XNXX[XNXX Handler]
         XHAM[xHamster Handler]
+        HiANIME[HiAnime Handler]
     end
 
     subgraph "Utility Layer"
@@ -84,6 +85,7 @@ graph TB
     MAIN --> XNXX
     MAIN --> XHAM
     MAIN --> GENERIC
+    MAIN --> HIANIME
 
     SPOTIFY --> SCORER
     APPLE --> SCORER
@@ -211,9 +213,18 @@ classDiagram
         +_extract_media(posts)
     }
 
+    class HiAnimeHandler {
+        +downloader: UltimateMediaDownloader
+        +search_and_download(url)
+        +_extract_episode_info(url)
+        +_download_episode(url)
+        +_download_series(url)
+    }
+
     UltimateMediaDownloader --> SpotifyHandler
     UltimateMediaDownloader --> AppleMusicHandler
     UltimateMediaDownloader --> TumblrHandler
+    UltimateMediaDownloader --> HiAnimeHandler
 ```
 
 ### How Handlers Work

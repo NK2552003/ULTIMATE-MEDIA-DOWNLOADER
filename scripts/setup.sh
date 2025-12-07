@@ -443,7 +443,7 @@ install_python_dependencies() {
 create_requirements_file() {
     cat > "$REQUIREMENTS_FILE" << 'EOF'
 # Ultimate Media Downloader - Requirements
-# Updated: October 2, 2025
+# Updated: December 5, 2025
 
 # Core dependencies
 yt-dlp>=2023.12.30
@@ -566,7 +566,7 @@ create_activation_script() {
 # =============================================================================
 # Ultimate Media Downloader - Environment Activation Script
 # Version: 2.0.0
-# Date: October 2, 2025
+# Date: December, 2025
 # =============================================================================
 
 # Colors
@@ -728,6 +728,7 @@ show_post_install_info() {
     echo -e "    • tumblr_handler       - Tumblr support"
     echo -e "    • xhamster_handler     - xHamster support"
     echo -e "    • generic_downloader   - Generic website downloader"
+    echo -e "    • hianime_handler      - HiAnime support"
     echo ""
     echo -e "  ${GREEN}Analysis Tools:${NC}"
     echo -e "    • youtube_scorer       - YouTube search result ranking"
