@@ -39,6 +39,7 @@ handlers/
     pornhub_handler.py
     xnxx_handler.py
     xhamster_handler.py
+    hianime_handler.py
 ```
 
 ---
@@ -77,8 +78,13 @@ classDiagram
         +api: TumblrAPI
         +download_blog(url)
         +_extract_media(posts)
+    class HiAnimeHandler {
+        +_download_anime(url)
+        +_download_episode(url)
+        +_extract_metadata(url)
     }
 
+    BaseHandler <|-- HiAnimeHandler
     BaseHandler <|-- SpotifyHandler
     BaseHandler <|-- AppleMusicHandler
     BaseHandler <|-- TumblrHandler
@@ -387,6 +393,52 @@ patterns = [
 - Rate limiting to avoid bans
 
 ---
+
+## HiAnime Handler
+
+**File**: `handlers/hianime_handler.py`
+
+Handles anime downloads from HiAnime with episode extraction and metadata support.
+
+### Supported Content Types
+
+| Content | Description |
+|---------|-------------|
+| Anime Series | Full series with all episodes |
+| Episodes | Individual episode downloads |
+| Movies | Anime movie files |
+| Manga | Manga chapter collections |
+
+### Processing Flow
+
+```mermaid
+flowchart TD
+    A[HiAnime URL] --> B[Parse anime ID]
+    B --> C[Fetch anime metadata]
+    C --> D{Content Type?}
+    D -->|Series| E[Extract all episodes]
+    D -->|Episode| F[Extract single episode]
+    D -->|Movie| G[Extract movie]
+    
+    E --> H[Get stream links]
+    F --> H
+    G --> H
+    
+    H --> I[Download video]
+    I --> J[Embed metadata]
+    J --> K[Final file]
+```
+
+### Key Features
+
+- Automatic episode detection
+- Metadata extraction (title, synopsis, cover art)
+- Multiple stream quality support
+- Batch series downloading
+- Episode number formatting
+
+---
+
 
 ## Creating Custom Handlers
 

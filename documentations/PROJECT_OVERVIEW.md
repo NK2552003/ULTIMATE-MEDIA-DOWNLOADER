@@ -75,6 +75,7 @@ mindmap
       Spotify
       Instagram
       TikTok
+      HiAnime
       100+ more
     Advanced
       Batch downloads
@@ -132,6 +133,7 @@ mindmap
 | Dailymotion | Videos |
 | Twitch | VODs, clips, live streams |
 | Facebook | Videos, live streams |
+| HiAnime | Videos, Series, Episodes|
 
 ### Music Platforms
 
