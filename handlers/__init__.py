@@ -11,6 +11,14 @@ from .tumblr_handler import TumblrHandler
 from .xhamster_handler import XHamsterHandler
 from .hianime_handler import HiAnimeHandler
 
+# Adult site handlers
+from .eporner_handler import EpornerHandler
+from .hqporner_handler import HQPornerHandler
+from .beeg_handler import BeegHandler
+
+# TikTok handler
+from .tiktok_handler import TikTokHandler
+
 __all__ = [
     'SpotifyHandler',
     'AppleMusicHandler',
@@ -19,4 +27,10 @@ __all__ = [
     'TumblrHandler',
     'XHamsterHandler',
     'HiAnimeHandler',
+    # Adult site handlers
+    'EpornerHandler',
+    'HQPornerHandler',
+    'BeegHandler',
+    # TikTok handler
+    'TikTokHandler',
 ]

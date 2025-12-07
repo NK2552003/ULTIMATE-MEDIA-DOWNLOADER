@@ -71,6 +71,32 @@ try:
 except ImportError:
     HIANIME_HANDLER_AVAILABLE = False
 
+# New adult site handlers
+try:
+    from handlers.eporner_handler import EpornerHandler
+    EPORNER_HANDLER_AVAILABLE = True
+except ImportError:
+    EPORNER_HANDLER_AVAILABLE = False
+
+try:
+    from handlers.hqporner_handler import HQPornerHandler
+    HQPORNER_HANDLER_AVAILABLE = True
+except ImportError:
+    HQPORNER_HANDLER_AVAILABLE = False
+
+try:
+    from handlers.beeg_handler import BeegHandler
+    BEEG_HANDLER_AVAILABLE = True
+except ImportError:
+    BEEG_HANDLER_AVAILABLE = False
+
+# TikTok handler
+try:
+    from handlers.tiktok_handler import TikTokHandler
+    TIKTOK_HANDLER_AVAILABLE = True
+except ImportError:
+    TIKTOK_HANDLER_AVAILABLE = False
+
 try:
     import mutagen
     from mutagen.flac import FLAC, Picture
@@ -292,6 +318,24 @@ class UltimateMediaDownloader:
         self.hianime_handler = None
         if HIANIME_HANDLER_AVAILABLE:
             self.hianime_handler = HiAnimeHandler(self)
+        
+        # Initialize new adult site handlers
+        self.eporner_handler = None
+        if EPORNER_HANDLER_AVAILABLE:
+            self.eporner_handler = EpornerHandler(self)
+        
+        self.hqporner_handler = None
+        if HQPORNER_HANDLER_AVAILABLE:
+            self.hqporner_handler = HQPornerHandler(self)
+        
+        self.beeg_handler = None
+        if BEEG_HANDLER_AVAILABLE:
+            self.beeg_handler = BeegHandler(self)
+        
+        # Initialize TikTok handler
+        self.tiktok_handler = None
+        if TIKTOK_HANDLER_AVAILABLE:
+            self.tiktok_handler = TikTokHandler(self)
         
         # Initialize Apple Music downloader if available
         self.apple_music_downloader = None
@@ -538,6 +582,63 @@ class UltimateMediaDownloader:
             except Exception as e:
                 self.print_rich(f"[red]✗ Download failed: {str(e)}[/red]")
                 return None
+    
+    # ============================================================
+    # NEW ADULT SITE HANDLERS
+    # ============================================================
+    
+    def search_and_download_eporner(self, url, quality="best", interactive=True):
+        """Download video from Eporner"""
+        if self.eporner_handler:
+            return self.eporner_handler.download(url, quality=quality, interactive=interactive)
+        else:
+            self.print_rich(Messages.error("Eporner handler not available"))
+            return self._fallback_download(url, 'https://eporner.com/')
+    
+    def search_and_download_hqporner(self, url, quality="best", interactive=True):
+        """Download video from HQPorner"""
+        if self.hqporner_handler:
+            return self.hqporner_handler.download(url, quality=quality, interactive=interactive)
+        else:
+            self.print_rich(Messages.error("HQPorner handler not available"))
+            return self._fallback_download(url, 'https://hqporner.com/')
+    
+    def search_and_download_beeg(self, url, quality="best", interactive=True):
+        """Download video from Beeg"""
+        if self.beeg_handler:
+            return self.beeg_handler.download(url, quality=quality, interactive=interactive)
+        else:
+            self.print_rich(Messages.error("Beeg handler not available"))
+            return self._fallback_download(url, 'https://beeg.com/')
+    
+    # ============================================================
+    # TIKTOK HANDLER
+    # ============================================================
+    
+    def search_and_download_tiktok(self, url, quality="best", interactive=True):
+        """Download video from TikTok"""
+        if self.tiktok_handler:
+            return self.tiktok_handler.download(url, quality=quality, interactive=interactive)
+        else:
+            self.print_rich(Messages.error("TikTok handler not available"))
+            return self._fallback_download(url, 'https://tiktok.com/')
+    
+    def _fallback_download(self, url, referer):
+        """Fallback download using yt-dlp directly"""
+        self.print_rich("[yellow]Attempting download with yt-dlp directly...[/yellow]")
+        try:
+            ydl_opts = self.default_ydl_opts.copy()
+            ydl_opts['format'] = 'bestvideo+bestaudio/best'
+            ydl_opts['http_headers'] = {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+                'Referer': referer,
+            }
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                ydl.download([url])
+            return True
+        except Exception as e:
+            self.print_rich(f"[red]✗ Download failed: {str(e)}[/red]")
+            return None
     
     def _search_youtube(self, query, max_results=1):
         """Search for a track on YouTube with animated spinner"""
@@ -1988,6 +2089,16 @@ class UltimateMediaDownloader:
                 return self.search_and_download_xhamster(url, quality=quality, interactive=interactive)
             elif platform == 'hianime':
                 return self.search_and_download_hianime(url, quality=quality, interactive=interactive)
+            # New adult site handlers
+            elif platform == 'eporner':
+                return self.search_and_download_eporner(url, quality=quality, interactive=interactive)
+            elif platform == 'hqporner':
+                return self.search_and_download_hqporner(url, quality=quality, interactive=interactive)
+            elif platform == 'beeg':
+                return self.search_and_download_beeg(url, quality=quality, interactive=interactive)
+            # TikTok handler
+            elif platform == 'tiktok':
+                return self.search_and_download_tiktok(url, quality=quality, interactive=interactive)
             
             # Check if URL might be a playlist
             if self.is_playlist_url(url):

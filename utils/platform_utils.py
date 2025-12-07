@@ -55,6 +55,28 @@ PLATFORM_CONFIGS = {
         'formats': ['mp4', 'mkv'],
         'note': 'HiAnime.to anime streaming - episodes and series'
     },
+    # New adult site configurations
+    'eporner': {
+        'extractors': ['eporner'],
+        'formats': ['mp4', 'webm'],
+        'note': 'Eporner videos with quality selection'
+    },
+    'hqporner': {
+        'extractors': ['hqporner'],
+        'formats': ['mp4', 'webm'],
+        'note': 'HQPorner HD videos'
+    },
+    'beeg': {
+        'extractors': ['beeg'],
+        'formats': ['mp4', 'webm'],
+        'note': 'Beeg videos'
+    },
+    # TikTok platform
+    'tiktok': {
+        'extractors': ['tiktok'],
+        'formats': ['mp4'],
+        'note': 'TikTok videos with watermark removal option'
+    },
     'generic': {
         'extractors': ['generic'],
         'formats': ['mp4', 'mp3', 'wav']
@@ -66,7 +88,7 @@ SUPPORTED_SITES = [
     {'name': 'YouTube', 'description': 'YouTube videos, playlists, channels'},
     {'name': 'Spotify', 'description': 'Spotify tracks, albums, playlists (via YouTube search)'},
     {'name': 'SoundCloud', 'description': 'SoundCloud tracks and playlists'},
-    {'name': 'TikTok', 'description': 'TikTok videos'},
+    {'name': 'TikTok', 'description': 'TikTok videos with watermark removal'},
     {'name': 'Instagram', 'description': 'Instagram posts, reels, IGTV'},
     {'name': 'Twitter', 'description': 'Twitter videos'},
     {'name': 'Facebook', 'description': 'Facebook videos'},
@@ -78,6 +100,11 @@ SUPPORTED_SITES = [
     {'name': 'Tumblr', 'description': 'Tumblr blogs - images and videos'},
     {'name': 'xHamster', 'description': 'xHamster videos, channels, photo galleries'},
     {'name': 'HiAnime', 'description': 'HiAnime.to anime streaming (episodes, series)'},
+    # New adult sites
+    {'name': 'Eporner', 'description': 'Eporner HD videos with quality selection'},
+    {'name': 'HQPorner', 'description': 'HQPorner HD videos'},
+    {'name': 'Beeg', 'description': 'Beeg videos'},
+    {'name': 'TikTok', 'description': 'TikTok videos with watermark removal'},
     {'name': 'Generic', 'description': 'many other video and audio platforms'}
 ]
 
@@ -112,7 +139,17 @@ def detect_platform(url: str) -> str:
         return 'xhamster'
     elif any(domain in url_lower for domain in ['hianime.to', 'hianime.sx', 'hianime.mn', 'aniwatch.to', 'zoro.to', 'kaido.to']):
         return 'hianime'
-    elif any(domain in url_lower for domain in ['tiktok.com', 'instagram.com', 'facebook.com', 'twitter.com', 'x.com']):
+    # New adult sites
+    elif 'eporner.com' in url_lower:
+        return 'eporner'
+    elif 'hqporner.com' in url_lower:
+        return 'hqporner'
+    elif 'beeg.com' in url_lower:
+        return 'beeg'
+    # TikTok
+    elif 'tiktok.com' in url_lower:
+        return 'tiktok'
+    elif any(domain in url_lower for domain in ['instagram.com', 'facebook.com', 'twitter.com', 'x.com']):
         return 'social_media'
     else:
         return 'generic'

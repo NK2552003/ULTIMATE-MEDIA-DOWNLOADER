@@ -59,6 +59,17 @@ class URLValidator:
                     print("✓ URL supported via enhanced handler (YouTube search + metadata)")
                 return True
             
+            # Platforms with custom handlers (not relying solely on yt-dlp)
+            custom_handler_platforms = (
+                "hqporner", "eporner", "beeg", "porntrex", "porndig",
+                "txxx", "porndoe", "pornhat", "okxxx", "porn00", "xxxfiles",
+                "fikfap", "fyptt", "tikporn", "xxxtik", "xxxfollow", "hianime"
+            )
+            if platform in custom_handler_platforms:
+                if not silent:
+                    print("✓ URL supported via custom handler")
+                return True
+            
             # Try to extract info to check if URL is supported
             with yt_dlp.YoutubeDL({'quiet': True, 'no_warnings': True}) as ydl:
                 try:

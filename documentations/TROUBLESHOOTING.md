@@ -249,8 +249,42 @@ Make sure you are downloading to the same directory. The application looks for p
 **Solutions**:
 
 1. Make sure the URL is the full URL (not shortened)
-2. Update yt-dlp
-3. TikTok frequently changes their site, updates help
+2. Try using the mobile URL format: `https://m.tiktok.com/...`
+3. Update yt-dlp:
+
+   ```bash
+   pip3 install -U yt-dlp
+   ```
+
+4. TikTok frequently changes their site, updates help
+5. If SSL errors occur, the handler will automatically try fallback methods
+
+---
+
+### Adult Site Downloads Failing (Eporner, HQPorner, Beeg)
+
+**Symptom**: Adult site URLs return SSL or connection errors
+
+**Solutions**:
+
+1. These handlers have built-in SSL bypass mechanisms
+2. Try with verbose mode to see which fallback method works:
+
+   ```bash
+   umd "URL" --verbose
+   ```
+
+3. If issues persist, ensure you have the latest dependencies:
+
+   ```bash
+   pip3 install -U requests urllib3
+   ```
+
+4. Some sites may require curl_cffi for better compatibility:
+
+   ```bash
+   pip3 install curl_cffi
+   ```
 
 ---
 

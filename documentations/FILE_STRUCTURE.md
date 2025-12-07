@@ -38,6 +38,10 @@ graph TD
     HANDLERS --> H5[xnxx_handler.py]
     HANDLERS --> H6[xhamster_handler.py]
     HANDLERS --> H7[hianime_handler.py]
+    HANDLERS --> H8[tiktok_handler.py]
+    HANDLERS --> H9[eporner_handler.py]
+    HANDLERS --> H10[hqporner_handler.py]
+    HANDLERS --> H11[beeg_handler.py]
 
     UTILS --> U1[utils.py]
     UTILS --> U2[url_validator.py]
@@ -176,7 +180,11 @@ Location: `handlers/`
 | `pornhub_handler.py` | ~613 | Pornhub videos |
 | `xnxx_handler.py` | ~500 | XNXX videos |
 | `xhamster_handler.py` | ~500 | xHamster content |
-|`hianime_handler.py`| ~600| hianime series and videos or episodes|
+| `hianime_handler.py` | ~600 | HiAnime series and videos |
+| `tiktok_handler.py` | ~372 | TikTok videos |
+| `eporner_handler.py` | ~961 | Eporner videos |
+| `hqporner_handler.py` | ~701 | HQPorner videos |
+| `beeg_handler.py` | ~901 | Beeg videos |
 
 ### Handler Structure
 
@@ -346,6 +354,10 @@ graph LR
         APPLE[apple_music_handler.py]
         TUMBLR[tumblr_handler.py]
         HIANIME[hianime_handler.py]
+        TIKTOK[tiktok_handler.py]
+        EPORNER[eporner_handler.py]
+        HQPORNER[hqporner_handler.py]
+        BEEG[beeg_handler.py]
     end
 
     subgraph "Utilities"
@@ -361,6 +373,10 @@ graph LR
     MAIN --> APPLE
     MAIN --> TUMBLR
     MAIN --> HIANIME
+    MAIN --> TIKTOK
+    MAIN --> EPORNER
+    MAIN --> HQPORNER
+    MAIN --> BEEG
     MAIN --> UTILS
     MAIN --> URL_VAL
     MAIN --> UI_COMP

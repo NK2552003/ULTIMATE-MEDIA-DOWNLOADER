@@ -637,6 +637,11 @@ from handlers.pornhub_handler import PornhubHandler
 from handlers.xnxx_handler import XNXXHandler
 from handlers.tumblr_handler import TumblrHandler
 from handlers.xhamster_handler import XHamsterHandler
+from handlers.hianime_handler import HiAnimeHandler
+from handlers.tiktok_handler import TikTokHandler
+from handlers.eporner_handler import EpornerHandler
+from handlers.hqporner_handler import HQPornerHandler
+from handlers.beeg_handler import BeegHandler
 from youtube_scorer import YouTubeScorer
 print('All imports successful')
 " && print_success "All imports working" || print_warning "Some imports failed"

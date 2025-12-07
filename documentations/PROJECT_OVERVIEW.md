@@ -76,6 +76,9 @@ mindmap
       Instagram
       TikTok
       HiAnime
+      Eporner
+      HQPorner
+      Beeg
       100+ more
     Advanced
       Batch downloads
@@ -133,7 +136,11 @@ mindmap
 | Dailymotion | Videos |
 | Twitch | VODs, clips, live streams |
 | Facebook | Videos, live streams |
-| HiAnime | Videos, Series, Episodes|
+| HiAnime | Videos, Series, Episodes |
+| TikTok | Videos, user content |
+| Eporner | Videos |
+| HQPorner | Videos |
+| Beeg | Videos |
 
 ### Music Platforms
 
@@ -152,6 +159,7 @@ mindmap
 | TikTok | Videos, user content |
 | Twitter/X | Video tweets |
 | Reddit | Videos |
+| Tumblr | Images, videos, blogs |
 
 ### Additional Support
 
@@ -247,8 +255,8 @@ graph TB
 
 | Category | Count |
 |----------|-------|
-| Python Files | 15 |
-| Handler Modules | 6 |
+| Python Files | 19 |
+| Handler Modules | 11 |
 | Utility Modules | 8 |
 | Shell Scripts | 8 |
 | Documentation | 10+ |

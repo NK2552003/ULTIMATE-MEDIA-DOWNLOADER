@@ -12,7 +12,12 @@ This document describes the platform-specific handlers in the Ultimate Media Dow
 6. [Pornhub Handler](#pornhub-handler)
 7. [XNXX Handler](#xnxx-handler)
 8. [xHamster Handler](#xhamster-handler)
-9. [Creating Custom Handlers](#creating-custom-handlers)
+9. [HiAnime Handler](#hianime-handler)
+10. [TikTok Handler](#tiktok-handler)
+11. [Eporner Handler](#eporner-handler)
+12. [HQPorner Handler](#hqporner-handler)
+13. [Beeg Handler](#beeg-handler)
+14. [Creating Custom Handlers](#creating-custom-handlers)
 
 ---
 
@@ -40,6 +45,10 @@ handlers/
     xnxx_handler.py
     xhamster_handler.py
     hianime_handler.py
+    tiktok_handler.py
+    eporner_handler.py
+    hqporner_handler.py
+    beeg_handler.py
 ```
 
 ---
@@ -436,6 +445,166 @@ flowchart TD
 - Multiple stream quality support
 - Batch series downloading
 - Episode number formatting
+
+---
+
+## TikTok Handler
+
+**File**: `handlers/tiktok_handler.py`
+
+The TikTok Handler downloads videos from TikTok with proper SSL handling and anti-bot bypass.
+
+### TikTok Supported Domains
+
+The handler recognizes multiple TikTok domain variations:
+
+- tiktok.com
+- www.tiktok.com
+- vm.tiktok.com (shortened URLs)
+- m.tiktok.com (mobile)
+- vt.tiktok.com
+
+### TikTok Processing Flow
+
+```mermaid
+flowchart TD
+    A[TikTok URL] --> B[Normalize URL]
+    B --> C[Create SSL session]
+    C --> D[Try yt-dlp download]
+    D --> E{Success?}
+    E -->|Yes| F[Complete]
+    E -->|No| G[Try requests fallback]
+    G --> H[Parse video page]
+    H --> I[Extract video URL]
+    I --> J[Download video]
+```
+
+### TikTok Key Features
+
+- Multiple domain support including shortened URLs
+- SSL/TLS bypass for problematic connections
+- User agent rotation
+- Watermark-free download attempts
+- Mobile and desktop URL handling
+
+---
+
+## Eporner Handler
+
+**File**: `handlers/eporner_handler.py`
+
+Handles video downloads from Eporner with advanced SSL bypass and multiple fallback methods.
+
+### Eporner Supported Content
+
+| Content | Description |
+|---------|-------------|
+| Videos | Standard video pages |
+| Categories | Category browsing |
+| Search Results | Search page videos |
+
+### Eporner Processing Flow
+
+```mermaid
+flowchart TD
+    A[Eporner URL] --> B[Create permissive SSL context]
+    B --> C[Try yt-dlp download]
+    C --> D{Success?}
+    D -->|Yes| E[Complete]
+    D -->|No| F[Try curl_cffi]
+    F --> G{Success?}
+    G -->|Yes| E
+    G -->|No| H[Try requests with SSL adapter]
+    H --> I[Parse video page]
+    I --> J[Extract stream URLs]
+    J --> K[Download best quality]
+```
+
+### Eporner Key Features
+
+- Advanced SSL/TLS bypass with permissive context
+- Multiple fallback extraction methods (yt-dlp, curl_cffi, requests)
+- Quality selection support
+- Rate limiting to avoid bans
+- User agent rotation
+
+---
+
+## HQPorner Handler
+
+**File**: `handlers/hqporner_handler.py`
+
+Downloads high-quality videos from HQPorner with SSL handling and fallback methods.
+
+### HQPorner Supported Domains
+
+- hqporner.com
+- www.hqporner.com
+
+### HQPorner Processing Flow
+
+```mermaid
+flowchart TD
+    A[HQPorner URL] --> B[Initialize SSL session]
+    B --> C[Try yt-dlp download]
+    C --> D{Success?}
+    D -->|Yes| E[Complete]
+    D -->|No| F[Try requests fallback]
+    F --> G[Parse video page]
+    G --> H[Extract video sources]
+    H --> I[Select best quality]
+    I --> J[Download video]
+```
+
+### HQPorner Key Features
+
+- Custom SSL adapter for certificate issues
+- High-quality video extraction
+- Multiple resolution support
+- Fallback extraction methods
+- User agent rotation
+
+---
+
+## Beeg Handler
+
+**File**: `handlers/beeg_handler.py`
+
+Handles video downloads from Beeg using their API and fallback methods including subprocess curl.
+
+### Beeg Architecture
+
+```mermaid
+flowchart TD
+    A[Beeg URL] --> B[Extract video ID]
+    B --> C[Try yt-dlp]
+    C --> D{Success?}
+    D -->|Yes| E[Complete]
+    D -->|No| F[Try Beeg API]
+    F --> G{Success?}
+    G -->|Yes| H[Parse API response]
+    G -->|No| I[Try subprocess curl]
+    H --> J[Extract CDN URL]
+    I --> J
+    J --> K[Download video]
+```
+
+### Beeg API Integration
+
+The handler uses Beeg's internal API for video information:
+
+| Endpoint | Purpose |
+|----------|---------|
+| `store.externulls.com` | Video metadata API |
+| `video.beeg.com` | Video CDN |
+
+### Beeg Key Features
+
+- Native API integration for reliable extraction
+- Subprocess curl fallback for SSL issues
+- Multiple quality options
+- Progress bar display with Rich
+- SSL context customization
 
 ---
 

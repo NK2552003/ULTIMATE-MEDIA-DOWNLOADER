@@ -99,6 +99,10 @@ echo   - xnxx_handler          (XNXX support)
 echo   - tumblr_handler        (Tumblr support)
 echo   - xhamster_handler      (xHamster support)
 echo   - hianime_handler       (HiAnime support)
+echo   - tiktok_handler        (TikTok support)
+echo   - eporner_handler       (Eporner support)
+echo   - hqporner_handler      (HQPorner support)
+echo   - beeg_handler          (Beeg support)
 echo.
 echo [INFO] Your downloaded files are still in: %%USERPROFILE%%\Downloads\UltimateDownloader
 echo [INFO] To remove downloads too, run: rmdir /s /q "%%USERPROFILE%%\Downloads\UltimateDownloader"

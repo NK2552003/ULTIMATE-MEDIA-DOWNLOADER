@@ -18,7 +18,7 @@ with open('requirements.txt', 'r') as f:
 
 setup(
     name='ultimate-downloader',
-    version='2.0.0',
+    version='2.0.1',
     description='A powerful, feature-rich media downloader supporting 1000+ platforms',
     long_description=long_description,
     long_description_content_type='text/markdown',
