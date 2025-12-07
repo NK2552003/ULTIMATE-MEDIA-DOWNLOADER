@@ -245,7 +245,12 @@ jobs:
             
             Download media from 1000+ platforms with one command: `umd`
             
-            JUST REFACTORED EVERYTHING TO MAKE IT MORE STABLE AND RELIABLE!
+            Add HQPorner and TikTok handlers for video downloading
+
+            - Implemented HQPornerHandler to download videos from hqporner.com using yt-dlp with SSL handling, quality selection, and direct download fallback.
+            - Added TikTokHandler for downloading TikTok videos with support for quality selection and watermark removal.
+            - Both handlers include rich console output for user interaction and error handling.
+            - Integrated utility functions for sanitizing filenames and managing HTTP requests with retries.
 
             ### Installation
             

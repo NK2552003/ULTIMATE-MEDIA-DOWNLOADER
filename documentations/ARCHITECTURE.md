@@ -56,6 +56,10 @@ graph TB
         XNXX[XNXX Handler]
         XHAM[xHamster Handler]
         HiANIME[HiAnime Handler]
+        TIKTOK[TikTok Handler]
+        EPORNER[Eporner Handler]
+        HQPORNER[HQPorner Handler]
+        BEEG[Beeg Handler]
     end
 
     subgraph "Utility Layer"
@@ -86,6 +90,10 @@ graph TB
     MAIN --> XHAM
     MAIN --> GENERIC
     MAIN --> HIANIME
+    MAIN --> TIKTOK
+    MAIN --> EPORNER
+    MAIN --> HQPORNER
+    MAIN --> BEEG
 
     SPOTIFY --> SCORER
     APPLE --> SCORER
@@ -221,10 +229,42 @@ classDiagram
         +_download_series(url)
     }
 
+    class TikTokHandler {
+        +downloader: UltimateMediaDownloader
+        +search_and_download(url)
+        +_download_video(url)
+        +_normalize_url(url)
+    }
+
+    class EpornerHandler {
+        +downloader: UltimateMediaDownloader
+        +search_and_download(url)
+        +_download_video(url)
+        +_try_fallback_methods(url)
+    }
+
+    class HQPornerHandler {
+        +downloader: UltimateMediaDownloader
+        +search_and_download(url)
+        +_download_video(url)
+        +_extract_sources(url)
+    }
+
+    class BeegHandler {
+        +downloader: UltimateMediaDownloader
+        +search_and_download(url)
+        +_download_video(url)
+        +_try_api_method(url)
+    }
+
     UltimateMediaDownloader --> SpotifyHandler
     UltimateMediaDownloader --> AppleMusicHandler
     UltimateMediaDownloader --> TumblrHandler
     UltimateMediaDownloader --> HiAnimeHandler
+    UltimateMediaDownloader --> TikTokHandler
+    UltimateMediaDownloader --> EpornerHandler
+    UltimateMediaDownloader --> HQPornerHandler
+    UltimateMediaDownloader --> BeegHandler
 ```
 
 ### How Handlers Work

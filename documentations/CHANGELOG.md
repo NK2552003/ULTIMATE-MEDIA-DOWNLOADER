@@ -28,6 +28,11 @@ This is a major release with significant architectural improvements and new feat
 - Apple Music handler with metadata extraction
 - Tumblr handler for blog media downloads
 - Pornhub, XNXX, and xHamster handlers
+- HiAnime handler for anime series and episodes
+- TikTok handler for TikTok video downloads with SSL bypass
+- Eporner handler with advanced SSL/TLS handling
+- HQPorner handler for high-quality video downloads
+- Beeg handler with API integration and curl fallback
 - Generic site downloader with advanced bypass capabilities
 - YouTube scoring algorithm for accurate search results
 - Rich CLI interface with progress bars and colored output
