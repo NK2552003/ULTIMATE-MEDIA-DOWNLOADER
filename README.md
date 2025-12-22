@@ -58,14 +58,14 @@ Install in just **2 commands** - no virtual environment needed!
 ```bash
 git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
 cd ULTIMATE-MEDIA-DOWNLOADER
-./scripts/setup.sh
+./scripts/install.sh
 ```
 
 **Windows users:**
 ```batch
 git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
 cd ULTIMATE-MEDIA-DOWNLOADER
-scripts\setup.bat
+scripts\install.bat
 ```
 
 That's it! Now use from anywhere:
