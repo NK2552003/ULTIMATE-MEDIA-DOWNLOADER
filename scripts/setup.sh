@@ -35,7 +35,7 @@ cd "$SCRIPT_DIR"
 # Configuration
 VENV_NAME="venv"
 PYTHON_VERSION="3.9"
-REQUIREMENTS_FILE="requirements.txt"
+REQUIREMENTS_FILE="$SCRIPT_DIR/../requirements.txt"
 
 # =============================================================================
 # Helper Functions
@@ -410,7 +410,7 @@ install_python_dependencies() {
         print_success "All dependencies installed successfully"
     else
         print_error "Requirements file not found: $REQUIREMENTS_FILE"
-        error_exit "Please ensure requirements.txt exists in the project directory"
+        error_exit "Please ensure requirements.txt exists in the project root directory."
     fi
     
     # Verify critical installations

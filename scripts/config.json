@@ -1,0 +1,29 @@
+{
+    "spotify": {
+        "client_id": "",
+        "client_secret": ""
+    },
+    "apple_music": {
+        "enabled": false,
+        "cookie_file": ""
+    },
+    "download": {
+        "output_dir": "downloads",
+        "format": "best",
+        "audio_format": "mp3",
+        "audio_quality": "320",
+        "video_quality": "1080",
+        "embed_thumbnail": true,
+        "embed_metadata": true
+    },
+    "proxy": {
+        "enabled": false,
+        "http": "",
+        "https": ""
+    },
+    "advanced": {
+        "concurrent_downloads": 3,
+        "retry_attempts": 3,
+        "timeout": 300
+    }
+}
