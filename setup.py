@@ -25,7 +25,7 @@ setup(
     author='NK2552003',
     author_email='',
     url='https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER',
-    license='MIT',
+    license='Apache-2.0',
     py_modules=[
         'ultimate_downloader',
         'logger',
@@ -45,7 +45,7 @@ setup(
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: End Users/Desktop',
-        'License :: OSI Approved :: MIT License',
+        'License :: OSI Approved :: Apache Software License',
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.9',

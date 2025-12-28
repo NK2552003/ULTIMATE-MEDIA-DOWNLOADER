@@ -1,5 +1,7 @@
 # Third-Party Licenses
 
+**Project license:** Apache License 2.0
+
 This software uses the following open-source packages:
 
 1. **yt-dlp** - The Unlicense  
