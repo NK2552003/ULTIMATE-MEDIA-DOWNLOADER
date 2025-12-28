@@ -2,7 +2,7 @@
     <h1>Ultimate Media Downloader</h1>
     <b>Download media from 1000+ platforms with one command: <code>umd</code></b></br></br>
     <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.9%2B-blue.svg" alt="Python Version"></a>
-    <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
+    <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" alt="License"></a>
     <a href="https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER"><img src="https://img.shields.io/github/stars/NK2552003/ULTIMATE-MEDIA-DOWNLOADER?style=social" alt="GitHub Stars"></a>
     <a href="https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/commits/main"><img src="https://img.shields.io/github/last-commit/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.svg" alt="Last Commit"></a><br/><br/>
     <a href="#features">Features</a> - <a href="#installation">Installation</a> - <a href="#quick-start">Quick Start</a> - <a href="#documentation">Documentation</a> - <a href="CONTRIBUTING.md">Contributing</a> - <a href="CODE_OF_CONDUCT.md">Code of Conduct</a>
@@ -343,7 +343,7 @@ See **[CONTRIBUTING.md](CONTRIBUTING.md)** for detailed guidelines.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
 
 For information about third-party licenses used in this project, see [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).
 
