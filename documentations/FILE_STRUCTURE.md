@@ -85,7 +85,7 @@ graph TD
 | File | Description |
 |------|-------------|
 | `README.md` | Main project documentation |
-| `LICENSE` | MIT license file |
+| `LICENSE` | Apache 2.0 license file |
 | `THIRD_PARTY_LICENSES.md` | Third-party dependency licenses |
 
 ---
