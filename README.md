@@ -356,8 +356,6 @@ Built with:
 - [FFmpeg](https://ffmpeg.org/) - Media processing
 - [SpotDL](https://github.com/spotDL/spotify-downloader) - Spotify integration
 
-Special thanks to all contributors and the open-source community!
-
 ---
 
 ## Support & Contact
@@ -372,7 +370,7 @@ Special thanks to all contributors and the open-source community!
 
 <div align="center">
 
-**Made with ❤️ & with love by [NK2552003](https://github.com/NK2552003)**
+**Made with ❤️ by [NK2552003](https://github.com/NK2552003)**
 
 ⭐ Star this repository if you find it useful!
 
