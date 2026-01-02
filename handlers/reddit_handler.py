@@ -1017,7 +1017,7 @@ class RedditHandler:
                 self.console.print(f"[green]✓ Found {len(posts)} posts[/green]\n")
             
             # Download media from each post with progress bar
-            total_stats = {'videos': 0, 'images': 0, 'gifs': 0, 'failed': 0}
+            total_stats = {'videos': 0, 'images': 0, 'gifs': 0, 'failed': 0, 'total_size': 0}
             
             if RICH_AVAILABLE and self.console:
                 from rich.progress import Progress, BarColumn, TextColumn, TimeRemainingColumn, TimeElapsedColumn
@@ -1052,6 +1052,7 @@ class RedditHandler:
                         total_stats['images'] += stats['images']
                         total_stats['gifs'] += stats['gifs']
                         total_stats['failed'] += stats['failed']
+                        total_stats['total_size'] += stats.get('total_size', 0)
                         
                         progress.update(task, advance=1)
                         
