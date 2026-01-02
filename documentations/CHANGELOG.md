@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Table of Contents
 
-- [Version 2.1.0](#version-210)
+<!-- - [Version 2.1.0](#version-210) -->
 - [Version 2.0.0](#version-200)
 - [Version 1.0.5](#version-105)
 - [Version 1.0.0](#version-100)
@@ -16,7 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
-## Version 2.1.0
+<!-- ## Version 2.1.0( not released yet)
 
 **Release Date**: January 2026
 
@@ -63,7 +63,7 @@ This release focuses on social media platform support and handler improvements.
 - Created multi-method fallback system for Pinterest
 - Removed Selenium dependencies where not needed
 
----
+--- -->
 
 ## Version 2.0.0
 
