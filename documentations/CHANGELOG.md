@@ -8,10 +8,60 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Table of Contents
 
+- [Version 2.1.0](#version-210)
 - [Version 2.0.0](#version-200)
 - [Version 1.0.5](#version-105)
 - [Version 1.0.0](#version-100)
 - [Roadmap](#roadmap)
+
+---
+
+## Version 2.1.0
+
+**Release Date**: January 2026
+
+This release focuses on social media platform support and handler improvements.
+
+### Added
+
+- **Pinterest Handler** with advanced features:
+  - Multi-tier download strategy (gallery-dl → pinterest-downloader → yt-dlp → web scraping)
+  - Interactive prompt for custom pin count
+  - Real-time progress tracking with file names
+  - High-quality media selection (1000px+ images)
+  - 10 regex patterns and 7 extraction methods for robust scraping
+  - Support for profiles, boards, and individual pins
+  - No metadata JSON files (clean downloads)
+- **LinkedIn Handler** improvements:
+  - Simplified to support only direct post URLs
+  - Removed profile scraping (authentication issues)
+  - Rich progress bars with download speed and ETA
+  - No Selenium dependency (faster and more reliable)
+- **Reddit Handler** for downloading from Reddit posts and user profiles
+- External library support:
+  - `gallery-dl>=1.26.0` for Pinterest
+  - `pinterest-downloader>=1.0.0` as alternative
+
+### Changed
+
+- LinkedIn handler simplified to direct URLs only (no profile scraping)
+- Pinterest handler replaced Selenium with advanced web scraping
+- Improved progress display across all handlers
+- Updated requirements.txt with optional external libraries
+
+### Fixed
+
+- Selenium "Bad CPU type" errors (removed Selenium from LinkedIn and Pinterest)
+- Pinterest metadata JSON files no longer created
+- Video quality now defaults to high
+- Real-time progress tracking for downloads
+
+### Technical Changes
+
+- Implemented subprocess streaming for real-time gallery-dl output
+- Added Rich progress bars to download operations
+- Created multi-method fallback system for Pinterest
+- Removed Selenium dependencies where not needed
 
 ---
 

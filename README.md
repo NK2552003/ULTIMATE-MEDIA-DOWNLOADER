@@ -44,7 +44,7 @@ Ultimate Media Downloader is a professional-grade, open-source media downloading
 | **Video** | YouTube (4K/8K), Vimeo, Dailymotion, Live streams, Age-restricted, Custom quality, HiAnime|
 | **Audio** | Spotify (via YouTube search), SoundCloud, Apple Music, 320kbps, FLAC, MP3 |
 | **Playlists** | YouTube, Spotify, SoundCloud, TikTok, Instagram, Batch download |
-| **Social** | Instagram, TikTok, Facebook, Twitter/X, Twitch, IGTV, Reels, Stories |
+| **Social** | Instagram, TikTok, Facebook, Twitter/X, Twitch, **LinkedIn** (direct posts), **Pinterest** (profiles/boards), **Reddit** (posts/users), IGTV, Reels, Stories |
 | **Generic** | 1000+ sites via yt-dlp, SSL/TLS bypass, proxy rotation |
 
 ---

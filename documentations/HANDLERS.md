@@ -9,15 +9,18 @@ This document describes the platform-specific handlers in the Ultimate Media Dow
 3. [Spotify Handler](#spotify-handler)
 4. [Apple Music Handler](#apple-music-handler)
 5. [Tumblr Handler](#tumblr-handler)
-6. [Pornhub Handler](#pornhub-handler)
-7. [XNXX Handler](#xnxx-handler)
-8. [xHamster Handler](#xhamster-handler)
-9. [HiAnime Handler](#hianime-handler)
-10. [TikTok Handler](#tiktok-handler)
-11. [Eporner Handler](#eporner-handler)
-12. [HQPorner Handler](#hqporner-handler)
-13. [Beeg Handler](#beeg-handler)
-14. [Creating Custom Handlers](#creating-custom-handlers)
+6. [LinkedIn Handler](#linkedin-handler)
+7. [Pinterest Handler](#pinterest-handler)
+8. [Reddit Handler](#reddit-handler)
+9. [Pornhub Handler](#pornhub-handler)
+10. [XNXX Handler](#xnxx-handler)
+11. [xHamster Handler](#xhamster-handler)
+12. [HiAnime Handler](#hianime-handler)
+13. [TikTok Handler](#tiktok-handler)
+14. [Eporner Handler](#eporner-handler)
+15. [HQPorner Handler](#hqporner-handler)
+16. [Beeg Handler](#beeg-handler)
+17. [Creating Custom Handlers](#creating-custom-handlers)
 
 ---
 
@@ -41,6 +44,9 @@ handlers/
     spotify_handler.py
     apple_music_handler.py
     tumblr_handler.py
+    linkedin_handler.py
+    pinterest_handler.py
+    reddit_handler.py
     pornhub_handler.py
     xnxx_handler.py
     xhamster_handler.py
