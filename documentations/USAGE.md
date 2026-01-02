@@ -396,6 +396,39 @@ umd "https://soundcloud.com/artist/track" --audio-only
 umd "https://soundcloud.com/artist/sets/playlist" --audio-only
 ```
 
+### LinkedIn
+
+```bash
+# Post with video
+umd "https://www.linkedin.com/posts/username_POST_ID"
+
+# Profile posts
+umd "https://www.linkedin.com/in/username/"
+```
+
+### Reddit
+
+```bash
+# Single post
+umd "https://www.reddit.com/r/subreddit/comments/POST_ID/title/"
+
+# User posts
+umd "https://www.reddit.com/user/username/"
+```
+
+### Pinterest
+
+```bash
+# Single pin
+umd "https://www.pinterest.com/pin/PIN_ID/"
+
+# Board
+umd "https://www.pinterest.com/username/board-name/"
+
+# User profile
+umd "https://www.pinterest.com/username/"
+```
+
 ---
 
 ## Command Reference
