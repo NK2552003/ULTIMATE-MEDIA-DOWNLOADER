@@ -642,6 +642,9 @@ from handlers.tiktok_handler import TikTokHandler
 from handlers.eporner_handler import EpornerHandler
 from handlers.hqporner_handler import HQPornerHandler
 from handlers.beeg_handler import BeegHandler
+from handlers.linkedin_handler import LinkedInHandler
+from handlers.reddit_handler import RedditHandler
+from handlers.pinterest_handler import PinterestHandler
 from youtube_scorer import YouTubeScorer
 print('All imports successful')
 " && print_success "All imports working" || print_warning "Some imports failed"
@@ -732,8 +735,15 @@ show_post_install_info() {
     echo -e "    • xnxx_handler         - XNXX support"
     echo -e "    • tumblr_handler       - Tumblr support"
     echo -e "    • xhamster_handler     - xHamster support"
-    echo -e "    • generic_downloader   - Generic website downloader"
+    echo -e "    • tiktok_handler       - TikTok support"
+    echo -e "    • eporner_handler      - Eporner support"
+    echo -e "    • hqporner_handler     - HQPorner support"
+    echo -e "    • beeg_handler         - Beeg support"
+    echo -e "    • linkedin_handler     - LinkedIn support"
+    echo -e "    • reddit_handler       - Reddit support"
+    echo -e "    • pinterest_handler    - Pinterest support"
     echo -e "    • hianime_handler      - HiAnime support"
+    echo -e "    • generic_downloader   - Generic website downloader"
     echo ""
     echo -e "  ${GREEN}Analysis Tools:${NC}"
     echo -e "    • youtube_scorer       - YouTube search result ranking"
