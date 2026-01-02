@@ -93,6 +93,27 @@ classDiagram
         +api: TumblrAPI
         +download_blog(url)
         +_extract_media(posts)
+    }
+
+    class LinkedInHandler {
+        +_download_post(url)
+        +_extract_media_urls(url)
+    }
+
+    class RedditHandler {
+        +reddit: PRAW
+        +_download_post(url)
+        +_download_user_posts(username)
+        +_create_zip(files, output_path)
+    }
+
+    class PinterestHandler {
+        +_download_pin(url)
+        +_download_board(url)
+        +_download_profile(url)
+        +_try_gallery_dl(url)
+    }
+
     class HiAnimeHandler {
         +_download_anime(url)
         +_download_episode(url)
@@ -103,6 +124,9 @@ classDiagram
     BaseHandler <|-- SpotifyHandler
     BaseHandler <|-- AppleMusicHandler
     BaseHandler <|-- TumblrHandler
+    BaseHandler <|-- LinkedInHandler
+    BaseHandler <|-- RedditHandler
+    BaseHandler <|-- PinterestHandler
 ```
 
 ### Common Methods
@@ -279,6 +303,208 @@ The handler includes a built-in API wrapper:
 - Progress tracking during download
 - Automatic filename sanitization
 - Skips already downloaded files
+
+---
+
+## LinkedIn Handler
+
+**File**: `handlers/linkedin_handler.py`
+
+Handles downloading videos and images from LinkedIn direct post URLs. Profile scraping is not supported due to authentication requirements.
+
+### Supported Content Types
+
+| Content Type | URL Pattern | Example |
+|--------------|-------------|---------||
+| Direct Post | `/posts/username_POST_ID` | `https://www.linkedin.com/posts/username_POST_ID` |
+| Feed Post | `/feed/update/urn:li:activity:...` | `https://www.linkedin.com/feed/update/...` |
+
+### LinkedIn Architecture
+
+```mermaid
+flowchart TD
+    A[LinkedIn URL] --> B{Post URL?}
+    B -->|Yes| C[Extract post media]
+    B -->|No| D[Error: Only post URLs supported]
+    C --> E[Try yt-dlp]
+    E --> F{Success?}
+    F -->|Yes| G[Download complete]
+    F -->|No| H[Try web scraping]
+    H --> I[Extract video/image URLs]
+    I --> J[Download media files]
+    J --> G
+```
+
+### Key Features
+
+- Direct post URL support only (no profile scraping)
+- Video and image extraction
+- Multiple fallback methods
+- Rich progress bars with download speed
+- No Selenium dependency (faster and more reliable)
+- User agent rotation
+- Cloudflare bypass support
+
+### Limitations
+
+- Profile scraping removed due to authentication requirements
+- Only works with publicly accessible posts
+- May require cookies for private content
+
+---
+
+## Pinterest Handler
+
+**File**: `handlers/pinterest_handler.py`
+
+Handles downloading images and videos from Pinterest pins, boards, and user profiles with advanced multi-tier download strategy.
+
+### Supported Content Types
+
+| Content Type | URL Pattern | Example |
+|--------------|-------------|---------||
+| Single Pin | `/pin/PIN_ID/` | `https://www.pinterest.com/pin/123456789/` |
+| Board | `/username/board-name/` | `https://www.pinterest.com/username/travel-photos/` |
+| User Profile | `/username/` | `https://www.pinterest.com/username/` |
+| Short Link | `pin.it/...` | `https://pin.it/abc123` |
+
+### Pinterest Architecture
+
+```mermaid
+flowchart TD
+    A[Pinterest URL] --> B{URL Type?}
+    B -->|Pin| C[Try gallery-dl]
+    B -->|Board| D[Try gallery-dl]
+    B -->|Profile| D
+    C --> E{Success?}
+    D --> E
+    E -->|Yes| F[Download complete]
+    E -->|No| G[Try pinterest-downloader]
+    G --> H{Success?}
+    H -->|Yes| F
+    H -->|No| I[Try yt-dlp]
+    I --> J{Success?}
+    J -->|Yes| F
+    J -->|No| K[Try web scraping]
+    K --> L[Extract media URLs]
+    L --> M[Download files]
+    M --> F
+```
+
+### Multi-Tier Download Strategy
+
+The handler uses multiple methods in order of preference:
+
+1. **gallery-dl** - Most reliable, supports boards and profiles
+2. **pinterest-downloader** - Alternative library for Pinterest
+3. **yt-dlp** - Generic extractor
+4. **Web Scraping** - Fallback with 10 regex patterns and 7 extraction methods
+
+### Key Features
+
+- Multi-tier download strategy for maximum reliability
+- Interactive prompt for custom pin count
+- Real-time progress tracking with file names
+- High-quality media selection (1000px+ images)
+- 10 regex patterns for robust scraping
+- Support for profiles, boards, and individual pins
+- No metadata JSON files (clean downloads)
+- ZIP file creation for bulk downloads
+- User agent rotation and proxy support
+
+### Pinterest API
+
+The handler can use gallery-dl which interfaces with Pinterest's internal API:
+
+| Tool | Purpose |
+|------|---------||
+| gallery-dl | Primary download tool |
+| pinterest-downloader | Alternative download tool |
+| Web scraping | Fallback extraction method |
+
+---
+
+## Reddit Handler
+
+**File**: `handlers/reddit_handler.py`
+
+Handles downloading videos, images, and GIFs from Reddit posts and user profiles with PRAW (Python Reddit API Wrapper) integration.
+
+### Supported Content Types
+
+| Content Type | URL Pattern | Example |
+|--------------|-------------|---------||
+| Single Post | `/r/subreddit/comments/POST_ID/title/` | `https://www.reddit.com/r/videos/comments/abc123/title/` |
+| User Posts | `/user/username/` | `https://www.reddit.com/user/username/` |
+| User Profile | `/u/username/` | `https://www.reddit.com/u/username/` |
+| Short Link | `redd.it/POST_ID` | `https://redd.it/abc123` |
+
+### Reddit Architecture
+
+```mermaid
+flowchart TD
+    A[Reddit URL] --> B{PRAW Available?}
+    B -->|Yes| C[Use Reddit API]
+    B -->|No| D[Use yt-dlp]
+    C --> E{Single Post or User?}
+    E -->|Post| F[Extract post media]
+    E -->|User| G[Get user posts]
+    G --> H[Extract media from each post]
+    F --> I[Download media]
+    H --> I
+    D --> J{Success?}
+    J -->|Yes| K[Download complete]
+    J -->|No| L[Try web scraping]
+    I --> M{Bulk download?}
+    M -->|Yes| N[Create ZIP file]
+    M -->|No| K
+    N --> K
+    L --> K
+```
+
+### PRAW Integration
+
+The handler can use PRAW for API access:
+
+| Method | Purpose |
+|--------|---------||
+| `submission()` | Get post by ID |
+| `redditor().submissions.new()` | Get user posts |
+| `subreddit().hot()` | Get subreddit posts |
+
+### Configuration
+
+Optional Reddit API credentials for enhanced functionality:
+
+```bash
+# Set environment variables
+export REDDIT_CLIENT_ID="your_client_id"
+export REDDIT_CLIENT_SECRET="your_client_secret"
+export REDDIT_USER_AGENT="python:ultimate-downloader:v1.0"
+```
+
+Without API credentials, the handler uses yt-dlp and web scraping.
+
+### Key Features
+
+- PRAW integration for API access
+- Bulk user post downloads
+- Automatic ZIP file creation
+- Support for videos, images, and GIFs
+- Progress tracking with Rich
+- Fallback to yt-dlp and web scraping
+- Handles v.redd.it and i.redd.it domains
+- User agent rotation
+- Configurable post limits
+
+### Media Types Supported
+
+- Videos (v.redd.it)
+- Images (i.redd.it)
+- GIFs (hosted and external)
+- Gallery posts (multiple images)
+- Cross-posts
+- External media (imgur, gfycat, etc.)
 
 ---
 
