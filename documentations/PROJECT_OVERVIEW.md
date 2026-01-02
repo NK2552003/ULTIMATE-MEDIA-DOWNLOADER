@@ -158,8 +158,10 @@ mindmap
 | Instagram | Posts, reels, IGTV, stories |
 | TikTok | Videos, user content |
 | Twitter/X | Video tweets |
-| Reddit | Videos |
+| Reddit | Videos, posts, user content |
 | Tumblr | Images, videos, blogs |
+| LinkedIn | Posts, videos |
+| Pinterest | Pins, boards, profiles |
 
 ### Additional Support
 
@@ -256,7 +258,7 @@ graph TB
 | Category | Count |
 |----------|-------|
 | Python Files | 19 |
-| Handler Modules | 11 |
+| Handler Modules | 14 |
 | Utility Modules | 8 |
 | Shell Scripts | 8 |
 | Documentation | 10+ |

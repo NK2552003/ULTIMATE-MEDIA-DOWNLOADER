@@ -52,6 +52,9 @@ graph TB
         SPOTIFY[Spotify Handler]
         APPLE[Apple Music Handler]
         TUMBLR[Tumblr Handler]
+        LINKEDIN[LinkedIn Handler]
+        REDDIT[Reddit Handler]
+        PINTEREST[Pinterest Handler]
         PH[Pornhub Handler]
         XNXX[XNXX Handler]
         XHAM[xHamster Handler]
@@ -94,6 +97,9 @@ graph TB
     MAIN --> EPORNER
     MAIN --> HQPORNER
     MAIN --> BEEG
+    MAIN --> LINKEDIN
+    MAIN --> REDDIT
+    MAIN --> PINTEREST
 
     SPOTIFY --> SCORER
     APPLE --> SCORER
@@ -257,9 +263,35 @@ classDiagram
         +_try_api_method(url)
     }
 
+    class LinkedInHandler {
+        +downloader: UltimateMediaDownloader
+        +search_and_download(url)
+        +_download_post(url)
+        +_extract_media_urls(url)
+    }
+
+    class RedditHandler {
+        +downloader: UltimateMediaDownloader
+        +reddit: PRAW
+        +search_and_download(url)
+        +_download_post(url)
+        +_download_user_posts(username)
+    }
+
+    class PinterestHandler {
+        +downloader: UltimateMediaDownloader
+        +search_and_download(url)
+        +_download_pin(url)
+        +_download_board(url)
+        +_download_profile(url)
+    }
+
     UltimateMediaDownloader --> SpotifyHandler
     UltimateMediaDownloader --> AppleMusicHandler
     UltimateMediaDownloader --> TumblrHandler
+    UltimateMediaDownloader --> LinkedInHandler
+    UltimateMediaDownloader --> RedditHandler
+    UltimateMediaDownloader --> PinterestHandler
     UltimateMediaDownloader --> HiAnimeHandler
     UltimateMediaDownloader --> TikTokHandler
     UltimateMediaDownloader --> EpornerHandler

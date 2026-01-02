@@ -34,14 +34,17 @@ graph TD
     HANDLERS --> H1[spotify_handler.py]
     HANDLERS --> H2[apple_music_handler.py]
     HANDLERS --> H3[tumblr_handler.py]
-    HANDLERS --> H4[pornhub_handler.py]
-    HANDLERS --> H5[xnxx_handler.py]
-    HANDLERS --> H6[xhamster_handler.py]
-    HANDLERS --> H7[hianime_handler.py]
-    HANDLERS --> H8[tiktok_handler.py]
-    HANDLERS --> H9[eporner_handler.py]
-    HANDLERS --> H10[hqporner_handler.py]
-    HANDLERS --> H11[beeg_handler.py]
+    HANDLERS --> H4[linkedin_handler.py]
+    HANDLERS --> H5[reddit_handler.py]
+    HANDLERS --> H6[pinterest_handler.py]
+    HANDLERS --> H7[pornhub_handler.py]
+    HANDLERS --> H8[xnxx_handler.py]
+    HANDLERS --> H9[xhamster_handler.py]
+    HANDLERS --> H10[hianime_handler.py]
+    HANDLERS --> H11[tiktok_handler.py]
+    HANDLERS --> H12[eporner_handler.py]
+    HANDLERS --> H13[hqporner_handler.py]
+    HANDLERS --> H14[beeg_handler.py]
 
     UTILS --> U1[utils.py]
     UTILS --> U2[url_validator.py]
@@ -177,6 +180,9 @@ Location: `handlers/`
 | `spotify_handler.py` | ~1212 | Spotify tracks, albums, playlists |
 | `apple_music_handler.py` | ~1123 | Apple Music content |
 | `tumblr_handler.py` | ~614 | Tumblr blogs and media |
+| `linkedin_handler.py` | ~800 | LinkedIn posts and profiles |
+| `reddit_handler.py` | ~900 | Reddit posts and user content |
+| `pinterest_handler.py` | ~700 | Pinterest pins, boards, profiles |
 | `pornhub_handler.py` | ~613 | Pornhub videos |
 | `xnxx_handler.py` | ~500 | XNXX videos |
 | `xhamster_handler.py` | ~500 | xHamster content |
@@ -353,6 +359,9 @@ graph LR
         SPOTIFY[spotify_handler.py]
         APPLE[apple_music_handler.py]
         TUMBLR[tumblr_handler.py]
+        LINKEDIN[linkedin_handler.py]
+        REDDIT[reddit_handler.py]
+        PINTEREST[pinterest_handler.py]
         HIANIME[hianime_handler.py]
         TIKTOK[tiktok_handler.py]
         EPORNER[eporner_handler.py]
@@ -372,6 +381,9 @@ graph LR
     MAIN --> SPOTIFY
     MAIN --> APPLE
     MAIN --> TUMBLR
+    MAIN --> LINKEDIN
+    MAIN --> REDDIT
+    MAIN --> PINTEREST
     MAIN --> HIANIME
     MAIN --> TIKTOK
     MAIN --> EPORNER
