@@ -97,6 +97,25 @@ try:
 except ImportError:
     TIKTOK_HANDLER_AVAILABLE = False
 
+# Social media handlers
+try:
+    from handlers.linkedin_handler import LinkedInHandler
+    LINKEDIN_HANDLER_AVAILABLE = True
+except ImportError:
+    LINKEDIN_HANDLER_AVAILABLE = False
+
+try:
+    from handlers.reddit_handler import RedditHandler
+    REDDIT_HANDLER_AVAILABLE = True
+except ImportError:
+    REDDIT_HANDLER_AVAILABLE = False
+
+try:
+    from handlers.pinterest_handler import PinterestHandler
+    PINTEREST_HANDLER_AVAILABLE = True
+except ImportError:
+    PINTEREST_HANDLER_AVAILABLE = False
+
 try:
     import mutagen
     from mutagen.flac import FLAC, Picture
@@ -336,6 +355,19 @@ class UltimateMediaDownloader:
         self.tiktok_handler = None
         if TIKTOK_HANDLER_AVAILABLE:
             self.tiktok_handler = TikTokHandler(self)
+        
+        # Initialize social media handlers
+        self.linkedin_handler = None
+        if LINKEDIN_HANDLER_AVAILABLE:
+            self.linkedin_handler = LinkedInHandler(self)
+        
+        self.reddit_handler = None
+        if REDDIT_HANDLER_AVAILABLE:
+            self.reddit_handler = RedditHandler(self)
+        
+        self.pinterest_handler = None
+        if PINTEREST_HANDLER_AVAILABLE:
+            self.pinterest_handler = PinterestHandler(self)
         
         # Initialize Apple Music downloader if available
         self.apple_music_downloader = None
@@ -622,6 +654,51 @@ class UltimateMediaDownloader:
         else:
             self.print_rich(Messages.error("TikTok handler not available"))
             return self._fallback_download(url, 'https://tiktok.com/')
+    
+    def search_and_download_linkedin(self, url, interactive=True):
+        """Download media from LinkedIn
+        
+        Delegates to LinkedInHandler
+        
+        Args:
+            url: LinkedIn URL (post or profile)
+            interactive: Whether to prompt for options
+        """
+        if self.linkedin_handler:
+            return self.linkedin_handler.download(url, output_dir=Path(self.output_dir))
+        else:
+            self.print_rich(Messages.error("LinkedIn handler not available"))
+            return None
+    
+    def search_and_download_reddit(self, url, interactive=True):
+        """Download media from Reddit
+        
+        Delegates to RedditHandler
+        
+        Args:
+            url: Reddit URL (post or user)
+            interactive: Whether to prompt for options
+        """
+        if self.reddit_handler:
+            return self.reddit_handler.download(url, output_dir=Path(self.output_dir))
+        else:
+            self.print_rich(Messages.error("Reddit handler not available"))
+            return None
+    
+    def search_and_download_pinterest(self, url, interactive=True):
+        """Download media from Pinterest
+        
+        Delegates to PinterestHandler
+        
+        Args:
+            url: Pinterest URL (pin, board, or profile)
+            interactive: Whether to prompt for options
+        """
+        if self.pinterest_handler:
+            return self.pinterest_handler.download(url, output_dir=Path(self.output_dir))
+        else:
+            self.print_rich(Messages.error("Pinterest handler not available"))
+            return None
     
     def _fallback_download(self, url, referer):
         """Fallback download using yt-dlp directly"""
@@ -2099,6 +2176,13 @@ class UltimateMediaDownloader:
             # TikTok handler
             elif platform == 'tiktok':
                 return self.search_and_download_tiktok(url, quality=quality, interactive=interactive)
+            # Social media handlers
+            elif platform == 'linkedin':
+                return self.search_and_download_linkedin(url, interactive=interactive)
+            elif platform == 'reddit':
+                return self.search_and_download_reddit(url, interactive=interactive)
+            elif platform == 'pinterest':
+                return self.search_and_download_pinterest(url, interactive=interactive)
             
             # Check if URL might be a playlist
             if self.is_playlist_url(url):

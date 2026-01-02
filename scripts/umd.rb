@@ -6,8 +6,8 @@ class Umd < Formula
 
   desc "Powerful, feature-rich media downloader supporting 1000+ platforms"
   homepage "https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER"
-  url "https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/archive/refs/heads/main.tar.gz"
-  sha256 "9c98631a7f58e02a639568885f74097b6541cbee1e35eb6fcf44cf70b207a6fd"
+  url "https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/archive/refs/tags/v2.0.1.tar.gz"
+  sha256 "b340d9177ff79cacd38e46a281d43c0e7939d5dfe24441cfabe6d013db607553"
   version "2.0.1"
   license "Apache-2.0"
   head "https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git", branch: "main"

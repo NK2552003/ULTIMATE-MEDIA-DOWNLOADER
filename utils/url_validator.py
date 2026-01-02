@@ -63,7 +63,8 @@ class URLValidator:
             custom_handler_platforms = (
                 "hqporner", "eporner", "beeg", "porntrex", "porndig",
                 "txxx", "porndoe", "pornhat", "okxxx", "porn00", "xxxfiles",
-                "fikfap", "fyptt", "tikporn", "xxxtik", "xxxfollow", "hianime"
+                "fikfap", "fyptt", "tikporn", "xxxtik", "xxxfollow", "hianime",
+                "linkedin", "reddit", "pinterest"
             )
             if platform in custom_handler_platforms:
                 if not silent:

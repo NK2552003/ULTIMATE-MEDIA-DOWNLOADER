@@ -19,6 +19,11 @@ from .beeg_handler import BeegHandler
 # TikTok handler
 from .tiktok_handler import TikTokHandler
 
+# Social media handlers
+from .linkedin_handler import LinkedInHandler
+from .reddit_handler import RedditHandler
+from .pinterest_handler import PinterestHandler
+
 __all__ = [
     'SpotifyHandler',
     'AppleMusicHandler',
@@ -33,4 +38,8 @@ __all__ = [
     'BeegHandler',
     # TikTok handler
     'TikTokHandler',
+    # Social media handlers
+    'LinkedInHandler',
+    'RedditHandler',
+    'PinterestHandler',
 ]

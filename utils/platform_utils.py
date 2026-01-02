@@ -77,6 +77,22 @@ PLATFORM_CONFIGS = {
         'formats': ['mp4'],
         'note': 'TikTok videos with watermark removal option'
     },
+    # Social media platforms
+    'linkedin': {
+        'extractors': ['linkedin'],
+        'formats': ['mp4', 'jpg', 'png'],
+        'note': 'LinkedIn posts and user profiles - videos and images'
+    },
+    'reddit': {
+        'extractors': ['reddit'],
+        'formats': ['mp4', 'jpg', 'png', 'gif'],
+        'note': 'Reddit posts and user content - videos, images, and GIFs'
+    },
+    'pinterest': {
+        'extractors': ['pinterest'],
+        'formats': ['jpg', 'png', 'mp4'],
+        'note': 'Pinterest pins, boards, and user profiles - images and videos'
+    },
     'generic': {
         'extractors': ['generic'],
         'formats': ['mp4', 'mp3', 'wav']
@@ -105,6 +121,10 @@ SUPPORTED_SITES = [
     {'name': 'HQPorner', 'description': 'HQPorner HD videos'},
     {'name': 'Beeg', 'description': 'Beeg videos'},
     {'name': 'TikTok', 'description': 'TikTok videos with watermark removal'},
+    # Social media platforms
+    {'name': 'LinkedIn', 'description': 'LinkedIn posts and profiles - videos and images'},
+    {'name': 'Reddit', 'description': 'Reddit posts and user content - videos, images, GIFs'},
+    {'name': 'Pinterest', 'description': 'Pinterest pins, boards, and profiles - images and videos'},
     {'name': 'Generic', 'description': 'many other video and audio platforms'}
 ]
 
@@ -149,6 +169,13 @@ def detect_platform(url: str) -> str:
     # TikTok
     elif 'tiktok.com' in url_lower:
         return 'tiktok'
+    # Social media platforms
+    elif 'linkedin.com' in url_lower:
+        return 'linkedin'
+    elif any(domain in url_lower for domain in ['reddit.com', 'redd.it']):
+        return 'reddit'
+    elif any(domain in url_lower for domain in ['pinterest.com', 'pin.it']):
+        return 'pinterest'
     elif any(domain in url_lower for domain in ['instagram.com', 'facebook.com', 'twitter.com', 'x.com']):
         return 'social_media'
     else:

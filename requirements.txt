@@ -31,6 +31,9 @@ fake-useragent>=1.4.0             # Random user agent generator
 requests-html>=0.10.0             # HTML parsing with JavaScript support  
 beautifulsoup4>=4.12.2            # HTML/XML parser  
 lxml>=4.9.3                       # XML and HTML parser  
+praw>=7.7.1                       # Python Reddit API Wrapper  
+gallery-dl>=1.26.0                # Multi-site media downloader (Pinterest, Instagram, etc)  
+pinterest-downloader>=1.0.0       # Pinterest-specific downloader  
 
 # Browser Automation
 # -------------------------------------------------------------------------

@@ -9,6 +9,12 @@
         "cookie_file": "",
         "media_user_token": ""
     },
+    "reddit": {
+        "client_id": "",
+        "client_secret": "",
+        "user_agent": "python:ultimate-downloader:v1.0",
+        "enabled": false
+    },
     "download": {
         "output_dir": "downloads",
         "format": "best",
@@ -20,7 +26,9 @@
         "subtitles": false,
         "auto_subtitles": false,
         "all_subtitles": false,
-        "subtitle_language": "en"
+        "subtitle_language": "en",
+        "create_zip": true,
+        "max_posts": 100
     },
     "proxy": {
         "enabled": false,
