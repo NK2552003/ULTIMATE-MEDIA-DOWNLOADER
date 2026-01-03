@@ -21,6 +21,11 @@ PLATFORM_CONFIGS = {
         'formats': ['mp3', 'wav', 'flac'],
         'note': 'Spotify tracks will be searched on YouTube for download'
     },
+    'jiosaavn': {
+        'extractors': ['jiosaavn', 'saavn'],
+        'formats': ['mp3', 'wav', 'flac'],
+        'note': 'JioSaavn tracks will be searched on YouTube for download'
+    },
     'soundcloud': {
         'extractors': ['soundcloud'],
         'formats': ['mp3', 'wav', 'flac']
@@ -103,6 +108,7 @@ PLATFORM_CONFIGS = {
 SUPPORTED_SITES = [
     {'name': 'YouTube', 'description': 'YouTube videos, playlists, channels'},
     {'name': 'Spotify', 'description': 'Spotify tracks, albums, playlists (via YouTube search)'},
+    {'name': 'JioSaavn', 'description': 'JioSaavn songs, albums, playlists (via YouTube search)'},
     {'name': 'SoundCloud', 'description': 'SoundCloud tracks and playlists'},
     {'name': 'TikTok', 'description': 'TikTok videos with watermark removal'},
     {'name': 'Instagram', 'description': 'Instagram posts, reels, IGTV'},
@@ -145,6 +151,8 @@ def detect_platform(url: str) -> str:
         return 'youtube'
     elif 'spotify.com' in url_lower:
         return 'spotify'
+    elif any(domain in url_lower for domain in ['jiosaavn.com', 'jiosvn.com']):
+        return 'jiosaavn'
     elif 'soundcloud.com' in url_lower:
         return 'soundcloud'
     elif any(domain in url_lower for domain in ['music.apple.com', 'itunes.apple.com']):

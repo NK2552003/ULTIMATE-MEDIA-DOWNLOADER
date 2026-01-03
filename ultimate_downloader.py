@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Ultimate Multi-Platform Media Downloader
-Supports YouTube, Spotify, Apple Music, SoundCloud, and many other platforms
+Supports YouTube, Spotify, JioSaavn, Apple Music, SoundCloud, and many other platforms
 """
 
 __version__ = "2.0.0"
@@ -40,6 +40,12 @@ try:
     SPOTIFY_HANDLER_AVAILABLE = True
 except ImportError:
     SPOTIFY_HANDLER_AVAILABLE = False
+
+try:
+    from handlers.jiosaavn_handler import JioSaavnHandler
+    JIOSAAVN_HANDLER_AVAILABLE = True
+except ImportError:
+    JIOSAAVN_HANDLER_AVAILABLE = False
 
 try:
     from handlers.pornhub_handler import PornhubHandler
@@ -313,6 +319,11 @@ class UltimateMediaDownloader:
         if SPOTIFY_HANDLER_AVAILABLE:
             self.spotify_handler = SpotifyHandler(self)
         
+        # Initialize JioSaavn handler if available
+        self.jiosaavn_handler = None
+        if JIOSAAVN_HANDLER_AVAILABLE:
+            self.jiosaavn_handler = JioSaavnHandler(self)
+        
         # Initialize Pornhub handler if available
         self.pornhub_handler = None
         if PORNHUB_HANDLER_AVAILABLE:
@@ -477,6 +488,17 @@ class UltimateMediaDownloader:
             return self.spotify_handler.search_and_download(spotify_url, interactive=True)
         else:
             self.print_rich(Messages.error("Spotify handler not available"))
+            return None
+    
+    def search_and_download_jiosaavn_track(self, jiosaavn_url):
+        """Search for JioSaavn track/album/playlist on YouTube and download
+        
+        Delegates to JioSaavnHandler
+        """
+        if self.jiosaavn_handler:
+            return self.jiosaavn_handler.search_and_download(jiosaavn_url, interactive=True)
+        else:
+            self.print_rich(Messages.error("JioSaavn handler not available"))
             return None
     
     def search_and_download_pornhub(self, url, quality="best", interactive=True):
@@ -736,6 +758,8 @@ class UltimateMediaDownloader:
                 'quiet': True,
                 'no_warnings': True,
                 'extract_flat': True,
+                'socket_timeout': 30,
+                'retries': 3,
             }
             
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -749,23 +773,9 @@ class UltimateMediaDownloader:
         
         except Exception as e:
             if RICH_AVAILABLE and self.console:
-                self.console.print(f"[red]✗ YouTube search error: {e}[/red]")
+                self.console.print(f"[dim yellow]⚠  Search attempt failed: {e}[/dim yellow]")
             else:
-                print(f"✗ YouTube search error: {e}")
-        
-        # Fallback: Try youtube-search-python library
-        if YOUTUBE_SEARCH_AVAILABLE:
-            try:
-                print("⟳ Trying alternative search library...")
-                videos_search = VideosSearch(query, limit=max_results)
-                results = videos_search.result()
-                
-                if results and 'result' in results and results['result']:
-                    video = results['result'][0]
-                    return video.get('link')
-                
-            except Exception as e:
-                print(f"⚠  Alternative search library error: {e}")
+                print(f"⚠  Search attempt failed: {e}")
         
         return None
     
@@ -920,7 +930,9 @@ class UltimateMediaDownloader:
                 'quiet': True,
                 'no_warnings': True,
                 'extract_flat': True,
-                'playlistend': max_results
+                'playlistend': max_results,
+                'socket_timeout': 30,
+                'retries': 3,
             }
             
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -931,9 +943,11 @@ class UltimateMediaDownloader:
                     for entry in search_results['entries']:
                         if entry and entry.get('id'):
                             urls.append(f"https://www.youtube.com/watch?v={entry['id']}")
-                    return urls
+                    if urls:
+                        return urls
         except Exception as e:
-            print(f"  ⚠  Multiple search error: {e}")
+            # Don't print error here, let caller handle it
+            pass
         
         return []
     
@@ -2151,9 +2165,11 @@ class UltimateMediaDownloader:
             else:
                 print(f"◎ Detected platform: {platform.upper()}")
             
-            # For Spotify/Apple Music/Pornhub/XNXX/Tumblr/xHamster, use enhanced handlers first
+            # For Spotify/JioSaavn/Apple Music/Pornhub/XNXX/Tumblr/xHamster, use enhanced handlers first
             if platform == 'spotify':
                 return self.search_and_download_spotify_track(url)
+            elif platform == 'jiosaavn':
+                return self.search_and_download_jiosaavn_track(url)
             elif platform == 'apple_music':
                 return self.search_and_download_apple_music_track(url, interactive=interactive)
             elif platform == 'pornhub':

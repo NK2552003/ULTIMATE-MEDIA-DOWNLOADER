@@ -51,6 +51,7 @@ graph TB
     subgraph "Handler Layer"
         SPOTIFY[Spotify Handler]
         APPLE[Apple Music Handler]
+        JIOSAAVN[JioSaavn Handler]
         TUMBLR[Tumblr Handler]
         LINKEDIN[LinkedIn Handler]
         REDDIT[Reddit Handler]
@@ -87,6 +88,7 @@ graph TB
     
     MAIN --> SPOTIFY
     MAIN --> APPLE
+    MAIN --> JIOSAAVN
     MAIN --> TUMBLR
     MAIN --> PH
     MAIN --> XNXX
@@ -103,6 +105,7 @@ graph TB
 
     SPOTIFY --> SCORER
     APPLE --> SCORER
+    JIOSAAVN --> SCORER
 
     MAIN --> UTILS
     MAIN --> URL_VAL
@@ -199,6 +202,7 @@ classDiagram
         +verbose: bool
         +spotify_handler: SpotifyHandler
         +apple_music_handler: AppleMusicHandler
+        +jiosaavn_handler: JioSaavnHandler
         +tumblr_handler: TumblrHandler
         +download(url)
         +detect_platform(url)
@@ -218,6 +222,15 @@ classDiagram
         +search_and_download(url)
         +_download_track_enhanced(url)
         +_download_album_enhanced(url)
+    }
+
+    class JioSaavnHandler {
+        +downloader: UltimateMediaDownloader
+        +search_and_download(url)
+        +_download_track(url)
+        +_download_album(url)
+        +_download_playlist(url)
+        +_extract_metadata(track_id)
     }
 
     class TumblrHandler {
@@ -288,6 +301,7 @@ classDiagram
 
     UltimateMediaDownloader --> SpotifyHandler
     UltimateMediaDownloader --> AppleMusicHandler
+    UltimateMediaDownloader --> JioSaavnHandler
     UltimateMediaDownloader --> TumblrHandler
     UltimateMediaDownloader --> LinkedInHandler
     UltimateMediaDownloader --> RedditHandler

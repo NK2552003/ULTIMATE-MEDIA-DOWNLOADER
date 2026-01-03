@@ -4,6 +4,7 @@ Contains platform-specific download handlers.
 """
 
 from .spotify_handler import SpotifyHandler
+from .jiosaavn_handler import JioSaavnHandler
 from .apple_music_handler import AppleMusicHandler
 from .pornhub_handler import PornhubHandler
 from .xnxx_handler import XNXXHandler
@@ -26,6 +27,7 @@ from .pinterest_handler import PinterestHandler
 
 __all__ = [
     'SpotifyHandler',
+    'JioSaavnHandler',
     'AppleMusicHandler',
     'PornhubHandler',
     'XNXXHandler',

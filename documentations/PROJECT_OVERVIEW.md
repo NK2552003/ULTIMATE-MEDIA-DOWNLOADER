@@ -149,6 +149,7 @@ mindmap
 | Spotify | Tracks, albums, playlists (via YouTube) |
 | SoundCloud | Tracks, playlists, user uploads |
 | Apple Music | Songs, albums (via YouTube) |
+| JioSaavn | Tracks, albums, playlists (via YouTube) |
 | Bandcamp | Tracks, albums |
 
 ### Social Media
@@ -249,16 +250,17 @@ graph TB
 | Generic Downloader | ~1200 lines |
 | Spotify Handler | ~1200 lines |
 | Apple Music Handler | ~1100 lines |
+| JioSaavn Handler | ~1700 lines |
 | YouTube Scorer | ~1000 lines |
 | Utility Modules | ~1500 lines |
-| Total Python Code | ~10000+ lines |
+| Total Python Code | ~12000+ lines |
 
 ### File Count
 
 | Category | Count |
 |----------|-------|
 | Python Files | 19 |
-| Handler Modules | 14 |
+| Handler Modules | 16 |
 | Utility Modules | 8 |
 | Shell Scripts | 8 |
 | Documentation | 10+ |

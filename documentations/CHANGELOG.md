@@ -199,6 +199,7 @@ gitGraph
     branch feature/handlers
     commit id: "Spotify handler"
     commit id: "Apple Music handler"
+    commit id: "JioSaavn handler"
     commit id: "Adult handlers"
     checkout main
     branch feature/utils

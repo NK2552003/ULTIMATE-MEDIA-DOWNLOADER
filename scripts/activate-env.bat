@@ -38,9 +38,11 @@ if exist "%~dp0venv\Scripts\activate.bat" (
     echo   - eporner_handler       (Eporner support)
     echo   - hqporner_handler      (HQPorner support)
     echo   - beeg_handler          (Beeg support)
-    echo.
-    
-    echo You can now run:
+    echo   - linkedin_handler      (LinkedIn support)
+    echo   - reddit_handler        (Reddit support)
+    echo   - pinterest_handler     (Pinterest support)
+    echo   - jiosaavn_handler      (JioSaavn support)
+    echo. You can now run:
     echo   * python ultimate_downloader.py --help        (Show help and options)
     echo   * python ultimate_downloader.py ^<URL^>         (Download from URL)
     echo   * python ultimate_downloader.py -i            (Interactive mode)

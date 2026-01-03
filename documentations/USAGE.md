@@ -364,6 +364,21 @@ umd "https://music.apple.com/us/song/..." --audio-only
 umd "https://music.apple.com/us/album/..." --audio-only
 ```
 
+### JioSaavn
+
+Indian music platform with comprehensive metadata:
+
+```bash
+# Track
+umd "https://www.jiosaavn.com/song/..." --audio-only
+
+# Album
+umd "https://www.jiosaavn.com/album/..." --audio-only
+
+# Playlist
+umd "https://www.jiosaavn.com/featured/..." --audio-only
+```
+
 ### Instagram
 
 ```bash
