@@ -9,7 +9,8 @@ This document describes the platform-specific handlers in the Ultimate Media Dow
 3. [Spotify Handler](#spotify-handler)
 4. [Apple Music Handler](#apple-music-handler)
 5. [JioSaavn Handler](#jiosaavn-handler)
-6. [Tumblr Handler](#tumblr-handler)
+6. [Gaana Handler](#gaana-handler)
+7. [Tumblr Handler](#tumblr-handler)
 7. [LinkedIn Handler](#linkedin-handler)
 8. [Pinterest Handler](#pinterest-handler)
 9. [Reddit Handler](#reddit-handler)
@@ -45,6 +46,7 @@ handlers/
     spotify_handler.py
     apple_music_handler.py
     jiosaavn_handler.py
+    gaana_handler.py
     tumblr_handler.py
     linkedin_handler.py
     pinterest_handler.py
@@ -268,6 +270,138 @@ The handler uses cloudscraper to bypass protection and BeautifulSoup to parse:
 - Rich metadata extraction from Apple Music pages
 - Album and playlist batch downloading
 - Cover art embedding
+
+---
+
+## Gaana Handler
+
+**File**: `handlers/gaana_handler.py`
+
+The Gaana Handler downloads Indian music from Gaana platform with comprehensive metadata support and flexible song selection.
+
+### Processing Flow
+
+```mermaid
+flowchart TD
+    A[Gaana URL] --> B[Detect content type]
+    B --> C{Type?}
+    C -->|Song| D[_download_track]
+    C -->|Album| E[_download_album]
+    C -->|Playlist| F[_download_playlist]
+    C -->|Artist| G[_download_artist]
+    
+    D --> H[Fetch metadata via web scraping]
+    E --> H
+    F --> H
+    G --> H
+    
+    H --> I[Display song list to user]
+    I --> J[User selects songs]
+    J --> K[Search YouTube with scoring]
+    K --> L[Download and embed metadata]
+    L --> M[Embed cover art]
+```
+
+### Supported Content Types
+
+| Content Type | URL Pattern |
+|--------------|-------------|
+| Song | `gaana.com/song/...` |
+| Album | `gaana.com/album/...` |
+| Playlist | `gaana.com/playlist/...` |
+| Artist | `gaana.com/artist/...` |
+
+### Web Scraping Integration
+
+The handler uses BeautifulSoup for metadata extraction:
+
+| Data Source | Purpose |
+|----------|---------|
+| Meta tags (og:title, og:image) | Basic metadata |
+| JSON-LD structured data | Detailed track/album information |
+| Page links | Song discovery for albums/playlists |
+
+### Interactive Song Selection
+
+For albums, playlists, and artists, the handler provides:
+
+- **Display**: Numbered list of all songs with artist names
+- **Selection Options**:
+  - Press Enter or type 'all' → Download all tracks
+  - Type specific numbers: `1,3,5` → Download songs 1, 3, and 5
+  - Type ranges: `1-10` → Download songs 1 through 10
+  - Combine: `1-5,8,10` → Download multiple ranges/songs
+  - Type 'cancel' → Abort download
+
+### Metadata Extraction
+
+The handler extracts comprehensive metadata:
+
+- Song title (with HTML entity decoding)
+- Artist name(s)
+- Album name
+- Release year
+- Album artwork URL
+- Song duration
+
+### YouTube Search with Scoring
+
+Uses intelligent YouTube search with scoring algorithm:
+
+| Factor | Weight |
+|--------|--------|
+| Title match | 100 points |
+| Artist match | 50 points |
+| Official content | 30 points |
+| Audio/lyric video | 20 points |
+| View count | Up to 30 points |
+| Like ratio | Up to 15 points |
+| Unwanted keywords | -50 points |
+
+### Example Usage
+
+```bash
+# Download a single track
+umd https://gaana.com/song/financer-5
+
+# Download an album (with song selection)
+umd https://gaana.com/album/financer
+
+# Download a playlist (with song selection)
+umd https://gaana.com/playlist/gaana-dj-haryanvi-top-50
+
+# Download artist's songs (with song selection)
+umd https://gaana.com/artist/bintu-pabra
+```
+
+### Format Support
+
+Supports multiple audio formats with quality selection:
+
+- **MP3**: Best quality (320kbps)
+- **M4A**: High quality (256kbps AAC)
+- **FLAC**: Lossless (larger files)
+- **Auto**: Best available quality
+
+### Technical Implementation
+
+The handler implements several advanced features:
+
+1. **HTML Entity Decoding**: Converts `&quot;`, `&amp;` to proper characters
+2. **Smart Song Selection**: Parse user input like `1,3-5,7` for flexible downloads
+3. **Format Preservation**: Selected format/quality passed to all track downloads
+4. **Error Recovery**: Continues downloading remaining songs if one fails
+
+### Key Features
+
+- ✅ Single tracks with full metadata
+- ✅ Complete albums with song selection
+- ✅ Full playlists with song selection  
+- ✅ Artist pages with song selection
+- ✅ Album artwork embedding (MP3, M4A, FLAC)
+- ✅ Flexible format selection (MP3/M4A/FLAC)
+- ✅ Interactive song selection UI
+- ✅ YouTube search with intelligent scoring
 
 ---
 

@@ -379,6 +379,24 @@ umd "https://www.jiosaavn.com/album/..." --audio-only
 umd "https://www.jiosaavn.com/featured/..." --audio-only
 ```
 
+### Gaana
+
+Indian music platform with comprehensive metadata:
+
+```bash
+# Track
+umd "https://gaana.com/song/..." --audio-only
+
+# Album
+umd "https://gaana.com/album/..." --audio-only
+
+# Playlist
+umd "https://gaana.com/playlist/..." --audio-only
+
+# Artist
+umd "https://gaana.com/artist/..." --audio-only
+```
+
 ### Instagram
 
 ```bash

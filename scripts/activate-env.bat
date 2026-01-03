@@ -42,6 +42,7 @@ if exist "%~dp0venv\Scripts\activate.bat" (
     echo   - reddit_handler        (Reddit support)
     echo   - pinterest_handler     (Pinterest support)
     echo   - jiosaavn_handler      (JioSaavn support)
+    echo   - gaana_handler         (Gaana support)
     echo. You can now run:
     echo   * python ultimate_downloader.py --help        (Show help and options)
     echo   * python ultimate_downloader.py ^<URL^>         (Download from URL)

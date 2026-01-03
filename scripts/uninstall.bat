@@ -107,6 +107,7 @@ echo   - linkedin_handler      (LinkedIn support)
 echo   - reddit_handler        (Reddit support)
 echo   - pinterest_handler     (Pinterest support)
 echo   - jiosaavn_handler      (JioSaavn support)
+echo   - gaana_handler         (Gaana support)
 echo.
 echo [INFO] Your downloaded files are still in: %%USERPROFILE%%\Downloads\UltimateDownloader
 echo [INFO] To remove downloads too, run: rmdir /s /q "%%USERPROFILE%%\Downloads\UltimateDownloader"

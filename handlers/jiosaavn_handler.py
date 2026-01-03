@@ -849,8 +849,34 @@ class JioSaavnHandler:
                         artist_match = 50 if artists_lower and artists_lower in video_title else 0
                         
                         # Bonus for official channels
-                        official_channels = ['t-series', 'sony music', 'zee music', 'speed records', 
-                                            'yrf', 'eros now', 'saregama', 'venus', 'tips', 'jio']
+                        official_channels = [
+                        "t-series","t-series bollywood","sony music india","zee music company",
+                        "saregama music","tips official","venus music","eros now music",
+                        "yrf music","dharma productions music","jio studios music",
+                        "times music","panorama music","lahari music","aditya music",
+                        "aditya music tamil","aditya music telugu","think music india",
+                        "white hill music","desi music factory","hombale music",
+                        "aanand audio","junglee music","saregama south","sony music south",
+                        "zee music south","t-series south","sun tv music",
+                        "speed records","white hill music","t-series apna punjab",
+                        "lokdhun punjabi","amar audio","finetone music",
+                        "mad4music","humble music","desi crew official",
+                        "brown town music","vehli janta records","rebel records",
+                        "single track studio","jass records","tips punjabi",
+                        "zee music punjabi","sony music punjabi",
+                        "sony music","vevo","universal music group","warner music group",
+                        "atlantic records","interscope records","republic records",
+                        "def jam recordings","capitol records","island records",
+                        "columbia records","motown records","epic records",
+                        "rca records","virgin music","polydor records",
+                        "arijit singh","atif aslam","armaan malik","shreya ghoshal",
+                        "neha kakkar","jubin nautiyal","b praak","guru randhawa",
+                        "badshah","yo yo honey singh","sidhu moose wala",
+                        "diljit dosanjh","karan aujla","ap dhillon","shubh",
+                        "billie eilish","taylor swift","ed sheeran","drake",
+                        "the weeknd","dua lipa","ariana grande","eminem","coldplay"
+                        ]
+
                         channel_bonus = 30 if any(ch in channel for ch in official_channels) else 0
                         
                         # Calculate engagement score

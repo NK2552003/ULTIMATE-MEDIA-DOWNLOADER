@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Ultimate Multi-Platform Media Downloader
-Supports YouTube, Spotify, JioSaavn, Apple Music, SoundCloud, and many other platforms
+Supports YouTube, Spotify, JioSaavn, Gaana, Apple Music, SoundCloud, and many other platforms
 """
 
 __version__ = "2.0.0"
@@ -46,6 +46,12 @@ try:
     JIOSAAVN_HANDLER_AVAILABLE = True
 except ImportError:
     JIOSAAVN_HANDLER_AVAILABLE = False
+
+try:
+    from handlers.gaana_handler import GaanaHandler
+    GAANA_HANDLER_AVAILABLE = True
+except ImportError:
+    GAANA_HANDLER_AVAILABLE = False
 
 try:
     from handlers.pornhub_handler import PornhubHandler
@@ -324,6 +330,11 @@ class UltimateMediaDownloader:
         if JIOSAAVN_HANDLER_AVAILABLE:
             self.jiosaavn_handler = JioSaavnHandler(self)
         
+        # Initialize Gaana handler if available
+        self.gaana_handler = None
+        if GAANA_HANDLER_AVAILABLE:
+            self.gaana_handler = GaanaHandler(self)
+        
         # Initialize Pornhub handler if available
         self.pornhub_handler = None
         if PORNHUB_HANDLER_AVAILABLE:
@@ -499,6 +510,17 @@ class UltimateMediaDownloader:
             return self.jiosaavn_handler.search_and_download(jiosaavn_url, interactive=True)
         else:
             self.print_rich(Messages.error("JioSaavn handler not available"))
+            return None
+    
+    def search_and_download_gaana_track(self, gaana_url):
+        """Search for Gaana track/album/playlist on YouTube and download
+        
+        Delegates to GaanaHandler
+        """
+        if self.gaana_handler:
+            return self.gaana_handler.search_and_download(gaana_url, interactive=True)
+        else:
+            self.print_rich(Messages.error("Gaana handler not available"))
             return None
     
     def search_and_download_pornhub(self, url, quality="best", interactive=True):
@@ -2165,11 +2187,13 @@ class UltimateMediaDownloader:
             else:
                 print(f"◎ Detected platform: {platform.upper()}")
             
-            # For Spotify/JioSaavn/Apple Music/Pornhub/XNXX/Tumblr/xHamster, use enhanced handlers first
+            # For Spotify/JioSaavn/Gaana/Apple Music/Pornhub/XNXX/Tumblr/xHamster, use enhanced handlers first
             if platform == 'spotify':
                 return self.search_and_download_spotify_track(url)
             elif platform == 'jiosaavn':
                 return self.search_and_download_jiosaavn_track(url)
+            elif platform == 'gaana':
+                return self.search_and_download_gaana_track(url)
             elif platform == 'apple_music':
                 return self.search_and_download_apple_music_track(url, interactive=interactive)
             elif platform == 'pornhub':
@@ -2640,8 +2664,15 @@ class UltimateMediaDownloader:
                     title_clean = (title or 'Unknown')[:40].replace('|', '').replace('/', '').replace('\\', '').replace('*', '').replace('?', '').replace('[', '').replace(']', '')
                     uploader_clean = (uploader or 'Unknown')[:20].replace('|', '').replace('/', '').replace('\\', '').replace('*', '').replace('?', '').replace('[', '').replace(']', '')
                     
-                    # Search for files with any of these extensions
-                    extensions = ['.mp3', '.m4a', '.webm', '.mp4', '.mkv', '.flac', '.opus']
+                    # Determine expected extension based on output_format
+                    expected_ext = output_format.lower() if output_format else ('mp3' if audio_only else 'mp4')
+                    
+                    # Search for files - prioritize expected extension first
+                    extensions = [f'.{expected_ext}']
+                    # Add other common audio/video extensions as fallback
+                    fallback_exts = ['.mp3', '.m4a', '.flac', '.opus', '.webm', '.mp4', '.mkv']
+                    extensions.extend([ext for ext in fallback_exts if ext != f'.{expected_ext}'])
+                    
                     downloaded_files = []
                     
                     for ext in extensions:
@@ -2673,13 +2704,26 @@ class UltimateMediaDownloader:
                             break
                     
                     if not downloaded_files:
-                        # Last resort: check for any recently created files
+                        # Last resort: check for any recently created files with expected extension
                         import time
                         current_time = time.time()
+                        
+                        # First try to find files with expected extension
                         recent_files = [f for f in self.output_dir.iterdir() 
-                                      if f.is_file() and (current_time - f.stat().st_mtime) < 60]
+                                      if f.is_file() 
+                                      and f.suffix == f'.{expected_ext}'
+                                      and (current_time - f.stat().st_mtime) < 60]
+                        
+                        # If no files with expected extension, check for any audio/video files
+                        if not recent_files:
+                            recent_files = [f for f in self.output_dir.iterdir() 
+                                          if f.is_file() 
+                                          and f.suffix in ['.mp3', '.m4a', '.flac', '.opus', '.webm', '.mp4', '.mkv']
+                                          and (current_time - f.stat().st_mtime) < 60]
                         
                         if recent_files:
+                            # Sort by modification time (most recent first)
+                            recent_files.sort(key=lambda f: f.stat().st_mtime, reverse=True)
                             download_succeeded = True
                             self.print_rich(f"  [dim]✓ Found downloaded file: {recent_files[0].name}[/dim]")
                         else:

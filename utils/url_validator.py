@@ -53,8 +53,8 @@ class URLValidator:
                 if not silent:
                     print(f"◎ Detected platform: {platform.upper()}")
             
-            # Treat Apple Music and Spotify as supported (handled via search/metadata)
-            if platform in ("apple_music", "spotify"):
+            # Treat Apple Music, Spotify, JioSaavn, and Gaana as supported (handled via search/metadata)
+            if platform in ("apple_music", "spotify", "jiosaavn", "gaana"):
                 if not silent:
                     print("✓ URL supported via enhanced handler (YouTube search + metadata)")
                 return True

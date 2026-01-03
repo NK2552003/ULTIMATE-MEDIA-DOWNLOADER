@@ -633,6 +633,8 @@ from logger import QuietLogger
 from utils.utils import sanitize_filename
 from handlers.spotify_handler import SpotifyHandler
 from handlers.apple_music_handler import AppleMusicHandler
+from handlers.jiosaavn_handler import JioSaavnHandler
+from handlers.gaana_handler import GaanaHandler
 from handlers.pornhub_handler import PornhubHandler
 from handlers.xnxx_handler import XNXXHandler
 from handlers.tumblr_handler import TumblrHandler
@@ -732,6 +734,8 @@ show_post_install_info() {
     echo -e "  ${GREEN}Platform Handlers (handlers/):${NC}"
     echo -e "    • spotify_handler      - Spotify track/playlist integration"
     echo -e "    • apple_music_handler  - Apple Music support"
+    echo -e "    • jiosaavn_handler     - JioSaavn support"
+    echo -e "    • gaana_handler        - Gaana support"
     echo -e "    • pornhub_handler      - Pornhub support"
     echo -e "    • xnxx_handler         - XNXX support"
     echo -e "    • tumblr_handler       - Tumblr support"
