@@ -20,14 +20,14 @@ This software is provided for educational and personal use only. Users are respo
 
 ## Overview
 
-Ultimate Media Downloader is a professional-grade, open-source media downloading tool supporting 100+ platforms (YouTube, Spotify, JioSaavn, SoundCloud, Instagram, TikTok, Apple Music and more). Built with Python, it features a beautiful Rich CLI interface and enterprise-level capabilities with consumer-friendly simplicity.
+Ultimate Media Downloader is a professional-grade, open-source media downloading tool supporting 100+ platforms (YouTube, Spotify, JioSaavn, Gaana, SoundCloud, Instagram, TikTok, Apple Music and more). Built with Python, it features a beautiful Rich CLI interface and enterprise-level capabilities with consumer-friendly simplicity.
 
 ### Why Choose Ultimate Media Downloader?
 
 | Feature                | Description |
 |------------------------|-------------|
 | **One Command**        | Install once, use <code>umd</code> from anywhere |
-| **100+ Platforms**    | YouTube, Spotify, JioSaavn, Apple Music, Instagram, TikTok, SoundCloud, and more |
+| **100+ Platforms**    | YouTube, Spotify, JioSaavn, Gaana, Apple Music, Instagram, TikTok, SoundCloud, and more |
 | **No Virtual Env**     | Clean installation with <code>pipx</code> |
 | **Auto Organization**  | Downloads saved to <code>~/Downloads/UltimateDownloader</code> |
 | **Beautiful UI**       | Modern CLI with progress bars and rich formatting |
@@ -42,8 +42,8 @@ Ultimate Media Downloader is a professional-grade, open-source media downloading
 | Type   | Platforms & Features |
 |--------|---------------------|
 | **Video** | YouTube (4K/8K), Vimeo, Dailymotion, Live streams, Age-restricted, Custom quality, HiAnime|
-| **Audio** | Spotify (via YouTube search), JioSaavn (via YouTube search), SoundCloud, Apple Music, 320kbps, FLAC, MP3 |
-| **Playlists** | YouTube, Spotify, JioSaavn, SoundCloud, TikTok, Instagram, Batch download |
+| **Audio** | Spotify (via YouTube search), JioSaavn (via YouTube search), Gaana (via YouTube search), SoundCloud, Apple Music, 320kbps, FLAC, MP3 |
+| **Playlists** | YouTube, Spotify, JioSaavn, Gaana, SoundCloud, TikTok, Instagram, Batch download |
 | **Social** | Instagram, TikTok, Facebook, Twitter/X, Twitch, **LinkedIn** (direct posts), **Pinterest** (profiles/boards), **Reddit** (posts/users), IGTV, Reels, Stories |
 | **Generic** | 1000+ sites via yt-dlp, SSL/TLS bypass, proxy rotation |
 
