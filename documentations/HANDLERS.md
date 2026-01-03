@@ -8,19 +8,20 @@ This document describes the platform-specific handlers in the Ultimate Media Dow
 2. [Handler Architecture](#handler-architecture)
 3. [Spotify Handler](#spotify-handler)
 4. [Apple Music Handler](#apple-music-handler)
-5. [Tumblr Handler](#tumblr-handler)
-6. [LinkedIn Handler](#linkedin-handler)
-7. [Pinterest Handler](#pinterest-handler)
-8. [Reddit Handler](#reddit-handler)
-9. [Pornhub Handler](#pornhub-handler)
-10. [XNXX Handler](#xnxx-handler)
-11. [xHamster Handler](#xhamster-handler)
-12. [HiAnime Handler](#hianime-handler)
-13. [TikTok Handler](#tiktok-handler)
-14. [Eporner Handler](#eporner-handler)
-15. [HQPorner Handler](#hqporner-handler)
-16. [Beeg Handler](#beeg-handler)
-17. [Creating Custom Handlers](#creating-custom-handlers)
+5. [JioSaavn Handler](#jiosaavn-handler)
+6. [Tumblr Handler](#tumblr-handler)
+7. [LinkedIn Handler](#linkedin-handler)
+8. [Pinterest Handler](#pinterest-handler)
+9. [Reddit Handler](#reddit-handler)
+10. [Pornhub Handler](#pornhub-handler)
+11. [XNXX Handler](#xnxx-handler)
+12. [xHamster Handler](#xhamster-handler)
+13. [HiAnime Handler](#hianime-handler)
+14. [TikTok Handler](#tiktok-handler)
+15. [Eporner Handler](#eporner-handler)
+16. [HQPorner Handler](#hqporner-handler)
+17. [Beeg Handler](#beeg-handler)
+18. [Creating Custom Handlers](#creating-custom-handlers)
 
 ---
 
@@ -43,6 +44,7 @@ handlers/
     __init__.py
     spotify_handler.py
     apple_music_handler.py
+    jiosaavn_handler.py
     tumblr_handler.py
     linkedin_handler.py
     pinterest_handler.py
@@ -89,6 +91,14 @@ classDiagram
         +_download_playlist_enhanced(url)
     }
 
+    class JioSaavnHandler {
+        +_download_track(url)
+        +_download_album(url)
+        +_download_playlist(url)
+        +_extract_metadata(track_id)
+        +_decode_html_entities(text)
+    }
+
     class TumblrHandler {
         +api: TumblrAPI
         +download_blog(url)
@@ -123,6 +133,7 @@ classDiagram
     BaseHandler <|-- HiAnimeHandler
     BaseHandler <|-- SpotifyHandler
     BaseHandler <|-- AppleMusicHandler
+    BaseHandler <|-- JioSaavnHandler
     BaseHandler <|-- TumblrHandler
     BaseHandler <|-- LinkedInHandler
     BaseHandler <|-- RedditHandler
@@ -257,6 +268,108 @@ The handler uses cloudscraper to bypass protection and BeautifulSoup to parse:
 - Rich metadata extraction from Apple Music pages
 - Album and playlist batch downloading
 - Cover art embedding
+
+---
+
+## JioSaavn Handler
+
+**File**: `handlers/jiosaavn_handler.py`
+
+The JioSaavn Handler downloads Indian music from JioSaavn platform with comprehensive metadata support.
+
+### Processing Flow
+
+```mermaid
+flowchart TD
+    A[JioSaavn URL] --> B[Detect content type]
+    B --> C{Type?}
+    C -->|Song| D[_download_track]
+    C -->|Album| E[_download_album]
+    C -->|Playlist| F[_download_playlist]
+    C -->|Artist| G[_download_artist_songs]
+    
+    D --> H[Fetch metadata from API]
+    E --> H
+    F --> H
+    G --> H
+    
+    H --> I[Search YouTube with query]
+    I --> J[Download and embed metadata]
+    J --> K[Embed cover art & lyrics]
+```
+
+### Supported Content Types
+
+| Content Type | URL Pattern |
+|--------------|-------------|
+| Song | `jiosaavn.com/song/...` |
+| Album | `jiosaavn.com/album/...` |
+| Playlist | `jiosaavn.com/featured/...` or `jiosaavn.com/s/playlist/...` |
+| Artist | `jiosaavn.com/artist/...` |
+
+### JioSaavn API Integration
+
+The handler uses JioSaavn's unofficial API endpoints for metadata:
+
+| Endpoint | Purpose |
+|----------|---------|
+| `autocomplete.get` | Search functionality |
+| `song.getDetails` | Track metadata and streaming URLs |
+| `content.getAlbumDetails` | Album information and track list |
+| `playlist.getDetails` | Playlist contents |
+| `lyrics.getLyrics` | Song lyrics in multiple languages |
+
+### Metadata Extraction
+
+The handler extracts comprehensive metadata:
+
+- Song title (with HTML entity decoding)
+- Artist name(s) (primary and featuring artists)
+- Album name
+- Release year
+- Song duration
+- High-quality cover art (500x500)
+- Lyrics (if available)
+- Album artist
+- Copyright information
+
+### Key Features
+
+- **Official API Integration**: Uses JioSaavn's API for reliable metadata
+- **High-Quality Metadata**: Extracts detailed song information including multiple artists
+- **Lyrics Support**: Downloads and embeds lyrics when available
+- **Cover Art**: Embeds high-resolution album artwork
+- **HTML Entity Decoding**: Properly handles special characters in titles
+- **Batch Processing**: Supports album and playlist downloads with progress tracking
+- **Fallback API**: Uses alternative API endpoints if primary fails
+- **Concurrent Downloads**: Multi-threaded downloading for playlists
+- **YouTube Search**: Falls back to YouTube for actual audio streaming
+
+### Example Usage
+
+```bash
+# Download a single track
+umd https://www.jiosaavn.com/song/kesariya/...
+
+# Download an entire album
+umd https://www.jiosaavn.com/album/brahmastra/...
+
+# Download a playlist
+umd https://www.jiosaavn.com/featured/...
+
+# Download artist's top songs
+umd https://www.jiosaavn.com/artist/arijit-singh/...
+```
+
+### Technical Implementation
+
+The handler implements several advanced features:
+
+1. **HTML Entity Decoding**: Converts `&quot;`, `&amp;` to proper characters
+2. **Multi-Artist Support**: Handles songs with multiple featured artists
+3. **Error Handling**: Graceful degradation when API endpoints fail
+4. **Progress Tracking**: Rich console progress bars for batch downloads
+5. **Metadata Preservation**: Maintains all original JioSaavn metadata
 
 ---
 
