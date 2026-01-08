@@ -11,18 +11,19 @@ This document describes the platform-specific handlers in the Ultimate Media Dow
 5. [JioSaavn Handler](#jiosaavn-handler)
 6. [Gaana Handler](#gaana-handler)
 7. [Tumblr Handler](#tumblr-handler)
-7. [LinkedIn Handler](#linkedin-handler)
-8. [Pinterest Handler](#pinterest-handler)
-9. [Reddit Handler](#reddit-handler)
-10. [Pornhub Handler](#pornhub-handler)
-11. [XNXX Handler](#xnxx-handler)
-12. [xHamster Handler](#xhamster-handler)
-13. [HiAnime Handler](#hianime-handler)
-14. [TikTok Handler](#tiktok-handler)
-15. [Eporner Handler](#eporner-handler)
-16. [HQPorner Handler](#hqporner-handler)
-17. [Beeg Handler](#beeg-handler)
-18. [Creating Custom Handlers](#creating-custom-handlers)
+8. [LinkedIn Handler](#linkedin-handler)
+9. [Pinterest Handler](#pinterest-handler)
+10. [Reddit Handler](#reddit-handler)
+11. [Instagram Handler](#instagram-handler)
+12. [Pornhub Handler](#pornhub-handler)
+13. [XNXX Handler](#xnxx-handler)
+14. [xHamster Handler](#xhamster-handler)
+15. [HiAnime Handler](#hianime-handler)
+16. [TikTok Handler](#tiktok-handler)
+17. [Eporner Handler](#eporner-handler)
+18. [HQPorner Handler](#hqporner-handler)
+19. [Beeg Handler](#beeg-handler)
+20. [Creating Custom Handlers](#creating-custom-handlers)
 
 ---
 
@@ -51,6 +52,7 @@ handlers/
     linkedin_handler.py
     pinterest_handler.py
     reddit_handler.py
+    instagram_handler.py
     pornhub_handler.py
     xnxx_handler.py
     xhamster_handler.py
@@ -126,6 +128,15 @@ classDiagram
         +_try_gallery_dl(url)
     }
 
+    class InstagramHandler {
+        +browser: Browser
+        +page: Page
+        +_download_single_post(url)
+        +_download_profile_posts(username)
+        +_download_stories(url)
+        +_handle_profile_download(username)
+    }
+
     class HiAnimeHandler {
         +_download_anime(url)
         +_download_episode(url)
@@ -140,6 +151,7 @@ classDiagram
     BaseHandler <|-- LinkedInHandler
     BaseHandler <|-- RedditHandler
     BaseHandler <|-- PinterestHandler
+    BaseHandler <|-- InstagramHandler
 ```
 
 ### Common Methods
@@ -752,6 +764,234 @@ Without API credentials, the handler uses yt-dlp and web scraping.
 - Gallery posts (multiple images)
 - Cross-posts
 - External media (imgur, gfycat, etc.)
+
+---
+
+## Instagram Handler
+
+**File**: `handlers/instagram_handler.py`
+
+The Instagram Handler enables downloading posts, reels, stories, and images from Instagram using Playwright for browser automation. Supports bulk downloads with ZIP creation and range selection.
+
+### Supported Content Types
+
+| Content Type | URL Pattern | Example |
+|--------------|-------------|---------|
+| Single Post | `/p/POST_ID` | `https://instagram.com/p/ABC123` |
+| Single Reel | `/reel/REEL_ID` or `/reels/REEL_ID` | `https://instagram.com/reel/XYZ789` |
+| IGTV Video | `/tv/VIDEO_ID` | `https://instagram.com/tv/DEF456` |
+| Stories | `/stories/USERNAME` | `https://instagram.com/stories/username` |
+| Profile Posts | `/USERNAME/` | `https://instagram.com/username` |
+| Profile Reels | `/USERNAME/reels/` | `https://instagram.com/username/reels` |
+
+### Architecture
+
+```mermaid
+flowchart TD
+    A[Instagram URL] --> B{URL Type?}
+    B -->|Single Post/Reel| C[_download_single_post]
+    B -->|Stories| D[_download_stories]
+    B -->|Profile| E[_handle_profile_download]
+    B -->|Profile Reels Page| F[_download_profile_posts - reels]
+    
+    C --> G[Initialize Playwright Browser]
+    D --> G
+    E --> G
+    F --> G
+    
+    G --> H[Load Cookies if Available]
+    H --> I[Navigate to URL]
+    I --> J[Wait for Media Elements]
+    J --> K[Extract Media URLs]
+    K --> L[Download Media Files]
+    L --> M[Save Cookies for Future Use]
+    
+    E --> N{Show Menu}
+    N -->|Option 1| O[Download All Posts]
+    N -->|Option 2| P[Download All Reels]
+    N -->|Option 3| Q[Download Stories]
+    N -->|Option 4| R[Download Range]
+    N -->|Option 5| S[Download as ZIP]
+    
+    O --> T[_download_profile_posts]
+    P --> T
+    R --> T
+    S --> T
+    Q --> D
+```
+
+### Processing Flow
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Handler as InstagramHandler
+    participant Browser as Playwright
+    participant Instagram
+    participant FileSystem
+
+    User->>Handler: download(url)
+    Handler->>Handler: Detect URL type
+    Handler->>Browser: Initialize browser
+    Browser->>Browser: Load cookies
+    Handler->>Browser: Navigate to URL
+    Browser->>Instagram: Request page
+    Instagram-->>Browser: Return page
+    Browser->>Browser: Wait for media
+    Browser->>Handler: Extract media URLs
+    Handler->>Instagram: Download media
+    Instagram-->>Handler: Media files
+    Handler->>FileSystem: Save files
+    Handler->>Browser: Save cookies
+    Handler-->>User: Success
+```
+
+### Key Features
+
+- **Playwright Integration**: Uses headless browser automation for reliable extraction
+- **Cookie Persistence**: Saves and reuses cookies to avoid repeated logins
+- **Bulk Downloads**: Download entire profiles or specific ranges
+- **ZIP Creation**: Bundle downloads into ZIP files for easy sharing
+- **Range Selection**: Download posts 1-10, 5-20, etc.
+- **Story Support**: Download temporary stories before they expire
+- **Multi-format**: Handles images, videos, carousels, and reels
+- **Progress Tracking**: Rich progress bars with file names and status
+- **Error Recovery**: Continues downloading remaining content if one item fails
+- **User-Agent Rotation**: Random user agents to avoid detection
+
+### Cookie Management
+
+The handler looks for cookies in two locations:
+
+1. `cookies.json` in project directory (preferred)
+2. `~/.instagram_cookies.json` in home directory (fallback)
+
+Cookies are automatically saved after successful sessions:
+
+```python
+# Cookie format
+[
+    {
+        "name": "sessionid",
+        "value": "...",
+        "domain": ".instagram.com",
+        "path": "/",
+        "secure": true,
+        "httpOnly": true
+    }
+]
+```
+
+### Profile Download Options
+
+When downloading from a profile URL, users are presented with an interactive menu:
+
+| Option | Description |
+|--------|-------------|
+| 1 | Download all posts (photos and videos) |
+| 2 | Download all reels |
+| 3 | Download active stories |
+| 4 | Download specific range (e.g., posts 1-20) |
+| 5 | Download as ZIP file (bundled) |
+
+### Range Selection
+
+Users can specify exact ranges when downloading:
+
+```bash
+# Examples
+Enter range: 1-10      # Download posts 1 through 10
+Enter range: 5-25      # Download posts 5 through 25
+Enter range: 1-50      # Download posts 1 through 50
+```
+
+### Dependencies
+
+The handler requires:
+
+- **Playwright**: Browser automation
+- **BeautifulSoup**: HTML parsing
+- **Requests**: HTTP requests with retry logic
+- **Rich**: Progress bars and UI
+
+### Installation
+
+```bash
+# Install Playwright
+pip install playwright
+playwright install chromium
+
+# Other dependencies
+pip install beautifulsoup4 requests rich
+```
+
+### Usage Examples
+
+```bash
+# Download single post
+umd https://instagram.com/p/ABC123
+
+# Download single reel
+umd https://instagram.com/reel/XYZ789
+
+# Download profile (shows menu)
+umd https://instagram.com/username
+
+# Download profile reels (direct)
+umd https://instagram.com/username/reels/
+
+# Download stories
+umd https://instagram.com/stories/username
+```
+
+### Error Handling
+
+The handler implements robust error handling:
+
+- **Login Required**: Prompts to provide cookies.json
+- **Private Account**: Notifies that authentication is needed
+- **Rate Limiting**: Implements delays between requests
+- **Network Errors**: Retries failed downloads
+- **Invalid URLs**: Clear error messages
+
+### Technical Implementation
+
+| Feature | Technology |
+|---------|------------|
+| Browser Automation | Playwright (Chromium) |
+| HTML Parsing | BeautifulSoup4 |
+| HTTP Requests | Requests + HTTPAdapter with retry |
+| Progress Display | Rich Console and Progress Bars |
+| Cookie Management | JSON file storage |
+| User Agent | Random rotation from list |
+
+### Supported Media Formats
+
+- **Images**: JPG, PNG, WebP
+- **Videos**: MP4, MOV
+- **Carousels**: Multiple images/videos in one post
+- **Reels**: Short-form videos
+- **Stories**: Temporary 24-hour content
+
+### Key Methods
+
+| Method | Purpose |
+|--------|---------|
+| `can_handle(url)` | Check if URL is Instagram |
+| `download(url, output_dir)` | Main download entry point |
+| `_download_single_post(url)` | Download specific post/reel |
+| `_download_profile_posts(username)` | Download from profile |
+| `_download_stories(url)` | Download stories |
+| `_handle_profile_download(username)` | Interactive menu for profiles |
+| `_init_browser()` | Initialize Playwright browser |
+| `_save_cookies()` | Persist cookies for reuse |
+
+### Limitations
+
+- **Authentication Required**: Private accounts need valid cookies
+- **Rate Limiting**: Instagram may block excessive requests
+- **Stories Expiration**: Stories only available for 24 hours
+- **Playwright Dependency**: Requires browser installation
 
 ---
 

@@ -39,14 +39,15 @@ graph TD
     HANDLERS --> H6[linkedin_handler.py]
     HANDLERS --> H7[reddit_handler.py]
     HANDLERS --> H8[pinterest_handler.py]
-    HANDLERS --> H9[pornhub_handler.py]
-    HANDLERS --> H10[xnxx_handler.py]
-    HANDLERS --> H11[xhamster_handler.py]
-    HANDLERS --> H12[hianime_handler.py]
-    HANDLERS --> H13[tiktok_handler.py]
-    HANDLERS --> H14[eporner_handler.py]
-    HANDLERS --> H15[hqporner_handler.py]
-    HANDLERS --> H16[beeg_handler.py]
+    HANDLERS --> H9[instagram_handler.py]
+    HANDLERS --> H10[pornhub_handler.py]
+    HANDLERS --> H11[xnxx_handler.py]
+    HANDLERS --> H12[xhamster_handler.py]
+    HANDLERS --> H13[hianime_handler.py]
+    HANDLERS --> H14[tiktok_handler.py]
+    HANDLERS --> H15[eporner_handler.py]
+    HANDLERS --> H16[hqporner_handler.py]
+    HANDLERS --> H17[beeg_handler.py]
 
     UTILS --> U1[utils.py]
     UTILS --> U2[url_validator.py]
@@ -187,6 +188,7 @@ Location: `handlers/`
 | `linkedin_handler.py` | ~800 | LinkedIn posts and profiles |
 | `reddit_handler.py` | ~900 | Reddit posts and user content |
 | `pinterest_handler.py` | ~700 | Pinterest pins, boards, profiles |
+| `instagram_handler.py` | ~1719 | Instagram posts, reels, stories, profiles |
 | `pornhub_handler.py` | ~613 | Pornhub videos |
 | `xnxx_handler.py` | ~500 | XNXX videos |
 | `xhamster_handler.py` | ~500 | xHamster content |
