@@ -24,7 +24,7 @@ echo.
 echo ========================================================================
 echo                                                                        
 echo        ULTIMATE MEDIA DOWNLOADER - SETUP SCRIPT                       
-echo                  Version 2.0.0 - October 2025                         
+echo                  Version 2.1.0 - January 2026                         
 echo                                                                        
 echo ========================================================================
 echo.
@@ -287,8 +287,8 @@ call :print_section "Creating Activation Script"
     echo @echo off
     echo REM =============================================================================
     echo REM Ultimate Media Downloader - Environment Activation Script
-    echo REM Version: 2.0.0
-    echo REM Date: October 6, 2025
+    echo REM Version: 2.1.0
+    echo REM Date: January 8, 2026
     echo REM =============================================================================
     echo.
     echo echo ========================================================================

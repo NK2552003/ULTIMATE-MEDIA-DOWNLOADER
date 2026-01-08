@@ -1,8 +1,8 @@
 @echo off
 REM =============================================================================
 REM Ultimate Media Downloader - Windows Uninstall Script
-REM Version: 1.0.0
-REM Date: December 2025
+REM Version: 2.1.0
+REM Date: January 2026
 REM Removes the Ultimate Media Downloader installation
 REM =============================================================================
 

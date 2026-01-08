@@ -4,7 +4,7 @@ Ultimate Multi-Platform Media Downloader
 Supports YouTube, Spotify, JioSaavn, Gaana, Apple Music, SoundCloud, and many other platforms
 """
 
-__version__ = "2.0.0"
+__version__ = "2.1.0"
 
 import os
 import sys

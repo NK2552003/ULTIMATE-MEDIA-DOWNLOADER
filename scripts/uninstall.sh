@@ -1,8 +1,8 @@
 #!/bin/bash
 # =============================================================================
 # Ultimate Media Downloader - Uninstall Script
-# Version: 1.0.0
-# Date: December 2025
+# Version: 2.1.0
+# Date: January 2026
 # Removes the Ultimate Media Downloader installation
 # =============================================================================
 
