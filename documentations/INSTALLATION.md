@@ -315,7 +315,7 @@ usage: umd [-h] [-q QUALITY] [-a] [-f FORMAT] [-o OUTPUT] ...
 Ultimate Multi-Platform Media Downloader
 
 A powerful, feature-rich downloader supporting many platforms including 
-YouTube, Spotify, Instagram, TikTok, SoundCloud, Apple Music, and more!
+YouTube, Spotify, Instagram, TikTok, SoundCloud, Apple Music, JioSaavn, and more!
 ```
 
 ---

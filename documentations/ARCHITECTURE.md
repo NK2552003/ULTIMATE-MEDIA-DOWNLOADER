@@ -51,10 +51,13 @@ graph TB
     subgraph "Handler Layer"
         SPOTIFY[Spotify Handler]
         APPLE[Apple Music Handler]
+        JIOSAAVN[JioSaavn Handler]
+        GAANA[Gaana Handler]
         TUMBLR[Tumblr Handler]
         LINKEDIN[LinkedIn Handler]
         REDDIT[Reddit Handler]
         PINTEREST[Pinterest Handler]
+        INSTAGRAM[Instagram Handler]
         PH[Pornhub Handler]
         XNXX[XNXX Handler]
         XHAM[xHamster Handler]
@@ -87,6 +90,8 @@ graph TB
     
     MAIN --> SPOTIFY
     MAIN --> APPLE
+    MAIN --> JIOSAAVN
+    MAIN --> GAANA
     MAIN --> TUMBLR
     MAIN --> PH
     MAIN --> XNXX
@@ -100,9 +105,12 @@ graph TB
     MAIN --> LINKEDIN
     MAIN --> REDDIT
     MAIN --> PINTEREST
+    MAIN --> INSTAGRAM
 
     SPOTIFY --> SCORER
     APPLE --> SCORER
+    JIOSAAVN --> SCORER
+    GAANA --> SCORER
 
     MAIN --> UTILS
     MAIN --> URL_VAL
@@ -199,6 +207,8 @@ classDiagram
         +verbose: bool
         +spotify_handler: SpotifyHandler
         +apple_music_handler: AppleMusicHandler
+        +jiosaavn_handler: JioSaavnHandler
+        +gaana_handler: GaanaHandler
         +tumblr_handler: TumblrHandler
         +download(url)
         +detect_platform(url)
@@ -218,6 +228,25 @@ classDiagram
         +search_and_download(url)
         +_download_track_enhanced(url)
         +_download_album_enhanced(url)
+    }
+
+    class JioSaavnHandler {
+        +downloader: UltimateMediaDownloader
+        +search_and_download(url)
+        +_download_track(url)
+        +_download_album(url)
+        +_download_playlist(url)
+        +_extract_metadata(track_id)
+    }
+
+    class GaanaHandler {
+        +downloader: UltimateMediaDownloader
+        +search_and_download(url)
+        +_download_track(url)
+        +_download_album(url)
+        +_download_playlist(url)
+        +_download_artist(url)
+        +_fetch_song_data(url)
     }
 
     class TumblrHandler {
@@ -286,12 +315,27 @@ classDiagram
         +_download_profile(url)
     }
 
+    class InstagramHandler {
+        +downloader: UltimateMediaDownloader
+        +browser: Browser
+        +page: Page
+        +search_and_download(url)
+        +_download_single_post(url)
+        +_download_profile_posts(username)
+        +_download_stories(url)
+        +_handle_profile_download(username)
+        +_init_browser()
+        +_save_cookies()
+    }
+
     UltimateMediaDownloader --> SpotifyHandler
     UltimateMediaDownloader --> AppleMusicHandler
+    UltimateMediaDownloader --> JioSaavnHandler
     UltimateMediaDownloader --> TumblrHandler
     UltimateMediaDownloader --> LinkedInHandler
     UltimateMediaDownloader --> RedditHandler
     UltimateMediaDownloader --> PinterestHandler
+    UltimateMediaDownloader --> InstagramHandler
     UltimateMediaDownloader --> HiAnimeHandler
     UltimateMediaDownloader --> TikTokHandler
     UltimateMediaDownloader --> EpornerHandler
