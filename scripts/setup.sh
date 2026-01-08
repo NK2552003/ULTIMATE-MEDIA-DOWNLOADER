@@ -647,6 +647,7 @@ from handlers.beeg_handler import BeegHandler
 from handlers.linkedin_handler import LinkedInHandler
 from handlers.reddit_handler import RedditHandler
 from handlers.pinterest_handler import PinterestHandler
+from handlers.instagram_handler import InstagramHandler
 from handlers.jiosaavn_handler import JioSaavnHandler
 from youtube_scorer import YouTubeScorer
 print('All imports successful')
@@ -747,6 +748,7 @@ show_post_install_info() {
     echo -e "    • linkedin_handler     - LinkedIn support"
     echo -e "    • reddit_handler       - Reddit support"
     echo -e "    • pinterest_handler    - Pinterest support"
+    echo -e "    • instagram_handler    - Instagram support"
     echo -e "    • jiosaavn_handler     - JioSaavn support"
     echo -e "    • hianime_handler      - HiAnime support"
     echo -e "    • generic_downloader   - Generic website downloader"

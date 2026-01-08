@@ -400,12 +400,29 @@ umd "https://gaana.com/artist/..." --audio-only
 ### Instagram
 
 ```bash
-# Post
+# Single post
 umd "https://www.instagram.com/p/POST_ID/"
 
-# Reel
+# Single reel
 umd "https://www.instagram.com/reel/REEL_ID/"
+
+# Profile with interactive menu (shows options)
+umd "https://www.instagram.com/username/"
+
+# Direct download all profile reels
+umd "https://www.instagram.com/username/reels/"
+
+# Download stories
+umd "https://www.instagram.com/stories/username/"
 ```
+
+**Instagram Notes:**
+- First-time use: Requires authentication via cookies.json
+- Cookie file locations: `./cookies.json` or `~/.instagram_cookies.json`
+- Profile downloads show interactive menu with 5 options
+- Supports range selection (e.g., posts 1-20)
+- Can create ZIP files for bulk downloads
+- Stories expire after 24 hours
 
 ### TikTok
 

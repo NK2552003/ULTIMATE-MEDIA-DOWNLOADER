@@ -129,6 +129,12 @@ except ImportError:
     PINTEREST_HANDLER_AVAILABLE = False
 
 try:
+    from handlers.instagram_handler import InstagramHandler
+    INSTAGRAM_HANDLER_AVAILABLE = True
+except ImportError:
+    INSTAGRAM_HANDLER_AVAILABLE = False
+
+try:
     import mutagen
     from mutagen.flac import FLAC, Picture
     from mutagen.mp3 import MP3
@@ -390,6 +396,10 @@ class UltimateMediaDownloader:
         self.pinterest_handler = None
         if PINTEREST_HANDLER_AVAILABLE:
             self.pinterest_handler = PinterestHandler(self)
+        
+        self.instagram_handler = None
+        if INSTAGRAM_HANDLER_AVAILABLE:
+            self.instagram_handler = InstagramHandler(self)
         
         # Initialize Apple Music downloader if available
         self.apple_music_downloader = None
@@ -742,6 +752,21 @@ class UltimateMediaDownloader:
             return self.pinterest_handler.download(url, output_dir=Path(self.output_dir))
         else:
             self.print_rich(Messages.error("Pinterest handler not available"))
+            return None
+    
+    def search_and_download_instagram(self, url, interactive=True):
+        """Download media from Instagram
+        
+        Delegates to InstagramHandler
+        
+        Args:
+            url: Instagram URL (post, reel, story, or profile)
+            interactive: Whether to prompt for options
+        """
+        if self.instagram_handler:
+            return self.instagram_handler.download(url, output_dir=str(self.output_dir / "instagram"))
+        else:
+            self.print_rich(Messages.error("Instagram handler not available"))
             return None
     
     def _fallback_download(self, url, referer):
@@ -2223,6 +2248,8 @@ class UltimateMediaDownloader:
                 return self.search_and_download_reddit(url, interactive=interactive)
             elif platform == 'pinterest':
                 return self.search_and_download_pinterest(url, interactive=interactive)
+            elif platform == 'instagram':
+                return self.search_and_download_instagram(url, interactive=interactive)
             
             # Check if URL might be a playlist
             if self.is_playlist_url(url):

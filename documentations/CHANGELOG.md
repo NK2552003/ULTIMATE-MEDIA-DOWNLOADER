@@ -15,8 +15,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - [Roadmap](#roadmap)
 
 ---
-
-<!-- ## Version 2.1.0( not released yet)
+<!-- 
+## Version 2.1.0
 
 **Release Date**: January 2026
 
@@ -24,6 +24,19 @@ This release focuses on social media platform support and handler improvements.
 
 ### Added
 
+- **Instagram Handler** with comprehensive features:
+  - Playwright-based browser automation for reliable extraction
+  - Cookie persistence for authenticated sessions
+  - Support for posts, reels, stories, and IGTV
+  - Profile downloads with interactive menu options
+  - Bulk download with progress tracking
+  - Range selection (download posts 1-10, 5-20, etc.)
+  - ZIP file creation for bundled downloads
+  - Multi-format support (images, videos, carousels)
+  - Story downloads before 24-hour expiration
+  - User agent rotation to avoid detection
+  - Error recovery for failed downloads
+  - Rich progress bars with detailed status
 - **Pinterest Handler** with advanced features:
   - Multi-tier download strategy (gallery-dl → pinterest-downloader → yt-dlp → web scraping)
   - Interactive prompt for custom pin count
@@ -39,6 +52,7 @@ This release focuses on social media platform support and handler improvements.
   - No Selenium dependency (faster and more reliable)
 - **Reddit Handler** for downloading from Reddit posts and user profiles
 - External library support:
+  - `playwright>=1.40.0` for Instagram browser automation
   - `gallery-dl>=1.26.0` for Pinterest
   - `pinterest-downloader>=1.0.0` as alternative
 
@@ -46,24 +60,30 @@ This release focuses on social media platform support and handler improvements.
 
 - LinkedIn handler simplified to direct URLs only (no profile scraping)
 - Pinterest handler replaced Selenium with advanced web scraping
+- Instagram handler uses Playwright instead of traditional requests-only approach
 - Improved progress display across all handlers
-- Updated requirements.txt with optional external libraries
+- Updated requirements.txt with Playwright and optional external libraries
 
 ### Fixed
 
 - Selenium "Bad CPU type" errors (removed Selenium from LinkedIn and Pinterest)
 - Pinterest metadata JSON files no longer created
+- Instagram login and authentication handling via cookies
 - Video quality now defaults to high
 - Real-time progress tracking for downloads
 
 ### Technical Changes
 
+- Implemented Playwright browser automation for Instagram
+- Added cookie management system for Instagram sessions
 - Implemented subprocess streaming for real-time gallery-dl output
 - Added Rich progress bars to download operations
 - Created multi-method fallback system for Pinterest
 - Removed Selenium dependencies where not needed
+- Enhanced error handling for social media platforms
 
---- -->
+---
+ -->
 
 ## Version 2.0.0
 

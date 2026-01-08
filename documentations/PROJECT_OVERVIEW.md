@@ -155,7 +155,7 @@ mindmap
 
 | Platform | Content Types |
 |----------|--------------|
-| Instagram | Posts, reels, IGTV, stories |
+| Instagram | Posts, reels, stories, IGTV, profiles |
 | TikTok | Videos, user content |
 | Twitter/X | Video tweets |
 | Reddit | Videos, posts, user content |
@@ -251,16 +251,17 @@ graph TB
 | Apple Music Handler | ~1100 lines |
 | JioSaavn Handler | ~1700 lines |
 | Gaana Handler | ~1140 lines |
+| Instagram Handler | ~1719 lines |
 | YouTube Scorer | ~1000 lines |
 | Utility Modules | ~1500 lines |
-| Total Python Code | ~12000+ lines |
+| Total Python Code | ~14000+ lines |
 
 ### File Count
 
 | Category | Count |
 |----------|-------|
-| Python Files | 19 |
-| Handler Modules | 16 |
+| Python Files | 20 |
+| Handler Modules | 17 |
 | Utility Modules | 8 |
 | Shell Scripts | 8 |
 | Documentation | 10+ |

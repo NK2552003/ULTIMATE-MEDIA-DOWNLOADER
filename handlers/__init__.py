@@ -25,6 +25,7 @@ from .tiktok_handler import TikTokHandler
 from .linkedin_handler import LinkedInHandler
 from .reddit_handler import RedditHandler
 from .pinterest_handler import PinterestHandler
+from .instagram_handler import InstagramHandler
 
 __all__ = [
     'SpotifyHandler',
@@ -46,4 +47,5 @@ __all__ = [
     'LinkedInHandler',
     'RedditHandler',
     'PinterestHandler',
+    'InstagramHandler',
 ]

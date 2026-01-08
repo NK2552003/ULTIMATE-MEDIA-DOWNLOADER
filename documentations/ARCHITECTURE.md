@@ -57,6 +57,7 @@ graph TB
         LINKEDIN[LinkedIn Handler]
         REDDIT[Reddit Handler]
         PINTEREST[Pinterest Handler]
+        INSTAGRAM[Instagram Handler]
         PH[Pornhub Handler]
         XNXX[XNXX Handler]
         XHAM[xHamster Handler]
@@ -104,6 +105,7 @@ graph TB
     MAIN --> LINKEDIN
     MAIN --> REDDIT
     MAIN --> PINTEREST
+    MAIN --> INSTAGRAM
 
     SPOTIFY --> SCORER
     APPLE --> SCORER
@@ -313,6 +315,19 @@ classDiagram
         +_download_profile(url)
     }
 
+    class InstagramHandler {
+        +downloader: UltimateMediaDownloader
+        +browser: Browser
+        +page: Page
+        +search_and_download(url)
+        +_download_single_post(url)
+        +_download_profile_posts(username)
+        +_download_stories(url)
+        +_handle_profile_download(username)
+        +_init_browser()
+        +_save_cookies()
+    }
+
     UltimateMediaDownloader --> SpotifyHandler
     UltimateMediaDownloader --> AppleMusicHandler
     UltimateMediaDownloader --> JioSaavnHandler
@@ -320,6 +335,7 @@ classDiagram
     UltimateMediaDownloader --> LinkedInHandler
     UltimateMediaDownloader --> RedditHandler
     UltimateMediaDownloader --> PinterestHandler
+    UltimateMediaDownloader --> InstagramHandler
     UltimateMediaDownloader --> HiAnimeHandler
     UltimateMediaDownloader --> TikTokHandler
     UltimateMediaDownloader --> EpornerHandler
