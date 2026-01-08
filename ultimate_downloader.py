@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
 Ultimate Multi-Platform Media Downloader
-Supports YouTube, Spotify, Apple Music, SoundCloud, and many other platforms
+Supports YouTube, Spotify, JioSaavn, Gaana, Apple Music, SoundCloud, and many other platforms
 """
 
-__version__ = "2.0.0"
+__version__ = "2.1.0"
 
 import os
 import sys
@@ -40,6 +40,18 @@ try:
     SPOTIFY_HANDLER_AVAILABLE = True
 except ImportError:
     SPOTIFY_HANDLER_AVAILABLE = False
+
+try:
+    from handlers.jiosaavn_handler import JioSaavnHandler
+    JIOSAAVN_HANDLER_AVAILABLE = True
+except ImportError:
+    JIOSAAVN_HANDLER_AVAILABLE = False
+
+try:
+    from handlers.gaana_handler import GaanaHandler
+    GAANA_HANDLER_AVAILABLE = True
+except ImportError:
+    GAANA_HANDLER_AVAILABLE = False
 
 try:
     from handlers.pornhub_handler import PornhubHandler
@@ -115,6 +127,12 @@ try:
     PINTEREST_HANDLER_AVAILABLE = True
 except ImportError:
     PINTEREST_HANDLER_AVAILABLE = False
+
+try:
+    from handlers.instagram_handler import InstagramHandler
+    INSTAGRAM_HANDLER_AVAILABLE = True
+except ImportError:
+    INSTAGRAM_HANDLER_AVAILABLE = False
 
 try:
     import mutagen
@@ -313,6 +331,16 @@ class UltimateMediaDownloader:
         if SPOTIFY_HANDLER_AVAILABLE:
             self.spotify_handler = SpotifyHandler(self)
         
+        # Initialize JioSaavn handler if available
+        self.jiosaavn_handler = None
+        if JIOSAAVN_HANDLER_AVAILABLE:
+            self.jiosaavn_handler = JioSaavnHandler(self)
+        
+        # Initialize Gaana handler if available
+        self.gaana_handler = None
+        if GAANA_HANDLER_AVAILABLE:
+            self.gaana_handler = GaanaHandler(self)
+        
         # Initialize Pornhub handler if available
         self.pornhub_handler = None
         if PORNHUB_HANDLER_AVAILABLE:
@@ -368,6 +396,10 @@ class UltimateMediaDownloader:
         self.pinterest_handler = None
         if PINTEREST_HANDLER_AVAILABLE:
             self.pinterest_handler = PinterestHandler(self)
+        
+        self.instagram_handler = None
+        if INSTAGRAM_HANDLER_AVAILABLE:
+            self.instagram_handler = InstagramHandler(self)
         
         # Initialize Apple Music downloader if available
         self.apple_music_downloader = None
@@ -477,6 +509,28 @@ class UltimateMediaDownloader:
             return self.spotify_handler.search_and_download(spotify_url, interactive=True)
         else:
             self.print_rich(Messages.error("Spotify handler not available"))
+            return None
+    
+    def search_and_download_jiosaavn_track(self, jiosaavn_url):
+        """Search for JioSaavn track/album/playlist on YouTube and download
+        
+        Delegates to JioSaavnHandler
+        """
+        if self.jiosaavn_handler:
+            return self.jiosaavn_handler.search_and_download(jiosaavn_url, interactive=True)
+        else:
+            self.print_rich(Messages.error("JioSaavn handler not available"))
+            return None
+    
+    def search_and_download_gaana_track(self, gaana_url):
+        """Search for Gaana track/album/playlist on YouTube and download
+        
+        Delegates to GaanaHandler
+        """
+        if self.gaana_handler:
+            return self.gaana_handler.search_and_download(gaana_url, interactive=True)
+        else:
+            self.print_rich(Messages.error("Gaana handler not available"))
             return None
     
     def search_and_download_pornhub(self, url, quality="best", interactive=True):
@@ -700,6 +754,21 @@ class UltimateMediaDownloader:
             self.print_rich(Messages.error("Pinterest handler not available"))
             return None
     
+    def search_and_download_instagram(self, url, interactive=True):
+        """Download media from Instagram
+        
+        Delegates to InstagramHandler
+        
+        Args:
+            url: Instagram URL (post, reel, story, or profile)
+            interactive: Whether to prompt for options
+        """
+        if self.instagram_handler:
+            return self.instagram_handler.download(url, output_dir=str(self.output_dir / "instagram"))
+        else:
+            self.print_rich(Messages.error("Instagram handler not available"))
+            return None
+    
     def _fallback_download(self, url, referer):
         """Fallback download using yt-dlp directly"""
         self.print_rich("[yellow]Attempting download with yt-dlp directly...[/yellow]")
@@ -736,6 +805,8 @@ class UltimateMediaDownloader:
                 'quiet': True,
                 'no_warnings': True,
                 'extract_flat': True,
+                'socket_timeout': 30,
+                'retries': 3,
             }
             
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -749,23 +820,9 @@ class UltimateMediaDownloader:
         
         except Exception as e:
             if RICH_AVAILABLE and self.console:
-                self.console.print(f"[red]✗ YouTube search error: {e}[/red]")
+                self.console.print(f"[dim yellow]⚠  Search attempt failed: {e}[/dim yellow]")
             else:
-                print(f"✗ YouTube search error: {e}")
-        
-        # Fallback: Try youtube-search-python library
-        if YOUTUBE_SEARCH_AVAILABLE:
-            try:
-                print("⟳ Trying alternative search library...")
-                videos_search = VideosSearch(query, limit=max_results)
-                results = videos_search.result()
-                
-                if results and 'result' in results and results['result']:
-                    video = results['result'][0]
-                    return video.get('link')
-                
-            except Exception as e:
-                print(f"⚠  Alternative search library error: {e}")
+                print(f"⚠  Search attempt failed: {e}")
         
         return None
     
@@ -920,7 +977,9 @@ class UltimateMediaDownloader:
                 'quiet': True,
                 'no_warnings': True,
                 'extract_flat': True,
-                'playlistend': max_results
+                'playlistend': max_results,
+                'socket_timeout': 30,
+                'retries': 3,
             }
             
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -931,9 +990,11 @@ class UltimateMediaDownloader:
                     for entry in search_results['entries']:
                         if entry and entry.get('id'):
                             urls.append(f"https://www.youtube.com/watch?v={entry['id']}")
-                    return urls
+                    if urls:
+                        return urls
         except Exception as e:
-            print(f"  ⚠  Multiple search error: {e}")
+            # Don't print error here, let caller handle it
+            pass
         
         return []
     
@@ -2151,9 +2212,13 @@ class UltimateMediaDownloader:
             else:
                 print(f"◎ Detected platform: {platform.upper()}")
             
-            # For Spotify/Apple Music/Pornhub/XNXX/Tumblr/xHamster, use enhanced handlers first
+            # For Spotify/JioSaavn/Gaana/Apple Music/Pornhub/XNXX/Tumblr/xHamster, use enhanced handlers first
             if platform == 'spotify':
                 return self.search_and_download_spotify_track(url)
+            elif platform == 'jiosaavn':
+                return self.search_and_download_jiosaavn_track(url)
+            elif platform == 'gaana':
+                return self.search_and_download_gaana_track(url)
             elif platform == 'apple_music':
                 return self.search_and_download_apple_music_track(url, interactive=interactive)
             elif platform == 'pornhub':
@@ -2183,6 +2248,8 @@ class UltimateMediaDownloader:
                 return self.search_and_download_reddit(url, interactive=interactive)
             elif platform == 'pinterest':
                 return self.search_and_download_pinterest(url, interactive=interactive)
+            elif platform == 'instagram':
+                return self.search_and_download_instagram(url, interactive=interactive)
             
             # Check if URL might be a playlist
             if self.is_playlist_url(url):
@@ -2624,8 +2691,15 @@ class UltimateMediaDownloader:
                     title_clean = (title or 'Unknown')[:40].replace('|', '').replace('/', '').replace('\\', '').replace('*', '').replace('?', '').replace('[', '').replace(']', '')
                     uploader_clean = (uploader or 'Unknown')[:20].replace('|', '').replace('/', '').replace('\\', '').replace('*', '').replace('?', '').replace('[', '').replace(']', '')
                     
-                    # Search for files with any of these extensions
-                    extensions = ['.mp3', '.m4a', '.webm', '.mp4', '.mkv', '.flac', '.opus']
+                    # Determine expected extension based on output_format
+                    expected_ext = output_format.lower() if output_format else ('mp3' if audio_only else 'mp4')
+                    
+                    # Search for files - prioritize expected extension first
+                    extensions = [f'.{expected_ext}']
+                    # Add other common audio/video extensions as fallback
+                    fallback_exts = ['.mp3', '.m4a', '.flac', '.opus', '.webm', '.mp4', '.mkv']
+                    extensions.extend([ext for ext in fallback_exts if ext != f'.{expected_ext}'])
+                    
                     downloaded_files = []
                     
                     for ext in extensions:
@@ -2657,13 +2731,26 @@ class UltimateMediaDownloader:
                             break
                     
                     if not downloaded_files:
-                        # Last resort: check for any recently created files
+                        # Last resort: check for any recently created files with expected extension
                         import time
                         current_time = time.time()
+                        
+                        # First try to find files with expected extension
                         recent_files = [f for f in self.output_dir.iterdir() 
-                                      if f.is_file() and (current_time - f.stat().st_mtime) < 60]
+                                      if f.is_file() 
+                                      and f.suffix == f'.{expected_ext}'
+                                      and (current_time - f.stat().st_mtime) < 60]
+                        
+                        # If no files with expected extension, check for any audio/video files
+                        if not recent_files:
+                            recent_files = [f for f in self.output_dir.iterdir() 
+                                          if f.is_file() 
+                                          and f.suffix in ['.mp3', '.m4a', '.flac', '.opus', '.webm', '.mp4', '.mkv']
+                                          and (current_time - f.stat().st_mtime) < 60]
                         
                         if recent_files:
+                            # Sort by modification time (most recent first)
+                            recent_files.sort(key=lambda f: f.stat().st_mtime, reverse=True)
                             download_succeeded = True
                             self.print_rich(f"  [dim]✓ Found downloaded file: {recent_files[0].name}[/dim]")
                         else:

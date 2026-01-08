@@ -6,13 +6,13 @@ This module contains all argument parsing and configuration
 import argparse
 from utils.ui_components import Icons
 
-__version__ = "2.0.0"
+__version__ = "2.1.0"
 
 
 def create_argument_parser():
     """Create and configure the argument parser for the application"""
     parser = argparse.ArgumentParser(
-        description=f"{Icons.get('video')} Ultimate Multi-Platform Media Downloader\n\nA powerful, feature-rich downloader supporting many platforms including YouTube, Spotify, Instagram, TikTok, SoundCloud, Apple Music, and more!",
+        description=f"{Icons.get('video')} Ultimate Multi-Platform Media Downloader\n\nA powerful, feature-rich downloader supporting many platforms including YouTube, Spotify, JioSaavn, Instagram, TikTok, SoundCloud, Apple Music, and more!",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=f"""
 {'═'*79}
@@ -38,6 +38,10 @@ def create_argument_parser():
 
   • Download Spotify Track (via YouTube Search):
     python ultimate_downloader.py "https://open.spotify.com/track/TRACK_ID" \\
+        --audio-only --format mp3
+
+  • Download JioSaavn Song (via YouTube Search):
+    python ultimate_downloader.py "https://www.jiosaavn.com/song/SONG_NAME/ID" \\
         --audio-only --format mp3
 
 {Icons.get('video')} VIDEO DOWNLOADS:
@@ -91,6 +95,7 @@ def create_argument_parser():
 
   {Icons.get('completed')} YouTube (Videos, Playlists, Live Streams)
   {Icons.get('completed')} Spotify (Tracks, Albums, Playlists - via YouTube search)
+  {Icons.get('completed')} JioSaavn (Songs, Albums, Playlists - via YouTube search)
   {Icons.get('completed')} Apple Music (Tracks, Albums - via YouTube search)
   {Icons.get('completed')} SoundCloud (Tracks, Playlists, User Uploads)
   {Icons.get('completed')} Instagram (Videos, Reels, IGTV)

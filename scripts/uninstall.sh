@@ -1,8 +1,8 @@
 #!/bin/bash
 # =============================================================================
 # Ultimate Media Downloader - Uninstall Script
-# Version: 1.0.0
-# Date: December 2025
+# Version: 2.1.0
+# Date: January 2026
 # Removes the Ultimate Media Downloader installation
 # =============================================================================
 
@@ -107,6 +107,8 @@ echo ""
 echo "  Platform Handlers (handlers/):"
 echo "  • spotify_handler       - Spotify integration"
 echo "  • apple_music_handler   - Apple Music support"
+echo "  • jiosaavn_handler      - JioSaavn support"
+echo "  • gaana_handler         - Gaana support"
 echo "  • pornhub_handler       - Pornhub support"
 echo "  • xnxx_handler          - XNXX support"
 echo "  • tumblr_handler        - Tumblr support"
@@ -119,6 +121,7 @@ echo "  • beeg_handler          - Beeg support"
 echo "  • linkedin_handler      - LinkedIn support"
 echo "  • reddit_handler        - Reddit support"
 echo "  • pinterest_handler     - Pinterest support"
+echo "  • jiosaavn_handler      - JioSaavn support"
 echo ""
 print_info "Your downloaded files are still in: ~/Downloads/UltimateDownloader"
 print_info "To remove downloads too, run: rm -rf ~/Downloads/UltimateDownloader"

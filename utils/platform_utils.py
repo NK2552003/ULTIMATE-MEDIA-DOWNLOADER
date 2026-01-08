@@ -21,6 +21,16 @@ PLATFORM_CONFIGS = {
         'formats': ['mp3', 'wav', 'flac'],
         'note': 'Spotify tracks will be searched on YouTube for download'
     },
+    'jiosaavn': {
+        'extractors': ['jiosaavn', 'saavn'],
+        'formats': ['mp3', 'wav', 'flac'],
+        'note': 'JioSaavn tracks will be searched on YouTube for download'
+    },
+    'gaana': {
+        'extractors': ['gaana'],
+        'formats': ['mp3', 'wav', 'flac'],
+        'note': 'Gaana tracks will be searched on YouTube for download'
+    },
     'soundcloud': {
         'extractors': ['soundcloud'],
         'formats': ['mp3', 'wav', 'flac']
@@ -93,6 +103,11 @@ PLATFORM_CONFIGS = {
         'formats': ['jpg', 'png', 'mp4'],
         'note': 'Pinterest pins, boards, and user profiles - images and videos'
     },
+    'instagram': {
+        'extractors': ['instagram'],
+        'formats': ['mp4', 'jpg', 'png'],
+        'note': 'Instagram posts, reels, stories, and profiles - videos and images'
+    },
     'generic': {
         'extractors': ['generic'],
         'formats': ['mp4', 'mp3', 'wav']
@@ -103,9 +118,11 @@ PLATFORM_CONFIGS = {
 SUPPORTED_SITES = [
     {'name': 'YouTube', 'description': 'YouTube videos, playlists, channels'},
     {'name': 'Spotify', 'description': 'Spotify tracks, albums, playlists (via YouTube search)'},
+    {'name': 'JioSaavn', 'description': 'JioSaavn songs, albums, playlists (via YouTube search)'},
+    {'name': 'Gaana', 'description': 'Gaana songs, albums, playlists (via YouTube search)'},
     {'name': 'SoundCloud', 'description': 'SoundCloud tracks and playlists'},
     {'name': 'TikTok', 'description': 'TikTok videos with watermark removal'},
-    {'name': 'Instagram', 'description': 'Instagram posts, reels, IGTV'},
+    {'name': 'Instagram', 'description': 'Instagram posts, reels, stories, profiles - videos and images'},
     {'name': 'Twitter', 'description': 'Twitter videos'},
     {'name': 'Facebook', 'description': 'Facebook videos'},
     {'name': 'Vimeo', 'description': 'Vimeo videos'},
@@ -145,6 +162,10 @@ def detect_platform(url: str) -> str:
         return 'youtube'
     elif 'spotify.com' in url_lower:
         return 'spotify'
+    elif any(domain in url_lower for domain in ['jiosaavn.com', 'jiosvn.com']):
+        return 'jiosaavn'
+    elif 'gaana.com' in url_lower:
+        return 'gaana'
     elif 'soundcloud.com' in url_lower:
         return 'soundcloud'
     elif any(domain in url_lower for domain in ['music.apple.com', 'itunes.apple.com']):
@@ -176,7 +197,9 @@ def detect_platform(url: str) -> str:
         return 'reddit'
     elif any(domain in url_lower for domain in ['pinterest.com', 'pin.it']):
         return 'pinterest'
-    elif any(domain in url_lower for domain in ['instagram.com', 'facebook.com', 'twitter.com', 'x.com']):
+    elif any(domain in url_lower for domain in ['instagram.com', 'instagr.am']):
+        return 'instagram'
+    elif any(domain in url_lower for domain in ['facebook.com', 'twitter.com', 'x.com']):
         return 'social_media'
     else:
         return 'generic'

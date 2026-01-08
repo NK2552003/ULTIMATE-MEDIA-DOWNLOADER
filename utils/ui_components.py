@@ -122,9 +122,19 @@ class ModernUI:
         """Clear terminal screen"""
         os.system('clear' if os.name == 'posix' else 'cls')
     
+    def get_terminal_width(self):
+        """Get current terminal width"""
+        try:
+            return os.get_terminal_size().columns
+        except (AttributeError, OSError):
+            return 80  # Default fallback width
+    
     def create_ascii_logo(self):
-        """Create ASCII art logo"""
-        return """
+        """Create responsive ASCII art logo based on terminal width"""
+        width = self.get_terminal_width()
+        
+        # Full logo for wide terminals (100+ columns)
+        full_logo = """
 ██████╗  ██████╗ ██╗    ██╗███╗   ██╗██╗      ██████╗  █████╗ ██████╗ ███████╗██████╗ 
 ██╔══██╗██╔═══██╗██║    ██║████╗  ██║██║     ██╔═══██╗██╔══██╗██╔══██╗██╔════╝██╔══██╗
 ██║  ██║██║   ██║██║ █╗ ██║██╔██╗ ██║██║     ██║   ██║███████║██║  ██║█████╗  ██████╔╝
@@ -132,6 +142,41 @@ class ModernUI:
 ██████╔╝╚██████╔╝╚███╔███╔╝██║ ╚████║███████╗╚██████╔╝██║  ██║██████╔╝███████╗██║  ██║
 ╚═════╝  ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚══════╝╚═╝  ╚═╝
 """
+        
+        # Medium logo for medium terminals (70-99 columns)
+        medium_logo = """
+██╗   ██╗███╗   ███╗██████╗ 
+██║   ██║████╗ ████║██╔══██╗
+██║   ██║██╔████╔██║██║  ██║
+██║   ██║██║╚██╔╝██║██║  ██║
+╚██████╔╝██║ ╚═╝ ██║██████╔╝
+ ╚═════╝ ╚═╝     ╚═╝╚═════╝ 
+ULTIMATE MEDIA DOWNLOADER
+"""
+        
+        # Compact logo for small terminals (50-69 columns)
+        compact_logo = """
+╦ ╦╔╦╗╔╦╗
+║ ║║║║ ║║
+╚═╝╩ ╩═╩╝
+Ultimate Media Downloader
+"""
+        
+        # Minimal logo for very small terminals (< 50 columns)
+        minimal_logo = """
+[ UMD ]
+Media Downloader
+"""
+        
+        # Return appropriate logo based on terminal width
+        if width >= 100:
+            return full_logo
+        elif width >= 70:
+            return medium_logo
+        elif width >= 50:
+            return compact_logo
+        else:
+            return minimal_logo
     
     def show_welcome_banner(self):
         """Display professional welcome banner"""
@@ -156,7 +201,7 @@ class ModernUI:
             box=box.DOUBLE,
             padding=(1, 2),
             title="[bold white]▶ ULTIMATE MEDIA DOWNLOADER[/bold white]",
-            subtitle="[dim]v2.0.0 - Professional Edition[/dim]"
+            subtitle="[dim]v2.1.0 - Professional Edition[/dim]"
         )
         
         self.console.print(panel)

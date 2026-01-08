@@ -8,19 +8,22 @@ This document describes the platform-specific handlers in the Ultimate Media Dow
 2. [Handler Architecture](#handler-architecture)
 3. [Spotify Handler](#spotify-handler)
 4. [Apple Music Handler](#apple-music-handler)
-5. [Tumblr Handler](#tumblr-handler)
-6. [LinkedIn Handler](#linkedin-handler)
-7. [Pinterest Handler](#pinterest-handler)
-8. [Reddit Handler](#reddit-handler)
-9. [Pornhub Handler](#pornhub-handler)
-10. [XNXX Handler](#xnxx-handler)
-11. [xHamster Handler](#xhamster-handler)
-12. [HiAnime Handler](#hianime-handler)
-13. [TikTok Handler](#tiktok-handler)
-14. [Eporner Handler](#eporner-handler)
-15. [HQPorner Handler](#hqporner-handler)
-16. [Beeg Handler](#beeg-handler)
-17. [Creating Custom Handlers](#creating-custom-handlers)
+5. [JioSaavn Handler](#jiosaavn-handler)
+6. [Gaana Handler](#gaana-handler)
+7. [Tumblr Handler](#tumblr-handler)
+8. [LinkedIn Handler](#linkedin-handler)
+9. [Pinterest Handler](#pinterest-handler)
+10. [Reddit Handler](#reddit-handler)
+11. [Instagram Handler](#instagram-handler)
+12. [Pornhub Handler](#pornhub-handler)
+13. [XNXX Handler](#xnxx-handler)
+14. [xHamster Handler](#xhamster-handler)
+15. [HiAnime Handler](#hianime-handler)
+16. [TikTok Handler](#tiktok-handler)
+17. [Eporner Handler](#eporner-handler)
+18. [HQPorner Handler](#hqporner-handler)
+19. [Beeg Handler](#beeg-handler)
+20. [Creating Custom Handlers](#creating-custom-handlers)
 
 ---
 
@@ -43,10 +46,13 @@ handlers/
     __init__.py
     spotify_handler.py
     apple_music_handler.py
+    jiosaavn_handler.py
+    gaana_handler.py
     tumblr_handler.py
     linkedin_handler.py
     pinterest_handler.py
     reddit_handler.py
+    instagram_handler.py
     pornhub_handler.py
     xnxx_handler.py
     xhamster_handler.py
@@ -89,6 +95,14 @@ classDiagram
         +_download_playlist_enhanced(url)
     }
 
+    class JioSaavnHandler {
+        +_download_track(url)
+        +_download_album(url)
+        +_download_playlist(url)
+        +_extract_metadata(track_id)
+        +_decode_html_entities(text)
+    }
+
     class TumblrHandler {
         +api: TumblrAPI
         +download_blog(url)
@@ -114,6 +128,15 @@ classDiagram
         +_try_gallery_dl(url)
     }
 
+    class InstagramHandler {
+        +browser: Browser
+        +page: Page
+        +_download_single_post(url)
+        +_download_profile_posts(username)
+        +_download_stories(url)
+        +_handle_profile_download(username)
+    }
+
     class HiAnimeHandler {
         +_download_anime(url)
         +_download_episode(url)
@@ -123,10 +146,12 @@ classDiagram
     BaseHandler <|-- HiAnimeHandler
     BaseHandler <|-- SpotifyHandler
     BaseHandler <|-- AppleMusicHandler
+    BaseHandler <|-- JioSaavnHandler
     BaseHandler <|-- TumblrHandler
     BaseHandler <|-- LinkedInHandler
     BaseHandler <|-- RedditHandler
     BaseHandler <|-- PinterestHandler
+    BaseHandler <|-- InstagramHandler
 ```
 
 ### Common Methods
@@ -257,6 +282,240 @@ The handler uses cloudscraper to bypass protection and BeautifulSoup to parse:
 - Rich metadata extraction from Apple Music pages
 - Album and playlist batch downloading
 - Cover art embedding
+
+---
+
+## Gaana Handler
+
+**File**: `handlers/gaana_handler.py`
+
+The Gaana Handler downloads Indian music from Gaana platform with comprehensive metadata support and flexible song selection.
+
+### Processing Flow
+
+```mermaid
+flowchart TD
+    A[Gaana URL] --> B[Detect content type]
+    B --> C{Type?}
+    C -->|Song| D[_download_track]
+    C -->|Album| E[_download_album]
+    C -->|Playlist| F[_download_playlist]
+    C -->|Artist| G[_download_artist]
+    
+    D --> H[Fetch metadata via web scraping]
+    E --> H
+    F --> H
+    G --> H
+    
+    H --> I[Display song list to user]
+    I --> J[User selects songs]
+    J --> K[Search YouTube with scoring]
+    K --> L[Download and embed metadata]
+    L --> M[Embed cover art]
+```
+
+### Supported Content Types
+
+| Content Type | URL Pattern |
+|--------------|-------------|
+| Song | `gaana.com/song/...` |
+| Album | `gaana.com/album/...` |
+| Playlist | `gaana.com/playlist/...` |
+| Artist | `gaana.com/artist/...` |
+
+### Web Scraping Integration
+
+The handler uses BeautifulSoup for metadata extraction:
+
+| Data Source | Purpose |
+|----------|---------|
+| Meta tags (og:title, og:image) | Basic metadata |
+| JSON-LD structured data | Detailed track/album information |
+| Page links | Song discovery for albums/playlists |
+
+### Interactive Song Selection
+
+For albums, playlists, and artists, the handler provides:
+
+- **Display**: Numbered list of all songs with artist names
+- **Selection Options**:
+  - Press Enter or type 'all' → Download all tracks
+  - Type specific numbers: `1,3,5` → Download songs 1, 3, and 5
+  - Type ranges: `1-10` → Download songs 1 through 10
+  - Combine: `1-5,8,10` → Download multiple ranges/songs
+  - Type 'cancel' → Abort download
+
+### Metadata Extraction
+
+The handler extracts comprehensive metadata:
+
+- Song title (with HTML entity decoding)
+- Artist name(s)
+- Album name
+- Release year
+- Album artwork URL
+- Song duration
+
+### YouTube Search with Scoring
+
+Uses intelligent YouTube search with scoring algorithm:
+
+| Factor | Weight |
+|--------|--------|
+| Title match | 100 points |
+| Artist match | 50 points |
+| Official content | 30 points |
+| Audio/lyric video | 20 points |
+| View count | Up to 30 points |
+| Like ratio | Up to 15 points |
+| Unwanted keywords | -50 points |
+
+### Example Usage
+
+```bash
+# Download a single track
+umd https://gaana.com/song/financer-5
+
+# Download an album (with song selection)
+umd https://gaana.com/album/financer
+
+# Download a playlist (with song selection)
+umd https://gaana.com/playlist/gaana-dj-haryanvi-top-50
+
+# Download artist's songs (with song selection)
+umd https://gaana.com/artist/bintu-pabra
+```
+
+### Format Support
+
+Supports multiple audio formats with quality selection:
+
+- **MP3**: Best quality (320kbps)
+- **M4A**: High quality (256kbps AAC)
+- **FLAC**: Lossless (larger files)
+- **Auto**: Best available quality
+
+### Technical Implementation
+
+The handler implements several advanced features:
+
+1. **HTML Entity Decoding**: Converts `&quot;`, `&amp;` to proper characters
+2. **Smart Song Selection**: Parse user input like `1,3-5,7` for flexible downloads
+3. **Format Preservation**: Selected format/quality passed to all track downloads
+4. **Error Recovery**: Continues downloading remaining songs if one fails
+
+### Key Features
+
+- ✅ Single tracks with full metadata
+- ✅ Complete albums with song selection
+- ✅ Full playlists with song selection  
+- ✅ Artist pages with song selection
+- ✅ Album artwork embedding (MP3, M4A, FLAC)
+- ✅ Flexible format selection (MP3/M4A/FLAC)
+- ✅ Interactive song selection UI
+- ✅ YouTube search with intelligent scoring
+
+---
+
+## JioSaavn Handler
+
+**File**: `handlers/jiosaavn_handler.py`
+
+The JioSaavn Handler downloads Indian music from JioSaavn platform with comprehensive metadata support.
+
+### Processing Flow
+
+```mermaid
+flowchart TD
+    A[JioSaavn URL] --> B[Detect content type]
+    B --> C{Type?}
+    C -->|Song| D[_download_track]
+    C -->|Album| E[_download_album]
+    C -->|Playlist| F[_download_playlist]
+    C -->|Artist| G[_download_artist_songs]
+    
+    D --> H[Fetch metadata from API]
+    E --> H
+    F --> H
+    G --> H
+    
+    H --> I[Search YouTube with query]
+    I --> J[Download and embed metadata]
+    J --> K[Embed cover art & lyrics]
+```
+
+### Supported Content Types
+
+| Content Type | URL Pattern |
+|--------------|-------------|
+| Song | `jiosaavn.com/song/...` |
+| Album | `jiosaavn.com/album/...` |
+| Playlist | `jiosaavn.com/featured/...` or `jiosaavn.com/s/playlist/...` |
+| Artist | `jiosaavn.com/artist/...` |
+
+### JioSaavn API Integration
+
+The handler uses JioSaavn's unofficial API endpoints for metadata:
+
+| Endpoint | Purpose |
+|----------|---------|
+| `autocomplete.get` | Search functionality |
+| `song.getDetails` | Track metadata and streaming URLs |
+| `content.getAlbumDetails` | Album information and track list |
+| `playlist.getDetails` | Playlist contents |
+| `lyrics.getLyrics` | Song lyrics in multiple languages |
+
+### Metadata Extraction
+
+The handler extracts comprehensive metadata:
+
+- Song title (with HTML entity decoding)
+- Artist name(s) (primary and featuring artists)
+- Album name
+- Release year
+- Song duration
+- High-quality cover art (500x500)
+- Lyrics (if available)
+- Album artist
+- Copyright information
+
+### Key Features
+
+- **Official API Integration**: Uses JioSaavn's API for reliable metadata
+- **High-Quality Metadata**: Extracts detailed song information including multiple artists
+- **Lyrics Support**: Downloads and embeds lyrics when available
+- **Cover Art**: Embeds high-resolution album artwork
+- **HTML Entity Decoding**: Properly handles special characters in titles
+- **Batch Processing**: Supports album and playlist downloads with progress tracking
+- **Fallback API**: Uses alternative API endpoints if primary fails
+- **Concurrent Downloads**: Multi-threaded downloading for playlists
+- **YouTube Search**: Falls back to YouTube for actual audio streaming
+
+### Example Usage
+
+```bash
+# Download a single track
+umd https://www.jiosaavn.com/song/kesariya/...
+
+# Download an entire album
+umd https://www.jiosaavn.com/album/brahmastra/...
+
+# Download a playlist
+umd https://www.jiosaavn.com/featured/...
+
+# Download artist's top songs
+umd https://www.jiosaavn.com/artist/arijit-singh/...
+```
+
+### Technical Implementation
+
+The handler implements several advanced features:
+
+1. **HTML Entity Decoding**: Converts `&quot;`, `&amp;` to proper characters
+2. **Multi-Artist Support**: Handles songs with multiple featured artists
+3. **Error Handling**: Graceful degradation when API endpoints fail
+4. **Progress Tracking**: Rich console progress bars for batch downloads
+5. **Metadata Preservation**: Maintains all original JioSaavn metadata
 
 ---
 
@@ -505,6 +764,234 @@ Without API credentials, the handler uses yt-dlp and web scraping.
 - Gallery posts (multiple images)
 - Cross-posts
 - External media (imgur, gfycat, etc.)
+
+---
+
+## Instagram Handler
+
+**File**: `handlers/instagram_handler.py`
+
+The Instagram Handler enables downloading posts, reels, stories, and images from Instagram using Playwright for browser automation. Supports bulk downloads with ZIP creation and range selection.
+
+### Supported Content Types
+
+| Content Type | URL Pattern | Example |
+|--------------|-------------|---------|
+| Single Post | `/p/POST_ID` | `https://instagram.com/p/ABC123` |
+| Single Reel | `/reel/REEL_ID` or `/reels/REEL_ID` | `https://instagram.com/reel/XYZ789` |
+| IGTV Video | `/tv/VIDEO_ID` | `https://instagram.com/tv/DEF456` |
+| Stories | `/stories/USERNAME` | `https://instagram.com/stories/username` |
+| Profile Posts | `/USERNAME/` | `https://instagram.com/username` |
+| Profile Reels | `/USERNAME/reels/` | `https://instagram.com/username/reels` |
+
+### Architecture
+
+```mermaid
+flowchart TD
+    A[Instagram URL] --> B{URL Type?}
+    B -->|Single Post/Reel| C[_download_single_post]
+    B -->|Stories| D[_download_stories]
+    B -->|Profile| E[_handle_profile_download]
+    B -->|Profile Reels Page| F[_download_profile_posts - reels]
+    
+    C --> G[Initialize Playwright Browser]
+    D --> G
+    E --> G
+    F --> G
+    
+    G --> H[Load Cookies if Available]
+    H --> I[Navigate to URL]
+    I --> J[Wait for Media Elements]
+    J --> K[Extract Media URLs]
+    K --> L[Download Media Files]
+    L --> M[Save Cookies for Future Use]
+    
+    E --> N{Show Menu}
+    N -->|Option 1| O[Download All Posts]
+    N -->|Option 2| P[Download All Reels]
+    N -->|Option 3| Q[Download Stories]
+    N -->|Option 4| R[Download Range]
+    N -->|Option 5| S[Download as ZIP]
+    
+    O --> T[_download_profile_posts]
+    P --> T
+    R --> T
+    S --> T
+    Q --> D
+```
+
+### Processing Flow
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Handler as InstagramHandler
+    participant Browser as Playwright
+    participant Instagram
+    participant FileSystem
+
+    User->>Handler: download(url)
+    Handler->>Handler: Detect URL type
+    Handler->>Browser: Initialize browser
+    Browser->>Browser: Load cookies
+    Handler->>Browser: Navigate to URL
+    Browser->>Instagram: Request page
+    Instagram-->>Browser: Return page
+    Browser->>Browser: Wait for media
+    Browser->>Handler: Extract media URLs
+    Handler->>Instagram: Download media
+    Instagram-->>Handler: Media files
+    Handler->>FileSystem: Save files
+    Handler->>Browser: Save cookies
+    Handler-->>User: Success
+```
+
+### Key Features
+
+- **Playwright Integration**: Uses headless browser automation for reliable extraction
+- **Cookie Persistence**: Saves and reuses cookies to avoid repeated logins
+- **Bulk Downloads**: Download entire profiles or specific ranges
+- **ZIP Creation**: Bundle downloads into ZIP files for easy sharing
+- **Range Selection**: Download posts 1-10, 5-20, etc.
+- **Story Support**: Download temporary stories before they expire
+- **Multi-format**: Handles images, videos, carousels, and reels
+- **Progress Tracking**: Rich progress bars with file names and status
+- **Error Recovery**: Continues downloading remaining content if one item fails
+- **User-Agent Rotation**: Random user agents to avoid detection
+
+### Cookie Management
+
+The handler looks for cookies in two locations:
+
+1. `cookies.json` in project directory (preferred)
+2. `~/.instagram_cookies.json` in home directory (fallback)
+
+Cookies are automatically saved after successful sessions:
+
+```python
+# Cookie format
+[
+    {
+        "name": "sessionid",
+        "value": "...",
+        "domain": ".instagram.com",
+        "path": "/",
+        "secure": true,
+        "httpOnly": true
+    }
+]
+```
+
+### Profile Download Options
+
+When downloading from a profile URL, users are presented with an interactive menu:
+
+| Option | Description |
+|--------|-------------|
+| 1 | Download all posts (photos and videos) |
+| 2 | Download all reels |
+| 3 | Download active stories |
+| 4 | Download specific range (e.g., posts 1-20) |
+| 5 | Download as ZIP file (bundled) |
+
+### Range Selection
+
+Users can specify exact ranges when downloading:
+
+```bash
+# Examples
+Enter range: 1-10      # Download posts 1 through 10
+Enter range: 5-25      # Download posts 5 through 25
+Enter range: 1-50      # Download posts 1 through 50
+```
+
+### Dependencies
+
+The handler requires:
+
+- **Playwright**: Browser automation
+- **BeautifulSoup**: HTML parsing
+- **Requests**: HTTP requests with retry logic
+- **Rich**: Progress bars and UI
+
+### Installation
+
+```bash
+# Install Playwright
+pip install playwright
+playwright install chromium
+
+# Other dependencies
+pip install beautifulsoup4 requests rich
+```
+
+### Usage Examples
+
+```bash
+# Download single post
+umd https://instagram.com/p/ABC123
+
+# Download single reel
+umd https://instagram.com/reel/XYZ789
+
+# Download profile (shows menu)
+umd https://instagram.com/username
+
+# Download profile reels (direct)
+umd https://instagram.com/username/reels/
+
+# Download stories
+umd https://instagram.com/stories/username
+```
+
+### Error Handling
+
+The handler implements robust error handling:
+
+- **Login Required**: Prompts to provide cookies.json
+- **Private Account**: Notifies that authentication is needed
+- **Rate Limiting**: Implements delays between requests
+- **Network Errors**: Retries failed downloads
+- **Invalid URLs**: Clear error messages
+
+### Technical Implementation
+
+| Feature | Technology |
+|---------|------------|
+| Browser Automation | Playwright (Chromium) |
+| HTML Parsing | BeautifulSoup4 |
+| HTTP Requests | Requests + HTTPAdapter with retry |
+| Progress Display | Rich Console and Progress Bars |
+| Cookie Management | JSON file storage |
+| User Agent | Random rotation from list |
+
+### Supported Media Formats
+
+- **Images**: JPG, PNG, WebP
+- **Videos**: MP4, MOV
+- **Carousels**: Multiple images/videos in one post
+- **Reels**: Short-form videos
+- **Stories**: Temporary 24-hour content
+
+### Key Methods
+
+| Method | Purpose |
+|--------|---------|
+| `can_handle(url)` | Check if URL is Instagram |
+| `download(url, output_dir)` | Main download entry point |
+| `_download_single_post(url)` | Download specific post/reel |
+| `_download_profile_posts(username)` | Download from profile |
+| `_download_stories(url)` | Download stories |
+| `_handle_profile_download(username)` | Interactive menu for profiles |
+| `_init_browser()` | Initialize Playwright browser |
+| `_save_cookies()` | Persist cookies for reuse |
+
+### Limitations
+
+- **Authentication Required**: Private accounts need valid cookies
+- **Rate Limiting**: Instagram may block excessive requests
+- **Stories Expiration**: Stories only available for 24 hours
+- **Playwright Dependency**: Requires browser installation
 
 ---
 

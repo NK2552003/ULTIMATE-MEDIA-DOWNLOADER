@@ -149,6 +149,9 @@ echo   - beeg_handler          (Beeg support)
 echo   - linkedin_handler      (LinkedIn support)
 echo   - reddit_handler        (Reddit support)
 echo   - pinterest_handler     (Pinterest support)
+echo   - instagram_handler     (Instagram support)
+echo   - jiosaavn_handler      (JioSaavn support)
+echo   - gaana_handler         (Gaana support)
 echo.
 echo Usage:
 echo   umd ^<URL^>                    # Download media from URL

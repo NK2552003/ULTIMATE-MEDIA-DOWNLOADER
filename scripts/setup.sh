@@ -46,7 +46,7 @@ print_header() {
     echo "╔════════════════════════════════════════════════════════════════════╗"
     echo "║                                                                    ║"
     echo "║        ULTIMATE MEDIA DOWNLOADER - SETUP SCRIPT                   ║"
-    echo "║                  Version 2.0.0 - October 2025                     ║"
+    echo "║                  Version 2.1.0 - January 2026                     ║"
     echo "║                                                                    ║"
     echo "╚════════════════════════════════════════════════════════════════════╝"
     echo -e "${NC}"
@@ -565,8 +565,8 @@ create_activation_script() {
 #!/bin/bash
 # =============================================================================
 # Ultimate Media Downloader - Environment Activation Script
-# Version: 2.0.0
-# Date: December, 2025
+# Version: 2.1.0
+# Date: January, 2026
 # =============================================================================
 
 # Colors
@@ -633,6 +633,8 @@ from logger import QuietLogger
 from utils.utils import sanitize_filename
 from handlers.spotify_handler import SpotifyHandler
 from handlers.apple_music_handler import AppleMusicHandler
+from handlers.jiosaavn_handler import JioSaavnHandler
+from handlers.gaana_handler import GaanaHandler
 from handlers.pornhub_handler import PornhubHandler
 from handlers.xnxx_handler import XNXXHandler
 from handlers.tumblr_handler import TumblrHandler
@@ -645,6 +647,8 @@ from handlers.beeg_handler import BeegHandler
 from handlers.linkedin_handler import LinkedInHandler
 from handlers.reddit_handler import RedditHandler
 from handlers.pinterest_handler import PinterestHandler
+from handlers.instagram_handler import InstagramHandler
+from handlers.jiosaavn_handler import JioSaavnHandler
 from youtube_scorer import YouTubeScorer
 print('All imports successful')
 " && print_success "All imports working" || print_warning "Some imports failed"
@@ -731,6 +735,8 @@ show_post_install_info() {
     echo -e "  ${GREEN}Platform Handlers (handlers/):${NC}"
     echo -e "    • spotify_handler      - Spotify track/playlist integration"
     echo -e "    • apple_music_handler  - Apple Music support"
+    echo -e "    • jiosaavn_handler     - JioSaavn support"
+    echo -e "    • gaana_handler        - Gaana support"
     echo -e "    • pornhub_handler      - Pornhub support"
     echo -e "    • xnxx_handler         - XNXX support"
     echo -e "    • tumblr_handler       - Tumblr support"
@@ -742,6 +748,8 @@ show_post_install_info() {
     echo -e "    • linkedin_handler     - LinkedIn support"
     echo -e "    • reddit_handler       - Reddit support"
     echo -e "    • pinterest_handler    - Pinterest support"
+    echo -e "    • instagram_handler    - Instagram support"
+    echo -e "    • jiosaavn_handler     - JioSaavn support"
     echo -e "    • hianime_handler      - HiAnime support"
     echo -e "    • generic_downloader   - Generic website downloader"
     echo ""

@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Table of Contents
 
-<!-- - [Version 2.1.0](#version-210) -->
+- [Version 2.1.0](#version-210)
 - [Version 2.0.0](#version-200)
 - [Version 1.0.5](#version-105)
 - [Version 1.0.0](#version-100)
@@ -16,7 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
-<!-- ## Version 2.1.0( not released yet)
+## Version 2.1.0
 
 **Release Date**: January 2026
 
@@ -24,6 +24,36 @@ This release focuses on social media platform support and handler improvements.
 
 ### Added
 
+- **Instagram Handler** with comprehensive features:
+  - Playwright-based browser automation for reliable extraction
+  - Cookie persistence for authenticated sessions
+  - Support for posts, reels, stories, and IGTV
+  - Profile downloads with interactive menu options
+  - Bulk download with progress tracking
+  - Range selection (download posts 1-10, 5-20, etc.)
+  - ZIP file creation for bundled downloads
+  - Multi-format support (images, videos, carousels)
+  - Story downloads before 24-hour expiration
+  - User agent rotation to avoid detection
+  - Error recovery for failed downloads
+  - Rich progress bars with detailed status
+- **JioSaavn Handler** with full music platform support:
+  - Track, album, and playlist downloads via YouTube search
+  - Intelligent YouTube scoring for accurate matches
+  - Full metadata extraction and embedding
+  - Interactive song selection for albums/playlists
+  - Range and selective download support (1,3-5,7)
+  - High-quality audio with cover art embedding
+  - HTML entity decoding for proper character display
+- **Gaana Handler** with comprehensive Indian music support:
+  - Track, album, playlist, and artist downloads
+  - Advanced web scraping with BeautifulSoup
+  - Interactive song selection with flexible input (all, 1-10, 1,3,5)
+  - YouTube search with intelligent scoring algorithm
+  - Full metadata extraction (title, artist, album, year)
+  - Cover art embedding from Gaana artwork
+  - HTML entity decoding for special characters
+  - Multiple format support (MP3, M4A, FLAC)
 - **Pinterest Handler** with advanced features:
   - Multi-tier download strategy (gallery-dl → pinterest-downloader → yt-dlp → web scraping)
   - Interactive prompt for custom pin count
@@ -32,38 +62,63 @@ This release focuses on social media platform support and handler improvements.
   - 10 regex patterns and 7 extraction methods for robust scraping
   - Support for profiles, boards, and individual pins
   - No metadata JSON files (clean downloads)
-- **LinkedIn Handler** improvements:
-  - Simplified to support only direct post URLs
-  - Removed profile scraping (authentication issues)
+- **LinkedIn Handler** for professional content:
+  - Support for direct post URLs with media
   - Rich progress bars with download speed and ETA
   - No Selenium dependency (faster and more reliable)
-- **Reddit Handler** for downloading from Reddit posts and user profiles
+  - Video and image extraction from posts
+  - Simplified architecture for reliability
+- **Reddit Handler** for social media content:
+  - Download posts with media (videos, images, GIFs)
+  - User profile content downloads
+  - PRAW integration for API access
+  - Automatic ZIP file creation for bulk downloads
+  - Support for v.redd.it and i.redd.it domains
+  - Gallery post support (multiple images)
+  - Fallback to yt-dlp and web scraping
 - External library support:
+  - `playwright>=1.40.0` for Instagram browser automation
   - `gallery-dl>=1.26.0` for Pinterest
   - `pinterest-downloader>=1.0.0` as alternative
+  - `praw>=7.7.1` for Reddit API access
 
 ### Changed
 
+- Added six major platform handlers (Instagram, JioSaavn, Gaana, Pinterest, LinkedIn, Reddit)
 - LinkedIn handler simplified to direct URLs only (no profile scraping)
 - Pinterest handler replaced Selenium with advanced web scraping
+- Instagram handler uses Playwright instead of traditional requests-only approach
+- JioSaavn and Gaana handlers use intelligent YouTube search with scoring
 - Improved progress display across all handlers
-- Updated requirements.txt with optional external libraries
+- Updated requirements.txt with Playwright and optional external libraries
+- Enhanced metadata extraction for Indian music platforms
 
 ### Fixed
 
 - Selenium "Bad CPU type" errors (removed Selenium from LinkedIn and Pinterest)
 - Pinterest metadata JSON files no longer created
+- Instagram login and authentication handling via cookies
+- JioSaavn and Gaana metadata extraction with proper HTML entity decoding
 - Video quality now defaults to high
 - Real-time progress tracking for downloads
+- Character encoding issues in Indian music platforms
 
 ### Technical Changes
 
+- Implemented Playwright browser automation for Instagram
+- Added cookie management system for Instagram sessions
+- Created intelligent YouTube scoring algorithm for music platforms
+- Implemented BeautifulSoup scraping for JioSaavn and Gaana
+- Added flexible song selection parsing (ranges, lists, all)
 - Implemented subprocess streaming for real-time gallery-dl output
 - Added Rich progress bars to download operations
 - Created multi-method fallback system for Pinterest
+- Added PRAW integration for Reddit API access
 - Removed Selenium dependencies where not needed
+- Enhanced error handling for social media platforms
+- Implemented HTML entity decoding for international characters
 
---- -->
+---
 
 ## Version 2.0.0
 
@@ -163,15 +218,12 @@ Initial release of Ultimate Media Downloader.
 
 ### Planned for Future Releases
 
-#### Version 2.1.0
+#### Version 2.2.0
 
 - GUI application using Electron or native toolkit
 - Download scheduling and queue management
 - Browser extension for one-click downloads
 - Enhanced metadata from MusicBrainz and Discogs
-
-#### Version 2.2.0
-
 - Mobile companion app
 - Cloud storage integration
 - Download history with search
@@ -199,6 +251,7 @@ gitGraph
     branch feature/handlers
     commit id: "Spotify handler"
     commit id: "Apple Music handler"
+    commit id: "JioSaavn handler"
     commit id: "Adult handlers"
     checkout main
     branch feature/utils

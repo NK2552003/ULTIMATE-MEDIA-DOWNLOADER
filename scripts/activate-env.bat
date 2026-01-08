@@ -1,8 +1,8 @@
 @echo off
 REM =============================================================================
 REM Ultimate Media Downloader - Environment Activation Script
-REM Version: 1.0.0
-REM Date: December 2025
+REM Version: 2.1.0
+REM Date: January 2026
 REM Description: Activates the virtual environment with all modules and deps
 REM =============================================================================
 
@@ -38,9 +38,12 @@ if exist "%~dp0venv\Scripts\activate.bat" (
     echo   - eporner_handler       (Eporner support)
     echo   - hqporner_handler      (HQPorner support)
     echo   - beeg_handler          (Beeg support)
-    echo.
-    
-    echo You can now run:
+    echo   - linkedin_handler      (LinkedIn support)
+    echo   - reddit_handler        (Reddit support)
+    echo   - pinterest_handler     (Pinterest support)
+    echo   - jiosaavn_handler      (JioSaavn support)
+    echo   - gaana_handler         (Gaana support)
+    echo. You can now run:
     echo   * python ultimate_downloader.py --help        (Show help and options)
     echo   * python ultimate_downloader.py ^<URL^>         (Download from URL)
     echo   * python ultimate_downloader.py -i            (Interactive mode)
