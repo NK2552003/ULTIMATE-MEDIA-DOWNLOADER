@@ -28,6 +28,7 @@ Ultimate Media Downloader is a professional-grade, open-source media downloading
 |------------------------|-------------|
 | **One Command**        | Install once, use <code>umd</code> from anywhere |
 | **100+ Platforms**    | YouTube, Spotify, JioSaavn, Gaana, Apple Music, Instagram, TikTok, SoundCloud, and more |
+| **Auto-Update**        | Automatically checks and updates to latest version |
 | **No Virtual Env**     | Clean installation with <code>pipx</code> |
 | **Auto Organization**  | Downloads saved to <code>~/Downloads/UltimateDownloader</code> |
 | **Beautiful UI**       | Modern CLI with progress bars and rich formatting |
@@ -233,6 +234,48 @@ umd "https://www.youtube.com/watch?v=dQw4w9WgXcQ" --info
 For comprehensive installation instructions, troubleshooting, and platform-specific guides, see:
 
 **[📖 Installation Guide](documentations/INSTALLATION.md)**
+
+---
+
+## Keeping Updated
+
+### Automatic Updates (Built-in)
+
+Ultimate Media Downloader automatically checks for updates every time you run it!
+
+- **No manual checking needed** - Updates are detected automatically
+- **One-click updates** - Just press 'Y' when prompted
+- **Non-intrusive** - Silent when up-to-date
+- **Smart caching** - Checks once per hour to avoid delays
+
+When an update is available, you'll see:
+```
+⚠️  New version available: v2.2.0 (current: v2.1.0)
+Would you like to update now? (Y/n):
+```
+
+### Manual Update
+
+Update at any time using the update scripts:
+
+**macOS/Linux:**
+```bash
+cd ULTIMATE-MEDIA-DOWNLOADER
+./scripts/update.sh
+```
+
+**Windows:**
+```cmd
+cd ULTIMATE-MEDIA-DOWNLOADER
+scripts\update.bat
+```
+
+Or use pip directly:
+```bash
+pip install --upgrade git+https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+```
+
+**[📖 Auto-Update Documentation](documentations/AUTO_UPDATE.md)**
 
 ---
 
