@@ -10,6 +10,7 @@ Welcome to the Ultimate Media Downloader documentation. This index helps you fin
 |--------------|----------|
 | Install the application | [Installation Guide](INSTALLATION.md) |
 | Learn how to use it | [Usage Guide](USAGE.md) |
+| Update to latest version | [Auto-Update Guide](AUTO_UPDATE.md) |
 | Understand how it works | [Architecture](ARCHITECTURE.md) |
 | Configure settings | [Configuration Guide](CONFIGURATION.md) |
 | Fix a problem | [Troubleshooting](TROUBLESHOOTING.md) |
@@ -60,6 +61,7 @@ graph TD
 | [Installation Guide](INSTALLATION.md) | How to install on any operating system |
 | [Usage Guide](USAGE.md) | Complete guide to using the application |
 | [Configuration Guide](CONFIGURATION.md) | All configuration options explained |
+| [Auto-Update Guide](AUTO_UPDATE.md) | Automatic version checking and updates |
 | [Troubleshooting](TROUBLESHOOTING.md) | Solutions to common problems |
 | [Changelog](CHANGELOG.md) | Version history and release notes |
 

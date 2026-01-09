@@ -50,6 +50,7 @@ streamlink>=6.5.0                 # Extract streams from various services
 # -------------------------------------------------------------------------
 python-dateutil>=2.8.2            # Date/time utilities  
 pytz>=2023.3                       # Timezone support  
+packaging>=23.0                    # Version parsing for updates  
 
 # Development & Testing (Optional)
 # -------------------------------------------------------------------------
