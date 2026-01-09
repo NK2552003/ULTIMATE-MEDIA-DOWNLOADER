@@ -33,6 +33,7 @@ setup(
         'youtube_scorer',
         'generic_downloader',
         'platform_info',
+        'version_checker',
     ],
     packages=['handlers', 'utils'],
     install_requires=requirements,

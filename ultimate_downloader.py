@@ -3713,6 +3713,14 @@ def main():
     from cli_args import parse_arguments
     from utils.ui_display import show_help_menu
     
+    # Check for updates before proceeding
+    try:
+        from version_checker import check_for_updates
+        check_for_updates(auto_update=True)
+    except Exception:
+        # Silently continue if version check fails
+        pass
+    
     args = parse_arguments()
     
     # Create downloader instance
