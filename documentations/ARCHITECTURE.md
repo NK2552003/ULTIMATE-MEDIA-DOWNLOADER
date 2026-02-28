@@ -66,6 +66,7 @@ graph TB
         EPORNER[Eporner Handler]
         HQPORNER[HQPorner Handler]
         BEEG[Beeg Handler]
+        WALLPAPER[4KWallpapers Handler]
     end
 
     subgraph "Utility Layer"
@@ -106,6 +107,7 @@ graph TB
     MAIN --> REDDIT
     MAIN --> PINTEREST
     MAIN --> INSTAGRAM
+    MAIN --> WALLPAPER
 
     SPOTIFY --> SCORER
     APPLE --> SCORER
@@ -210,8 +212,11 @@ classDiagram
         +jiosaavn_handler: JioSaavnHandler
         +gaana_handler: GaanaHandler
         +tumblr_handler: TumblrHandler
+        +wallpaper_handler: FourKWallpapersHandler
         +download(url)
         +detect_platform(url)
+        +browse_wallpapers(search_query)
+        +browse_wallpapers_url(url)
     }
 
     class SpotifyHandler {
@@ -328,6 +333,17 @@ classDiagram
         +_save_cookies()
     }
 
+    class FourKWallpapersHandler {
+        +downloader: UltimateMediaDownloader
+        +session: CloudScraper
+        +interactive_browse(search_query)
+        +handle_url(url)
+        +fetch_listing_paginated(base_url, max_wallpapers)
+        +search_wallpapers(query)
+        +_parse_selection(raw, total)
+        +_run_listing_flow(section_name, listing_url)
+    }
+
     UltimateMediaDownloader --> SpotifyHandler
     UltimateMediaDownloader --> AppleMusicHandler
     UltimateMediaDownloader --> JioSaavnHandler
@@ -341,6 +357,7 @@ classDiagram
     UltimateMediaDownloader --> EpornerHandler
     UltimateMediaDownloader --> HQPornerHandler
     UltimateMediaDownloader --> BeegHandler
+    UltimateMediaDownloader --> FourKWallpapersHandler
 ```
 
 ### How Handlers Work
