@@ -79,6 +79,7 @@ mindmap
       Eporner
       HQPorner
       Beeg
+      4kwallpapers
       100+ more
     Advanced
       Batch downloads
@@ -162,6 +163,12 @@ mindmap
 | Tumblr | Images, videos, blogs |
 | LinkedIn | Posts, videos |
 | Pinterest | Pins, boards, profiles |
+
+### Image & Wallpaper Platforms
+
+| Platform | Content Types |
+|----------|--------------|
+| 4kwallpapers.com | 4K/8K wallpapers — browse by category, tag, or search; range selection; multi-resolution download |
 
 ### Additional Support
 
@@ -252,19 +259,20 @@ graph TB
 | JioSaavn Handler | ~1700 lines |
 | Gaana Handler | ~1140 lines |
 | Instagram Handler | ~1719 lines |
+| 4K Wallpapers Handler | ~950 lines |
 | YouTube Scorer | ~1000 lines |
 | Utility Modules | ~1500 lines |
-| Total Python Code | ~14000+ lines |
+| Total Python Code | ~15000+ lines |
 
 ### File Count
 
 | Category | Count |
 |----------|-------|
-| Python Files | 20 |
-| Handler Modules | 17 |
+| Python Files | 21 |
+| Handler Modules | 18 |
 | Utility Modules | 8 |
 | Shell Scripts | 8 |
-| Documentation | 10+ |
+| Documentation | 11+ |
 
 ### Supported Sites
 
@@ -273,6 +281,7 @@ graph TB
 | Video Platforms | 50+ |
 | Music Platforms | 10+ |
 | Social Media | 15+ |
+| Image/Wallpaper | 1+ |
 | Other Sites | 900+ |
 | Total via yt-dlp | 1000+ |
 

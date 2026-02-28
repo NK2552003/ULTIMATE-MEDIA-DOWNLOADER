@@ -36,7 +36,7 @@ umd https://youtube.com/watch?v=example
 If an update is available, you'll see:
 
 ```
-⚠️  New version available: v2.2.0 (current: v2.1.0)
+⚠️  New version available: v2.3.0 (current: v2.2.0)
 Would you like to update now? (Y/n):
 ```
 
@@ -83,7 +83,7 @@ pip install --upgrade git+https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER
 
 ### Smart Update Detection
 
-- Uses semantic versioning (e.g., 2.1.0 → 2.2.0)
+- Uses semantic versioning (e.g., 2.2.0 → 2.3.0)
 - Only prompts when a newer version is available
 - Handles version parsing errors gracefully
 

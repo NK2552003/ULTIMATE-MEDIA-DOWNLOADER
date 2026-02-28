@@ -7,6 +7,13 @@ This guide helps you solve common problems you might encounter when using the Ul
 1. [Installation Issues](#installation-issues)
 2. [Download Issues](#download-issues)
 3. [Platform-Specific Issues](#platform-specific-issues)
+   - [YouTube Age-Restricted Videos](#youtube-age-restricted-videos)
+   - [Spotify Downloads Not Working](#spotify-downloads-not-working)
+   - [Instagram Downloads Failing](#instagram-downloads-failing)
+   - [TikTok Videos Not Downloading](#tiktok-videos-not-downloading)
+   - [Adult Site Downloads Failing](#adult-site-downloads-failing-eporner-hqporner-beeg)
+   - [Twitter/X Videos Failing](#twitterx-videos-failing)
+   - [4K Wallpapers Issues](#4k-wallpapers-issues)
 4. [Audio and Video Issues](#audio-and-video-issues)
 5. [Performance Issues](#performance-issues)
 6. [Error Messages](#error-messages)
@@ -297,6 +304,57 @@ Make sure you are downloading to the same directory. The application looks for p
 1. Use the full tweet URL, not embedded video URL
 2. Some videos require authentication
 3. Update yt-dlp
+
+---
+
+### 4K Wallpapers Issues
+
+#### No Wallpapers Found (0 results)
+
+**Symptom**: The handler shows "0 wallpapers found" for a category or search
+
+**Solutions**:
+
+1. The category slug in the URL may have changed. Try browsing via the interactive menu (`umd --wallpaper`) instead of pasting a URL directly.
+2. For search, ensure you are using simple keywords (e.g. `anime` not `anime+girl`).
+3. The site may be temporarily unavailable. Try again in a few minutes.
+
+#### Cloudflare Challenge / Access Denied
+
+**Symptom**: Wallpaper pages return very short responses or HTML challenge pages
+
+**Root Cause & Fix**: This was a known bug (now fixed in v2.2.0) caused by passing browser emulation arguments to `cloudscraper`. If you still see this, ensure you are on the latest version:
+
+```bash
+git pull
+pip install -r requirements.txt
+```
+
+#### Search Returns Only 24 Results
+
+**Symptom**: Search only ever shows 24 wallpapers regardless of how many you request
+
+**Explanation**: This is a site limitation. 4kwallpapers.com search pages are single-page only — no pagination is available for search results. Use a category or tag browse instead to get more wallpapers.
+
+#### Downloads Fail or Return 404
+
+**Symptom**: Individual wallpaper downloads fail with 404
+
+**Solutions**:
+
+1. The wallpaper may have been removed from the site.
+2. Try downloading a different resolution from the same wallpaper.
+3. Re-fetch the listing (run the browse flow again) to get fresh links.
+
+#### `wallpaper` / `wp` Command Not Recognized in Interactive Mode
+
+**Symptom**: Typing `wallpaper` in interactive mode shows "URL not recognized"
+
+**Solutions**:
+
+1. Make sure you are on v2.2.0 or later.
+2. Verify `four_k_wallpapers_handler.py` exists in the `handlers/` directory.
+3. Check for import errors by running `umd --wallpaper` to see if there is a Python error.
 
 ---
 

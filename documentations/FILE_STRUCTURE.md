@@ -48,6 +48,7 @@ graph TD
     HANDLERS --> H15[eporner_handler.py]
     HANDLERS --> H16[hqporner_handler.py]
     HANDLERS --> H17[beeg_handler.py]
+    HANDLERS --> H18[four_k_wallpapers_handler.py]
 
     UTILS --> U1[utils.py]
     UTILS --> U2[url_validator.py]
@@ -197,6 +198,7 @@ Location: `handlers/`
 | `eporner_handler.py` | ~961 | Eporner videos |
 | `hqporner_handler.py` | ~701 | HQPorner videos |
 | `beeg_handler.py` | ~901 | Beeg videos |
+| `four_k_wallpapers_handler.py` | ~950 | 4kwallpapers.com image browsing & download |
 
 ### Handler Structure
 
@@ -373,6 +375,7 @@ graph LR
         EPORNER[eporner_handler.py]
         HQPORNER[hqporner_handler.py]
         BEEG[beeg_handler.py]
+        WALLPAPER[four_k_wallpapers_handler.py]
     end
 
     subgraph "Utilities"
@@ -395,6 +398,7 @@ graph LR
     MAIN --> EPORNER
     MAIN --> HQPORNER
     MAIN --> BEEG
+    MAIN --> WALLPAPER
     MAIN --> UTILS
     MAIN --> URL_VAL
     MAIN --> UI_COMP

@@ -23,7 +23,8 @@ This document describes the platform-specific handlers in the Ultimate Media Dow
 17. [Eporner Handler](#eporner-handler)
 18. [HQPorner Handler](#hqporner-handler)
 19. [Beeg Handler](#beeg-handler)
-20. [Creating Custom Handlers](#creating-custom-handlers)
+20. [4K Wallpapers Handler](#4k-wallpapers-handler)
+21. [Creating Custom Handlers](#creating-custom-handlers)
 
 ---
 
@@ -61,6 +62,7 @@ handlers/
     eporner_handler.py
     hqporner_handler.py
     beeg_handler.py
+    four_k_wallpapers_handler.py
 ```
 
 ---
@@ -1324,6 +1326,96 @@ The handler uses Beeg's internal API for video information:
 - Multiple quality options
 - Progress bar display with Rich
 - SSL context customization
+
+---
+
+
+## 4K Wallpapers Handler
+
+**File**: `handlers/four_k_wallpapers_handler.py`
+
+The 4K Wallpapers Handler enables browsing and downloading high-resolution wallpapers from [4kwallpapers.com](https://4kwallpapers.com). Unlike media handlers that use yt-dlp, this handler performs direct web scraping using `cloudscraper` and `BeautifulSoup`.
+
+### How It Works
+
+```mermaid
+flowchart TD
+    A[User runs --wallpaper or types wp] --> B[interactive_browse shown]
+    B --> C{User picks section}
+    C -->|Category / Tag| D[fetch_listing_paginated]
+    C -->|Search| E[search_wallpapers - single page]
+    C -->|URL pasted| F[handle_url]
+    D --> G[Show numbered list]
+    E --> G
+    F --> G
+    G --> H[User selects via range syntax]
+    H --> I[Fetch resolution list per wallpaper]
+    I --> J[User picks resolution]
+    J --> K[Parallel download with Rich progress]
+    K --> L[Saved to ~/Downloads/UltimateDownloader/4kwallpapers/]
+```
+
+### Supported URL Types
+
+| URL Pattern | Behaviour |
+|-------------|-----------|
+| `https://4kwallpapers.com/` (root) | Opens `interactive_browse()` |
+| `https://4kwallpapers.com/<category>/` | Category listing (paginated) |
+| `https://4kwallpapers.com/search/?q=query` | Search results (single page, 24 max) |
+| `https://4kwallpapers.com/cat/slug-ID.html` | Single wallpaper download |
+
+### Key Methods
+
+| Method | Description |
+|--------|-------------|
+| `interactive_browse(search_query='')` | Main menu shown when user runs `--wallpaper` or types `wallpaper` in interactive mode |
+| `handle_url(url)` | Auto-detects the URL type and routes to the appropriate flow |
+| `fetch_listing(url)` | Fetches wallpapers from a single page |
+| `fetch_listing_paginated(base_url, max_wallpapers=200)` | Paginates via `?page=N`, deduplicates by ID, stops on <20 results or duplicates |
+| `search_wallpapers(query)` | Queries `https://4kwallpapers.com/search/?q=<query>` — single page only |
+| `fetch_popular_tags()` | Scrapes live tag links from the homepage navigation |
+| `_parse_wallpaper_listing(html)` | Parses `<a href="...cat/slug-ID.html">` links from listing HTML |
+| `_parse_download_links(html)` | Extracts `/images/wallpapers/` hrefs with resolution regex `(\d{3,5}x\d{3,5})` |
+| `_parse_selection(raw, total)` | Converts `"1,3,4-7,10-12"` / `"all"` to sorted 0-based index list |
+| `_ask_selection(total)` | Interactive prompt that calls `_parse_selection` |
+| `_run_listing_flow(section_name, listing_url)` | Full browse → select → download flow for any listing URL |
+
+### Selection Syntax
+
+The handler supports rich range-based selection:
+
+```
+all          → all wallpapers
+1            → wallpaper #1 only
+1,3,7        → wallpapers 1, 3, and 7
+1-10         → wallpapers 1 through 10
+1-5,8,10-15  → combined ranges
+(Enter)      → skip / cancel
+```
+
+### Pagination Details
+
+- Each page returns 24 wallpapers
+- Pages are fetched via `?page=N` query parameter
+- Fetching stops when:
+  - A page returns fewer than 20 results (last page reached)
+  - All wallpapers on the current page already exist in the set (duplicates detected)
+  - The `max_wallpapers` limit is reached
+
+### Cloudflare Bypass
+
+The handler uses a **bare** `cloudscraper.create_scraper()` session (no `browser=` argument). Passing browser emulation arguments was found to trigger Cloudflare's challenge page (returning 8 KB instead of the expected 55 KB response). The bare session passes Cloudflare checks reliably.
+
+### Download URL Format
+
+```
+https://4kwallpapers.com/images/wallpapers/<slug>-<WxH>-<id>.png
+```
+
+Example:
+```
+https://4kwallpapers.com/images/wallpapers/anime-girl-3840x2160-12345.png
+```
 
 ---
 
