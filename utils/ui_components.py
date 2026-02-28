@@ -201,7 +201,7 @@ Media Downloader
             box=box.DOUBLE,
             padding=(1, 2),
             title="[bold white]▶ ULTIMATE MEDIA DOWNLOADER[/bold white]",
-            subtitle="[dim]v2.1.0 - Professional Edition[/dim]"
+            subtitle="[dim]v2.2.0 - Professional Edition[/dim]"
         )
         
         self.console.print(panel)
@@ -245,6 +245,7 @@ Media Downloader
         info_table.add_row("")
         info_table.add_row("[bold white]Quick Commands:[/bold white]")
         info_table.add_row("[yellow]help[/yellow]      - Show available commands")
+        info_table.add_row("[yellow]wallpaper[/yellow] - Browse 4K wallpapers")
         info_table.add_row("[yellow]platforms[/yellow] - List supported sites")
         info_table.add_row("[yellow]quit[/yellow]      - Exit application")
         

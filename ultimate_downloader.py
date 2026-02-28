@@ -4,7 +4,7 @@ Ultimate Multi-Platform Media Downloader
 Supports YouTube, Spotify, JioSaavn, Gaana, Apple Music, SoundCloud, and many other platforms
 """
 
-__version__ = "2.1.0"
+__version__ = "2.2.0"
 
 import os
 import sys
@@ -133,6 +133,13 @@ try:
     INSTAGRAM_HANDLER_AVAILABLE = True
 except ImportError:
     INSTAGRAM_HANDLER_AVAILABLE = False
+
+# 4K Wallpapers handler
+try:
+    from handlers.four_k_wallpapers_handler import FourKWallpapersHandler
+    WALLPAPER_HANDLER_AVAILABLE = True
+except ImportError:
+    WALLPAPER_HANDLER_AVAILABLE = False
 
 try:
     import mutagen
@@ -400,7 +407,12 @@ class UltimateMediaDownloader:
         self.instagram_handler = None
         if INSTAGRAM_HANDLER_AVAILABLE:
             self.instagram_handler = InstagramHandler(self)
-        
+
+        # Initialize 4K Wallpapers handler
+        self.wallpaper_handler = None
+        if WALLPAPER_HANDLER_AVAILABLE:
+            self.wallpaper_handler = FourKWallpapersHandler(self)
+
         # Initialize Apple Music downloader if available
         self.apple_music_downloader = None
         if GAMDL_AVAILABLE:
@@ -2250,6 +2262,8 @@ class UltimateMediaDownloader:
                 return self.search_and_download_pinterest(url, interactive=interactive)
             elif platform == 'instagram':
                 return self.search_and_download_instagram(url, interactive=interactive)
+            elif platform == '4kwallpapers':
+                return self.browse_wallpapers_url(url)
             
             # Check if URL might be a playlist
             if self.is_playlist_url(url):
@@ -3597,6 +3611,49 @@ class UltimateMediaDownloader:
         """Check if URL is supported - delegates to URLValidator module"""
         url_validator = URLValidator(self.platform_configs)
         return url_validator.check_url_support(url, self.detect_platform, silent)
+
+    # ── 4K Wallpaper methods ─────────────────────────────────────────────────
+
+    def browse_wallpapers_url(self, url: str):
+        """Handle a 4kwallpapers.com URL pasted into interactive mode."""
+        if not self.wallpaper_handler:
+            self.print_rich(Messages.error(
+                "4K Wallpapers handler is not available. "
+                "Make sure 'requests' and 'beautifulsoup4' are installed."
+            ))
+            return
+        try:
+            self.wallpaper_handler.handle_url(url)
+        except KeyboardInterrupt:
+            self.print_rich('[yellow]\n⚠  Wallpaper downloader interrupted by user.[/yellow]')
+        except Exception as exc:
+            self.print_rich(Messages.error(f"Wallpaper downloader error: {exc}"))
+            import traceback
+            traceback.print_exc()
+
+    def browse_wallpapers(self, search_query: str = ''):
+        """
+        Launch the interactive 4K Wallpaper Downloader.
+
+        Args:
+            search_query: If non-empty, skip the main menu and go straight
+                          to the search results for this query.
+        """
+        if not self.wallpaper_handler:
+            self.print_rich(Messages.error(
+                "4K Wallpapers handler is not available. "
+                "Make sure 'requests' and 'beautifulsoup4' are installed."
+            ))
+            return
+
+        try:
+            self.wallpaper_handler.interactive_browse(search_query=search_query)
+        except KeyboardInterrupt:
+            self.print_rich('[yellow]\n⚠  Wallpaper downloader interrupted by user.[/yellow]')
+        except Exception as exc:
+            self.print_rich(Messages.error(f"Wallpaper downloader error: {exc}"))
+            import traceback
+            traceback.print_exc()
     
     def list_supported_platforms(self):
         """List all supported platforms - delegates to PlatformInfo module"""
@@ -3647,6 +3704,15 @@ def interactive_mode():
             elif url.lower() in ['clear', 'cls']:
                 ui.show_welcome_banner()
                 ui.show_interactive_banner()
+                continue
+
+            elif url.lower() in ['wallpaper', 'wallpapers', 'wp']:
+                if WALLPAPER_HANDLER_AVAILABLE:
+                    downloader.browse_wallpapers()
+                    ui.show_welcome_banner()
+                    ui.show_interactive_banner()
+                else:
+                    ui.error_message("4K Wallpapers handler not available. Install 'requests' and 'beautifulsoup4'.")
                 continue
             
             # Validate URL
@@ -3727,6 +3793,15 @@ def main():
     downloader = UltimateMediaDownloader(args.output, verbose=args.verbose)
     ui = ModernUI()
     
+    # ── Wallpaper mode ────────────────────────────────────────────────────────
+    if getattr(args, 'wallpaper', False):
+        downloader.browse_wallpapers()
+        return
+
+    if getattr(args, 'wallpaper_search', None):
+        downloader.browse_wallpapers(search_query=args.wallpaper_search)
+        return
+
     # Show beautiful welcome banner only in interactive mode
     # For command-line mode, keep it minimal
     

@@ -64,7 +64,8 @@ class URLValidator:
                 "hqporner", "eporner", "beeg", "porntrex", "porndig",
                 "txxx", "porndoe", "pornhat", "okxxx", "porn00", "xxxfiles",
                 "fikfap", "fyptt", "tikporn", "xxxtik", "xxxfollow", "hianime",
-                "linkedin", "reddit", "pinterest"
+                "linkedin", "reddit", "pinterest",
+                "4kwallpapers",   # wallpaper downloader
             )
             if platform in custom_handler_platforms:
                 if not silent:

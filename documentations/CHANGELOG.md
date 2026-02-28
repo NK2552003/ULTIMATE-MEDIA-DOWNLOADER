@@ -8,11 +8,61 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Table of Contents
 
+- [Version 2.2.0](#version-220)
 - [Version 2.1.0](#version-210)
 - [Version 2.0.0](#version-200)
 - [Version 1.0.5](#version-105)
 - [Version 1.0.0](#version-100)
 - [Roadmap](#roadmap)
+
+---
+
+## Version 2.2.0
+
+**Release Date**: February 2026
+
+This release adds a dedicated wallpaper downloader module for 4kwallpapers.com with a full interactive browsing and download experience.
+
+### Added
+
+- **4K Wallpapers Handler** (`handlers/four_k_wallpapers_handler.py`):
+  - Interactive browsing with category, tag, and search menus
+  - Pagination support — browse up to 2400 wallpapers per session using `?page=N`
+  - Range-based selection (`1,3,4-7,10-12`, `all`, or press Enter to skip)
+  - Multi-resolution download (auto-picks highest available resolution per image)
+  - Parallel downloads with Rich progress bars
+  - Cloudflare bypass using bare `cloudscraper` session (no browser args)
+  - Home/Featured, Recently Added, Browse by Tag, Categories, and Search modes
+  - Direct URL routing — paste any 4kwallpapers.com link to auto-detect mode
+  - `fetch_listing_paginated()` with deduplication and early-termination
+  - Graceful fallback when a page returns fewer than 20 results
+- **CLI flags** (`cli_args.py`):
+  - `--wallpaper` — open 4K Wallpapers interactive menu directly
+  - `--wallpaper-search QUERY` — jump straight to search results
+- **Interactive mode commands** (`ultimate_downloader.py`):
+  - New commands `wallpaper`, `wallpapers`, `wp` in interactive prompt
+  - Pasting a 4kwallpapers.com URL is now auto-routed to the handler
+- **Platform detection** (`utils/platform_utils.py`, `utils/url_validator.py`):
+  - `4kwallpapers.com` added to supported platforms and URL validator
+
+### Changed
+
+- Interactive banner and help menu updated to show `wallpaper / wp` command
+- `ultimate_downloader.py` instantiates `FourKWallpapersHandler` on startup when available
+- `handlers/__init__.py` exports `FourKWallpapersHandler`
+
+### Fixed
+
+- Cloudflare challenge responses (8 KB page) caused by incorrect `cloudscraper` browser args — fixed by removing browser emulation arguments from session creation
+- Pasting a 4kwallpapers.com URL in interactive mode no longer triggers a yt-dlp error
+
+### Technical Changes
+
+- Added `four_k_wallpapers_handler.py` (~950 lines) with `FourKWallpapersHandler` class
+- Implemented `_parse_selection(raw, total)` for flexible range parsing
+- Implemented `fetch_listing_paginated(base_url, max_wallpapers)` for multi-page scraping
+- Search results limited to one page (site restriction; 24 results max)
+- Download URLs constructed as `https://4kwallpapers.com/images/wallpapers/<slug>-<WxH>-<id>.png`
 
 ---
 
@@ -218,7 +268,7 @@ Initial release of Ultimate Media Downloader.
 
 ### Planned for Future Releases
 
-#### Version 2.2.0
+#### Version 2.3.0
 
 - GUI application using Electron or native toolkit
 - Download scheduling and queue management
@@ -261,6 +311,20 @@ gitGraph
     merge feature/handlers
     merge feature/utils
     commit id: "v2.0.0" tag: "v2.0.0"
+    branch feature/social
+    commit id: "Instagram handler"
+    commit id: "Reddit handler"
+    commit id: "Pinterest handler"
+    commit id: "LinkedIn handler"
+    checkout main
+    merge feature/social
+    commit id: "v2.1.0" tag: "v2.1.0"
+    branch feature/wallpapers
+    commit id: "4kwallpapers handler"
+    commit id: "CLI wallpaper flags"
+    checkout main
+    merge feature/wallpapers
+    commit id: "v2.2.0" tag: "v2.2.0"
 ```
 
 ---

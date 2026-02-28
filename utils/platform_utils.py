@@ -108,6 +108,12 @@ PLATFORM_CONFIGS = {
         'formats': ['mp4', 'jpg', 'png'],
         'note': 'Instagram posts, reels, stories, and profiles - videos and images'
     },
+    # Wallpaper sites
+    '4kwallpapers': {
+        'extractors': ['4kwallpapers'],
+        'formats': ['jpg', 'png', 'webp'],
+        'note': '4kwallpapers.com – browse and download 4K/8K wallpapers'
+    },
     'generic': {
         'extractors': ['generic'],
         'formats': ['mp4', 'mp3', 'wav']
@@ -142,6 +148,8 @@ SUPPORTED_SITES = [
     {'name': 'LinkedIn', 'description': 'LinkedIn posts and profiles - videos and images'},
     {'name': 'Reddit', 'description': 'Reddit posts and user content - videos, images, GIFs'},
     {'name': 'Pinterest', 'description': 'Pinterest pins, boards, and profiles - images and videos'},
+    # Wallpaper sites
+    {'name': '4K Wallpapers', 'description': '4kwallpapers.com – browse/search 4K, 5K, 8K wallpapers (use --wallpaper flag)'},
     {'name': 'Generic', 'description': 'many other video and audio platforms'}
 ]
 
@@ -199,6 +207,8 @@ def detect_platform(url: str) -> str:
         return 'pinterest'
     elif any(domain in url_lower for domain in ['instagram.com', 'instagr.am']):
         return 'instagram'
+    elif '4kwallpapers.com' in url_lower:
+        return '4kwallpapers'
     elif any(domain in url_lower for domain in ['facebook.com', 'twitter.com', 'x.com']):
         return 'social_media'
     else:

@@ -39,7 +39,7 @@ class VersionChecker:
                     import re
                     for line in result.stdout.split('\n'):
                         if 'ultimate-downloader' in line.lower() or 'ultimate_downloader' in line.lower():
-                            # Look for pattern like "ultimate-downloader 2.1.0"
+                            # Look for pattern like "ultimate-downloader 2.2.0"
                             version_match = re.search(r'ultimate[-_]downloader\s+(\d+\.\d+\.\d+)', line.lower())
                             if version_match:
                                 self.current_version = version_match.group(1)

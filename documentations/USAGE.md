@@ -11,8 +11,9 @@ This guide explains how to use the Ultimate Media Downloader. It covers basic us
 5. [Playlists and Albums](#playlists-and-albums)
 6. [Batch Downloads](#batch-downloads)
 7. [Platform-Specific Usage](#platform-specific-usage)
-8. [Command Reference](#command-reference)
-9. [Tips and Best Practices](#tips-and-best-practices)
+8. [Downloading Wallpapers](#downloading-wallpapers)
+9. [Command Reference](#command-reference)
+10. [Tips and Best Practices](#tips-and-best-practices)
 
 ---
 
@@ -481,6 +482,94 @@ umd "https://www.pinterest.com/username/"
 
 ---
 
+## Downloading Wallpapers
+
+The built-in 4K Wallpapers module lets you browse and download high-resolution wallpapers from [4kwallpapers.com](https://4kwallpapers.com).
+
+### Open the Wallpaper Browser
+
+```bash
+# Interactive menu (CLI flag)
+umd --wallpaper
+
+# Search directly from the command line
+umd --wallpaper-search "anime"
+umd --wallpaper-search "space galaxy"
+```
+
+### Wallpaper Command in Interactive Mode
+
+While inside `umd` interactive mode, type any of these:
+
+```
+wallpaper
+wallpapers
+wp
+```
+
+### Paste a 4kwallpapers.com URL
+
+You can also paste any 4kwallpapers.com URL directly into the interactive prompt:
+
+```
+https://4kwallpapers.com/anime/
+https://4kwallpapers.com/search/?q=cyberpunk
+https://4kwallpapers.com/nature/mountains-123456.html
+```
+
+The handler will auto-detect the URL type and behave accordingly.
+
+### Interactive Menu Options
+
+| Option | Description |
+|--------|-------------|
+| `1` | Home / Featured wallpapers |
+| `2` | Recently Added wallpapers |
+| `3` | Browse by Tag (scraped from live site) |
+| `4` | Categories (anime, nature, space, etc.) |
+| `5` | Search by keyword |
+| `0` | Exit wallpaper browser |
+
+### Browsing & Downloading Wallpapers
+
+After selecting a section, the handler will:
+
+1. Fetch wallpapers from page 1 and show the count
+2. Ask how many wallpapers to browse (default: 96, max per session: 2400)
+3. Show the numbered list of wallpapers
+4. Prompt you to select which ones to download
+
+#### Selection Syntax
+
+| Input | Meaning |
+|-------|---------|
+| `all` | Download every wallpaper in the list |
+| `1` | Download wallpaper #1 only |
+| `1,3,7` | Download wallpapers 1, 3, and 7 |
+| `1-10` | Download wallpapers 1 through 10 |
+| `1-5,8,10-15` | Combined ranges and individual picks |
+| *(press Enter)* | Skip / cancel |
+
+#### Resolution Selection
+
+After selecting wallpapers, you will be asked to choose a resolution. Available resolutions are scraped live from each wallpaper page (e.g., `3840x2160`, `1920x1080`, `1280x720`). The highest available resolution is highlighted as the default.
+
+### Download Location
+
+Wallpapers are saved to:
+
+```
+~/Downloads/UltimateDownloader/4kwallpapers/
+```
+
+### Notes
+
+- **Search results** are limited to 24 per session (site limitation — search pages are single-page only)
+- **Category / tag pages** support pagination up to 2400 wallpapers per session
+- **Cloudflare** is automatically bypassed — no extra setup needed
+
+---
+
 ## Command Reference
 
 ### Complete Option List
@@ -550,6 +639,13 @@ umd "https://www.pinterest.com/username/"
 |--------|-------------|
 | `--interactive` | Force interactive mode |
 | `--no-interactive` | Disable interactive prompts |
+
+#### Wallpaper Options
+
+| Option | Description |
+|--------|-------------|
+| `--wallpaper` | Open the 4K Wallpapers interactive browser |
+| `--wallpaper-search QUERY` | Search 4kwallpapers.com for QUERY and show results |
 
 ---
 

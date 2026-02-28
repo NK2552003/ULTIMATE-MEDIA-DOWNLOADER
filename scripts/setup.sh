@@ -46,7 +46,7 @@ print_header() {
     echo "╔════════════════════════════════════════════════════════════════════╗"
     echo "║                                                                    ║"
     echo "║        ULTIMATE MEDIA DOWNLOADER - SETUP SCRIPT                   ║"
-    echo "║                  Version 2.1.0 - January 2026                     ║"
+    echo "║                  Version 2.2.0 - February 2026                    ║"
     echo "║                                                                    ║"
     echo "╚════════════════════════════════════════════════════════════════════╝"
     echo -e "${NC}"
@@ -565,8 +565,8 @@ create_activation_script() {
 #!/bin/bash
 # =============================================================================
 # Ultimate Media Downloader - Environment Activation Script
-# Version: 2.1.0
-# Date: January, 2026
+# Version: 2.2.0
+# Date: February, 2026
 # =============================================================================
 
 # Colors
@@ -648,7 +648,7 @@ from handlers.linkedin_handler import LinkedInHandler
 from handlers.reddit_handler import RedditHandler
 from handlers.pinterest_handler import PinterestHandler
 from handlers.instagram_handler import InstagramHandler
-from handlers.jiosaavn_handler import JioSaavnHandler
+from handlers.four_k_wallpapers_handler import FourKWallpapersHandler
 from youtube_scorer import YouTubeScorer
 print('All imports successful')
 " && print_success "All imports working" || print_warning "Some imports failed"

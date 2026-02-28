@@ -24,7 +24,7 @@ echo.
 echo ========================================================================
 echo                                                                        
 echo        ULTIMATE MEDIA DOWNLOADER - SETUP SCRIPT                       
-echo                  Version 2.1.0 - January 2026                         
+echo                  Version 2.2.0 - February 2026                        
 echo                                                                        
 echo ========================================================================
 echo.
@@ -287,7 +287,7 @@ call :print_section "Creating Activation Script"
     echo @echo off
     echo REM =============================================================================
     echo REM Ultimate Media Downloader - Environment Activation Script
-    echo REM Version: 2.1.0
+    echo REM Version: 2.2.0
     echo REM Date: January 8, 2026
     echo REM =============================================================================
     echo.
@@ -335,7 +335,7 @@ if %errorlevel% equ 0 (
 )
 
 call :print_step "Testing imports..."
-python -c "import yt_dlp; import requests; import rich; from generic_downloader import GenericSiteDownloader; from cli_args import create_argument_parser; from utils.ui_components import ModernUI, Icons; from utils.ui_display import show_help_menu; from logger import QuietLogger; from utils.utils import sanitize_filename; from handlers.spotify_handler import SpotifyHandler; from handlers.apple_music_handler import AppleMusicHandler; from handlers.pornhub_handler import PornhubHandler; from handlers.xnxx_handler import XNXXHandler; from handlers.tumblr_handler import TumblrHandler; from handlers.xhamster_handler import XHamsterHandler; from handlers.hianime_handler import HiAnimeHandler; from handlers.tiktok_handler import TikTokHandler; from handlers.eporner_handler import EpornerHandler; from handlers.hqporner_handler import HQPornerHandler; from handlers.beeg_handler import BeegHandler; from handlers.linkedin_handler import LinkedInHandler; from handlers.reddit_handler import RedditHandler; from handlers.pinterest_handler import PinterestHandler; from handlers.instagram_handler import InstagramHandler; from handlers.jiosaavn_handler import JioSaavnHandler; from handlers.gaana_handler import GaanaHandler; from youtube_scorer import YouTubeScorer; print('All imports successful')" >nul 2>&1
+python -c "import yt_dlp; import requests; import rich; from generic_downloader import GenericSiteDownloader; from cli_args import create_argument_parser; from utils.ui_components import ModernUI, Icons; from utils.ui_display import show_help_menu; from logger import QuietLogger; from utils.utils import sanitize_filename; from handlers.spotify_handler import SpotifyHandler; from handlers.apple_music_handler import AppleMusicHandler; from handlers.pornhub_handler import PornhubHandler; from handlers.xnxx_handler import XNXXHandler; from handlers.tumblr_handler import TumblrHandler; from handlers.xhamster_handler import XHamsterHandler; from handlers.hianime_handler import HiAnimeHandler; from handlers.tiktok_handler import TikTokHandler; from handlers.eporner_handler import EpornerHandler; from handlers.hqporner_handler import HQPornerHandler; from handlers.beeg_handler import BeegHandler; from handlers.linkedin_handler import LinkedInHandler; from handlers.reddit_handler import RedditHandler; from handlers.pinterest_handler import PinterestHandler; from handlers.instagram_handler import InstagramHandler; from handlers.jiosaavn_handler import JioSaavnHandler; from handlers.gaana_handler import GaanaHandler; from handlers.four_k_wallpapers_handler import FourKWallpapersHandler; from youtube_scorer import YouTubeScorer; print('All imports successful')" >nul 2>&1
 if %errorlevel% equ 0 (
     call :print_success "All imports working"
 ) else (
