@@ -1,8 +1,8 @@
 #!/bin/bash
 # =============================================================================
 # Ultimate Media Downloader - Environment Activation Script
-# Version: 2.1.0
-# Date: January, 2026
+# Version: 2.2.0
+# Date: February, 2026
 # =============================================================================
 
 # Colors

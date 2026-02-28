@@ -28,6 +28,7 @@ def show_help_menu(ui):
 
         help_table.add_row("help", "h", "Show this help menu")
         help_table.add_row("platforms", "p", "List all supported platforms")
+        help_table.add_row("wallpaper", "wallpapers, wp", "Browse & download 4K wallpapers")
         help_table.add_row("clear", "cls", "Clear the screen")
         help_table.add_row("quit", "exit, q", "Exit the application")
         help_table.add_row("[URL]", "-", "Paste any media URL to download")
@@ -41,6 +42,7 @@ def show_help_menu(ui):
         print("=" * 70)
         print("  help, h          - Show this help menu")
         print("  platforms, p     - List all supported platforms")
+        print("  wallpaper, wp    - Browse & download 4K wallpapers")
         print("  clear, cls       - Clear the screen")
         print("  quit, exit, q    - Exit the application")
         print("  [URL]            - Paste any media URL to download")

@@ -152,6 +152,7 @@ echo   - pinterest_handler     (Pinterest support)
 echo   - instagram_handler     (Instagram support)
 echo   - jiosaavn_handler      (JioSaavn support)
 echo   - gaana_handler         (Gaana support)
+echo   - four_k_wallpapers_handler (4kwallpapers.com support)
 echo.
 echo Usage:
 echo   umd ^<URL^>                    # Download media from URL

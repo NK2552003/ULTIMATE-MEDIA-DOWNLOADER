@@ -14,7 +14,7 @@ import warnings
 import threading
 from pathlib import Path
 from typing import Optional, Dict, Any, List, Tuple
-from urllib.parse import urlparse, urljoin, quote_plus
+from urllib.parse import urlparse, urljoin, quote_plus, urlencode, parse_qs, urlunparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 
@@ -330,11 +330,63 @@ class FourKWallpapersHandler:
     # ─── Public fetch methods ─────────────────────────────────────────────────
 
     def fetch_listing(self, url: str) -> List[Dict]:
-        """Fetch and parse a wallpaper listing page."""
+        """Fetch and parse a single wallpaper listing page (no pagination)."""
         html = self._get_html(url)
         if not html:
             return []
         return self._parse_wallpaper_listing(html)
+
+    def fetch_listing_paginated(self, base_url: str, max_wallpapers: int = 200) -> List[Dict]:
+        """
+        Fetch multiple pages of a listing, returning up to max_wallpapers results.
+        Pagination uses the ?page=N query parameter.  Search pages are
+        single-page only (the site itself doesn't paginate search results).
+        """
+        is_search = '/search/' in base_url
+
+        # Strip any pre-existing ?page= from the base URL so we can rebuild it cleanly
+        parsed      = urlparse(base_url)
+        base_params = {k: v[0] for k, v in parse_qs(parsed.query).items()}
+        base_params.pop('page', None)
+
+        all_walls: List[Dict] = []
+        seen_ids:  set        = set()
+        page = 1
+
+        while len(all_walls) < max_wallpapers:
+            if page == 1:
+                url = base_url          # keep the URL exactly as provided on first request
+            elif is_search:
+                break                   # search has no server-side pagination
+            else:
+                page_params = dict(base_params)
+                page_params['page'] = str(page)
+                url = urlunparse(parsed._replace(query=urlencode(page_params)))
+
+            html = self._get_html(url)
+            if not html:
+                break
+
+            page_walls = self._parse_wallpaper_listing(html)
+            if not page_walls:
+                break
+
+            new_walls = [w for w in page_walls if w['id'] not in seen_ids]
+            if not new_walls:
+                break   # duplicate page means we've looped past the last real page
+
+            for w in new_walls:
+                seen_ids.add(w['id'])
+            all_walls.extend(new_walls)
+
+            # If the page returned fewer items than the typical page size it's the last page
+            if len(page_walls) < 20:
+                break
+
+            page += 1
+            time.sleep(0.25)    # be polite
+
+        return all_walls[:max_wallpapers]
 
     def fetch_wallpaper_details(self, wall: Dict) -> List[Dict]:
         """
@@ -585,6 +637,77 @@ class FourKWallpapersHandler:
             except KeyboardInterrupt:
                 return default
 
+    def _parse_selection(self, raw: str, total: int) -> List[int]:
+        """
+        Parse a selection string like "1,3,4-7,10-12" into a sorted list
+        of 0-based indices (validated against total).
+        Returns empty list on any parse error.
+        Examples:
+            "all"          -> [0, 1, ..., total-1]
+            "1"            -> [0]
+            "1,3,5"        -> [0, 2, 4]
+            "4-7"          -> [3, 4, 5, 6]
+            "1,3,4-7,10"   -> [0, 2, 3, 4, 5, 6, 9]
+        """
+        raw = raw.strip()
+        if not raw or raw.lower() in ('all', 'a'):
+            return list(range(total))
+
+        indices: set = set()
+        for part in raw.split(','):
+            part = part.strip()
+            if not part:
+                continue
+            if '-' in part:
+                bounds = part.split('-', 1)
+                try:
+                    lo = int(bounds[0].strip())
+                    hi = int(bounds[1].strip())
+                    for n in range(lo, hi + 1):
+                        if 1 <= n <= total:
+                            indices.add(n - 1)
+                except ValueError:
+                    return []
+            else:
+                try:
+                    n = int(part)
+                    if 1 <= n <= total:
+                        indices.add(n - 1)
+                except ValueError:
+                    return []
+
+        return sorted(indices)
+
+    def _ask_selection(self, total: int) -> List[int]:
+        """
+        Ask user to pick wallpapers from the displayed list.
+        Accepts: numbers, comma-separated, ranges (4-7), mixed (1,3,4-7,10),
+                 or "all" / blank-Enter for all.
+        Returns a sorted list of 0-based indices.
+        """
+        if RICH_AVAILABLE and self.console:
+            self.console.print(
+                f'\n[bold yellow]Select wallpapers to download[/bold yellow] '
+                f'[dim](e.g. [cyan]1[/cyan], [cyan]1,3,5[/cyan], '
+                f'[cyan]4-7[/cyan], [cyan]1,3,4-7,10-12[/cyan], '
+                f'or [cyan]all[/cyan] / [cyan]Enter[/cyan] for all {total})[/dim]'
+            )
+        else:
+            print(f'\nSelect wallpapers (e.g. 1, 1,3,5, 4-7, 1,3,4-7, or all / Enter for all {total}):')
+
+        while True:
+            try:
+                raw = input('  Your selection: ').strip()
+                if not raw:
+                    return list(range(total))   # Enter = all
+                result = self._parse_selection(raw, total)
+                if not result:
+                    self._print('[yellow]⚠  Invalid selection — use numbers, ranges (4-7), comma-separated, or "all"[/yellow]')
+                    continue
+                return result
+            except (EOFError, KeyboardInterrupt):
+                return list(range(min(10, total)))
+
     def _ask_resolution(self, all_links_per_wall: List[List[Dict]]) -> Optional[str]:
         """
         Collect all unique resolutions from fetched detail links, display
@@ -640,42 +763,65 @@ class FourKWallpapersHandler:
             return None          # Best available
         return sorted_res[choice - 1]
 
-    # ─── Core flow: display list → pick count → fetch details → pick res → download ──
+    # ─── Core flow: display list → select wallpapers → fetch details → pick res → download ──
 
     def _run_listing_flow(self, section_name: str, listing_url: str):
         """
         Full interactive flow for any listing/category/collection/search
         results page.
         """
-        self._print(f'\n[bold cyan]⟳ Fetching {section_name} wallpapers…[/bold cyan]')
-        wallpapers = self.fetch_listing(listing_url)
+        is_search = '/search/' in listing_url
 
-        if not wallpapers:
+        # ── Step 1: fetch first page to find out what's available ──────────────
+        self._print(f'\n[bold cyan]⟳ Fetching {section_name} wallpapers…[/bold cyan]')
+        first_page = self.fetch_listing(listing_url)
+
+        if not first_page:
             self._print(f'[red]✗ No wallpapers found for "{section_name}".[/red]')
             self._print('[dim]The page layout may have changed or the URL returned no results.[/dim]')
             return
 
-        # Show up to 40 results initially
-        display = wallpapers[:40]
+        page_size = len(first_page)
+
+        # ── Step 2: ask how many wallpapers to browse ──────────────────────────
+        if is_search:
+            # Search results are single-page only on this site
+            max_browse = page_size
+            self._print(f'[dim]Found {page_size} search results (search is single-page on this site).[/dim]')
+        else:
+            self._print(
+                f'[green]Found {page_size} wallpapers on page 1.[/green] '
+                f'[dim]The category has many more — load as many as you like.[/dim]'
+            )
+            max_browse = self._ask_int(
+                'How many wallpapers to browse?',
+                lo=page_size, hi=2400, default=min(96, page_size * 4),
+            )
+
+        # ── Step 3: paginate if user wants more than the first page ────────────
+        if max_browse > page_size and not is_search:
+            self._print(f'[bold cyan]⟳ Loading up to {max_browse} wallpapers…[/bold cyan]')
+            wallpapers = self.fetch_listing_paginated(listing_url, max_wallpapers=max_browse)
+        else:
+            wallpapers = first_page
+
+        if not wallpapers:
+            self._print('[red]✗ Failed to load wallpapers.[/red]')
+            return
+
+        display = wallpapers
         self._display_wallpaper_list(display, section_name)
 
-        # Ask how many to download
-        count = self._ask_int(
-            'How many wallpapers do you want to download?',
-            1, len(display),
-            default=min(10, len(display)),
-        )
-
-        selected = display[:count]
+        # Ask which wallpapers to download (supports ranges: 1,3,4-7,10-12)
+        indices = self._ask_selection(len(display))
+        selected = [display[i] for i in indices]
 
         # Fetch download links for each selected wallpaper
-        self._print(
-            f'\n[bold cyan]⟳ Fetching available resolutions for {count} wallpaper(s)…[/bold cyan]'
-        )
+        self._print(f'\n[bold cyan]⟳ Fetching available resolutions for {len(selected)} wallpaper(s)…[/bold cyan]')
         all_links: List[List[Dict]] = []
         for idx, wall in enumerate(selected, 1):
             self._print(
-                f'[dim]  [{idx}/{count}] {wall["title"][:60]}[/dim]'
+                f'[dim]  [{idx}/{len(selected)}] {wall["title"][:60]}[/dim]'
             )
             links = self.fetch_wallpaper_details(wall)
             all_links.append(links)

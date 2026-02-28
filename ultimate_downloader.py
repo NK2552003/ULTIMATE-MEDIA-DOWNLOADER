@@ -4,7 +4,7 @@ Ultimate Multi-Platform Media Downloader
 Supports YouTube, Spotify, JioSaavn, Gaana, Apple Music, SoundCloud, and many other platforms
 """
 
-__version__ = "2.1.0"
+__version__ = "2.2.0"
 
 import os
 import sys
@@ -3704,6 +3704,15 @@ def interactive_mode():
             elif url.lower() in ['clear', 'cls']:
                 ui.show_welcome_banner()
                 ui.show_interactive_banner()
+                continue
+
+            elif url.lower() in ['wallpaper', 'wallpapers', 'wp']:
+                if WALLPAPER_HANDLER_AVAILABLE:
+                    downloader.browse_wallpapers()
+                    ui.show_welcome_banner()
+                    ui.show_interactive_banner()
+                else:
+                    ui.error_message("4K Wallpapers handler not available. Install 'requests' and 'beautifulsoup4'.")
                 continue
             
             # Validate URL

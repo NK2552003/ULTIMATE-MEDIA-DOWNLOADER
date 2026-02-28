@@ -234,6 +234,21 @@ jobs:
       - name: List release assets
         run: ls -R downloaded
 
+      - name: Extract changelog for current version
+        id: changelog
+        run: |
+          VERSION="$PACKAGE_VERSION"
+          CONTENT=$(awk -v ver="Version ${VERSION}" '
+            $0 ~ ("^## " ver) { flag=1; next }
+            flag && /^---[[:space:]]*$/ { exit }
+            flag { print }
+          ' documentations/CHANGELOG.md)
+          {
+            echo 'content<<CHANGELOG_DELIM'
+            echo "$CONTENT"
+            echo 'CHANGELOG_DELIM'
+          } >> "$GITHUB_OUTPUT"
+
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v1
         with:
@@ -242,30 +257,33 @@ jobs:
           generate_release_notes: true
           body: |
             ## Ultimate Media Downloader v${{ env.PACKAGE_VERSION }}
-            
-            Download media from 1000+ platforms with one command: `umd`
-            
-            Add HQPorner and TikTok handlers for video downloading
 
-            - Implemented HQPornerHandler to download videos from hqporner.com using yt-dlp with SSL handling, quality selection, and direct download fallback.
-            - Added TikTokHandler for downloading TikTok videos with support for quality selection and watermark removal.
-            - Both handlers include rich console output for user interaction and error handling.
-            - Integrated utility functions for sanitizing filenames and managing HTTP requests with retries.
+            Download media from 1000+ platforms with one command: `umd`
+
+            ---
+
+            ## What's New in v${{ env.PACKAGE_VERSION }}
+
+            ${{ steps.changelog.outputs.content }}
+
+            ---
 
             ### Installation
-            
+
             1. Download the appropriate archive for your platform
             2. Extract and run the install script:
                - **Linux/macOS**: `./scripts/install.sh`
                - **Windows**: `scripts\install.bat`
-            
+
             ### Quick Start
-            
+
             ```bash
             umd "https://youtube.com/watch?v=VIDEO_ID"
+            umd --wallpaper
             ```
-            
+
             See [README](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER#readme) for full documentation.
+            See [CHANGELOG](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/blob/main/documentations/CHANGELOG.md) for full version history.
           files: |
             downloaded/**/*.zip
             downloaded/**/*.whl

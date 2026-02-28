@@ -10,6 +10,7 @@ Welcome to the Ultimate Media Downloader documentation. This index helps you fin
 |--------------|----------|
 | Install the application | [Installation Guide](INSTALLATION.md) |
 | Learn how to use it | [Usage Guide](USAGE.md) |
+| Download 4K wallpapers | [Downloading Wallpapers](USAGE.md#downloading-wallpapers) |
 | Update to latest version | [Auto-Update Guide](AUTO_UPDATE.md) |
 | Understand how it works | [Architecture](ARCHITECTURE.md) |
 | Configure settings | [Configuration Guide](CONFIGURATION.md) |
@@ -107,6 +108,12 @@ umd "URL"
 # Download audio
 umd "URL" --audio-only --format mp3
 
+# Browse 4K wallpapers
+umd --wallpaper
+
+# Search wallpapers
+umd --wallpaper-search "anime"
+
 # Show help
 umd --help
 ```
@@ -120,6 +127,8 @@ umd --help
 | `--quality 1080p` | Set video quality |
 | `--output DIR` | Set download directory |
 | `--verbose` | Show detailed output |
+| `--wallpaper` | Browse & download 4K wallpapers |
+| `--wallpaper-search QUERY` | Search 4kwallpapers.com directly |
 
 ---
 

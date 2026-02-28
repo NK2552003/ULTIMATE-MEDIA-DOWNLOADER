@@ -6,7 +6,7 @@ This module contains all argument parsing and configuration
 import argparse
 from utils.ui_components import Icons
 
-__version__ = "2.1.0"
+__version__ = "2.2.0"
 
 
 def create_argument_parser():
