@@ -89,6 +89,16 @@ def create_argument_parser():
   • Download with Custom Output Directory:
     python ultimate_downloader.py "URL" --output /path/to/downloads
 
+{Icons.get('art')} WALLPAPER DOWNLOADS (4kwallpapers.com):
+  • Interactive Wallpaper Browser:
+    python ultimate_downloader.py --wallpaper
+    umd --wallpaper
+
+  • Search & Download Wallpapers:
+    python ultimate_downloader.py --wallpaper-search "cyberpunk city"
+    umd --wallpaper-search "nature 8k"
+    umd --wallpaper-search "anime 4k dark"
+
 {'═'*79}
 {Icons.get('world')} SUPPORTED PLATFORMS
 {'═'*79}
@@ -108,6 +118,15 @@ def create_argument_parser():
 
   Use --list-platforms to see all supported sites
   Use --check-support <URL> to verify URL compatibility
+
+  {Icons.get('completed')} 4K WALLPAPERS (4kwallpapers.com):
+    python ultimate_downloader.py --wallpaper
+    python ultimate_downloader.py --wallpaper-search "anime dark"
+    python ultimate_downloader.py --wallpaper-search "cars 4k"
+
+    Using the umd command:
+    umd --wallpaper
+    umd --wallpaper-search "nature 4k"
 
 {'═'*79}
 {Icons.get('tip')} TIPS & BEST PRACTICES
@@ -204,6 +223,33 @@ Report issues: Create an issue on the GitHub repository
                        help='File containing URLs to download (one per line)')
     parser.add_argument('--optimized-batch', action='store_true',
                        help='Use optimized parallel batch downloading')
+
+    # ── Wallpaper options ──────────────────────────────────────────────────────
+    wallpaper_group = parser.add_argument_group(
+        '🖼  Wallpaper Options  (4kwallpapers.com)',
+        'Download stunning 4K/8K wallpapers interactively '
+        'or via search directly from 4kwallpapers.com'
+    )
+    wallpaper_group.add_argument(
+        '--wallpaper',
+        action='store_true',
+        help=(
+            'Launch the interactive 4K Wallpaper Downloader.\n'
+            'Browse New, Popular, Featured, Collections, or Categories\n'
+            'and download wallpapers at your chosen resolution.\n'
+            'Example: umd --wallpaper'
+        ),
+    )
+    wallpaper_group.add_argument(
+        '--wallpaper-search',
+        metavar='QUERY',
+        help=(
+            'Search 4kwallpapers.com for wallpapers matching QUERY '
+            'and download them interactively.\n'
+            'Example: umd --wallpaper-search "anime dark"\n'
+            '         umd --wallpaper-search "cars 4k"'
+        ),
+    )
 
     # Version and debug arguments
     parser.add_argument('-v', '--version', action='version',

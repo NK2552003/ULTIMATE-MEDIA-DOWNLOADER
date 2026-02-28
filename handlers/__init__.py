@@ -27,6 +27,9 @@ from .reddit_handler import RedditHandler
 from .pinterest_handler import PinterestHandler
 from .instagram_handler import InstagramHandler
 
+# Wallpaper handler
+from .four_k_wallpapers_handler import FourKWallpapersHandler
+
 __all__ = [
     'SpotifyHandler',
     'JioSaavnHandler',
@@ -48,4 +51,6 @@ __all__ = [
     'RedditHandler',
     'PinterestHandler',
     'InstagramHandler',
+    # Wallpaper handler
+    'FourKWallpapersHandler',
 ]
