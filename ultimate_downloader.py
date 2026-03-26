@@ -4,7 +4,7 @@ Ultimate Multi-Platform Media Downloader
 Supports YouTube, Spotify, JioSaavn, Gaana, Apple Music, SoundCloud, and many other platforms
 """
 
-__version__ = "2.2.0"
+__version__ = "2.2.1"
 
 import os
 import sys
@@ -2594,52 +2594,8 @@ class UltimateMediaDownloader:
                 elif not audio_only and output_format.lower() in ['mp4', 'mkv', 'avi', 'webm', 'mov']:
                     ydl_opts['merge_output_format'] = output_format.lower()
             
-            # Enhanced thumbnail and metadata support with artist cover art preference
-            if add_thumbnail:
-                ydl_opts['writethumbnail'] = True
-                
-                # Add thumbnail embedding for audio files with enhanced options
-                if audio_only:
-                    if 'postprocessors' not in ydl_opts:
-                        ydl_opts['postprocessors'] = []
-                    
-                    # Enhanced thumbnail embedding with better quality settings
-                    ydl_opts['postprocessors'].append({
-                        'key': 'EmbedThumbnail',
-                        'already_have_thumbnail': False,
-                    })
-                    
-                    # Add comprehensive metadata processor
-                    ydl_opts['postprocessors'].append({
-                        'key': 'FFmpegMetadata',
-                        'add_metadata': True,
-                        'add_chapters': True,
-                        'add_infojson': False,  # Don't embed the entire JSON
-                    })
-            
-            # Enhanced metadata support even without thumbnail
-            elif add_metadata and audio_only:
-                if 'postprocessors' not in ydl_opts:
-                    ydl_opts['postprocessors'] = []
-                ydl_opts['postprocessors'].append({
-                    'key': 'FFmpegMetadata',
-                    'add_metadata': True,
-                    'add_chapters': True,
-                })
-            
-            # Always enable basic metadata and thumbnails for audio files if not specified
-            elif audio_only:
-                ydl_opts['writethumbnail'] = True
-                if 'postprocessors' not in ydl_opts:
-                    ydl_opts['postprocessors'] = []
-                ydl_opts['postprocessors'].extend([{
-                    'key': 'EmbedThumbnail',
-                    'already_have_thumbnail': False,
-                }, {
-                    'key': 'FFmpegMetadata',
-                    'add_metadata': True,
-                    'add_chapters': True,
-                }])
+            # Always apply thumbnail + metadata embedding so media previews work across devices.
+            self._apply_thumbnail_and_metadata_rules(ydl_opts, audio_only=audio_only)
             
             # Add progress hook using new ProgressDisplay module
             ydl_opts['progress_hooks'] = [ProgressDisplay.progress_hook]
@@ -2878,6 +2834,18 @@ class UltimateMediaDownloader:
                             print(f"📁 File saved as: {actual_file.name}")
                             print(f"▸ Location: {self.output_dir}")
                             downloaded_file_path = actual_file
+
+                            # Clear OS-level download security markers when present.
+                            marker_removed, marker_message = FileManager.remove_platform_download_security_markers(downloaded_file_path)
+                            if marker_removed:
+                                if sys.platform == 'darwin':
+                                    print("✓ macOS quarantine attribute removed for safer opening in Finder/Quick Look")
+                                elif os.name == 'nt':
+                                    print("✓ Windows Mark-of-the-Web removed (Zone.Identifier)")
+                                elif sys.platform.startswith('linux'):
+                                    print("✓ Linux download-origin xattrs removed")
+                            elif self.verbose and marker_message.startswith('error'):
+                                print(f"⚠  Could not clear download security marker: {marker_message}")
                             
                             # Enhanced post-processing for audio files
                             if audio_only and downloaded_file_path.exists():
@@ -2904,7 +2872,7 @@ class UltimateMediaDownloader:
                                         print(f"✓ Converted to: {downloaded_file_path.name}")
                             
                             # Cleanup intermediate files (thumbnails, json, etc.)
-                            self._cleanup_intermediate_files(info, audio_only, output_format, str(actual_file))
+                            self._cleanup_intermediate_files(info, audio_only, output_format, str(downloaded_file_path))
                         else:
                             # File not found - this shouldn't happen but handle gracefully
                             # Check one more time for ANY recent file
@@ -2919,6 +2887,16 @@ class UltimateMediaDownloader:
                                 print(f"✓ File downloaded successfully!")
                                 print(f"📁 File saved as: {latest_file.name}")
                                 print(f"▸ Location: {self.output_dir}")
+                                marker_removed, marker_message = FileManager.remove_platform_download_security_markers(latest_file)
+                                if marker_removed:
+                                    if sys.platform == 'darwin':
+                                        print("✓ macOS quarantine attribute removed for safer opening in Finder/Quick Look")
+                                    elif os.name == 'nt':
+                                        print("✓ Windows Mark-of-the-Web removed (Zone.Identifier)")
+                                    elif sys.platform.startswith('linux'):
+                                        print("✓ Linux download-origin xattrs removed")
+                                elif self.verbose and marker_message.startswith('error'):
+                                    print(f"⚠  Could not clear download security marker: {marker_message}")
                                 # Don't mark as failed since file exists
                             else:
                                 print(f"⚠  Warning: Expected file not found: {expected_filename}")
@@ -3600,6 +3578,39 @@ class UltimateMediaDownloader:
         except Exception as e:
             print(f"⚠  Error extracting artist info: {e}")
             return None
+
+    def _ensure_postprocessor(self, ydl_opts, key, **settings):
+        """Ensure a yt-dlp postprocessor exists and merge required settings."""
+        postprocessors = ydl_opts.setdefault('postprocessors', [])
+        for postprocessor in postprocessors:
+            if postprocessor.get('key') == key:
+                postprocessor.update(settings)
+                return
+
+        entry = {'key': key}
+        entry.update(settings)
+        postprocessors.append(entry)
+
+    def _apply_thumbnail_and_metadata_rules(self, ydl_opts, audio_only=False):
+        """Always embed thumbnail and metadata for better cross-device previews."""
+        ydl_opts['writethumbnail'] = True
+
+        self._ensure_postprocessor(
+            ydl_opts,
+            'FFmpegMetadata',
+            add_metadata=True,
+            add_chapters=True,
+            add_infojson=False,
+        )
+
+        self._ensure_postprocessor(
+            ydl_opts,
+            'EmbedThumbnail',
+            already_have_thumbnail=False,
+        )
+
+        if audio_only:
+            ydl_opts['embed_thumbnail'] = True
     
     def _cleanup_intermediate_files(self, info, audio_only=False, output_format=None, keep_file=None):
         """Clean up intermediate files - uses FileManager module"""

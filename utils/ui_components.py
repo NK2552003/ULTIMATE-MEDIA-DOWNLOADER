@@ -201,7 +201,7 @@ Media Downloader
             box=box.DOUBLE,
             padding=(1, 2),
             title="[bold white]▶ ULTIMATE MEDIA DOWNLOADER[/bold white]",
-            subtitle="[dim]v2.2.0 - Professional Edition[/dim]"
+            subtitle="[dim]v2.2.1 - Professional Edition[/dim]"
         )
         
         self.console.print(panel)

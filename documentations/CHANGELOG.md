@@ -8,12 +8,67 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Table of Contents
 
+- [Version 2.2.1](#version-221)
 - [Version 2.2.0](#version-220)
 - [Version 2.1.0](#version-210)
 - [Version 2.0.0](#version-200)
 - [Version 1.0.5](#version-105)
 - [Version 1.0.0](#version-100)
 - [Roadmap](#roadmap)
+
+---
+
+## Version 2.2.1
+
+**Release Date**: March 2026
+
+### Issue #15
+
+#### Bug Description
+
+Downloaded media files (e.g., `.mp4`) trigger a macOS security warning:
+
+"Apple could not verify this file is free of malware that may harm your Mac or compromise your privacy."
+
+This happens even though the file is a standard video file and expected to be safe.
+
+#### Steps to Reproduce
+
+1. Use `umd` to download a video (e.g., YouTube link)
+2. Locate downloaded `.mp4` file
+3. Try opening it on macOS
+4. Warning appears
+
+#### Expected Behavior
+
+- Downloaded media files should open normally without security warnings
+- Files should be recognized as safe by macOS
+
+#### Actual Behavior
+
+- macOS blocks the file
+- Shows malware verification warning
+- Requires manual override ("Open Anyway")
+
+#### Environment
+
+- OS: macOS (Ventura / Sonoma)
+- Tool version: v2.2.1
+- File type: `.mp4`
+
+#### Possible Cause
+
+- Files are not signed/notarized, so macOS Gatekeeper flags them
+- Extended attributes (`com.apple.quarantine`) added during download
+
+### Fixed (Cross-Platform Download Security Markers)
+
+- Added automatic post-download cleanup for OS security markers when present:
+  - macOS: removes `com.apple.quarantine`
+  - Windows: removes `Zone.Identifier` (Mark-of-the-Web)
+  - Linux: removes common origin/referrer xattrs (`user.xdg.origin.url`, `user.xdg.referrer.url`)
+- Cleanup now runs in both normal success flow and fallback file-detection success flow.
+- Added clearer success/error messaging for marker cleanup in verbose mode.
 
 ---
 
@@ -324,7 +379,7 @@ gitGraph
     commit id: "CLI wallpaper flags"
     checkout main
     merge feature/wallpapers
-    commit id: "v2.2.0" tag: "v2.2.0"
+    commit id: "v2.2.1" tag: "v2.2.1"
 ```
 
 ---
