@@ -4,6 +4,8 @@ File Manager Module
 Handles file cleanup and management operations
 """
 
+import os
+import sys
 from pathlib import Path
 
 
@@ -194,3 +196,34 @@ class FileManager:
         except Exception as e:
             print(f"⚠  Error cleaning directory: {e}")
             return 0
+
+    @staticmethod
+    def remove_macos_quarantine(file_path):
+        """Remove macOS quarantine attribute from a file if present.
+
+        Returns:
+            tuple(bool, str): (changed, message)
+        """
+        try:
+            if sys.platform != 'darwin':
+                return False, "not-macos"
+
+            target = Path(file_path)
+            if not target.exists() or not target.is_file():
+                return False, "file-not-found"
+
+            if not hasattr(os, 'listxattr') or not hasattr(os, 'removexattr'):
+                return False, "xattr-not-supported"
+
+            attrs = os.listxattr(str(target))
+            quarantine_attr = 'com.apple.quarantine'
+
+            if quarantine_attr not in attrs:
+                return False, "no-quarantine-attribute"
+
+            os.removexattr(str(target), quarantine_attr)
+            return True, "quarantine-removed"
+        except OSError as exc:
+            return False, f"os-error: {exc}"
+        except Exception as exc:
+            return False, f"error: {exc}"
