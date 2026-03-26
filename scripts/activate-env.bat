@@ -1,8 +1,8 @@
 @echo off
 REM =============================================================================
 REM Ultimate Media Downloader - Environment Activation Script
-REM Version: 2.2.0
-REM Date: February 2026
+REM Version: 2.2.1
+REM Date: March 2026
 REM Description: Activates the virtual environment with all modules and deps
 REM =============================================================================
 

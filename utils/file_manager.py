@@ -227,3 +227,84 @@ class FileManager:
             return False, f"os-error: {exc}"
         except Exception as exc:
             return False, f"error: {exc}"
+
+    @staticmethod
+    def remove_windows_zone_identifier(file_path):
+        """Remove Windows Mark-of-the-Web (Zone.Identifier) alternate data stream.
+
+        Returns:
+            tuple(bool, str): (changed, message)
+        """
+        try:
+            if os.name != 'nt':
+                return False, "not-windows"
+
+            target = Path(file_path)
+            if not target.exists() or not target.is_file():
+                return False, "file-not-found"
+
+            # On NTFS, internet zone metadata is stored in this ADS stream.
+            zone_identifier_path = f"{target}:Zone.Identifier"
+            try:
+                os.remove(zone_identifier_path)
+                return True, "zone-identifier-removed"
+            except FileNotFoundError:
+                return False, "no-zone-identifier"
+            except OSError as exc:
+                return False, f"os-error: {exc}"
+        except Exception as exc:
+            return False, f"error: {exc}"
+
+    @staticmethod
+    def remove_linux_download_markers(file_path):
+        """Remove Linux desktop download origin xattrs when present.
+
+        Returns:
+            tuple(bool, str): (changed, message)
+        """
+        try:
+            if sys.platform.startswith('linux') is False:
+                return False, "not-linux"
+
+            target = Path(file_path)
+            if not target.exists() or not target.is_file():
+                return False, "file-not-found"
+
+            if not hasattr(os, 'listxattr') or not hasattr(os, 'removexattr'):
+                return False, "xattr-not-supported"
+
+            attrs = os.listxattr(str(target))
+            marker_attrs = ['user.xdg.origin.url', 'user.xdg.referrer.url']
+            removed_any = False
+
+            for attr in marker_attrs:
+                if attr in attrs:
+                    os.removexattr(str(target), attr)
+                    removed_any = True
+
+            if removed_any:
+                return True, "linux-download-markers-removed"
+
+            return False, "no-linux-download-markers"
+        except OSError as exc:
+            return False, f"os-error: {exc}"
+        except Exception as exc:
+            return False, f"error: {exc}"
+
+    @staticmethod
+    def remove_platform_download_security_markers(file_path):
+        """Remove OS-specific download security markers where possible.
+
+        Returns:
+            tuple(bool, str): (changed, message)
+        """
+        if sys.platform == 'darwin':
+            return FileManager.remove_macos_quarantine(file_path)
+
+        if os.name == 'nt':
+            return FileManager.remove_windows_zone_identifier(file_path)
+
+        if sys.platform.startswith('linux'):
+            return FileManager.remove_linux_download_markers(file_path)
+
+        return False, "unsupported-platform"

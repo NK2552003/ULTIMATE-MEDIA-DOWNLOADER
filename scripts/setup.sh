@@ -46,7 +46,7 @@ print_header() {
     echo "╔════════════════════════════════════════════════════════════════════╗"
     echo "║                                                                    ║"
     echo "║        ULTIMATE MEDIA DOWNLOADER - SETUP SCRIPT                   ║"
-    echo "║                  Version 2.2.0 - February 2026                    ║"
+    echo "║                  Version 2.2.1 - March 2026                       ║"
     echo "║                                                                    ║"
     echo "╚════════════════════════════════════════════════════════════════════╝"
     echo -e "${NC}"
@@ -565,7 +565,7 @@ create_activation_script() {
 #!/bin/bash
 # =============================================================================
 # Ultimate Media Downloader - Environment Activation Script
-# Version: 2.2.0
+# Version: 2.2.1
 # Date: February, 2026
 # =============================================================================
 

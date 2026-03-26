@@ -323,7 +323,7 @@ Make sure you are downloading to the same directory. The application looks for p
 
 **Symptom**: Wallpaper pages return very short responses or HTML challenge pages
 
-**Root Cause & Fix**: This was a known bug (now fixed in v2.2.0) caused by passing browser emulation arguments to `cloudscraper`. If you still see this, ensure you are on the latest version:
+**Root Cause & Fix**: This was a known bug (now fixed in v2.2.1) caused by passing browser emulation arguments to `cloudscraper`. If you still see this, ensure you are on the latest version:
 
 ```bash
 git pull
@@ -352,7 +352,7 @@ pip install -r requirements.txt
 
 **Solutions**:
 
-1. Make sure you are on v2.2.0 or later.
+1. Make sure you are on v2.2.1 or later.
 2. Verify `four_k_wallpapers_handler.py` exists in the `handlers/` directory.
 3. Check for import errors by running `umd --wallpaper` to see if there is a Python error.
 
