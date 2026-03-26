@@ -250,7 +250,7 @@ Ultimate Media Downloader automatically checks for updates every time you run it
 
 When an update is available, you'll see:
 ```
-⚠️  New version available: v2.3.0 (current: v2.2.0)
+⚠️  New version available: v2.3.0 (current: v2.2.1)
 Would you like to update now? (Y/n):
 ```
 
