@@ -255,6 +255,70 @@ from utils.platform_utils import detect_platform as detect_platform_util, get_su
 from utils.ui_utils import RichConsoleWrapper
 
 class UltimateMediaDownloader:
+    def _enhance_audio_with_metadata(self, audio_file_path, title, artist, fetch_from_streaming=True):
+        """Fetch and embed album art from streaming services and embed as front cover."""
+        album_art_data = None
+        # Try Apple Music first
+        if fetch_from_streaming:
+            album_art_data = self._fetch_apple_music_album_art(title, artist, silent=True)
+            if not album_art_data and hasattr(self, 'spotify_handler') and self.spotify_handler and hasattr(self.spotify_handler, 'spotify_client') and self.spotify_handler.spotify_client:
+                album_art_data = self._fetch_spotify_album_art(title, artist, silent=True)
+        if album_art_data:
+            track_info = {'title': title, 'artist': artist}
+            self._embed_album_art(audio_file_path, album_art_data, track_info, silent=True)
+        # If no album art found, do nothing (fail silently)
+
+    def prompt_user_choice(self, prompt_text, choices, default=None):
+        """Prompt user to select from a list of choices, using Rich/ModernUI if available."""
+        # Use ModernUI if available for styled input
+        try:
+            ui = ModernUI()
+            if ui.console and RICH_AVAILABLE:
+                from rich.prompt import Prompt
+                # Show choices as a numbered list
+                for idx, choice in enumerate(choices, 1):
+                    ui.console.print(f"[cyan]{idx}.[/cyan] {choice}")
+                default_idx = None
+                if default and default in choices:
+                    default_idx = choices.index(default) + 1
+                prompt_str = f"{prompt_text}"
+                while True:
+                    answer = Prompt.ask(f"[bold cyan]⚲[/bold cyan] {prompt_str}", default=str(default_idx) if default_idx else "1")
+                    if answer.isdigit():
+                        idx = int(answer)
+                        if 1 <= idx <= len(choices):
+                            return choices[idx - 1]
+                    # Also allow direct text match
+                    if answer in choices:
+                        return answer
+                    ui.warning_message(f"Please enter a number between 1 and {len(choices)}, or a valid choice.")
+            else:
+                # Plain input fallback
+                for idx, choice in enumerate(choices, 1):
+                    print(f"{idx}. {choice}")
+                default_idx = None
+                if default and default in choices:
+                    default_idx = choices.index(default) + 1
+                prompt_str = f"{prompt_text}"
+                while True:
+                    answer = input(f"⚲ {prompt_str} [{default_idx if default_idx else 1}]: ").strip()
+                    if not answer and default_idx:
+                        return choices[default_idx - 1]
+                    if answer.isdigit():
+                        idx = int(answer)
+                        if 1 <= idx <= len(choices):
+                            return choices[idx - 1]
+                    if answer in choices:
+                        return answer
+                    print(f"Please enter a number between 1 and {len(choices)}, or a valid choice.")
+        except Exception:
+            # Fallback: always return first choice
+            return choices[0]
+
+    def is_playlist_url(self, url):
+        """Check if a URL is a playlist (YouTube, Spotify, etc.)"""
+        from utils.url_validator import URLValidator
+        return URLValidator.is_playlist_url(url)
     def __init__(self, output_dir=None, verbose=False):
         # Default to system Downloads folder if no output_dir specified
         if output_dir is None:
@@ -276,77 +340,28 @@ class UltimateMediaDownloader:
         self.platform_configs = PLATFORM_CONFIGS.copy()
         
         # Enhanced yt-dlp configuration for maximum performance and quality
+
+        # Restore default yt-dlp options (was missing, causing AttributeError)
         self.default_ydl_opts = {
-            # Performance optimizations
-            'socket_timeout': 30,
-            'retries': 15,  # Increased retries for better reliability
-            'fragment_retries': 15,
+            'outtmpl': str(self.output_dir / '%(title).100B.%(ext)s'),
+            'restrictfilenames': False,
+            'windowsfilenames': True,
+            'trim_file_name': 200,
+            'nocheckcertificate': True,
+            'geo_bypass': True,
+            'quiet': not self.verbose,
+            'no_warnings': not self.verbose,
+            'retries': 10,
+            'fragment_retries': 10,
             'skip_unavailable_fragments': True,
-            'keepvideo': False,
-            'noplaylist': False,
-            'ignoreerrors': False,  # Changed to False to catch errors properly
-            'no_warnings': True,  # Always suppress warnings - we count them now
-            'quiet': not self.verbose,  # Show full output in verbose mode
-            'no_color': False,  # Allow colors in our custom progress
-            'verbose': self.verbose,  # Enable verbose output if requested
-            'extractaudio': False,
-            'audioformat': 'best',  # Changed from 'mp3' to 'best' for higher quality
-            'concurrent_fragments': 8,  # Enable parallel fragment downloads
-            'http_chunk_size': 10485760,  # 10MB chunks for faster downloads
-            
-            # Anti-restriction measures
-            'geo_bypass': True,  # Bypass geographic restrictions
-            'geo_bypass_country': 'US',
-            'nocheckcertificate': True,  # Ignore SSL certificate errors
-            'sleep_interval': 1,  # Sleep between downloads to avoid rate limiting
-            'max_sleep_interval': 3,
-            'sleep_interval_requests': 1,  # Sleep between requests
-            
-            # Quality settings for high-quality audio
-            'prefer_free_formats': False,  # Prefer higher quality formats even if not free
-            'format_sort': ['quality', 'res', 'fps', 'hdr:12', 'codec:vp9.2', 'size', 'br', 'asr', 'proto'],
-            
-            # File naming and organization - use simpler template to avoid long filenames
-            'outtmpl': str(self.output_dir / '%(uploader)s - %(title).100B.%(ext)s'),
-            'restrictfilenames': False,  # Allow unicode characters but sanitize problematic ones
-            'windowsfilenames': True,  # Sanitize filenames for Windows compatibility (removes :, ?, etc.)
-            'trim_file_name': 200,  # Limit filename length to 200 characters
-            
-            # Metadata and cover art - write intermediate files but clean them later
-            'writeinfojson': False,  # Don't keep JSON files
-            'writethumbnail': True,  # Write thumbnail for embedding
-            'writesubtitles': False,
-            'writeautomaticsub': False,
-            'subtitleslangs': ['en'],
-            
-            # Enhanced user agent rotation for better compatibility and anti-detection
-            'user_agent': self._get_random_user_agent(),
-            
-            # Cache for faster repeated operations
-            'cachedir': str(self.output_dir / '.cache'),
-            
-            # Resume support
-            'continue_dl': True,
-            'part': True,
-            
-            # Custom logger to suppress verbose output (unless verbose mode is enabled)
-            'logger': None if self.verbose else self.quiet_logger,
+            'writethumbnail': True,
+            'embedthumbnail': True,
+            'merge_output_format': 'mp4',
+            'postprocessors': [],
+            'http_headers': {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            },
         }
-        
-        # Initialize Spotify handler if available
-        self.spotify_handler = None
-        if SPOTIFY_HANDLER_AVAILABLE:
-            self.spotify_handler = SpotifyHandler(self)
-        
-        # Initialize JioSaavn handler if available
-        self.jiosaavn_handler = None
-        if JIOSAAVN_HANDLER_AVAILABLE:
-            self.jiosaavn_handler = JioSaavnHandler(self)
-        
-        # Initialize Gaana handler if available
-        self.gaana_handler = None
-        if GAANA_HANDLER_AVAILABLE:
-            self.gaana_handler = GaanaHandler(self)
         
         # Initialize Pornhub handler if available
         self.pornhub_handler = None
@@ -1292,7 +1307,7 @@ class UltimateMediaDownloader:
             return None
     
     def _embed_album_art(self, audio_file_path, album_art_data, track_info=None, silent=False):
-        """Embed album art into audio file with proper metadata"""
+        """Embed album art into audio file with proper metadata and set as front cover for all formats (max compatibility)."""
         if not MUTAGEN_AVAILABLE:
             if not silent:
                 if RICH_AVAILABLE and self.console:
@@ -1300,32 +1315,41 @@ class UltimateMediaDownloader:
                 else:
                     print("⚠ Mutagen not available, skipping album art embedding")
             return False
-        
         try:
+            from PIL import Image
+            import io
             file_path = Path(audio_file_path)
             file_ext = file_path.suffix.lower()
-            
+            success = False
+            # Always use JPEG for embedding (convert if needed)
+            def ensure_jpeg(data):
+                try:
+                    img = Image.open(io.BytesIO(data))
+                    if img.format != 'JPEG':
+                        buf = io.BytesIO()
+                        img.convert('RGB').save(buf, format='JPEG', quality=95)
+                        return buf.getvalue()
+                except Exception:
+                    pass
+                return data
+            album_art_data_jpeg = ensure_jpeg(album_art_data)
             if file_ext == '.mp3':
                 audio = MP3(str(file_path), ID3=ID3)
-                
-                # Add ID3 tag if doesn't exist
                 try:
                     audio.add_tags()
                 except:
                     pass
-                
-                # Add cover art
+                # Remove existing APIC frames to avoid duplicates
+                audio.tags.delall('APIC')
                 audio.tags.add(
                     APIC(
                         encoding=3,
                         mime='image/jpeg',
-                        type=3,  # Cover (front)
-                        desc='Cover',
-                        data=album_art_data
+                        type=3,  # 3 = front cover
+                        desc='Front cover',
+                        data=album_art_data_jpeg
                     )
                 )
-                
-                # Add track info if provided
                 if track_info:
                     if track_info.get('title'):
                         audio.tags.add(TIT2(encoding=3, text=track_info['title']))
@@ -1335,25 +1359,18 @@ class UltimateMediaDownloader:
                         audio.tags.add(TALB(encoding=3, text=track_info['album']))
                     if track_info.get('year'):
                         audio.tags.add(TDRC(encoding=3, text=str(track_info['year'])))
-                
                 audio.save()
-                return True
-                
+                success = True
             elif file_ext == '.flac':
                 audio = FLAC(str(file_path))
-                
-                # Create Picture object for FLAC
-                picture = Picture()
-                picture.type = 3  # Cover (front)
-                picture.mime = 'image/jpeg'
-                picture.desc = 'Cover'
-                picture.data = album_art_data
-                
-                # Remove existing pictures
+                # Remove all existing pictures
                 audio.clear_pictures()
+                picture = Picture()
+                picture.type = 3  # 3 = front cover
+                picture.mime = 'image/jpeg'
+                picture.desc = 'Cover (front)'
+                picture.data = album_art_data_jpeg
                 audio.add_picture(picture)
-                
-                # Add track info if provided
                 if track_info:
                     if track_info.get('title'):
                         audio['title'] = track_info['title']
@@ -1363,17 +1380,14 @@ class UltimateMediaDownloader:
                         audio['album'] = track_info['album']
                     if track_info.get('year'):
                         audio['date'] = str(track_info['year'])
-                
                 audio.save()
-                return True
-                
+                success = True
             elif file_ext in ['.m4a', '.mp4']:
                 audio = MP4(str(file_path))
-                
-                # Add cover art
-                audio['covr'] = [MP4Cover(album_art_data, imageformat=MP4Cover.FORMAT_JPEG)]
-                
-                # Add track info if provided
+                # Remove existing covers
+                if 'covr' in audio:
+                    audio.pop('covr')
+                audio['covr'] = [MP4Cover(album_art_data_jpeg, imageformat=MP4Cover.FORMAT_JPEG)]
                 if track_info:
                     if track_info.get('title'):
                         audio['\xa9nam'] = track_info['title']
@@ -1383,18 +1397,18 @@ class UltimateMediaDownloader:
                         audio['\xa9alb'] = track_info['album']
                     if track_info.get('year'):
                         audio['\xa9day'] = str(track_info['year'])
-                
                 audio.save()
-                return True
-            
+                success = True
             else:
                 if not silent:
                     if RICH_AVAILABLE and self.console:
                         self.console.print(f"[yellow]⚠[/yellow] Album art embedding not supported for {file_ext} format")
                     else:
                         print(f"⚠ Album art embedding not supported for {file_ext} format")
-                return False
-                
+            # After embedding, aggressively clean up thumbnails and .prefix files
+            from utils.file_manager import FileManager
+            FileManager.cleanup_intermediate_files(file_path.parent, {'title': file_path.stem, 'uploader': ''}, audio_only=True, output_format=file_ext[1:], keep_file=str(file_path))
+            return success
         except Exception as e:
             if not silent:
                 if RICH_AVAILABLE and self.console:
@@ -1544,37 +1558,32 @@ class UltimateMediaDownloader:
                 
     def _add_album_art_to_playlist(self, playlist_dir):
         """Add album art to all audio files in a playlist directory"""
-        try:
-            playlist_path = Path(playlist_dir)
-            if not playlist_path.exists():
-                return
-            
-            # Find all audio files
-            audio_files = []
-            for ext in ['.flac', '.mp3', '.m4a', '.aac']:
-                audio_files.extend(playlist_path.glob(f'*{ext}'))
-            
-            if not audio_files:
-                return
-            
-            if RICH_AVAILABLE and self.console:
-                self.console.print(f"\n[bold cyan]♪[/bold cyan] Processing album artwork for {len(audio_files)} files...")
-            else:
-                print(f"\n♪ Processing album artwork for {len(audio_files)} files...")
+        playlist_path = Path(playlist_dir)
+        if not playlist_path.exists():
+            return
+
+        # Find all audio files
+        audio_files = []
+        for ext in ['.flac', '.mp3', '.m4a', '.aac']:
+            audio_files.extend(playlist_path.glob(f'*{ext}'))
+
+        if not audio_files:
+            return
+
+        if RICH_AVAILABLE and self.console:
+            self.console.print(f"\n[bold cyan]♪[/bold cyan] Processing album artwork for {len(audio_files)} files...")
+        else:
+            print(f"\n♪ Processing album artwork for {len(audio_files)} files...")
             
             # Process each file
             for idx, audio_file in enumerate(audio_files, 1):
                 try:
                     # Extract track info from filename (format: "001 - Artist - Title.ext")
                     filename = audio_file.stem
-                    
                     # Try to parse title and artist from filename
-                    # Common patterns: "001 - Title", "001 - Artist - Title"
                     parts = filename.split(' - ', 1)
                     if len(parts) > 1:
                         track_name = parts[1].strip()
-                        
-                        # Try to split artist and title
                         if ' - ' in track_name:
                             artist_parts = track_name.split(' - ', 1)
                             artist_name = artist_parts[0].strip()
@@ -1585,21 +1594,15 @@ class UltimateMediaDownloader:
                     else:
                         track_title = filename
                         artist_name = ""
-                    
                     if RICH_AVAILABLE and self.console:
                         self.console.print(f"[dim][{idx}/{len(audio_files)}][/dim] [cyan]{track_title}[/cyan]", end="")
                     else:
                         print(f"[{idx}/{len(audio_files)}] {track_title}", end="")
-                    
-                    # Try to fetch album art from Apple Music first, then Spotify
                     album_art_data = None
                     if track_title:
                         album_art_data = self._fetch_apple_music_album_art(track_title, artist_name, silent=True)
-                        
                         if not album_art_data and self.spotify_handler and self.spotify_handler.spotify_client:
                             album_art_data = self._fetch_spotify_album_art(track_title, artist_name, silent=True)
-                    
-                    # Embed album art if found
                     if album_art_data:
                         track_info = {
                             'title': track_title,
@@ -1615,7 +1618,6 @@ class UltimateMediaDownloader:
                             self.console.print(f" [yellow]⊘[/yellow]")
                         else:
                             print(f" ⊘")
-                    
                 except Exception as e:
                     if RICH_AVAILABLE and self.console:
                         self.console.print(f" [red]✗[/red] ({str(e)})")
@@ -1623,228 +1625,6 @@ class UltimateMediaDownloader:
                         print(f" ✗ ({str(e)})")
                     continue
             
-            if RICH_AVAILABLE and self.console:
-                self.console.print(f"[bold green]✓[/bold green] Album artwork processing completed")
-            else:
-                print(f"✓ Album artwork processing completed")
-                
-        except Exception as e:
-            if RICH_AVAILABLE and self.console:
-                self.console.print(f"[yellow]⚠[/yellow] Error processing album art: {str(e)}")
-            else:
-                print(f"⚠ Error processing album art: {str(e)}")
-    
-    def _enhance_audio_with_metadata(self, audio_file_path, track_name, artist_name, fetch_from_streaming=True):
-        """Enhance audio file with proper metadata and album art from streaming services"""
-        try:
-            print(f"\n♫ Enhancing audio metadata for: {track_name}")
-            
-            # Try to fetch album art from streaming services
-            album_art_data = None
-            
-            if fetch_from_streaming:
-                # Try Spotify first (usually better quality)
-                if self.spotify_handler:
-                    album_art_data = self._fetch_spotify_album_art(track_name, artist_name)
-                
-                # If Spotify fails, try Apple Music
-                if not album_art_data:
-                    album_art_data = self._fetch_apple_music_album_art(track_name, artist_name)
-            
-            # If we got album art, embed it
-            if album_art_data:
-                track_info = {
-                    'title': track_name,
-                    'artist': artist_name,
-                }
-                self._embed_album_art(audio_file_path, album_art_data, track_info)
-            else:
-                print("⚠  Using YouTube thumbnail as fallback")
-            
-            return True
-            
-        except Exception as e:
-            print(f"✗ Error enhancing audio metadata: {e}")
-            return False
-
-    def is_playlist_url(self, url):
-        """Detect if URL is a playlist"""
-        playlist_indicators = [
-            'list=',  # YouTube playlists
-            'playlist',  # Generic playlist
-            'album',  # Spotify albums
-            'sets/',  # SoundCloud sets
-            '/playlists/',  # Various platforms
-        ]
-        
-        url_lower = url.lower()
-        return any(indicator in url_lower for indicator in playlist_indicators)
-    
-    def prompt_user_choice(self, prompt, choices, default=None):
-        """Prompt user for a choice from a list"""
-        print(f"\n{prompt}")
-        for i, choice in enumerate(choices, 1):
-            marker = " (default)" if default and choice == default else ""
-            print(f"  {i}. {choice}{marker}")
-        
-        while True:
-            try:
-                choice = input(f"\nEnter your choice (1-{len(choices)}): ").strip()
-                if not choice and default:
-                    return default
-                
-                choice_idx = int(choice) - 1
-                if 0 <= choice_idx < len(choices):
-                    return choices[choice_idx]
-                else:
-                    print(f"Please enter a number between 1 and {len(choices)}")
-            except (ValueError, KeyboardInterrupt):
-                if default:
-                    return default
-                print(f"Please enter a number between 1 and {len(choices)}")
-    
-    def prompt_format_selection(self, url):
-        """Interactive format selection with auto-detected qualities"""
-        print("\n◎ FORMAT SELECTION")
-        print("=" * 50)
-        
-        # First, try to detect available qualities
-        print("🔍 Detecting available video qualities...")
-        info = self.get_supported_formats(url, timeout=20)
-        
-        # Ask for media type
-        media_types = ["Video (with audio)", "Audio only"]
-        media_choice = self.prompt_user_choice(
-            "What type of media do you want to download?", 
-            media_types, 
-            default="Video (with audio)"
-        )
-        
-        audio_only = media_choice == "Audio only"
-        
-        # Ask for quality with enhanced audio format options or detected video qualities
-        if audio_only:
-            quality_options = [
-                "Best lossless (FLAC)",
-                "High quality (Opus 256kbps)", 
-                "High quality (M4A 256kbps)",
-                "Standard (MP3 320kbps)", 
-                "Compact (MP3 192kbps)",
-                "Custom"
-            ]
-            quality_choice = self.prompt_user_choice(
-                "Select audio quality and format:", 
-                quality_options, 
-                default="Best lossless (FLAC)"
-            )
-            
-            if quality_choice == "Custom":
-                print("\nCustom format examples:")
-                print("  FLAC lossless: bestaudio[acodec=flac]/bestaudio")
-                print("  Opus high quality: bestaudio[acodec=opus]/bestaudio")
-                print("  M4A/AAC: bestaudio[acodec=m4a]/bestaudio[acodec=aac]")
-                custom_format = input("Enter custom format: ").strip()
-                return "best", audio_only, None, custom_format if custom_format else None
-            
-            quality_map = {
-                "Best lossless (FLAC)": "best",
-                "High quality (Opus 256kbps)": "best", 
-                "High quality (M4A 256kbps)": "best",
-                "Standard (MP3 320kbps)": "best",
-                "Compact (MP3 192kbps)": "best"
-            }
-            
-            format_map = {
-                "Best lossless (FLAC)": "flac",
-                "High quality (Opus 256kbps)": "opus", 
-                "High quality (M4A 256kbps)": "m4a",
-                "Standard (MP3 320kbps)": "mp3",
-                "Compact (MP3 192kbps)": "mp3"
-            }
-            
-            return quality_map[quality_choice], audio_only, format_map[quality_choice], None
-        else:
-            # Build quality options from detected formats
-            quality_options = ["Best available"]
-            detected_qualities = set()
-            
-            if info and 'formats' in info:
-                # Extract unique video heights from formats
-                for fmt in info['formats']:
-                    if fmt.get('vcodec') != 'none' and fmt.get('height'):
-                        height = fmt.get('height')
-                        if height >= 2160:
-                            detected_qualities.add("4K (2160p)")
-                        elif height >= 1440:
-                            detected_qualities.add("1440p")
-                        elif height >= 1080:
-                            detected_qualities.add("1080p")
-                        elif height >= 720:
-                            detected_qualities.add("720p")
-                        elif height >= 480:
-                            detected_qualities.add("480p")
-                        elif height >= 360:
-                            detected_qualities.add("360p")
-                
-                # Sort detected qualities by resolution (descending)
-                quality_order = ["4K (2160p)", "1440p", "1080p", "720p", "480p", "360p"]
-                for q in quality_order:
-                    if q in detected_qualities:
-                        quality_options.append(f"{q} ✓ (available)")
-            
-            # Add standard options that weren't detected
-            standard_qualities = ["4K (2160p)", "1440p", "1080p", "720p", "480p", "360p"]
-            for q in standard_qualities:
-                if f"{q} ✓ (available)" not in quality_options:
-                    quality_options.append(q)
-            
-            quality_options.append("Custom")
-            
-            # Show detected qualities if any
-            if detected_qualities:
-                print(f"\n✓ Detected available qualities: {', '.join(sorted(detected_qualities, reverse=True))}")
-            
-            quality_choice = self.prompt_user_choice(
-                "Select video quality:", 
-                quality_options, 
-                default="Best available"
-            )
-            
-            if quality_choice == "Custom":
-                custom_format = input("Enter custom format (e.g., 'best[height<=720]'): ").strip()
-                return "best", audio_only, None, custom_format if custom_format else None
-            
-            # Map the choice back to simple quality name
-            quality_choice_clean = quality_choice.replace(" ✓ (available)", "")
-            
-            quality_map = {
-                "Best available": "best",
-                "4K (2160p)": "2160p",
-                "1440p": "1440p", 
-                "1080p": "1080p",
-                "720p": "720p",
-                "480p": "480p",
-                "360p": "360p"
-            }
-            
-            # Ask for output format
-            format_options = ["MP4 (recommended)", "MKV", "WebM", "AVI", "MOV", "Keep original"]
-            format_choice = self.prompt_user_choice(
-                "Select output format:", 
-                format_options, 
-                default="MP4 (recommended)"
-            )
-            
-            format_map = {
-                "MP4 (recommended)": "mp4",
-                "MKV": "mkv",
-                "WebM": "webm", 
-                "AVI": "avi",
-                "MOV": "mov",
-                "Keep original": None
-            }
-            
-            return quality_map[quality_choice_clean], audio_only, format_map[format_choice], None
     
     def get_supported_formats(self, url, timeout=30):
         """Get all available formats for a URL with timeout"""

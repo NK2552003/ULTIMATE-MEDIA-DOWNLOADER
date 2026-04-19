@@ -79,7 +79,7 @@ If you experience or witness unacceptable behavior:
 
 - **GitHub Issues** - For public concerns (if appropriate)
 - **Email** - Create a private issue for sensitive matters
-- **Direct Message** - Reach out to [@NK2552003](https://github.com/NK2552003)
+- **Direct Message** - Reach out to [@NK2552003](https://codeberg.org/nk2552003/umd.git)
 
 All reports will be reviewed and investigated. I'll keep your identity confidential if you request it.
 

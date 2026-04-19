@@ -22,8 +22,11 @@ class VersionChecker:
     def __init__(self):
         self.current_version = None
         self.latest_version = None
-        self.github_repo = "NK2552003/ULTIMATE-MEDIA-DOWNLOADER"
-        self.github_api_url = f"https://api.github.com/repos/{self.github_repo}/releases/latest"
+
+     
+        self.repo = "nk2552003/umd"
+        self.api_url = f"https://codeberg.org/api/v1/repos/{self.repo}/releases/latest"
+
         self.system = platform.system()
         self.cache_file = Path.home() / ".umd_version_cache.json"
         self.cache_duration = 3600  # Check once per hour
@@ -35,12 +38,10 @@ class VersionChecker:
             try:
                 result = subprocess.run(['pipx', 'list'], capture_output=True, text=True, timeout=5)
                 if result.returncode == 0:
-                    # Parse pipx list output to find ultimate-downloader version
                     import re
                     for line in result.stdout.split('\n'):
-                        if 'ultimate-downloader' in line.lower() or 'ultimate_downloader' in line.lower():
-                            # Look for pattern like "ultimate-downloader 2.2.1"
-                            version_match = re.search(r'ultimate[-_]downloader\s+(\d+\.\d+\.\d+)', line.lower())
+                        if 'ultimate-downloader' in line.lower() or 'ultimate_downloader' in line.lower() or 'umd' in line.lower():
+                            version_match = re.search(r'(\d+\.\d+\.\d+)', line.lower())
                             if version_match:
                                 self.current_version = version_match.group(1)
                                 return self.current_version
@@ -55,7 +56,6 @@ class VersionChecker:
                 try:
                     result = subprocess.run(['umd', '--version'], capture_output=True, text=True, timeout=3)
                     if result.returncode == 0 and result.stdout.strip():
-                        # Extract version from output
                         import re
                         version_match = re.search(r'(\d+\.\d+\.\d+)', result.stdout.strip())
                         if version_match:
@@ -66,8 +66,7 @@ class VersionChecker:
                 except:
                     pass
             
-            # Method 3: Try to import ultimate_downloader from installed location
-            # Remove current directory from path to avoid importing local version
+            # Method 3: Try to import ultimate_downloader
             original_path = sys.path.copy()
             sys.path = [p for p in sys.path if not p.startswith(str(Path(__file__).parent))]
             
@@ -79,15 +78,14 @@ class VersionChecker:
             except:
                 sys.path = original_path
                 
-        except Exception as e:
+        except Exception:
             pass
         
-        # Fallback: return 0.0.0 if no installed version found
         self.current_version = "0.0.0"
         return self.current_version
     
     def get_latest_version(self):
-        """Get the latest version from GitHub releases"""
+        """Get the latest version from Codeberg releases"""
         try:
             # Check cache first
             if self._is_cache_valid():
@@ -95,18 +93,18 @@ class VersionChecker:
                 self.latest_version = cached_data.get('latest_version')
                 return self.latest_version
             
-            # Fetch from GitHub
-            response = requests.get(self.github_api_url, timeout=10)
+            # Fetch from Codeberg
+            response = requests.get(self.api_url, timeout=10)
             if response.status_code == 200:
                 data = response.json()
-                self.latest_version = data.get('tag_name', '').lstrip('v')
+
+                # Safe handling (in case releases not configured)
+                tag = data.get('tag_name') or data.get('name') or ""
+                self.latest_version = tag.lstrip('v') if tag else self.current_version
                 
-                # Cache the result
                 self._write_cache({'latest_version': self.latest_version, 'timestamp': time.time()})
-                
                 return self.latest_version
-        except Exception as e:
-            # If unable to fetch, use cached version or current version
+        except Exception:
             if self._is_cache_valid():
                 cached_data = self._read_cache()
                 self.latest_version = cached_data.get('latest_version', self.current_version)
@@ -156,50 +154,45 @@ class VersionChecker:
         try:
             print(f"\nUpdating Ultimate Media Downloader from v{self.current_version} to v{self.latest_version}...")
             
-            # Get the installation directory
             install_dir = Path(__file__).parent
             
-            # Determine the appropriate update command based on OS
             if self.system == "Windows":
                 update_script = install_dir / "scripts" / "update.bat"
                 if update_script.exists():
                     result = subprocess.run([str(update_script)], shell=True, capture_output=True, text=True)
                 else:
-                    # Try pipx first (recommended)
                     try:
-                        # Remove old version first
                         subprocess.run(["pipx", "uninstall", "ultimate-downloader"], capture_output=True)
-                        # Install new version
-                        result = subprocess.run(["pipx", "install", f"git+https://github.com/{self.github_repo}.git"],
-                                              capture_output=True, text=True)
+                        result = subprocess.run([
+                            "pipx", "install",
+                            f"git+https://codeberg.org/{self.repo}.git"
+                        ], capture_output=True, text=True)
                     except:
-                        # Fallback to pip - uninstall then install
                         subprocess.run([sys.executable, "-m", "pip", "uninstall", "-y", "ultimate-downloader"], capture_output=True)
-                        result = subprocess.run([sys.executable, "-m", "pip", "install", "--user",
-                                               f"git+https://github.com/{self.github_repo}.git"],
-                                              capture_output=True, text=True)
-            else:  # macOS/Linux
+                        result = subprocess.run([
+                            sys.executable, "-m", "pip", "install", "--user",
+                            f"git+https://codeberg.org/{self.repo}.git"
+                        ], capture_output=True, text=True)
+            else:
                 update_script = install_dir / "scripts" / "update.sh"
                 if update_script.exists():
                     result = subprocess.run(["bash", str(update_script)], capture_output=True, text=True)
                 else:
-                    # Try pipx first (recommended, matches installation method)
                     try:
-                        # Remove old version first
                         subprocess.run(["pipx", "uninstall", "ultimate-downloader"], capture_output=True)
-                        # Install new version
-                        result = subprocess.run(["pipx", "install", f"git+https://github.com/{self.github_repo}.git"],
-                                              capture_output=True, text=True)
+                        result = subprocess.run([
+                            "pipx", "install",
+                            f"git+https://codeberg.org/{self.repo}.git"
+                        ], capture_output=True, text=True)
                     except:
-                        # Fallback to pip - uninstall then install
                         subprocess.run([sys.executable, "-m", "pip", "uninstall", "-y", "ultimate-downloader"], capture_output=True)
-                        result = subprocess.run([sys.executable, "-m", "pip", "install", "--user",
-                                               f"git+https://github.com/{self.github_repo}.git"],
-                                              capture_output=True, text=True)
+                        result = subprocess.run([
+                            sys.executable, "-m", "pip", "install", "--user",
+                            f"git+https://codeberg.org/{self.repo}.git"
+                        ], capture_output=True, text=True)
             
             if result.returncode == 0:
                 print(f"Successfully updated to v{self.latest_version}")
-                # Clear cache to force version check next time
                 if self.cache_file.exists():
                     self.cache_file.unlink()
                 return True
@@ -214,11 +207,9 @@ class VersionChecker:
     def check_and_update(self, auto_update=True):
         """Check for updates and optionally auto-update"""
         try:
-            # Get versions
             self.get_current_version()
             self.get_latest_version()
             
-            # Check if update is available
             if self.is_update_available():
                 print(f"\nNew version available: v{self.latest_version} (current: v{self.current_version})")
                 
@@ -233,15 +224,14 @@ class VersionChecker:
                         else:
                             print("\nContinuing with current version...\n")
                     else:
-                        print("\nUpdate skipped. You can update later by running: pip install --upgrade git+https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git\n")
+                        print("\nUpdate skipped. You can update later by running:\n")
+                        print(f"pip install --upgrade git+https://codeberg.org/{self.repo}.git\n")
                 else:
-                    print(f"ℹ To update, run: pip install --upgrade git+https://github.com/{self.github_repo}.git\n")
+                    print(f"ℹ To update, run: pip install --upgrade git+https://codeberg.org/{self.repo}.git\n")
             else:
-                # Running latest version - no output needed for seamless experience
                 pass
                 
-        except Exception as e:
-            # Silently fail to avoid disrupting user experience
+        except Exception:
             pass
 
 def check_for_updates(auto_update=True):

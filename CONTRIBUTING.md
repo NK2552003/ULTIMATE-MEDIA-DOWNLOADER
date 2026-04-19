@@ -88,8 +88,8 @@ flowchart TD
 
 ```bash
 # Fork the repository on GitHub, then clone your fork
-git clone https://github.com/YOUR_USERNAME/ULTIMATE-MEDIA-DOWNLOADER.git
-cd ULTIMATE-MEDIA-DOWNLOADER
+git clone https://github.com/YOUR_USERNAME/umd.git
+cd umd
 ```
 
 ### Step 2: Set Up Virtual Environment
@@ -119,7 +119,7 @@ pip install pytest black flake8 mypy
 
 ```bash
 # Add the original repository as upstream
-git remote add upstream https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+git remote add upstream https://codeberg.org/nk2552003/umd.git
 
 # Verify remotes
 git remote -v
