@@ -72,7 +72,7 @@ if %errorlevel% equ 0 (
     REM Install fresh version
     echo [INFO] Installing new version...
     if "%USE_GIT%"=="true" (
-        pipx install git+https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+        pipx install git+https://codeberg.org/nk2552003/umd.git
     ) else (
         set SCRIPT_DIR=%~dp0..
         if exist "%SCRIPT_DIR%\setup.py" (
@@ -95,7 +95,7 @@ if %errorlevel% equ 0 (
     
     if "%USE_GIT%"=="true" (
         REM Try with --user flag first
-        python -m pip install --user git+https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+        python -m pip install --user git+https://codeberg.org/nk2552003/umd.git
     ) else (
         REM Fallback: Try to upgrade from local directory
         set SCRIPT_DIR=%~dp0..
@@ -133,7 +133,7 @@ except:
     echo [ERROR] Update failed. Please check the error messages above.
     echo.
     echo [TIP] Try running manually:
-    echo    python -m pip install --upgrade git+https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+    echo    python -m pip install --upgrade git+https://codeberg.org/nk2552003/umd.git
     echo.
     pause
     exit /b 1
