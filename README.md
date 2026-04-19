@@ -1,11 +1,20 @@
 <div align="center">
     <h1>Ultimate Media Downloader</h1>
     <b>Download media from 1000+ platforms with one command: <code>umd</code></b></br></br>
-    <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.9%2B-blue.svg" alt="Python Version"></a>
-    <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" alt="License"></a>
-    <a href="https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER"><img src="https://img.shields.io/github/stars/NK2552003/ULTIMATE-MEDIA-DOWNLOADER?style=social" alt="GitHub Stars"></a>
-    <a href="https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/commits/main"><img src="https://img.shields.io/github/last-commit/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.svg" alt="Last Commit"></a><br/><br/>
-    <a href="#features">Features</a> - <a href="#installation">Installation</a> - <a href="#quick-start">Quick Start</a> - <a href="#documentation">Documentation</a> - <a href="CONTRIBUTING.md">Contributing</a> - <a href="CODE_OF_CONDUCT.md">Code of Conduct</a>
+      <!-- Python Version -->
+    <a href="https://www.python.org/downloads/">
+        <img src="https://img.shields.io/badge/python-3.9%2B-blue.svg" alt="Python Version">
+    </a>
+    <a href="LICENSE">
+        <img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" alt="License">
+    </a>
+    <!-- Codeberg Repo -->
+    <a href="https://codeberg.org/nk2552003/umd">
+        <img src="https://img.shields.io/badge/repo-Codeberg-blue?logo=git" alt="Codeberg Repo">
+    </a>
+    <!-- Optional: Add a build/status placeholder -->
+    <img src="https://img.shields.io/badge/status-active-brightgreen" alt="Status">
+
 </div>
 
 ---
@@ -21,20 +30,6 @@ This software is provided for educational and personal use only. Users are respo
 ## Overview
 
 Ultimate Media Downloader is a professional-grade, open-source media downloading tool supporting 100+ platforms (YouTube, Spotify, JioSaavn, Gaana, SoundCloud, Instagram, TikTok, Apple Music and more). Built with Python, it features a beautiful Rich CLI interface and enterprise-level capabilities with consumer-friendly simplicity.
-
-### Why Choose Ultimate Media Downloader?
-
-| Feature                | Description |
-|------------------------|-------------|
-| **One Command**        | Install once, use <code>umd</code> from anywhere |
-| **100+ Platforms**    | YouTube, Spotify, JioSaavn, Gaana, Apple Music, Instagram, TikTok, SoundCloud, and more |
-| **Auto-Update**        | Automatically checks and updates to latest version |
-| **No Virtual Env**     | Clean installation with <code>pipx</code> |
-| **Auto Organization**  | Downloads saved to <code>~/Downloads/UltimateDownloader</code> |
-| **Beautiful UI**       | Modern CLI with progress bars and rich formatting |
-| **Fast Downloads**     | Concurrent downloads with resume support |
-| **High Quality**       | 4K/8K video, 320kbps audio, metadata embedding |
-| **Active Development** | Regular updates and improvements |
 
 ---
 ## Features
@@ -57,15 +52,15 @@ Ultimate Media Downloader is a professional-grade, open-source media downloading
 Install in just **2 commands** - no virtual environment needed!
 
 ```bash
-git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
-cd ULTIMATE-MEDIA-DOWNLOADER
+git clone https://codeberg.org/nk2552003/umd.git
+cd umd
 ./scripts/install.sh
 ```
 
 **Windows users:**
 ```batch
-git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
-cd ULTIMATE-MEDIA-DOWNLOADER
+git clone https://codeberg.org/nk2552003/umd.git
+cd umd
 scripts\install.bat
 ```
 
@@ -114,8 +109,8 @@ brew install pipx  # macOS
 pip install --user pipx  # Linux/Windows
 
 # Clone and install
-git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
-cd ULTIMATE-MEDIA-DOWNLOADER
+git clone https://codeberg.org/nk2552003/umd.git
+cd umd
 pipx install -e .
 ```
 
@@ -125,8 +120,8 @@ pipx install -e .
 <summary><b>Method 2: Using pip</b></summary>
 
 ```bash
-git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
-cd ULTIMATE-MEDIA-DOWNLOADER
+git clone https://codeberg.org/nk2552003/umd.git
+cd umd
 pip3 install -e .
 ```
 
@@ -136,8 +131,8 @@ pip3 install -e .
 <summary><b>Method 3: Virtual Environment</b></summary>
 
 ```bash
-git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
-cd ULTIMATE-MEDIA-DOWNLOADER
+git clone https://codeberg.org/nk2552003/umd.git
+cd umd
 python3 -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
@@ -158,8 +153,8 @@ python ultimate_downloader.py <URL>
 brew install python@3.11 ffmpeg pipx
 
 # Clone and install
-git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
-cd ULTIMATE-MEDIA-DOWNLOADER
+git clone https://codeberg.org/nk2552003/umd.git
+cd umd
 ./scripts/setup.sh
 ```
 
@@ -180,8 +175,8 @@ sudo apt update
 sudo apt install -y python3 python3-pip ffmpeg git
 
 # Clone and install
-git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
-cd ULTIMATE-MEDIA-DOWNLOADER
+git clone https://codeberg.org/nk2552003/umd.git
+cd umd
 ./scripts/install.sh
 ```
 
@@ -205,8 +200,8 @@ source ~/.bashrc
 
 **Step 2: Install Ultimate Media Downloader**
 ```batch
-git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
-cd ULTIMATE-MEDIA-DOWNLOADER
+git clone https://codeberg.org/nk2552003/umd.git
+cd umd
 scripts\setup.bat
 ```
 
@@ -260,19 +255,19 @@ Update at any time using the update scripts:
 
 **macOS/Linux:**
 ```bash
-cd ULTIMATE-MEDIA-DOWNLOADER
+cd umd
 ./scripts/update.sh
 ```
 
 **Windows:**
 ```cmd
-cd ULTIMATE-MEDIA-DOWNLOADER
+cd umd
 scripts\update.bat
 ```
 
 Or use pip directly:
 ```bash
-pip install --upgrade git+https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+pip install --upgrade git+https://codeberg.org/nk2552003/umd.git
 ```
 
 **[📖 Auto-Update Documentation](documentations/AUTO_UPDATE.md)**
@@ -403,20 +398,20 @@ Built with:
 
 ## Support & Contact
 
-- **Bug Reports**: [Open an issue](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues)
-- **Feature Requests**: [Start a discussion](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/discussions)
-- **Contact**: [Create an issue](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues)
-- ⭐ **Show Support**: [Star the repository](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER)
+- **Bug Reports**: [Open an issue](https://codeberg.org/nk2552003/umd/issues)
+- **Feature Requests**: [Start a discussion](https://codeberg.org/nk2552003/umd/discussions)
+- **Contact**: [Create an issue](https://codeberg.org/nk2552003/umd/issues)
+- ⭐ **Show Support**: [Star the repository](https://codeberg.org/nk2552003/umd)
 
 
 ---
 
 <div align="center">
 
-**Made with ❤️ by [NK2552003](https://github.com/NK2552003)**
+**Made with ❤️ by [NK2552003](https://codeberg.org/nk2552003)**
 
 ⭐ Star this repository if you find it useful!
 
-[Report Bug](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues) • [Request Feature](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues) • [Documentation](documentations/INDEX.md)
+[Report Bug](https://codeberg.org/nk2552003/umd/issues) • [Request Feature](https://codeberg.org/nk2552003/umd/issues) • [Documentation](documentations/INDEX.md)
 
 </div>
