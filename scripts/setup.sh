@@ -5,7 +5,7 @@
 # Date: December, 2025
 # Description: Automated setup script for Ultimate Media Downloader
 # Author: Nitish Kumar
-# Repository: https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER
+# Repository: https://codeberg.org/nk2552003/umd.git
 # =============================================================================
 
 set -e  # Exit on error

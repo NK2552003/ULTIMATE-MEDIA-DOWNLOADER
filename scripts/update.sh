@@ -76,7 +76,7 @@ if command -v pipx &> /dev/null; then
     # Install fresh version
     echo -e "${GREEN}Installing new version...${NC}"
     if [ "$USE_GIT" = true ]; then
-        pipx install git+https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+        pipx install git+https://codeberg.org/nk2552003/umd.git
     else
         # Update from local directory
         SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && cd .. && pwd)"
@@ -117,10 +117,10 @@ else
     
     if [ "$USE_GIT" = true ]; then
         # Try with --user flag first for externally-managed environments
-        python3 -m pip install --user git+https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git 2>/dev/null
+        python3 -m pip install --user git+https://codeberg.org/nk2552003/umd.git 2>/dev/null
         if [ $? -ne 0 ]; then
             # Try with --break-system-packages
-            python3 -m pip install --user --break-system-packages git+https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+            python3 -m pip install --user --break-system-packages git+https://codeberg.org/nk2552003/umd.git
         fi
     else
         # Fallback: Try to upgrade from local directory
@@ -158,7 +158,7 @@ else
     echo -e "${RED} Update failed. Please check the error messages above.${NC}"
     echo ""
     echo -e "${YELLOW} Try running manually:${NC}"
-    echo -e "   python3 -m pip install --upgrade git+https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git"
+    echo -e "   python3 -m pip install --upgrade git+https://codeberg.org/nk2552003/umd.git"
     echo ""
     exit 1
 fi

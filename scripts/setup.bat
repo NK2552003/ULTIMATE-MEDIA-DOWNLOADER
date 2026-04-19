@@ -5,7 +5,7 @@ REM Version: 1.0.0
 REM Date: December, 2025
 REM Description: Automated setup script for Ultimate Media Downloader (Windows)
 REM Author: Nitish Kumar
-REM Repository: https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER
+REM Repository: https://codeberg.org/nk2552003/umd.git
 REM =============================================================================
 
 setlocal enabledelayedexpansion
