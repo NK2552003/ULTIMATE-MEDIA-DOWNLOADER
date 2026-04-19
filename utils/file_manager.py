@@ -14,8 +14,7 @@ class FileManager:
     
     @staticmethod
     def cleanup_intermediate_files(output_dir, info, audio_only=False, output_format=None, keep_file=None):
-        """Clean up intermediate files (thumbnails, json, etc.) after download completes
-        
+        """Aggressively clean up intermediate files (thumbnails, .prefix, etc.) after download completes
         Args:
             output_dir: Output directory path
             info: Download info dictionary
@@ -26,140 +25,126 @@ class FileManager:
         try:
             if not info:
                 return
-            
             title = info.get('title', 'Unknown')
             uploader = info.get('uploader', 'Unknown')
-            
-            # Determine the main output file extension
             main_ext = output_format.lower() if output_format else ('mp3' if audio_only else 'mp4')
             main_filename_base = f"{uploader} - {title}"
-            
-            # Get the actual file we want to keep (absolute path)
             keep_file_path = Path(keep_file).resolve() if keep_file else None
-            
-            # List of intermediate file extensions to clean up
-            intermediate_extensions = [
-                '.jpg', '.jpeg', '.png', '.webp',  # Thumbnails
-                '.info.json',  # Info JSON
-                '.description',  # Description files
-                '.annotations.xml',  # Annotations
-                '.webm', '.m4a', '.part',  # Temp video/audio files
+            # Aggressive cleanup: all thumbnail, .prefix, and temp files
+            intermediate_patterns = [
+                '*.jpg', '*.jpeg', '*.png', '*.webp', '*.info.json', '*.description', '*.annotations.xml',
+                '*.webm', '*.m4a', '*.part', '*.prefix', '*.tmp', '*.temp', '*.cache', '*.thm', '*.tbn', '*.bmp'
             ]
-            
-            # If audio_only, also remove video files that might remain
             if audio_only:
-                intermediate_extensions.extend(['.mp4', '.mkv', '.webm', '.avi', '.mov'])
-            
-            print("\n🧹 Cleaning up intermediate files...")
+                intermediate_patterns.extend(['*.mp4', '*.mkv', '*.webm', '*.avi', '*.mov'])
+            print("\n🧹 Aggressively cleaning up intermediate files...")
             cleaned_count = 0
-            
-            # Convert to Path object if needed
             output_dir = Path(output_dir)
-            
-            # Search for and remove intermediate files
-            for file_path in output_dir.iterdir():
-                if file_path.is_file():
-                    file_name = file_path.name
-                    
-                    # NEVER delete the file we want to keep
-                    if keep_file_path and file_path.resolve() == keep_file_path:
-                        continue
-                    
-                    # Check if this is an intermediate file related to our download
-                    for ext in intermediate_extensions:
-                        if file_name.endswith(ext):
-                            # Make sure it's related to this download
-                            if main_filename_base in file_name or title in file_name:
-                                try:
-                                    file_path.unlink()
-                                    cleaned_count += 1
-                                    print(f"  🗑️  Removed: {file_name}")
-                                except Exception as e:
-                                    print(f"  ⚠  Could not remove {file_name}: {e}")
-                                break
-            
+            for pattern in intermediate_patterns:
+                for file_path in output_dir.glob(pattern):
+                    if file_path.is_file():
+                        file_name = file_path.name
+                        # NEVER delete the file we want to keep
+                        if keep_file_path and file_path.resolve() == keep_file_path:
+                            continue
+                        # Only delete if related to this download (by title or uploader or main file base)
+                        if (main_filename_base in file_name or title in file_name or uploader in file_name):
+                            try:
+                                file_path.unlink()
+                                cleaned_count += 1
+                                print(f"  🗑️  Removed: {file_name}")
+                            except Exception as e:
+                                print(f"  ⚠  Could not remove {file_name}: {e}")
             if cleaned_count > 0:
                 print(f"✓ Cleaned up {cleaned_count} intermediate file(s)")
             else:
                 print("✓ No intermediate files to clean")
-                
         except Exception as e:
             print(f"⚠  Cleanup error: {e}")
     
     @staticmethod
-    def get_file_size(file_path):
-        """Get human-readable file size
-        
+    @staticmethod
+    def cleanup_intermediate_files(output_dir, info, audio_only=False, output_format=None, keep_file=None):
+        """Aggressively clean up all intermediate files (thumbnails, .prefix, etc.) after download completes
         Args:
-            file_path: Path to file
-            
-        Returns:
-            Formatted size string
+            output_dir: Output directory path
+            info: Download info dictionary
+            audio_only: Whether download was audio-only
+            output_format: Output format used
+            keep_file: File path to keep (don't delete)
         """
         try:
-            size = Path(file_path).stat().st_size
-            
-            if size >= 1024 * 1024 * 1024:  # GB
-                return f"{size / (1024 * 1024 * 1024):.2f} GB"
-            elif size >= 1024 * 1024:  # MB
-                return f"{size / (1024 * 1024):.2f} MB"
-            elif size >= 1024:  # KB
-                return f"{size / 1024:.2f} KB"
+            if not info:
+                return
+
+            title = info.get('title', 'Unknown')
+            uploader = info.get('uploader', 'Unknown')
+            main_ext = output_format.lower() if output_format else ('mp3' if audio_only else 'mp4')
+            main_filename_base = f"{uploader} - {title}"
+            keep_file_path = Path(keep_file).resolve() if keep_file else None
+
+            # Aggressive extensions and prefixes to remove
+            thumbnail_exts = ['.jpg', '.jpeg', '.png', '.webp']
+            prefix_exts = ['.info.json', '.description', '.annotations.xml', '.webm', '.m4a', '.part', '.temp', '.cache', '.nfo']
+            # Remove video files if audio_only
+            if audio_only:
+                prefix_exts.extend(['.mp4', '.mkv', '.webm', '.avi', '.mov'])
+
+            print("\n🧹 Aggressively cleaning up intermediate files...")
+            cleaned_count = 0
+            output_dir = Path(output_dir)
+
+            # Remove all thumbnails and .prefix files with same base name
+            for file_path in output_dir.iterdir():
+                if not file_path.is_file():
+                    continue
+                file_name = file_path.name
+                # NEVER delete the file we want to keep
+                if keep_file_path and file_path.resolve() == keep_file_path:
+                    continue
+
+                # Remove thumbnails and .prefix files related to this download
+                base_match = (main_filename_base in file_name or title in file_name)
+                ext = file_path.suffix.lower()
+                # Remove thumbnails
+                if ext in thumbnail_exts and base_match:
+                    try:
+                        file_path.unlink()
+                        cleaned_count += 1
+                        print(f"  🗑️  Removed thumbnail: {file_name}")
+                    except Exception as e:
+                        print(f"  ⚠  Could not remove {file_name}: {e}")
+                    continue
+                # Remove .prefix files
+                for pfx in prefix_exts:
+                    if file_name.endswith(pfx) and base_match:
+                        try:
+                            file_path.unlink()
+                            cleaned_count += 1
+                            print(f"  🗑️  Removed: {file_name}")
+                        except Exception as e:
+                            print(f"  ⚠  Could not remove {file_name}: {e}")
+                        break
+
+            # Also remove any thumbnails with the same stem as the main file (e.g., song.mp3 → song.jpg/png/webp)
+            if keep_file_path:
+                stem = keep_file_path.stem
+                for ext in thumbnail_exts:
+                    thumb_path = keep_file_path.with_suffix(ext)
+                    if thumb_path.exists():
+                        try:
+                            thumb_path.unlink()
+                            cleaned_count += 1
+                            print(f"  🗑️  Removed: {thumb_path.name}")
+                        except Exception as e:
+                            print(f"  ⚠  Could not remove {thumb_path.name}: {e}")
+
+            if cleaned_count > 0:
+                print(f"✓ Cleaned up {cleaned_count} intermediate file(s)")
             else:
-                return f"{size} B"
-        except Exception:
-            return "Unknown"
-    
-    @staticmethod
-    def ensure_directory(directory):
-        """Ensure directory exists, create if it doesn't
-        
-        Args:
-            directory: Directory path
-            
-        Returns:
-            Path object
-        """
-        dir_path = Path(directory)
-        dir_path.mkdir(parents=True, exist_ok=True)
-        return dir_path
-    
-    @staticmethod
-    def list_files_by_extension(directory, extension):
-        """List all files with given extension in directory
-        
-        Args:
-            directory: Directory to search
-            extension: File extension (e.g., '.mp3')
-            
-        Returns:
-            List of file paths
-        """
-        try:
-            dir_path = Path(directory)
-            return list(dir_path.glob(f"*{extension}"))
-        except Exception:
-            return []
-    
-    @staticmethod
-    def safe_delete_file(file_path):
-        """Safely delete a file with error handling
-        
-        Args:
-            file_path: Path to file
-            
-        Returns:
-            True if successful, False otherwise
-        """
-        try:
-            Path(file_path).unlink()
-            return True
+                print("✓ No intermediate files to clean")
         except Exception as e:
-            print(f"⚠  Could not delete {file_path}: {e}")
-            return False
-    
-    @staticmethod
-    def clean_directory(directory, extensions=None, exclude_patterns=None):
+            print(f"⚠  Cleanup error: {e}")
         """Clean directory by removing files with specified extensions
         
         Args:

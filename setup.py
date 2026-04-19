@@ -24,7 +24,7 @@ setup(
     long_description_content_type='text/markdown',
     author='NK2552003',
     author_email='',
-    url='https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER',
+    url='https://codeberg.org/nk2552003/umd',
     license='Apache-2.0',
     py_modules=[
         'ultimate_downloader',
@@ -53,6 +53,8 @@ setup(
         'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
         'Programming Language :: Python :: 3.12',
+        'Programming Language :: Python :: 3.13',
+        'Programming Language :: Python :: 3.14',
         'Topic :: Multimedia :: Sound/Audio',
         'Topic :: Multimedia :: Video',
     ],

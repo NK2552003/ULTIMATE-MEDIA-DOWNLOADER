@@ -41,13 +41,13 @@ Before reporting, collect as much info as you can:
 ### Step 2: Report Privately
 
 **Option A: GitHub Security Advisories (Preferred)**
-1. Go to the [Security tab](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/security)
+1. Go to the [Security tab](https://codeberg.org/nk2552003/umd/security)
 2. Click "Report a vulnerability"
 3. Fill out the form with all the details
 
 **Option B: Direct Contact**
 - Create a private security report via GitHub
-- Or reach out to [@NK2552003](https://github.com/NK2552003) directly
+- Or reach out to [@NK2552003](https://codeberg.org/nk2552003) directly
 
 ### Step 3: Wait for Response
 
@@ -143,7 +143,6 @@ I promise to:
 ## Additional Resources
 
 - [OWASP Top 10](https://owasp.org/www-project-top-ten/) - Common security risks
-- [GitHub Security Best Practices](https://docs.github.com/en/code-security)
 - [Python Security](https://python-security.readthedocs.io/)
 
 ---

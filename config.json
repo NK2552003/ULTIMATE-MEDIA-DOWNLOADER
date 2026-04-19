@@ -12,7 +12,7 @@
     "reddit": {
         "client_id": "",
         "client_secret": "",
-        "user_agent": "python:ultimate-downloader:v1.0",
+        "user_agent": "python:ultimate-downloader:v2.2.1",
         "enabled": false
     },
     "download": {
