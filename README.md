@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/download-cloud.svg" width="100" height="100" alt="UMD Logo" />
+  <img src="public/umd_logo.png" width="100" height="100" alt="UMD Logo" />
   <h1>Ultimate Media Downloader (UMD)</h1>
   <p><strong>The official website and documentation for Ultimate Media Downloader.</strong></p>
 </div>
