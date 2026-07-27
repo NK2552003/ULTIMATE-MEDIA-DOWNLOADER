@@ -150,21 +150,8 @@ export default function Hero() {
 
         {/* Mobile Graphic */}
         <div className="flex lg:hidden w-full justify-center relative mt-12 mb-4">
-           <div className="relative w-[90vw] max-w-[400px]">
-             <img src={`${basePath}/main_2.svg`} alt="Graphic" className="w-full h-auto object-contain z-10 relative filter contrast-125" />
-             <div 
-               className="absolute inset-0 bg-[url('https://cdn.cosmos.so/00c1aedd-73e6-4e74-a278-2252a626bbff?format=jpeg')] bg-center bg-cover mix-blend-screen opacity-90 z-20 pointer-events-none"
-               style={{ 
-                 WebkitMaskImage: `url(${basePath}/main_2.svg)`, 
-                 WebkitMaskSize: 'contain', 
-                 WebkitMaskRepeat: 'no-repeat', 
-                 WebkitMaskPosition: 'center',
-                 maskImage: 'url(/main_2.svg)', 
-                 maskSize: 'contain', 
-                 maskRepeat: 'no-repeat', 
-                 maskPosition: 'center'
-               }}
-             ></div>
+           <div className="relative w-[90vw] max-w-[400px] rounded-lg overflow-hidden border border-[var(--offblack)] shadow-[4px_4px_0px_var(--offblack)]">
+             <img src={`${basePath}/totoro_mobile_hero.jpg`} alt="Media Downloading" className="w-full h-auto object-contain z-10 relative" />
            </div>
         </div>
 
