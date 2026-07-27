@@ -3,7 +3,7 @@ import { SiSpotify, SiTiktok, SiTed, SiRumble, SiReddit, SiPinterest, SiPeertube
 import { FaApple, FaAmazon, FaLinkedin, FaYoutube } from 'react-icons/fa'
 import PixelStrip from './PixelStrip'
 
-const basePath = process.env.NODE_ENV === 'production' ? '/ULTIMATE-MEDIA-DOWNLOADER' : '';
+const basePath = '';
 
 export default function Compatibility() {
   return (
