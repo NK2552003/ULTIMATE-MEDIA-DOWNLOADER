@@ -204,8 +204,12 @@
   box-shadow: 0 25px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.2);
 }
 .terminalWindow .titlebar {
-  background: rgba(40, 40, 40, 0.95);
+  background: rgba(40, 40, 40, 0.6);
+  backdrop-filter: blur(12px);
   border-bottom-color: rgba(0,0,0,0.6);
+  padding: 0 16px;
+  position: relative;
+  z-index: 10;
 }
 .terminalWindow .title {
   color: #ccc;
@@ -226,6 +230,8 @@
   top: 0; left: 0; right: 0; bottom: 0;
   overflow: hidden;
   padding: clamp(5px, 0.9vw, 11px);
+  padding-left: calc(clamp(5px, 0.9vw, 11px) + 6px);
+  padding-top: calc(28px + clamp(5px, 0.9vw, 11px));
 }
 
 .termInner {
@@ -519,10 +525,13 @@
   gap: 5px;
   font-size: clamp(6px, 1vw, 11px);
   margin: 2px 0;
+  padding-right: 20px;
 }
 
 .progBar {
-  flex: 1;
+  width: 40%;
+  max-width: 150px;
+  flex: none;
   height: clamp(3px, 0.45vw, 5px);
   background: rgba(255, 255, 255, 0.2);
   border-radius: 2px;
