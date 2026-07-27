@@ -43,6 +43,8 @@ export const metadata: Metadata = {
     "yt-dlp alternative",
     "download videos offline",
     "download music offline",
+    "downloader ofr mac",
+    "downlaoder for windows",
     "1000 platforms downloader",
   ],
   authors: [{ name: "NK2552003", url: "https://github.com/NK2552003" }],
