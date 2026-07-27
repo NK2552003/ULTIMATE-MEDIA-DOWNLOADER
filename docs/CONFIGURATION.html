@@ -1,0 +1,606 @@
+<!DOCTYPE html><!--85teulKhSzCWNUsofAEOs--><html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="/_next/static/css/43d8a26082dd6c66.css" data-precedence="next"/><link rel="preload" as="script" fetchPriority="low" href="/_next/static/chunks/webpack-bfe36d62ec019d6f.js"/><script src="/_next/static/chunks/4bd1b696-100b9d70ed4e49c1.js" async=""></script><script src="/_next/static/chunks/1255-4f3e5465d2137be3.js" async=""></script><script src="/_next/static/chunks/main-app-c797c7cf9ec5b2d8.js" async=""></script><script src="/_next/static/chunks/c15bf2b0-bfa95b308e62c6cc.js" async=""></script><script src="/_next/static/chunks/8171-072b61e2eb314140.js" async=""></script><script src="/_next/static/chunks/5246-010341edb3c20d3e.js" async=""></script><script src="/_next/static/chunks/app/layout-85e8378134696645.js" async=""></script><script src="/_next/static/chunks/2619-04bc32f026a0d946.js" async=""></script><script src="/_next/static/chunks/app/docs/layout-b5c0d7de0e88f8a7.js" async=""></script><script src="/_next/static/chunks/4012-d7d3939322bac069.js" async=""></script><script src="/_next/static/chunks/app/docs/template-df5e073e914c4610.js" async=""></script><script src="/_next/static/chunks/050357b0-c29a1ec11e45b759.js" async=""></script><script src="/_next/static/chunks/28f0fb3b-93ff7b29321306e3.js" async=""></script><script src="/_next/static/chunks/3878-6ad1e15e2594e860.js" async=""></script><script src="/_next/static/chunks/6315-afb745340946da74.js" async=""></script><script src="/_next/static/chunks/app/docs/%5Bslug%5D/page-bc3a690998312dca.js" async=""></script><title>CONFIGURATION | UMD Documentation</title><meta name="description" content="Download media from 1000+ platforms with one command."/><script src="/_next/static/chunks/polyfills-42372ed130431b0a.js" noModule=""></script></head><body><div hidden=""><!--$--><!--/$--></div><div class="fixed inset-0 z-[100] flex pointer-events-none"><div class="absolute inset-0 flex items-center justify-center z-10 shutter-logo"><div class="w-16 h-16 border-[3px] border-[var(--offblack)] bg-[var(--accent-color)] flex items-center justify-center shadow-[4px_4px_0px_var(--offblack)]"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-terminal w-8 h-8 text-[var(--offblack)]" aria-hidden="true"><path d="M12 19h8"></path><path d="m4 17 6-6-6-6"></path></svg></div></div><div class="shutter-bar flex-1 h-full bg-[var(--offblack)]" style="transform-origin:top"></div><div class="shutter-bar flex-1 h-full bg-[var(--offblack)]" style="transform-origin:top"></div><div class="shutter-bar flex-1 h-full bg-[var(--offblack)]" style="transform-origin:top"></div><div class="shutter-bar flex-1 h-full bg-[var(--offblack)]" style="transform-origin:top"></div><div class="shutter-bar flex-1 h-full bg-[var(--offblack)]" style="transform-origin:top"></div></div><div><div class="min-h-screen bg-[var(--offwhite)] text-[var(--offblack)] font-sans"><div class="fixed top-0 left-0 w-full h-32 z-40 transition-opacity duration-500 pointer-events-none opacity-0" style="backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);background-color:transparent;mask-image:linear-gradient(to bottom, black 50%, transparent 100%);-webkit-mask-image:linear-gradient(to bottom, black 50%, transparent 100%)"></div><header class="fixed top-0 left-0 w-full py-4 md:py-8 z-50 mix-blend-difference text-[#f5f5f0]"><div class="flex flex-wrap items-center justify-between max-w-full mx-auto px-4 md:px-8 gap-y-6"><a href="/" class="text-2xl md:text-3xl font-bold tracking-tight block">UMD</a><div class="flex items-center ml-auto relative order-2 lg:order-none"><a class="inline-block bg-[#f5f5f0] text-[#3a3a38] mix-blend-normal px-4 py-2 md:px-6 md:py-3 text-sm md:text-lg uppercase font-bold" target="_blank" href="https://codeberg.org/nk2552003/umd/releases">+ GET UMD</a><div class="w-[30vw] md:w-[40vw] h-[2px] ml-4 bg-white/20 hidden sm:block"><div class="h-full bg-[var(--accent-color)] origin-left" style="transform:scaleX(0)"></div></div></div><nav class="flex gap-4 md:gap-8 w-full lg:w-auto lg:ml-12 text-center lg:text-right justify-center group order-3 lg:order-none mt-2 lg:mt-0"><a href="/" class="text-base md:text-xl lowercase transition-all duration-300 group-hover:blur-[2px] hover:!blur-none opacity-70">home</a><a href="/docs/INSTALLATION" class="text-base md:text-xl lowercase transition-all duration-300 group-hover:blur-[2px] hover:!blur-none opacity-70">install</a><a href="/docs/USAGE" class="text-base md:text-xl lowercase transition-all duration-300 group-hover:blur-[2px] hover:!blur-none opacity-70">usage</a><a href="/docs/CONFIGURATION" class="text-base md:text-xl lowercase transition-all duration-300 group-hover:blur-[2px] hover:!blur-none opacity-100 font-bold border-b-2">config</a></nav></div></header><div class="container mx-auto px-4 md:px-12 lg:px-24 xl:px-32 max-w-[90rem] pt-32 pb-32"><div class="flex gap-12 items-start mt-12"><aside class="w-64 flex-shrink-0 hidden lg:flex flex-col border-r-2 border-[var(--offblack)] sticky top-32 h-[calc(100vh-10rem)]"><div class="flex-1 overflow-y-auto overscroll-contain pr-8 pb-8"><div class="font-black text-xl uppercase tracking-tighter mb-6">Documentation</div><nav class="flex flex-col gap-2"><a href="/docs/ARCHITECTURE" class="font-mono text-sm uppercase tracking-wider py-2 px-3 border-[2px] transition-all
+                  border-transparent hover:border-[var(--offblack)] hover:bg-[var(--offwhite)] hover:shadow-[4px_4px_0px_var(--offblack)] hover:translate-x-[-2px] hover:translate-y-[-2px]">ARCHITECTURE<!-- -->.md</a><a href="/docs/AUTO_UPDATE" class="font-mono text-sm uppercase tracking-wider py-2 px-3 border-[2px] transition-all
+                  border-transparent hover:border-[var(--offblack)] hover:bg-[var(--offwhite)] hover:shadow-[4px_4px_0px_var(--offblack)] hover:translate-x-[-2px] hover:translate-y-[-2px]">AUTO_UPDATE<!-- -->.md</a><a href="/docs/CHANGELOG" class="font-mono text-sm uppercase tracking-wider py-2 px-3 border-[2px] transition-all
+                  border-transparent hover:border-[var(--offblack)] hover:bg-[var(--offwhite)] hover:shadow-[4px_4px_0px_var(--offblack)] hover:translate-x-[-2px] hover:translate-y-[-2px]">CHANGELOG<!-- -->.md</a><a href="/docs/CONFIGURATION" class="font-mono text-sm uppercase tracking-wider py-2 px-3 border-[2px] transition-all
+                  border-[var(--offblack)] bg-[var(--accent-color)] shadow-[4px_4px_0px_var(--offblack)] font-bold translate-x-[-2px] translate-y-[-2px]">CONFIGURATION<!-- -->.md</a><a href="/docs/FILE_STRUCTURE" class="font-mono text-sm uppercase tracking-wider py-2 px-3 border-[2px] transition-all
+                  border-transparent hover:border-[var(--offblack)] hover:bg-[var(--offwhite)] hover:shadow-[4px_4px_0px_var(--offblack)] hover:translate-x-[-2px] hover:translate-y-[-2px]">FILE_STRUCTURE<!-- -->.md</a><a href="/docs/HANDLERS" class="font-mono text-sm uppercase tracking-wider py-2 px-3 border-[2px] transition-all
+                  border-transparent hover:border-[var(--offblack)] hover:bg-[var(--offwhite)] hover:shadow-[4px_4px_0px_var(--offblack)] hover:translate-x-[-2px] hover:translate-y-[-2px]">HANDLERS<!-- -->.md</a><a href="/docs/INDEX" class="font-mono text-sm uppercase tracking-wider py-2 px-3 border-[2px] transition-all
+                  border-transparent hover:border-[var(--offblack)] hover:bg-[var(--offwhite)] hover:shadow-[4px_4px_0px_var(--offblack)] hover:translate-x-[-2px] hover:translate-y-[-2px]">INDEX<!-- -->.md</a><a href="/docs/INSTALLATION" class="font-mono text-sm uppercase tracking-wider py-2 px-3 border-[2px] transition-all
+                  border-transparent hover:border-[var(--offblack)] hover:bg-[var(--offwhite)] hover:shadow-[4px_4px_0px_var(--offblack)] hover:translate-x-[-2px] hover:translate-y-[-2px]">INSTALLATION<!-- -->.md</a><a href="/docs/PROJECT_OVERVIEW" class="font-mono text-sm uppercase tracking-wider py-2 px-3 border-[2px] transition-all
+                  border-transparent hover:border-[var(--offblack)] hover:bg-[var(--offwhite)] hover:shadow-[4px_4px_0px_var(--offblack)] hover:translate-x-[-2px] hover:translate-y-[-2px]">PROJECT_OVERVIEW<!-- -->.md</a><a href="/docs/TROUBLESHOOTING" class="font-mono text-sm uppercase tracking-wider py-2 px-3 border-[2px] transition-all
+                  border-transparent hover:border-[var(--offblack)] hover:bg-[var(--offwhite)] hover:shadow-[4px_4px_0px_var(--offblack)] hover:translate-x-[-2px] hover:translate-y-[-2px]">TROUBLESHOOTING<!-- -->.md</a><a href="/docs/USAGE" class="font-mono text-sm uppercase tracking-wider py-2 px-3 border-[2px] transition-all
+                  border-transparent hover:border-[var(--offblack)] hover:bg-[var(--offwhite)] hover:shadow-[4px_4px_0px_var(--offblack)] hover:translate-x-[-2px] hover:translate-y-[-2px]">USAGE<!-- -->.md</a></nav></div></aside><main class="flex-1 w-full min-w-0"><div class="pointer-events-none fixed inset-0 z-[9999] grid" style="grid-template-rows:repeat(5, 1fr)"><div class="bg-[var(--offblack)] w-full" style="margin-bottom:-1px;transform:none;transform-origin:100% 50% 0"></div><div class="bg-[var(--offblack)] w-full" style="margin-bottom:-1px;transform:none;transform-origin:100% 50% 0"></div><div class="bg-[var(--offblack)] w-full" style="margin-bottom:-1px;transform:none;transform-origin:100% 50% 0"></div><div class="bg-[var(--offblack)] w-full" style="margin-bottom:-1px;transform:none;transform-origin:100% 50% 0"></div><div class="bg-[var(--offblack)] w-full" style="margin-bottom:-1px;transform:none;transform-origin:100% 50% 0"></div></div><div class="flex gap-12 items-start relative w-full"><article class="border-[3px] border-[var(--offblack)] shadow-[8px_8px_0px_var(--offblack)] bg-[var(--offwhite)] p-8 md:p-16 mb-24 relative flex-1 min-w-0 mt-16"><div class="absolute top-0 right-0 bg-[var(--offblack)] text-[var(--offwhite)] font-mono text-sm tracking-[0.2em] px-4 py-2 uppercase font-bold">CONFIGURATION<!-- -->.md</div><div class="max-w-none text-[var(--offblack)] bg-[var(--offwhite)]  [&amp;_h1]:scroll-mt-48 [&amp;_h1]:font-black [&amp;_h1]:uppercase [&amp;_h1]:tracking-tighter [&amp;_h1]:text-5xl [&amp;_h1]:mb-8 [&amp;_h1]:mt-12 [&amp;_h1]:border-b-4 [&amp;_h1]:border-[var(--offblack)] [&amp;_h1]:pb-4 [&amp;_h2]:scroll-mt-48 [&amp;_h2]:font-bold [&amp;_h2]:uppercase [&amp;_h2]:tracking-tighter [&amp;_h2]:text-4xl [&amp;_h2]:mt-10 [&amp;_h2]:mb-6 [&amp;_h2]:border-b-2 [&amp;_h2]:border-[var(--offblack)] [&amp;_h2]:pb-2 [&amp;_h3]:scroll-mt-48 [&amp;_h3]:font-bold [&amp;_h3]:uppercase [&amp;_h3]:tracking-tighter [&amp;_h3]:text-3xl [&amp;_h3]:mt-8 [&amp;_h3]:mb-4 [&amp;_h4]:scroll-mt-48 [&amp;_h4]:font-bold [&amp;_h4]:uppercase [&amp;_h4]:tracking-tighter [&amp;_h4]:text-2xl [&amp;_h4]:mt-6 [&amp;_h4]:mb-4 [&amp;_p]:text-xl [&amp;_p]:leading-relaxed [&amp;_p]:mb-6 [&amp;_a]:text-[var(--offblack)] [&amp;_a]:font-bold [&amp;_a]:underline [&amp;_a]:decoration-2 [&amp;_a]:underline-offset-4 hover:[&amp;_a]:bg-[var(--accent-color)] hover:[&amp;_a]:no-underline [&amp;_strong]:font-bold [&amp;_strong]:text-[var(--offblack)] [&amp;_ul]:list-disc [&amp;_ul]:pl-8 [&amp;_ul]:text-xl [&amp;_ul]:mb-6 [&amp;_ol]:list-decimal [&amp;_ol]:pl-8 [&amp;_ol]:text-xl [&amp;_ol]:mb-6 [&amp;_li]:my-2 [&amp;_blockquote]:border-l-8 [&amp;_blockquote]:border-[var(--offblack)] [&amp;_blockquote]:pl-6 [&amp;_blockquote]:py-2 [&amp;_blockquote]:bg-[var(--accent-color)] [&amp;_blockquote]:italic [&amp;_blockquote]:font-medium [&amp;_code]:text-[var(--offwhite)] [&amp;_code]:bg-[var(--offblack)] [&amp;_code]:px-2 [&amp;_code]:py-1 [&amp;_code]:font-mono [&amp;_code]:text-base [&amp;_code]:font-normal [&amp;_code]:shadow-[2px_2px_0px_var(--accent-color)] [&amp;_pre]:bg-[var(--offblack)] [&amp;_pre]:text-[var(--offwhite)] [&amp;_pre]:p-6 [&amp;_pre]:font-mono [&amp;_pre]:text-sm [&amp;_pre]:overflow-x-auto [&amp;_pre]:border-2 [&amp;_pre]:border-[var(--accent-color)] [&amp;_pre]:shadow-[6px_6px_0px_var(--offblack)] [&amp;_pre]:my-8 [&amp;_pre_code]:bg-transparent [&amp;_pre_code]:p-0 [&amp;_pre_code]:shadow-none [&amp;_pre_code]:text-[var(--offwhite)] [&amp;_img]:border-[4px] [&amp;_img]:border-[var(--offblack)] [&amp;_img]:shadow-[8px_8px_0px_var(--offblack)] [&amp;_img]:my-8 [&amp;_table]:w-full [&amp;_table]:border-collapse [&amp;_table]:border-2 [&amp;_table]:border-[var(--offblack)] [&amp;_table]:mb-8 [&amp;_th]:border-2 [&amp;_th]:border-[var(--offblack)] [&amp;_th]:bg-[var(--offblack)] [&amp;_th]:text-[var(--offwhite)] [&amp;_th]:p-3 [&amp;_th]:text-left [&amp;_th]:font-bold [&amp;_th]:uppercase [&amp;_th]:tracking-wider [&amp;_td]:border-2 [&amp;_td]:border-[var(--offblack)] [&amp;_td]:p-3 [&amp;_hr]:border-2 [&amp;_hr]:border-[var(--offblack)] [&amp;_hr]:my-12"><h1 id="configuration-guide"><a href="#configuration-guide">Configuration Guide</a></h1>
+<p>This document explains how to configure the Ultimate Media Downloader to suit your needs. The application uses a JSON configuration file and environment variables for different settings.</p>
+<hr/>
+<h2 id="configuration-file"><a href="#configuration-file">Configuration File</a></h2>
+<p>The main configuration file is <code>config.json</code> located in the project root directory.</p>
+<h3 id="file-location"><a href="#file-location">File Location</a></h3>
+<pre><code class="language-text">umd/
+    config.json        &lt;-- Main configuration file
+    ultimate_downloader.py
+    ...
+</code></pre>
+<h3 id="configuration-structure"><a href="#configuration-structure">Configuration Structure</a></h3>
+<pre><div class="flex justify-center my-8 p-4 md:p-8 border-[2px] border-[var(--offblack)] bg-[var(--offwhite)]">Loading diagram...</div></pre>
+<hr/>
+<h2 id="configuration-sections"><a href="#configuration-sections">Configuration Sections</a></h2>
+<h3 id="spotify-settings"><a href="#spotify-settings">Spotify Settings</a></h3>
+<pre><code class="language-json">{
+    &quot;spotify&quot;: {
+        &quot;client_id&quot;: &quot;&quot;,
+        &quot;client_secret&quot;: &quot;&quot;,
+        &quot;enabled&quot;: false
+    }
+}
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Setting</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><code>client_id</code></td><td>string</td><td>Spotify API client ID</td></tr><tr><td><code>client_secret</code></td><td>string</td><td>Spotify API client secret</td></tr><tr><td><code>enabled</code></td><td>boolean</td><td>Whether Spotify API is enabled</td></tr></tbody></table>
+<p>To get Spotify API credentials:</p>
+<ol>
+<li>Go to <a href="https://developer.spotify.com/dashboard">Spotify Developer Dashboard</a></li>
+<li>Create a new application</li>
+<li>Copy the Client ID and Client Secret</li>
+</ol>
+<h3 id="apple-music-settings"><a href="#apple-music-settings">Apple Music Settings</a></h3>
+<pre><code class="language-json">{
+    &quot;apple_music&quot;: {
+        &quot;enabled&quot;: false,
+        &quot;cookie_file&quot;: &quot;&quot;,
+        &quot;media_user_token&quot;: &quot;&quot;
+    }
+}
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Setting</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><code>enabled</code></td><td>boolean</td><td>Whether Apple Music direct download is enabled</td></tr><tr><td><code>cookie_file</code></td><td>string</td><td>Path to cookies file</td></tr><tr><td><code>media_user_token</code></td><td>string</td><td>Apple Music media user token</td></tr></tbody></table>
+<h3 id="download-settings"><a href="#download-settings">Download Settings</a></h3>
+<pre><code class="language-json">{
+    &quot;download&quot;: {
+        &quot;output_dir&quot;: &quot;downloads&quot;,
+        &quot;format&quot;: &quot;best&quot;,
+        &quot;audio_format&quot;: &quot;mp3&quot;,
+        &quot;audio_quality&quot;: &quot;320&quot;,
+        &quot;video_quality&quot;: &quot;1080&quot;,
+        &quot;embed_thumbnail&quot;: true,
+        &quot;embed_metadata&quot;: true,
+        &quot;subtitles&quot;: false,
+        &quot;auto_subtitles&quot;: false,
+        &quot;all_subtitles&quot;: false,
+        &quot;subtitle_language&quot;: &quot;en&quot;
+    }
+}
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Setting</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>output_dir</code></td><td>string</td><td>&quot;downloads&quot;</td><td>Default download directory</td></tr><tr><td><code>format</code></td><td>string</td><td>&quot;best&quot;</td><td>Default video format</td></tr><tr><td><code>audio_format</code></td><td>string</td><td>&quot;mp3&quot;</td><td>Default audio format</td></tr><tr><td><code>audio_quality</code></td><td>string</td><td>&quot;320&quot;</td><td>Audio bitrate in kbps</td></tr><tr><td><code>video_quality</code></td><td>string</td><td>&quot;1080&quot;</td><td>Default video quality</td></tr><tr><td><code>embed_thumbnail</code></td><td>boolean</td><td>true</td><td>Embed cover art in audio files</td></tr><tr><td><code>embed_metadata</code></td><td>boolean</td><td>true</td><td>Embed metadata in files</td></tr><tr><td><code>subtitles</code></td><td>boolean</td><td>false</td><td>Download subtitles</td></tr><tr><td><code>subtitle_language</code></td><td>string</td><td>&quot;en&quot;</td><td>Subtitle language code</td></tr></tbody></table>
+<h3 id="proxy-settings"><a href="#proxy-settings">Proxy Settings</a></h3>
+<pre><code class="language-json">{
+    &quot;proxy&quot;: {
+        &quot;enabled&quot;: false,
+        &quot;http&quot;: &quot;&quot;,
+        &quot;https&quot;: &quot;&quot;,
+        &quot;socks5&quot;: &quot;&quot;
+    }
+}
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Setting</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><code>enabled</code></td><td>boolean</td><td>Whether to use proxy</td></tr><tr><td><code>http</code></td><td>string</td><td>HTTP proxy URL</td></tr><tr><td><code>https</code></td><td>string</td><td>HTTPS proxy URL</td></tr><tr><td><code>socks5</code></td><td>string</td><td>SOCKS5 proxy URL</td></tr></tbody></table>
+<p>Example proxy formats:</p>
+<pre><code class="language-text">http://username:password@proxy.example.com:8080
+socks5://127.0.0.1:1080
+</code></pre>
+<h3 id="authentication-settings"><a href="#authentication-settings">Authentication Settings</a></h3>
+<pre><code class="language-json">{
+    &quot;authentication&quot;: {
+        &quot;youtube&quot;: {
+            &quot;cookies_file&quot;: &quot;&quot;
+        },
+        &quot;instagram&quot;: {
+            &quot;username&quot;: &quot;&quot;,
+            &quot;password&quot;: &quot;&quot;
+        },
+        &quot;facebook&quot;: {
+            &quot;cookies_file&quot;: &quot;&quot;
+        }
+    }
+}
+</code></pre>
+<p>Using cookies allows downloading age-restricted or private content that you have access to.</p>
+<h3 id="advanced-settings"><a href="#advanced-settings">Advanced Settings</a></h3>
+<pre><code class="language-json">{
+    &quot;advanced&quot;: {
+        &quot;concurrent_downloads&quot;: 3,
+        &quot;retry_attempts&quot;: 3,
+        &quot;timeout&quot;: 300,
+        &quot;rate_limit&quot;: null,
+        &quot;user_agent&quot;: &quot;Mozilla/5.0 ...&quot;,
+        &quot;cookies_file&quot;: &quot;&quot;,
+        &quot;archive_file&quot;: &quot;archive.txt&quot;,
+        &quot;use_cache&quot;: true,
+        &quot;cache_dir&quot;: &quot;.cache&quot;
+    }
+}
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Setting</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>concurrent_downloads</code></td><td>integer</td><td>3</td><td>Max parallel downloads</td></tr><tr><td><code>retry_attempts</code></td><td>integer</td><td>3</td><td>Retries on failure</td></tr><tr><td><code>timeout</code></td><td>integer</td><td>300</td><td>Request timeout in seconds</td></tr><tr><td><code>rate_limit</code></td><td>integer/null</td><td>null</td><td>Download speed limit in KB/s</td></tr><tr><td><code>user_agent</code></td><td>string</td><td>Chrome UA</td><td>Browser user agent</td></tr><tr><td><code>archive_file</code></td><td>string</td><td>&quot;archive.txt&quot;</td><td>Downloaded URLs record</td></tr><tr><td><code>use_cache</code></td><td>boolean</td><td>true</td><td>Enable caching</td></tr><tr><td><code>cache_dir</code></td><td>string</td><td>&quot;.cache&quot;</td><td>Cache directory</td></tr></tbody></table>
+<h3 id="ui-settings"><a href="#ui-settings">UI Settings</a></h3>
+<pre><code class="language-json">{
+    &quot;ui&quot;: {
+        &quot;show_progress&quot;: true,
+        &quot;verbose&quot;: false,
+        &quot;quiet&quot;: false,
+        &quot;colors&quot;: true,
+        &quot;ascii_banner&quot;: true
+    }
+}
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Setting</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>show_progress</code></td><td>boolean</td><td>true</td><td>Show download progress</td></tr><tr><td><code>verbose</code></td><td>boolean</td><td>false</td><td>Enable verbose output</td></tr><tr><td><code>quiet</code></td><td>boolean</td><td>false</td><td>Suppress output</td></tr><tr><td><code>colors</code></td><td>boolean</td><td>true</td><td>Use colored output</td></tr><tr><td><code>ascii_banner</code></td><td>boolean</td><td>true</td><td>Show ASCII art banner</td></tr></tbody></table>
+<h3 id="post-processing-settings"><a href="#post-processing-settings">Post-Processing Settings</a></h3>
+<pre><code class="language-json">{
+    &quot;post_processing&quot;: {
+        &quot;convert_format&quot;: false,
+        &quot;target_format&quot;: &quot;mp4&quot;,
+        &quot;normalize_audio&quot;: false,
+        &quot;organize_files&quot;: true,
+        &quot;file_template&quot;: &quot;%(title)s.%(ext)s&quot;
+    }
+}
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Setting</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><code>convert_format</code></td><td>boolean</td><td>Convert after download</td></tr><tr><td><code>target_format</code></td><td>string</td><td>Target format for conversion</td></tr><tr><td><code>normalize_audio</code></td><td>boolean</td><td>Normalize audio levels</td></tr><tr><td><code>organize_files</code></td><td>boolean</td><td>Organize into folders</td></tr><tr><td><code>file_template</code></td><td>string</td><td>Filename template</td></tr></tbody></table>
+<h3 id="filter-settings"><a href="#filter-settings">Filter Settings</a></h3>
+<pre><code class="language-json">{
+    &quot;filters&quot;: {
+        &quot;min_duration&quot;: null,
+        &quot;max_duration&quot;: null,
+        &quot;date_after&quot;: null,
+        &quot;date_before&quot;: null,
+        &quot;min_views&quot;: null,
+        &quot;max_views&quot;: null
+    }
+}
+</code></pre>
+<p>These filters skip downloads that do not match criteria:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Setting</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><code>min_duration</code></td><td>integer/null</td><td>Minimum duration in seconds</td></tr><tr><td><code>max_duration</code></td><td>integer/null</td><td>Maximum duration in seconds</td></tr><tr><td><code>date_after</code></td><td>string/null</td><td>Only after date (YYYYMMDD)</td></tr><tr><td><code>date_before</code></td><td>string/null</td><td>Only before date (YYYYMMDD)</td></tr><tr><td><code>min_views</code></td><td>integer/null</td><td>Minimum view count</td></tr><tr><td><code>max_views</code></td><td>integer/null</td><td>Maximum view count</td></tr></tbody></table>
+<hr/>
+<h2 id="environment-variables"><a href="#environment-variables">Environment Variables</a></h2>
+<p>Some settings can be configured through environment variables, which override config file settings.</p>
+<h3 id="available-variables"><a href="#available-variables">Available Variables</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Variable</th><th>Purpose</th></tr></thead><tbody><tr><td><code>SPOTIFY_CLIENT_ID</code></td><td>Spotify API client ID</td></tr><tr><td><code>SPOTIFY_CLIENT_SECRET</code></td><td>Spotify API client secret</td></tr><tr><td><code>APPLE_MUSIC_TOKEN</code></td><td>Apple Music API token</td></tr><tr><td><code>APPLE_MUSIC_STOREFRONT</code></td><td>Apple Music region (default: &quot;us&quot;)</td></tr></tbody></table>
+<h3 id="setting-environment-variables"><a href="#setting-environment-variables">Setting Environment Variables</a></h3>
+<p>On macOS and Linux, add to your shell profile:</p>
+<pre><code class="language-bash"># ~/.zshrc or ~/.bashrc
+export SPOTIFY_CLIENT_ID=&quot;your_client_id&quot;
+export SPOTIFY_CLIENT_SECRET=&quot;your_client_secret&quot;
+</code></pre>
+<p>Then reload:</p>
+<pre><code class="language-bash">source ~/.zshrc
+</code></pre>
+<p>On Windows, use System Properties or PowerShell:</p>
+<pre><code class="language-powershell">[Environment]::SetEnvironmentVariable(&quot;SPOTIFY_CLIENT_ID&quot;, &quot;your_client_id&quot;, &quot;User&quot;)
+</code></pre>
+<hr/>
+<h2 id="common-configurations"><a href="#common-configurations">Common Configurations</a></h2>
+<h3 id="configuration-for-music-downloads"><a href="#configuration-for-music-downloads">Configuration for Music Downloads</a></h3>
+<p>If you primarily download music:</p>
+<pre><code class="language-json">{
+    &quot;download&quot;: {
+        &quot;audio_format&quot;: &quot;flac&quot;,
+        &quot;audio_quality&quot;: &quot;320&quot;,
+        &quot;embed_thumbnail&quot;: true,
+        &quot;embed_metadata&quot;: true
+    },
+    &quot;post_processing&quot;: {
+        &quot;organize_files&quot;: true,
+        &quot;file_template&quot;: &quot;%(artist)s - %(title)s.%(ext)s&quot;
+    }
+}
+</code></pre>
+<h3 id="configuration-for-video-archiving"><a href="#configuration-for-video-archiving">Configuration for Video Archiving</a></h3>
+<p>If you download videos for archival:</p>
+<pre><code class="language-json">{
+    &quot;download&quot;: {
+        &quot;format&quot;: &quot;best&quot;,
+        &quot;video_quality&quot;: &quot;2160&quot;,
+        &quot;subtitles&quot;: true,
+        &quot;all_subtitles&quot;: true
+    },
+    &quot;advanced&quot;: {
+        &quot;archive_file&quot;: &quot;archive.txt&quot;
+    }
+}
+</code></pre>
+<h3 id="configuration-for-slow-connections"><a href="#configuration-for-slow-connections">Configuration for Slow Connections</a></h3>
+<p>If you have limited bandwidth:</p>
+<pre><code class="language-json">{
+    &quot;download&quot;: {
+        &quot;video_quality&quot;: &quot;720&quot;
+    },
+    &quot;advanced&quot;: {
+        &quot;concurrent_downloads&quot;: 1,
+        &quot;rate_limit&quot;: 500,
+        &quot;retry_attempts&quot;: 5
+    }
+}
+</code></pre>
+<h3 id="configuration-with-proxy"><a href="#configuration-with-proxy">Configuration with Proxy</a></h3>
+<p>If you need to use a proxy:</p>
+<pre><code class="language-json">{
+    &quot;proxy&quot;: {
+        &quot;enabled&quot;: true,
+        &quot;https&quot;: &quot;http://proxy.example.com:8080&quot;
+    }
+}
+</code></pre>
+<hr/>
+<h2 id="summary"><a href="#summary">Summary</a></h2>
+<p>The configuration system allows you to customize:</p>
+<ul>
+<li>Default download settings</li>
+<li>Audio and video quality preferences</li>
+<li>Proxy and authentication</li>
+<li>UI appearance</li>
+<li>Post-processing behavior</li>
+<li>Content filters</li>
+</ul>
+<p>Most users will not need to change the defaults, but power users can fine-tune every aspect of the application&#x27;s behavior.</p>
+<p>For usage instructions, see the <a href="USAGE.md">Usage Guide</a>.</p></div></article><aside class="w-64 flex-shrink-0 hidden xl:flex flex-col border-l-2 border-[var(--offblack)] sticky top-32 h-[calc(100vh-10rem)]"><div class="flex-1 overflow-y-auto overscroll-contain pl-8 pr-4 pb-8 relative"><div class="font-mono text-sm tracking-widest uppercase mb-6 opacity-60 sticky top-0 bg-[var(--offwhite)] py-2 z-10">On this page</div><nav class="flex flex-col gap-3"><a id="toc-link-configuration-file" href="#configuration-file" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:0rem;font-size:0.875rem">Configuration File</a><a id="toc-link-file-location" href="#file-location" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">File Location</a><a id="toc-link-configuration-structure" href="#configuration-structure" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Configuration Structure</a><a id="toc-link-configuration-sections" href="#configuration-sections" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:0rem;font-size:0.875rem">Configuration Sections</a><a id="toc-link-spotify-settings" href="#spotify-settings" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Spotify Settings</a><a id="toc-link-apple-music-settings" href="#apple-music-settings" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Apple Music Settings</a><a id="toc-link-download-settings" href="#download-settings" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Download Settings</a><a id="toc-link-proxy-settings" href="#proxy-settings" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Proxy Settings</a><a id="toc-link-authentication-settings" href="#authentication-settings" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Authentication Settings</a><a id="toc-link-advanced-settings" href="#advanced-settings" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Advanced Settings</a><a id="toc-link-ui-settings" href="#ui-settings" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">UI Settings</a><a id="toc-link-post-processing-settings" href="#post-processing-settings" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Post-Processing Settings</a><a id="toc-link-filter-settings" href="#filter-settings" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Filter Settings</a><a id="toc-link-environment-variables" href="#environment-variables" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:0rem;font-size:0.875rem">Environment Variables</a><a id="toc-link-available-variables" href="#available-variables" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Available Variables</a><a id="toc-link-setting-environment-variables" href="#setting-environment-variables" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Setting Environment Variables</a><a id="toc-link-common-configurations" href="#common-configurations" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:0rem;font-size:0.875rem">Common Configurations</a><a id="toc-link-configuration-for-music-downloads" href="#configuration-for-music-downloads" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Configuration for Music Downloads</a><a id="toc-link-configuration-for-video-archiving" href="#configuration-for-video-archiving" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Configuration for Video Archiving</a><a id="toc-link-configuration-for-slow-connections" href="#configuration-for-slow-connections" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Configuration for Slow Connections</a><a id="toc-link-configuration-with-proxy" href="#configuration-with-proxy" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Configuration with Proxy</a><a id="toc-link-summary" href="#summary" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:0rem;font-size:0.875rem">Summary</a></nav></div></aside></div><!--$--><!--/$--></main></div></div></div></div><section aria-label="Notifications alt+T" tabindex="-1" aria-live="polite" aria-relevant="additions text" aria-atomic="false"></section><script src="/_next/static/chunks/webpack-bfe36d62ec019d6f.js" id="_R_" async=""></script><script>(self.__next_f=self.__next_f||[]).push([0])</script><script>self.__next_f.push([1,"1:\"$Sreact.fragment\"\n2:I[93247,[\"5592\",\"static/chunks/c15bf2b0-bfa95b308e62c6cc.js\",\"8171\",\"static/chunks/8171-072b61e2eb314140.js\",\"5246\",\"static/chunks/5246-010341edb3c20d3e.js\",\"7177\",\"static/chunks/app/layout-85e8378134696645.js\"],\"default\"]\n3:I[9766,[],\"\"]\n4:I[98924,[],\"\"]\n5:I[33451,[\"5592\",\"static/chunks/c15bf2b0-bfa95b308e62c6cc.js\",\"8171\",\"static/chunks/8171-072b61e2eb314140.js\",\"2619\",\"static/chunks/2619-04bc32f026a0d946.js\",\"4499\",\"static/chunks/app/docs/layout-b5c0d7de0e88f8a7.js\"],\"default\"]\n6:I[49400,[\"5592\",\"static/chunks/c15bf2b0-bfa95b308e62c6cc.js\",\"8171\",\"static/chunks/8171-072b61e2eb314140.js\",\"2619\",\"static/chunks/2619-04bc32f026a0d946.js\",\"4499\",\"static/chunks/app/docs/layout-b5c0d7de0e88f8a7.js\"],\"default\"]\n7:I[37569,[\"4012\",\"static/chunks/4012-d7d3939322bac069.js\",\"6395\",\"static/chunks/app/docs/template-df5e073e914c4610.js\"],\"default\"]\n9:I[24431,[],\"OutletBoundary\"]\nb:I[15278,[],\"AsyncMetadataOutlet\"]\nd:I[24431,[],\"ViewportBoundary\"]\nf:I[24431,[],\"MetadataBoundary\"]\n10:\"$Sreact.suspense\"\n12:I[57150,[],\"\"]\n:HL[\"/_next/static/css/43d8a26082dd6c66.css\",\"style\"]\n"])</script><script>self.__next_f.push([1,"0:{\"P\":null,\"b\":\"85teulKhSzCWNUsofAEOs\",\"p\":\"\",\"c\":[\"\",\"docs\",\"CONFIGURATION\"],\"i\":false,\"f\":[[[\"\",{\"children\":[\"docs\",{\"children\":[[\"slug\",\"CONFIGURATION\",\"d\"],{\"children\":[\"__PAGE__\",{}]}]}]},\"$undefined\",\"$undefined\",true],[\"\",[\"$\",\"$1\",\"c\",{\"children\":[[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/_next/static/css/43d8a26082dd6c66.css\",\"precedence\":\"next\",\"crossOrigin\":\"$undefined\",\"nonce\":\"$undefined\"}]],[\"$\",\"html\",null,{\"lang\":\"en\",\"children\":[\"$\",\"body\",null,{\"children\":[\"$\",\"$L2\",null,{\"children\":[\"$\",\"$L3\",null,{\"parallelRouterKey\":\"children\",\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L4\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":[[[\"$\",\"title\",null,{\"children\":\"404: This page could not be found.\"}],[\"$\",\"div\",null,{\"style\":{\"fontFamily\":\"system-ui,\\\"Segoe UI\\\",Roboto,Helvetica,Arial,sans-serif,\\\"Apple Color Emoji\\\",\\\"Segoe UI Emoji\\\"\",\"height\":\"100vh\",\"textAlign\":\"center\",\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"center\",\"justifyContent\":\"center\"},\"children\":[\"$\",\"div\",null,{\"children\":[[\"$\",\"style\",null,{\"dangerouslySetInnerHTML\":{\"__html\":\"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\"}}],[\"$\",\"h1\",null,{\"className\":\"next-error-h1\",\"style\":{\"display\":\"inline-block\",\"margin\":\"0 20px 0 0\",\"padding\":\"0 23px 0 0\",\"fontSize\":24,\"fontWeight\":500,\"verticalAlign\":\"top\",\"lineHeight\":\"49px\"},\"children\":404}],[\"$\",\"div\",null,{\"style\":{\"display\":\"inline-block\"},\"children\":[\"$\",\"h2\",null,{\"style\":{\"fontSize\":14,\"fontWeight\":400,\"lineHeight\":\"49px\",\"margin\":0},\"children\":\"This page could not be found.\"}]}]]}]}]],[]],\"forbidden\":\"$undefined\",\"unauthorized\":\"$undefined\"}]}]}]}]]}],{\"children\":[\"docs\",[\"$\",\"$1\",\"c\",{\"children\":[null,[\"$\",\"div\",null,{\"className\":\"min-h-screen bg-[var(--offwhite)] text-[var(--offblack)] font-sans\",\"children\":[[\"$\",\"$L5\",null,{}],[\"$\",\"div\",null,{\"className\":\"container mx-auto px-4 md:px-12 lg:px-24 xl:px-32 max-w-[90rem] pt-32 pb-32\",\"children\":[\"$\",\"div\",null,{\"className\":\"flex gap-12 items-start mt-12\",\"children\":[[\"$\",\"$L6\",null,{\"docs\":[\"ARCHITECTURE\",\"AUTO_UPDATE\",\"CHANGELOG\",\"CONFIGURATION\",\"FILE_STRUCTURE\",\"HANDLERS\",\"INDEX\",\"INSTALLATION\",\"PROJECT_OVERVIEW\",\"TROUBLESHOOTING\",\"USAGE\"]}],[\"$\",\"main\",null,{\"className\":\"flex-1 w-full min-w-0\",\"children\":[\"$\",\"$L3\",null,{\"parallelRouterKey\":\"children\",\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L7\",null,{\"children\":[\"$\",\"$L4\",null,{}]}],\"templateStyles\":[],\"templateScripts\":[],\"notFound\":\"$undefined\",\"forbidden\":\"$undefined\",\"unauthorized\":\"$undefined\"}]}]]}]}]]}]]}],{\"children\":[[\"slug\",\"CONFIGURATION\",\"d\"],[\"$\",\"$1\",\"c\",{\"children\":[null,[\"$\",\"$L3\",null,{\"parallelRouterKey\":\"children\",\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L4\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":\"$undefined\",\"forbidden\":\"$undefined\",\"unauthorized\":\"$undefined\"}]]}],{\"children\":[\"__PAGE__\",[\"$\",\"$1\",\"c\",{\"children\":[\"$L8\",null,[\"$\",\"$L9\",null,{\"children\":[\"$La\",[\"$\",\"$Lb\",null,{\"promise\":\"$@c\"}]]}]]}],{},null,false]},null,false]},null,false]},null,false],[\"$\",\"$1\",\"h\",{\"children\":[null,[[\"$\",\"$Ld\",null,{\"children\":\"$Le\"}],null],[\"$\",\"$Lf\",null,{\"children\":[\"$\",\"div\",null,{\"hidden\":true,\"children\":[\"$\",\"$10\",null,{\"fallback\":null,\"children\":\"$L11\"}]}]}]]}],false]],\"m\":\"$undefined\",\"G\":[\"$12\",[]],\"s\":false,\"S\":true}\n"])</script><script>self.__next_f.push([1,"13:I[20005,[\"279\",\"static/chunks/050357b0-c29a1ec11e45b759.js\",\"2280\",\"static/chunks/28f0fb3b-93ff7b29321306e3.js\",\"3878\",\"static/chunks/3878-6ad1e15e2594e860.js\",\"6315\",\"static/chunks/6315-afb745340946da74.js\",\"3508\",\"static/chunks/app/docs/%5Bslug%5D/page-bc3a690998312dca.js\"],\"default\"]\n14:T226f,"])</script><script>self.__next_f.push([1,"# Configuration Guide\n\nThis document explains how to configure the Ultimate Media Downloader to suit your needs. The application uses a JSON configuration file and environment variables for different settings.\n\n---\n\n## Configuration File\n\nThe main configuration file is `config.json` located in the project root directory.\n\n### File Location\n\n```text\numd/\n    config.json        \u003c-- Main configuration file\n    ultimate_downloader.py\n    ...\n```\n\n### Configuration Structure\n\n```mermaid\ngraph TD\n    CONFIG[config.json] --\u003e A[spotify]\n    CONFIG --\u003e B[apple_music]\n    CONFIG --\u003e C[download]\n    CONFIG --\u003e D[proxy]\n    CONFIG --\u003e E[authentication]\n    CONFIG --\u003e F[advanced]\n    CONFIG --\u003e G[ui]\n    CONFIG --\u003e H[post_processing]\n    CONFIG --\u003e I[filters]\n```\n\n---\n\n## Configuration Sections\n\n### Spotify Settings\n\n```json\n{\n    \"spotify\": {\n        \"client_id\": \"\",\n        \"client_secret\": \"\",\n        \"enabled\": false\n    }\n}\n```\n\n| Setting | Type | Description |\n|---------|------|-------------|\n| `client_id` | string | Spotify API client ID |\n| `client_secret` | string | Spotify API client secret |\n| `enabled` | boolean | Whether Spotify API is enabled |\n\nTo get Spotify API credentials:\n\n1. Go to [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)\n2. Create a new application\n3. Copy the Client ID and Client Secret\n\n### Apple Music Settings\n\n```json\n{\n    \"apple_music\": {\n        \"enabled\": false,\n        \"cookie_file\": \"\",\n        \"media_user_token\": \"\"\n    }\n}\n```\n\n| Setting | Type | Description |\n|---------|------|-------------|\n| `enabled` | boolean | Whether Apple Music direct download is enabled |\n| `cookie_file` | string | Path to cookies file |\n| `media_user_token` | string | Apple Music media user token |\n\n### Download Settings\n\n```json\n{\n    \"download\": {\n        \"output_dir\": \"downloads\",\n        \"format\": \"best\",\n        \"audio_format\": \"mp3\",\n        \"audio_quality\": \"320\",\n        \"video_quality\": \"1080\",\n        \"embed_thumbnail\": true,\n        \"embed_metadata\": true,\n        \"subtitles\": false,\n        \"auto_subtitles\": false,\n        \"all_subtitles\": false,\n        \"subtitle_language\": \"en\"\n    }\n}\n```\n\n| Setting | Type | Default | Description |\n|---------|------|---------|-------------|\n| `output_dir` | string | \"downloads\" | Default download directory |\n| `format` | string | \"best\" | Default video format |\n| `audio_format` | string | \"mp3\" | Default audio format |\n| `audio_quality` | string | \"320\" | Audio bitrate in kbps |\n| `video_quality` | string | \"1080\" | Default video quality |\n| `embed_thumbnail` | boolean | true | Embed cover art in audio files |\n| `embed_metadata` | boolean | true | Embed metadata in files |\n| `subtitles` | boolean | false | Download subtitles |\n| `subtitle_language` | string | \"en\" | Subtitle language code |\n\n### Proxy Settings\n\n```json\n{\n    \"proxy\": {\n        \"enabled\": false,\n        \"http\": \"\",\n        \"https\": \"\",\n        \"socks5\": \"\"\n    }\n}\n```\n\n| Setting | Type | Description |\n|---------|------|-------------|\n| `enabled` | boolean | Whether to use proxy |\n| `http` | string | HTTP proxy URL |\n| `https` | string | HTTPS proxy URL |\n| `socks5` | string | SOCKS5 proxy URL |\n\nExample proxy formats:\n\n```text\nhttp://username:password@proxy.example.com:8080\nsocks5://127.0.0.1:1080\n```\n\n### Authentication Settings\n\n```json\n{\n    \"authentication\": {\n        \"youtube\": {\n            \"cookies_file\": \"\"\n        },\n        \"instagram\": {\n            \"username\": \"\",\n            \"password\": \"\"\n        },\n        \"facebook\": {\n            \"cookies_file\": \"\"\n        }\n    }\n}\n```\n\nUsing cookies allows downloading age-restricted or private content that you have access to.\n\n### Advanced Settings\n\n```json\n{\n    \"advanced\": {\n        \"concurrent_downloads\": 3,\n        \"retry_attempts\": 3,\n        \"timeout\": 300,\n        \"rate_limit\": null,\n        \"user_agent\": \"Mozilla/5.0 ...\",\n        \"cookies_file\": \"\",\n        \"archive_file\": \"archive.txt\",\n        \"use_cache\": true,\n        \"cache_dir\": \".cache\"\n    }\n}\n```\n\n| Setting | Type | Default | Description |\n|---------|------|---------|-------------|\n| `concurrent_downloads` | integer | 3 | Max parallel downloads |\n| `retry_attempts` | integer | 3 | Retries on failure |\n| `timeout` | integer | 300 | Request timeout in seconds |\n| `rate_limit` | integer/null | null | Download speed limit in KB/s |\n| `user_agent` | string | Chrome UA | Browser user agent |\n| `archive_file` | string | \"archive.txt\" | Downloaded URLs record |\n| `use_cache` | boolean | true | Enable caching |\n| `cache_dir` | string | \".cache\" | Cache directory |\n\n### UI Settings\n\n```json\n{\n    \"ui\": {\n        \"show_progress\": true,\n        \"verbose\": false,\n        \"quiet\": false,\n        \"colors\": true,\n        \"ascii_banner\": true\n    }\n}\n```\n\n| Setting | Type | Default | Description |\n|---------|------|---------|-------------|\n| `show_progress` | boolean | true | Show download progress |\n| `verbose` | boolean | false | Enable verbose output |\n| `quiet` | boolean | false | Suppress output |\n| `colors` | boolean | true | Use colored output |\n| `ascii_banner` | boolean | true | Show ASCII art banner |\n\n### Post-Processing Settings\n\n```json\n{\n    \"post_processing\": {\n        \"convert_format\": false,\n        \"target_format\": \"mp4\",\n        \"normalize_audio\": false,\n        \"organize_files\": true,\n        \"file_template\": \"%(title)s.%(ext)s\"\n    }\n}\n```\n\n| Setting | Type | Description |\n|---------|------|-------------|\n| `convert_format` | boolean | Convert after download |\n| `target_format` | string | Target format for conversion |\n| `normalize_audio` | boolean | Normalize audio levels |\n| `organize_files` | boolean | Organize into folders |\n| `file_template` | string | Filename template |\n\n### Filter Settings\n\n```json\n{\n    \"filters\": {\n        \"min_duration\": null,\n        \"max_duration\": null,\n        \"date_after\": null,\n        \"date_before\": null,\n        \"min_views\": null,\n        \"max_views\": null\n    }\n}\n```\n\nThese filters skip downloads that do not match criteria:\n\n| Setting | Type | Description |\n|---------|------|-------------|\n| `min_duration` | integer/null | Minimum duration in seconds |\n| `max_duration` | integer/null | Maximum duration in seconds |\n| `date_after` | string/null | Only after date (YYYYMMDD) |\n| `date_before` | string/null | Only before date (YYYYMMDD) |\n| `min_views` | integer/null | Minimum view count |\n| `max_views` | integer/null | Maximum view count |\n\n---\n\n## Environment Variables\n\nSome settings can be configured through environment variables, which override config file settings.\n\n### Available Variables\n\n| Variable | Purpose |\n|----------|---------|\n| `SPOTIFY_CLIENT_ID` | Spotify API client ID |\n| `SPOTIFY_CLIENT_SECRET` | Spotify API client secret |\n| `APPLE_MUSIC_TOKEN` | Apple Music API token |\n| `APPLE_MUSIC_STOREFRONT` | Apple Music region (default: \"us\") |\n\n### Setting Environment Variables\n\nOn macOS and Linux, add to your shell profile:\n\n```bash\n# ~/.zshrc or ~/.bashrc\nexport SPOTIFY_CLIENT_ID=\"your_client_id\"\nexport SPOTIFY_CLIENT_SECRET=\"your_client_secret\"\n```\n\nThen reload:\n\n```bash\nsource ~/.zshrc\n```\n\nOn Windows, use System Properties or PowerShell:\n\n```powershell\n[Environment]::SetEnvironmentVariable(\"SPOTIFY_CLIENT_ID\", \"your_client_id\", \"User\")\n```\n\n---\n\n## Common Configurations\n\n### Configuration for Music Downloads\n\nIf you primarily download music:\n\n```json\n{\n    \"download\": {\n        \"audio_format\": \"flac\",\n        \"audio_quality\": \"320\",\n        \"embed_thumbnail\": true,\n        \"embed_metadata\": true\n    },\n    \"post_processing\": {\n        \"organize_files\": true,\n        \"file_template\": \"%(artist)s - %(title)s.%(ext)s\"\n    }\n}\n```\n\n### Configuration for Video Archiving\n\nIf you download videos for archival:\n\n```json\n{\n    \"download\": {\n        \"format\": \"best\",\n        \"video_quality\": \"2160\",\n        \"subtitles\": true,\n        \"all_subtitles\": true\n    },\n    \"advanced\": {\n        \"archive_file\": \"archive.txt\"\n    }\n}\n```\n\n### Configuration for Slow Connections\n\nIf you have limited bandwidth:\n\n```json\n{\n    \"download\": {\n        \"video_quality\": \"720\"\n    },\n    \"advanced\": {\n        \"concurrent_downloads\": 1,\n        \"rate_limit\": 500,\n        \"retry_attempts\": 5\n    }\n}\n```\n\n### Configuration with Proxy\n\nIf you need to use a proxy:\n\n```json\n{\n    \"proxy\": {\n        \"enabled\": true,\n        \"https\": \"http://proxy.example.com:8080\"\n    }\n}\n```\n\n---\n\n## Summary\n\nThe configuration system allows you to customize:\n\n- Default download settings\n- Audio and video quality preferences\n- Proxy and authentication\n- UI appearance\n- Post-processing behavior\n- Content filters\n\nMost users will not need to change the defaults, but power users can fine-tune every aspect of the application's behavior.\n\nFor usage instructions, see the [Usage Guide](USAGE.md).\n"])</script><script>self.__next_f.push([1,"8:[\"$\",\"div\",null,{\"className\":\"flex gap-12 items-start relative w-full\",\"children\":[[\"$\",\"article\",null,{\"className\":\"border-[3px] border-[var(--offblack)] shadow-[8px_8px_0px_var(--offblack)] bg-[var(--offwhite)] p-8 md:p-16 mb-24 relative flex-1 min-w-0 mt-16\",\"children\":[[\"$\",\"div\",null,{\"className\":\"absolute top-0 right-0 bg-[var(--offblack)] text-[var(--offwhite)] font-mono text-sm tracking-[0.2em] px-4 py-2 uppercase font-bold\",\"children\":[\"CONFIGURATION\",\".md\"]}],[\"$\",\"$L13\",null,{\"content\":\"$14\"}]]}],\"$L15\"]}]\n"])</script><script>self.__next_f.push([1,"16:I[90286,[\"279\",\"static/chunks/050357b0-c29a1ec11e45b759.js\",\"2280\",\"static/chunks/28f0fb3b-93ff7b29321306e3.js\",\"3878\",\"static/chunks/3878-6ad1e15e2594e860.js\",\"6315\",\"static/chunks/6315-afb745340946da74.js\",\"3508\",\"static/chunks/app/docs/%5Bslug%5D/page-bc3a690998312dca.js\"],\"default\"]\n"])</script><script>self.__next_f.push([1,"15:[\"$\",\"$L16\",null,{\"headings\":[{\"level\":2,\"text\":\"Configuration File\",\"slug\":\"configuration-file\"},{\"level\":3,\"text\":\"File Location\",\"slug\":\"file-location\"},{\"level\":3,\"text\":\"Configuration Structure\",\"slug\":\"configuration-structure\"},{\"level\":2,\"text\":\"Configuration Sections\",\"slug\":\"configuration-sections\"},{\"level\":3,\"text\":\"Spotify Settings\",\"slug\":\"spotify-settings\"},{\"level\":3,\"text\":\"Apple Music Settings\",\"slug\":\"apple-music-settings\"},{\"level\":3,\"text\":\"Download Settings\",\"slug\":\"download-settings\"},{\"level\":3,\"text\":\"Proxy Settings\",\"slug\":\"proxy-settings\"},{\"level\":3,\"text\":\"Authentication Settings\",\"slug\":\"authentication-settings\"},{\"level\":3,\"text\":\"Advanced Settings\",\"slug\":\"advanced-settings\"},{\"level\":3,\"text\":\"UI Settings\",\"slug\":\"ui-settings\"},{\"level\":3,\"text\":\"Post-Processing Settings\",\"slug\":\"post-processing-settings\"},{\"level\":3,\"text\":\"Filter Settings\",\"slug\":\"filter-settings\"},{\"level\":2,\"text\":\"Environment Variables\",\"slug\":\"environment-variables\"},{\"level\":3,\"text\":\"Available Variables\",\"slug\":\"available-variables\"},{\"level\":3,\"text\":\"Setting Environment Variables\",\"slug\":\"setting-environment-variables\"},{\"level\":2,\"text\":\"Common Configurations\",\"slug\":\"common-configurations\"},{\"level\":3,\"text\":\"Configuration for Music Downloads\",\"slug\":\"configuration-for-music-downloads\"},{\"level\":3,\"text\":\"Configuration for Video Archiving\",\"slug\":\"configuration-for-video-archiving\"},{\"level\":3,\"text\":\"Configuration for Slow Connections\",\"slug\":\"configuration-for-slow-connections\"},{\"level\":3,\"text\":\"Configuration with Proxy\",\"slug\":\"configuration-with-proxy\"},{\"level\":2,\"text\":\"Summary\",\"slug\":\"summary\"}]}]\n"])</script><script>self.__next_f.push([1,"e:[[\"$\",\"meta\",\"0\",{\"charSet\":\"utf-8\"}],[\"$\",\"meta\",\"1\",{\"name\":\"viewport\",\"content\":\"width=device-width, initial-scale=1\"}]]\na:null\n"])</script><script>self.__next_f.push([1,"c:{\"metadata\":[[\"$\",\"title\",\"0\",{\"children\":\"CONFIGURATION | UMD Documentation\"}],[\"$\",\"meta\",\"1\",{\"name\":\"description\",\"content\":\"Download media from 1000+ platforms with one command.\"}]],\"error\":null,\"digest\":\"$undefined\"}\n"])</script><script>self.__next_f.push([1,"11:\"$c:metadata\"\n"])</script></body></html>

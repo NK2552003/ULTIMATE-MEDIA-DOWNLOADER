@@ -1,0 +1,554 @@
+1:"$Sreact.fragment"
+2:I[93247,["5592","static/chunks/c15bf2b0-bfa95b308e62c6cc.js","8171","static/chunks/8171-072b61e2eb314140.js","5246","static/chunks/5246-010341edb3c20d3e.js","7177","static/chunks/app/layout-85e8378134696645.js"],"default"]
+3:I[9766,[],""]
+4:I[98924,[],""]
+5:I[33451,["5592","static/chunks/c15bf2b0-bfa95b308e62c6cc.js","8171","static/chunks/8171-072b61e2eb314140.js","2619","static/chunks/2619-04bc32f026a0d946.js","4499","static/chunks/app/docs/layout-b5c0d7de0e88f8a7.js"],"default"]
+6:I[49400,["5592","static/chunks/c15bf2b0-bfa95b308e62c6cc.js","8171","static/chunks/8171-072b61e2eb314140.js","2619","static/chunks/2619-04bc32f026a0d946.js","4499","static/chunks/app/docs/layout-b5c0d7de0e88f8a7.js"],"default"]
+7:I[37569,["4012","static/chunks/4012-d7d3939322bac069.js","6395","static/chunks/app/docs/template-df5e073e914c4610.js"],"default"]
+9:I[24431,[],"OutletBoundary"]
+b:I[15278,[],"AsyncMetadataOutlet"]
+d:I[24431,[],"ViewportBoundary"]
+f:I[24431,[],"MetadataBoundary"]
+10:"$Sreact.suspense"
+12:I[57150,[],""]
+:HL["/_next/static/css/43d8a26082dd6c66.css","style"]
+0:{"P":null,"b":"85teulKhSzCWNUsofAEOs","p":"","c":["","docs","ARCHITECTURE"],"i":false,"f":[[["",{"children":["docs",{"children":[["slug","ARCHITECTURE","d"],{"children":["__PAGE__",{}]}]}]},"$undefined","$undefined",true],["",["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/43d8a26082dd6c66.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]],["$","html",null,{"lang":"en","children":["$","body",null,{"children":["$","$L2",null,{"children":["$","$L3",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L4",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}]}]}]]}],{"children":["docs",["$","$1","c",{"children":[null,["$","div",null,{"className":"min-h-screen bg-[var(--offwhite)] text-[var(--offblack)] font-sans","children":[["$","$L5",null,{}],["$","div",null,{"className":"container mx-auto px-4 md:px-12 lg:px-24 xl:px-32 max-w-[90rem] pt-32 pb-32","children":["$","div",null,{"className":"flex gap-12 items-start mt-12","children":[["$","$L6",null,{"docs":["ARCHITECTURE","AUTO_UPDATE","CHANGELOG","CONFIGURATION","FILE_STRUCTURE","HANDLERS","INDEX","INSTALLATION","PROJECT_OVERVIEW","TROUBLESHOOTING","USAGE"]}],["$","main",null,{"className":"flex-1 w-full min-w-0","children":["$","$L3",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L7",null,{"children":["$","$L4",null,{}]}],"templateStyles":[],"templateScripts":[],"notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]}]]}]}]]}]]}],{"children":[["slug","ARCHITECTURE","d"],["$","$1","c",{"children":[null,["$","$L3",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L4",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":["__PAGE__",["$","$1","c",{"children":["$L8",null,["$","$L9",null,{"children":["$La",["$","$Lb",null,{"promise":"$@c"}]]}]]}],{},null,false]},null,false]},null,false]},null,false],["$","$1","h",{"children":[null,[["$","$Ld",null,{"children":"$Le"}],null],["$","$Lf",null,{"children":["$","div",null,{"hidden":true,"children":["$","$10",null,{"fallback":null,"children":"$L11"}]}]}]]}],false]],"m":"$undefined","G":["$12",[]],"s":false,"S":true}
+13:I[20005,["279","static/chunks/050357b0-c29a1ec11e45b759.js","2280","static/chunks/28f0fb3b-93ff7b29321306e3.js","3878","static/chunks/3878-6ad1e15e2594e860.js","6315","static/chunks/6315-afb745340946da74.js","3508","static/chunks/app/docs/%5Bslug%5D/page-bc3a690998312dca.js"],"default"]
+14:T3ec3,# System Architecture
+
+This document explains how the Ultimate Media Downloader is designed and how its different parts work together. If you are a computer science student or someone trying to understand the project structure, this guide will walk you through everything step by step.
+
+---
+
+## Overview
+
+The Ultimate Media Downloader is a Python-based command-line application that downloads media content from over 100 different platforms. The application follows a modular architecture where different components handle specific responsibilities. This makes the code easier to maintain, test, and extend.
+
+### Design Principles
+
+The project follows these key principles:
+
+- **Modularity**: Each component does one thing well
+- **Extensibility**: New platforms can be added without changing existing code
+- **Graceful Degradation**: If optional features are not available, the app still works
+- **User Experience**: Beautiful CLI interface with progress indicators
+
+---
+
+## High-Level Architecture
+
+The following diagram shows how the main components interact with each other:
+
+```mermaid
+graph TB
+    subgraph "User Interface Layer"
+        CLI[Command Line Interface]
+        ARGS[Argument Parser]
+        UI[Rich Console UI]
+    end
+
+    subgraph "Core Application Layer"
+        MAIN[UltimateMediaDownloader]
+        GENERIC[GenericSiteDownloader]
+        SCORER[YouTube Scorer]
+    end
+
+    subgraph "Handler Layer"
+        SPOTIFY[Spotify Handler]
+        APPLE[Apple Music Handler]
+        JIOSAAVN[JioSaavn Handler]
+        GAANA[Gaana Handler]
+        TUMBLR[Tumblr Handler]
+        LINKEDIN[LinkedIn Handler]
+        REDDIT[Reddit Handler]
+        PINTEREST[Pinterest Handler]
+        INSTAGRAM[Instagram Handler]
+        PH[Pornhub Handler]
+        XNXX[XNXX Handler]
+        XHAM[xHamster Handler]
+        HiANIME[HiAnime Handler]
+        TIKTOK[TikTok Handler]
+        EPORNER[Eporner Handler]
+        HQPORNER[HQPorner Handler]
+        BEEG[Beeg Handler]
+        WALLPAPER[4KWallpapers Handler]
+        AMAZON[Amazon Music Handler]
+        AUDIOMACK[Audiomack Handler]
+        BITCHUTE[BitChute Handler]
+        BOOMPLAY[Boomplay Handler]
+        DAILYMOTION[Dailymotion Handler]
+        FLICKR[Flickr Handler]
+        KICK[Kick Handler]
+        PEERTUBE[PeerTube Handler]
+        RUMBLE[Rumble Handler]
+        TED[TED Handler]
+        TRILLER[TrillerTV Handler]
+        TWITCH[Twitch Handler]
+        VEOH[Veoh Handler]
+        VIMEO[Vimeo Handler]
+        YOUTUBE_MUSIC[YouTube Music Handler]
+    end
+
+    subgraph "Utility Layer"
+        UTILS[Utility Functions]
+        URL_VAL[URL Validator]
+        FILE_MGR[File Manager]
+        PLATFORM[Platform Utils]
+        BROWSER[Browser Utils]
+        PROGRESS[Progress Display]
+    end
+
+    subgraph "External Dependencies"
+        YTDLP[yt-dlp]
+        RICH[Rich Library]
+        MUTAGEN[Mutagen]
+        REQUESTS[Requests/HTTPX]
+    end
+
+    CLI --> ARGS
+    ARGS --> MAIN
+    MAIN --> UI
+    
+    MAIN --> SPOTIFY
+    MAIN --> APPLE
+    MAIN --> JIOSAAVN
+    MAIN --> GAANA
+    MAIN --> TUMBLR
+    MAIN --> PH
+    MAIN --> XNXX
+    MAIN --> XHAM
+    MAIN --> GENERIC
+    MAIN --> HIANIME
+    MAIN --> TIKTOK
+    MAIN --> EPORNER
+    MAIN --> HQPORNER
+    MAIN --> BEEG
+    MAIN --> LINKEDIN
+    MAIN --> REDDIT
+    MAIN --> PINTEREST
+    MAIN --> INSTAGRAM
+    MAIN --> WALLPAPER
+    MAIN --> AMAZON
+    MAIN --> AUDIOMACK
+    MAIN --> BITCHUTE
+    MAIN --> BOOMPLAY
+    MAIN --> DAILYMOTION
+    MAIN --> FLICKR
+    MAIN --> KICK
+    MAIN --> PEERTUBE
+    MAIN --> RUMBLE
+    MAIN --> TED
+    MAIN --> TRILLER
+    MAIN --> TWITCH
+    MAIN --> VEOH
+    MAIN --> VIMEO
+    MAIN --> YOUTUBE_MUSIC
+
+    SPOTIFY --> SCORER
+    APPLE --> SCORER
+    JIOSAAVN --> SCORER
+    GAANA --> SCORER
+
+    MAIN --> UTILS
+    MAIN --> URL_VAL
+    MAIN --> FILE_MGR
+    MAIN --> PLATFORM
+    MAIN --> BROWSER
+    MAIN --> PROGRESS
+
+    MAIN --> YTDLP
+    UI --> RICH
+    FILE_MGR --> MUTAGEN
+    GENERIC --> REQUESTS
+```
+
+---
+
+## Component Breakdown
+
+### Entry Point
+
+The application starts from `ultimate_downloader.py`. This file contains the main class `UltimateMediaDownloader` which orchestrates everything.
+
+```mermaid
+graph LR
+    A[User runs umd command] --> B[ultimate_downloader.py]
+    B --> C[Parse Arguments]
+    C --> D{URL Provided?}
+    D -->|Yes| E[Process URL]
+    D -->|No| F[Interactive Mode]
+    E --> G[Detect Platform]
+    G --> H[Call Appropriate Handler]
+    H --> I[Download Media]
+    F --> G
+```
+
+### Main Components
+
+| Component | File | Purpose |
+|-----------|------|---------|
+| Main Downloader | `ultimate_downloader.py` | Core application logic and coordination |
+| Generic Downloader | `generic_downloader.py` | Handles sites with special requirements like SSL bypass |
+| CLI Parser | `cli_args.py` | Processes command-line arguments |
+| Logger | `logger.py` | Custom logging to suppress verbose output |
+| YouTube Scorer | `youtube_scorer.py` | Ranks YouTube search results for accuracy |
+| Platform Info | `platform_info.py` | Displays supported platform information |
+| Patch Handlers | `patch_handlers.py` | Manages runtime patches and overrides for handlers |
+
+---
+
+## Data Flow
+
+When a user provides a URL, here is what happens inside the application:
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant CLI
+    participant Main as UltimateMediaDownloader
+    participant Platform as Platform Detection
+    participant Handler
+    participant Downloader as yt-dlp
+    participant FileSystem
+
+    User->>CLI: umd "URL"
+    CLI->>Main: Initialize with arguments
+    Main->>Platform: detect_platform(URL)
+    Platform-->>Main: Platform name (e.g., spotify)
+    
+    alt Platform has dedicated handler
+        Main->>Handler: search_and_download(URL)
+        Handler->>Handler: Extract metadata
+        Handler->>Main: Request download via YouTube
+    else Use generic yt-dlp
+        Main->>Downloader: Download directly
+    end
+    
+    Downloader->>FileSystem: Save media file
+    Downloader-->>Main: Download complete
+    Main->>Main: Embed metadata (if audio)
+    Main-->>User: Success message
+```
+
+---
+
+## Handler System
+
+The handler system is how the application supports different platforms. Each platform that needs special handling has its own handler class.
+
+### Handler Architecture
+
+```mermaid
+classDiagram
+    class UltimateMediaDownloader {
+        +output_dir: Path
+        +verbose: bool
+        +spotify_handler: SpotifyHandler
+        +apple_music_handler: AppleMusicHandler
+        +jiosaavn_handler: JioSaavnHandler
+        +gaana_handler: GaanaHandler
+        +tumblr_handler: TumblrHandler
+        +wallpaper_handler: FourKWallpapersHandler
+        +download(url)
+        +detect_platform(url)
+        +browse_wallpapers(search_query)
+        +browse_wallpapers_url(url)
+    }
+
+    class SpotifyHandler {
+        +downloader: UltimateMediaDownloader
+        +spotify_client: Spotipy
+        +search_and_download(url)
+        +_download_track(url)
+        +_download_album(url)
+        +_download_playlist(url)
+    }
+
+    class AppleMusicHandler {
+        +downloader: UltimateMediaDownloader
+        +search_and_download(url)
+        +_download_track_enhanced(url)
+        +_download_album_enhanced(url)
+    }
+
+    class JioSaavnHandler {
+        +downloader: UltimateMediaDownloader
+        +search_and_download(url)
+        +_download_track(url)
+        +_download_album(url)
+        +_download_playlist(url)
+        +_extract_metadata(track_id)
+    }
+
+    class GaanaHandler {
+        +downloader: UltimateMediaDownloader
+        +search_and_download(url)
+        +_download_track(url)
+        +_download_album(url)
+        +_download_playlist(url)
+        +_download_artist(url)
+        +_fetch_song_data(url)
+    }
+
+    class TumblrHandler {
+        +downloader: UltimateMediaDownloader
+        +api: TumblrAPI
+        +download_blog(url)
+        +_extract_media(posts)
+    }
+
+    class HiAnimeHandler {
+        +downloader: UltimateMediaDownloader
+        +search_and_download(url)
+        +_extract_episode_info(url)
+        +_download_episode(url)
+        +_download_series(url)
+    }
+
+    class TikTokHandler {
+        +downloader: UltimateMediaDownloader
+        +search_and_download(url)
+        +_download_video(url)
+        +_normalize_url(url)
+    }
+
+    class EpornerHandler {
+        +downloader: UltimateMediaDownloader
+        +search_and_download(url)
+        +_download_video(url)
+        +_try_fallback_methods(url)
+    }
+
+    class HQPornerHandler {
+        +downloader: UltimateMediaDownloader
+        +search_and_download(url)
+        +_download_video(url)
+        +_extract_sources(url)
+    }
+
+    class BeegHandler {
+        +downloader: UltimateMediaDownloader
+        +search_and_download(url)
+        +_download_video(url)
+        +_try_api_method(url)
+    }
+
+    class LinkedInHandler {
+        +downloader: UltimateMediaDownloader
+        +search_and_download(url)
+        +_download_post(url)
+        +_extract_media_urls(url)
+    }
+
+    class RedditHandler {
+        +downloader: UltimateMediaDownloader
+        +reddit: PRAW
+        +search_and_download(url)
+        +_download_post(url)
+        +_download_user_posts(username)
+    }
+
+    class PinterestHandler {
+        +downloader: UltimateMediaDownloader
+        +search_and_download(url)
+        +_download_pin(url)
+        +_download_board(url)
+        +_download_profile(url)
+    }
+
+    class InstagramHandler {
+        +downloader: UltimateMediaDownloader
+        +browser: Browser
+        +page: Page
+        +search_and_download(url)
+        +_download_single_post(url)
+        +_download_profile_posts(username)
+        +_download_stories(url)
+        +_handle_profile_download(username)
+        +_init_browser()
+        +_save_cookies()
+    }
+
+    class FourKWallpapersHandler {
+        +downloader: UltimateMediaDownloader
+        +session: CloudScraper
+        +interactive_browse(search_query)
+        +handle_url(url)
+        +fetch_listing_paginated(base_url, max_wallpapers)
+        +search_wallpapers(query)
+        +_parse_selection(raw, total)
+        +_run_listing_flow(section_name, listing_url)
+    }
+
+    UltimateMediaDownloader --> SpotifyHandler
+    UltimateMediaDownloader --> AppleMusicHandler
+    UltimateMediaDownloader --> JioSaavnHandler
+    UltimateMediaDownloader --> TumblrHandler
+    UltimateMediaDownloader --> LinkedInHandler
+    UltimateMediaDownloader --> RedditHandler
+    UltimateMediaDownloader --> PinterestHandler
+    UltimateMediaDownloader --> InstagramHandler
+    UltimateMediaDownloader --> HiAnimeHandler
+    UltimateMediaDownloader --> TikTokHandler
+    UltimateMediaDownloader --> EpornerHandler
+    UltimateMediaDownloader --> HQPornerHandler
+    UltimateMediaDownloader --> BeegHandler
+    UltimateMediaDownloader --> FourKWallpapersHandler
+```
+
+### How Handlers Work
+
+1. **Detection**: The main class detects which platform a URL belongs to
+2. **Delegation**: If a handler exists for that platform, the request is delegated
+3. **Processing**: The handler extracts metadata and determines how to download
+4. **Fallback**: If direct download is not possible, handlers search YouTube and download from there
+
+### Spotify and Apple Music Flow
+
+These platforms do not allow direct downloading. Here is how the application handles them:
+
+```mermaid
+flowchart TD
+    A[Spotify/Apple Music URL] --> B{API Available?}
+    B -->|Yes| C[Extract metadata via API]
+    B -->|No| D[Scrape webpage for info]
+    C --> E[Build search query: Artist - Title]
+    D --> E
+    E --> F[Search YouTube]
+    F --> G[YouTubeScorer ranks results]
+    G --> H[Download best match]
+    H --> I[Embed original metadata]
+    I --> J[Final audio file]
+```
+
+---
+
+## Utility Modules
+
+The `utils/` directory contains helper modules that provide common functionality.
+
+### Module Overview
+
+```mermaid
+graph TB
+    subgraph "utils/"
+        A[utils.py] --> |"sanitize_filename<br>format_bytes<br>detect_platform"| CORE[Core Utilities]
+        B[url_validator.py] --> |"is_valid_url<br>check_url_support"| VALIDATION[URL Validation]
+        C[file_manager.py] --> |"manage downloads<br>organize files"| FILES[File Operations]
+        D[platform_utils.py] --> |"platform configs<br>detect platform"| PLATFORM[Platform Detection]
+        E[browser_utils.py] --> |"random user agent<br>browser driver"| BROWSER[Browser Automation]
+        F[progress_display.py] --> |"progress bars<br>download status"| DISPLAY[Progress Display]
+        G[ui_components.py] --> |"Icons, Messages<br>ModernUI"| UI_COMP[UI Components]
+        H[ui_utils.py] --> |"Rich console wrapper"| WRAPPER[Console Wrapper]
+        I[terminal_image.py] --> |"sixel image<br>rendering"| TERM_IMG[Terminal Image]
+    end
+```
+
+### Key Utility Functions
+
+| Module | Function | Description |
+|--------|----------|-------------|
+| utils.py | `sanitize_filename()` | Removes invalid characters from filenames |
+| utils.py | `format_bytes()` | Converts bytes to human-readable format |
+| utils.py | `detect_platform()` | Identifies platform from URL |
+| url_validator.py | `is_valid_url()` | Checks if URL is properly formatted |
+| url_validator.py | `check_url_support()` | Verifies if URL can be downloaded |
+| terminal_image.py | `display_image()` | Renders an image using sixel if supported |
+| ui_components.py | `Icons.get()` | Returns consistent icons for UI |
+| ui_components.py | `Messages.success()` | Formats success messages |
+
+---
+
+## Configuration Management
+
+The application uses a JSON configuration file to store settings.
+
+### Configuration Structure
+
+```mermaid
+graph TB
+    CONFIG[config.json] --> SPOTIFY[spotify settings]
+    CONFIG --> APPLE[apple_music settings]
+    CONFIG --> DOWNLOAD[download settings]
+    CONFIG --> PROXY[proxy settings]
+    CONFIG --> AUTH[authentication]
+    CONFIG --> ADVANCED[advanced options]
+    CONFIG --> UI_CONF[ui preferences]
+    CONFIG --> POST[post_processing]
+    CONFIG --> FILTERS[filters]
+
+    DOWNLOAD --> FORMAT[format: best]
+    DOWNLOAD --> AUDIO_FMT[audio_format: mp3]
+    DOWNLOAD --> QUALITY[audio_quality: 320]
+    DOWNLOAD --> EMBED[embed_thumbnail: true]
+```
+
+### Environment Variables
+
+Some settings can be configured through environment variables:
+
+| Variable | Purpose |
+|----------|---------|
+| `SPOTIFY_CLIENT_ID` | Spotify API authentication |
+| `SPOTIFY_CLIENT_SECRET` | Spotify API authentication |
+| `APPLE_MUSIC_TOKEN` | Apple Music direct download |
+| `APPLE_MUSIC_STOREFRONT` | Apple Music region |
+
+---
+
+## Error Handling
+
+The application handles errors gracefully to provide a good user experience.
+
+### Error Handling Flow
+
+```mermaid
+flowchart TD
+    A[Start Download] --> B{URL Valid?}
+    B -->|No| C[Show error message]
+    B -->|Yes| D{Platform Supported?}
+    D -->|No| E[Try generic downloader]
+    D -->|Yes| F[Use platform handler]
+    
+    F --> G{Download Success?}
+    E --> G
+    
+    G -->|No| H{Retry Available?}
+    H -->|Yes| I[Retry with different method]
+    H -->|No| J[Show failure message]
+    
+    G -->|Yes| K[Post-process file]
+    K --> L{Post-process Success?}
+    L -->|No| M[Keep original file]
+    L -->|Yes| N[Show success message]
+    
+    I --> G
+```
+
+### Fallback Strategies
+
+1. **SSL Issues**: The generic downloader creates permissive SSL contexts
+2. **Rate Limiting**: Automatic delays between requests
+3. **Anti-bot Protection**: Multiple request methods (cloudscraper, curl-cffi, selenium)
+4. **Missing Handlers**: Falls back to yt-dlp generic extractor
+
+---
+
+## Summary
+
+The Ultimate Media Downloader is built with a clean, modular architecture that separates concerns and makes the codebase maintainable. The handler system allows easy extension for new platforms, while the utility modules provide reusable functionality across the application.
+
+Understanding this architecture will help you:
+- Navigate the codebase effectively
+- Add new features or platforms
+- Debug issues by tracing the data flow
+- Contribute improvements to the project
+
+For more details on specific components, refer to the individual source files and their inline documentation.
+8:["$","div",null,{"className":"flex gap-12 items-start relative w-full","children":[["$","article",null,{"className":"border-[3px] border-[var(--offblack)] shadow-[8px_8px_0px_var(--offblack)] bg-[var(--offwhite)] p-8 md:p-16 mb-24 relative flex-1 min-w-0 mt-16","children":[["$","div",null,{"className":"absolute top-0 right-0 bg-[var(--offblack)] text-[var(--offwhite)] font-mono text-sm tracking-[0.2em] px-4 py-2 uppercase font-bold","children":["ARCHITECTURE",".md"]}],["$","$L13",null,{"content":"$14"}]]}],"$L15"]}]
+16:I[90286,["279","static/chunks/050357b0-c29a1ec11e45b759.js","2280","static/chunks/28f0fb3b-93ff7b29321306e3.js","3878","static/chunks/3878-6ad1e15e2594e860.js","6315","static/chunks/6315-afb745340946da74.js","3508","static/chunks/app/docs/%5Bslug%5D/page-bc3a690998312dca.js"],"default"]
+15:["$","$L16",null,{"headings":[{"level":2,"text":"Overview","slug":"overview"},{"level":3,"text":"Design Principles","slug":"design-principles"},{"level":2,"text":"High-Level Architecture","slug":"high-level-architecture"},{"level":2,"text":"Component Breakdown","slug":"component-breakdown"},{"level":3,"text":"Entry Point","slug":"entry-point"},{"level":3,"text":"Main Components","slug":"main-components"},{"level":2,"text":"Data Flow","slug":"data-flow"},{"level":2,"text":"Handler System","slug":"handler-system"},{"level":3,"text":"Handler Architecture","slug":"handler-architecture"},{"level":3,"text":"How Handlers Work","slug":"how-handlers-work"},{"level":3,"text":"Spotify and Apple Music Flow","slug":"spotify-and-apple-music-flow"},{"level":2,"text":"Utility Modules","slug":"utility-modules"},{"level":3,"text":"Module Overview","slug":"module-overview"},{"level":3,"text":"Key Utility Functions","slug":"key-utility-functions"},{"level":2,"text":"Configuration Management","slug":"configuration-management"},{"level":3,"text":"Configuration Structure","slug":"configuration-structure"},{"level":3,"text":"Environment Variables","slug":"environment-variables"},{"level":2,"text":"Error Handling","slug":"error-handling"},{"level":3,"text":"Error Handling Flow","slug":"error-handling-flow"},{"level":3,"text":"Fallback Strategies","slug":"fallback-strategies"},{"level":2,"text":"Summary","slug":"summary"}]}]
+e:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+a:null
+c:{"metadata":[["$","title","0",{"children":"ARCHITECTURE | UMD Documentation"}],["$","meta","1",{"name":"description","content":"Download media from 1000+ platforms with one command."}]],"error":null,"digest":"$undefined"}
+11:"$c:metadata"

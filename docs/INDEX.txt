@@ -1,0 +1,176 @@
+1:"$Sreact.fragment"
+2:I[93247,["5592","static/chunks/c15bf2b0-bfa95b308e62c6cc.js","8171","static/chunks/8171-072b61e2eb314140.js","5246","static/chunks/5246-010341edb3c20d3e.js","7177","static/chunks/app/layout-85e8378134696645.js"],"default"]
+3:I[9766,[],""]
+4:I[98924,[],""]
+5:I[33451,["5592","static/chunks/c15bf2b0-bfa95b308e62c6cc.js","8171","static/chunks/8171-072b61e2eb314140.js","2619","static/chunks/2619-04bc32f026a0d946.js","4499","static/chunks/app/docs/layout-b5c0d7de0e88f8a7.js"],"default"]
+6:I[49400,["5592","static/chunks/c15bf2b0-bfa95b308e62c6cc.js","8171","static/chunks/8171-072b61e2eb314140.js","2619","static/chunks/2619-04bc32f026a0d946.js","4499","static/chunks/app/docs/layout-b5c0d7de0e88f8a7.js"],"default"]
+7:I[37569,["4012","static/chunks/4012-d7d3939322bac069.js","6395","static/chunks/app/docs/template-df5e073e914c4610.js"],"default"]
+9:I[24431,[],"OutletBoundary"]
+b:I[15278,[],"AsyncMetadataOutlet"]
+d:I[24431,[],"ViewportBoundary"]
+f:I[24431,[],"MetadataBoundary"]
+10:"$Sreact.suspense"
+12:I[57150,[],""]
+:HL["/_next/static/css/43d8a26082dd6c66.css","style"]
+0:{"P":null,"b":"85teulKhSzCWNUsofAEOs","p":"","c":["","docs","INDEX"],"i":false,"f":[[["",{"children":["docs",{"children":[["slug","INDEX","d"],{"children":["__PAGE__",{}]}]}]},"$undefined","$undefined",true],["",["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/43d8a26082dd6c66.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]],["$","html",null,{"lang":"en","children":["$","body",null,{"children":["$","$L2",null,{"children":["$","$L3",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L4",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}]}]}]]}],{"children":["docs",["$","$1","c",{"children":[null,["$","div",null,{"className":"min-h-screen bg-[var(--offwhite)] text-[var(--offblack)] font-sans","children":[["$","$L5",null,{}],["$","div",null,{"className":"container mx-auto px-4 md:px-12 lg:px-24 xl:px-32 max-w-[90rem] pt-32 pb-32","children":["$","div",null,{"className":"flex gap-12 items-start mt-12","children":[["$","$L6",null,{"docs":["ARCHITECTURE","AUTO_UPDATE","CHANGELOG","CONFIGURATION","FILE_STRUCTURE","HANDLERS","INDEX","INSTALLATION","PROJECT_OVERVIEW","TROUBLESHOOTING","USAGE"]}],["$","main",null,{"className":"flex-1 w-full min-w-0","children":["$","$L3",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L7",null,{"children":["$","$L4",null,{}]}],"templateStyles":[],"templateScripts":[],"notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]}]]}]}]]}]]}],{"children":[["slug","INDEX","d"],["$","$1","c",{"children":[null,["$","$L3",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L4",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":["__PAGE__",["$","$1","c",{"children":["$L8",null,["$","$L9",null,{"children":["$La",["$","$Lb",null,{"promise":"$@c"}]]}]]}],{},null,false]},null,false]},null,false]},null,false],["$","$1","h",{"children":[null,[["$","$Ld",null,{"children":"$Le"}],null],["$","$Lf",null,{"children":["$","div",null,{"hidden":true,"children":["$","$10",null,{"fallback":null,"children":"$L11"}]}]}]]}],false]],"m":"$undefined","G":["$12",[]],"s":false,"S":true}
+13:I[20005,["279","static/chunks/050357b0-c29a1ec11e45b759.js","2280","static/chunks/28f0fb3b-93ff7b29321306e3.js","3878","static/chunks/3878-6ad1e15e2594e860.js","6315","static/chunks/6315-afb745340946da74.js","3508","static/chunks/app/docs/%5Bslug%5D/page-bc3a690998312dca.js"],"default"]
+14:Teda,# Documentation Index
+
+Welcome to the Ultimate Media Downloader documentation. This index helps you find the information you need.
+
+---
+
+## Quick Links
+
+| I want to... | Go to... |
+|--------------|----------|
+| Install the application | [Installation Guide](INSTALLATION.md) |
+| Learn how to use it | [Usage Guide](USAGE.md) |
+| Download 4K wallpapers | [Downloading Wallpapers](USAGE.md#downloading-wallpapers) |
+| Update to latest version | [Auto-Update Guide](AUTO_UPDATE.md) |
+| Understand how it works | [Architecture](ARCHITECTURE.md) |
+| Configure settings | [Configuration Guide](CONFIGURATION.md) |
+| Fix a problem | [Troubleshooting](TROUBLESHOOTING.md) |
+
+---
+
+## Documentation Map
+
+```mermaid
+graph TD
+    A[Start Here] --> B{What do you need?}
+    
+    B -->|Install| C[INSTALLATION.md]
+    B -->|Use| D[USAGE.md]
+    B -->|Understand| E[ARCHITECTURE.md]
+    B -->|Configure| F[CONFIGURATION.md]
+    B -->|Fix Issues| G[TROUBLESHOOTING.md]
+    B -->|Develop| H[HANDLERS.md]
+    
+    C --> D
+    D --> F
+    E --> H
+    
+    subgraph "Getting Started"
+        C
+        D
+    end
+    
+    subgraph "Reference"
+        F
+        G
+    end
+    
+    subgraph "Development"
+        E
+        H
+    end
+```
+
+---
+
+## Available Documents
+
+### For Users
+
+| Document | Description |
+|----------|-------------|
+| [Installation Guide](INSTALLATION.md) | How to install on any operating system |
+| [Usage Guide](USAGE.md) | Complete guide to using the application |
+| [Configuration Guide](CONFIGURATION.md) | All configuration options explained |
+| [Auto-Update Guide](AUTO_UPDATE.md) | Automatic version checking and updates |
+| [Troubleshooting](TROUBLESHOOTING.md) | Solutions to common problems |
+| [Changelog](CHANGELOG.md) | Version history and release notes |
+
+### For Developers
+
+| Document | Description |
+|----------|-------------|
+| [Architecture](ARCHITECTURE.md) | System design with diagrams |
+| [Handlers Documentation](HANDLERS.md) | Platform handler details |
+| [File Structure](FILE_STRUCTURE.md) | Project organization |
+| [Project Overview](PROJECT_OVERVIEW.md) | High-level project summary |
+
+---
+
+## Reading Order for New Users
+
+1. **[Installation Guide](INSTALLATION.md)** - Get the application running
+2. **[Usage Guide](USAGE.md)** - Learn basic commands
+3. **[Configuration Guide](CONFIGURATION.md)** - Customize settings (optional)
+
+---
+
+## Reading Order for Developers
+
+1. **[Project Overview](PROJECT_OVERVIEW.md)** - Understand the project
+2. **[Architecture](ARCHITECTURE.md)** - Learn the design
+3. **[File Structure](FILE_STRUCTURE.md)** - Navigate the code
+4. **[Handlers Documentation](HANDLERS.md)** - Extend functionality
+
+---
+
+## Quick Reference
+
+### Basic Commands
+
+```bash
+# Start interactive mode
+umd
+
+# Download video
+umd "URL"
+
+# Download audio
+umd "URL" --audio-only --format mp3
+
+# Browse 4K wallpapers
+umd --wallpaper
+
+# Search wallpapers
+umd --wallpaper-search "anime"
+
+# Show help
+umd --help
+```
+
+### Common Options
+
+| Option | Description |
+|--------|-------------|
+| `--audio-only` | Extract audio only |
+| `--format mp3` | Set output format |
+| `--quality 1080p` | Set video quality |
+| `--output DIR` | Set download directory |
+| `--verbose` | Show detailed output |
+| `--wallpaper` | Browse & download 4K wallpapers |
+| `--wallpaper-search QUERY` | Search 4kwallpapers.com directly |
+
+---
+
+## Getting Help
+
+If you cannot find what you need:
+
+1. Check the [Troubleshooting Guide](TROUBLESHOOTING.md)
+2. Search the documentation for keywords
+3. Run `umd --help` for command reference
+4. Create an issue on Codeberg
+
+---
+
+## Contributing to Documentation
+
+Documentation improvements are welcome. When contributing:
+
+- Use clear, simple language
+- Include examples where helpful
+- Add Mermaid diagrams for complex concepts
+- Keep formatting consistent
+8:["$","div",null,{"className":"flex gap-12 items-start relative w-full","children":[["$","article",null,{"className":"border-[3px] border-[var(--offblack)] shadow-[8px_8px_0px_var(--offblack)] bg-[var(--offwhite)] p-8 md:p-16 mb-24 relative flex-1 min-w-0 mt-16","children":[["$","div",null,{"className":"absolute top-0 right-0 bg-[var(--offblack)] text-[var(--offwhite)] font-mono text-sm tracking-[0.2em] px-4 py-2 uppercase font-bold","children":["INDEX",".md"]}],["$","$L13",null,{"content":"$14"}]]}],"$L15"]}]
+16:I[90286,["279","static/chunks/050357b0-c29a1ec11e45b759.js","2280","static/chunks/28f0fb3b-93ff7b29321306e3.js","3878","static/chunks/3878-6ad1e15e2594e860.js","6315","static/chunks/6315-afb745340946da74.js","3508","static/chunks/app/docs/%5Bslug%5D/page-bc3a690998312dca.js"],"default"]
+15:["$","$L16",null,{"headings":[{"level":2,"text":"Quick Links","slug":"quick-links"},{"level":2,"text":"Documentation Map","slug":"documentation-map"},{"level":2,"text":"Available Documents","slug":"available-documents"},{"level":3,"text":"For Users","slug":"for-users"},{"level":3,"text":"For Developers","slug":"for-developers"},{"level":2,"text":"Reading Order for New Users","slug":"reading-order-for-new-users"},{"level":2,"text":"Reading Order for Developers","slug":"reading-order-for-developers"},{"level":2,"text":"Quick Reference","slug":"quick-reference"},{"level":3,"text":"Basic Commands","slug":"basic-commands"},{"level":3,"text":"Common Options","slug":"common-options"},{"level":2,"text":"Getting Help","slug":"getting-help"},{"level":2,"text":"Contributing to Documentation","slug":"contributing-to-documentation"}]}]
+e:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+a:null
+c:{"metadata":[["$","title","0",{"children":"INDEX | UMD Documentation"}],["$","meta","1",{"name":"description","content":"Download media from 1000+ platforms with one command."}]],"error":null,"digest":"$undefined"}
+11:"$c:metadata"

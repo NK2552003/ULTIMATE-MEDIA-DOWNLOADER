@@ -1,0 +1,406 @@
+1:"$Sreact.fragment"
+2:I[93247,["5592","static/chunks/c15bf2b0-bfa95b308e62c6cc.js","8171","static/chunks/8171-072b61e2eb314140.js","5246","static/chunks/5246-010341edb3c20d3e.js","7177","static/chunks/app/layout-85e8378134696645.js"],"default"]
+3:I[9766,[],""]
+4:I[98924,[],""]
+5:I[33451,["5592","static/chunks/c15bf2b0-bfa95b308e62c6cc.js","8171","static/chunks/8171-072b61e2eb314140.js","2619","static/chunks/2619-04bc32f026a0d946.js","4499","static/chunks/app/docs/layout-b5c0d7de0e88f8a7.js"],"default"]
+6:I[49400,["5592","static/chunks/c15bf2b0-bfa95b308e62c6cc.js","8171","static/chunks/8171-072b61e2eb314140.js","2619","static/chunks/2619-04bc32f026a0d946.js","4499","static/chunks/app/docs/layout-b5c0d7de0e88f8a7.js"],"default"]
+7:I[37569,["4012","static/chunks/4012-d7d3939322bac069.js","6395","static/chunks/app/docs/template-df5e073e914c4610.js"],"default"]
+9:I[24431,[],"OutletBoundary"]
+b:I[15278,[],"AsyncMetadataOutlet"]
+d:I[24431,[],"ViewportBoundary"]
+f:I[24431,[],"MetadataBoundary"]
+10:"$Sreact.suspense"
+12:I[57150,[],""]
+:HL["/_next/static/css/43d8a26082dd6c66.css","style"]
+0:{"P":null,"b":"85teulKhSzCWNUsofAEOs","p":"","c":["","docs","CONFIGURATION"],"i":false,"f":[[["",{"children":["docs",{"children":[["slug","CONFIGURATION","d"],{"children":["__PAGE__",{}]}]}]},"$undefined","$undefined",true],["",["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/43d8a26082dd6c66.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]],["$","html",null,{"lang":"en","children":["$","body",null,{"children":["$","$L2",null,{"children":["$","$L3",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L4",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}]}]}]]}],{"children":["docs",["$","$1","c",{"children":[null,["$","div",null,{"className":"min-h-screen bg-[var(--offwhite)] text-[var(--offblack)] font-sans","children":[["$","$L5",null,{}],["$","div",null,{"className":"container mx-auto px-4 md:px-12 lg:px-24 xl:px-32 max-w-[90rem] pt-32 pb-32","children":["$","div",null,{"className":"flex gap-12 items-start mt-12","children":[["$","$L6",null,{"docs":["ARCHITECTURE","AUTO_UPDATE","CHANGELOG","CONFIGURATION","FILE_STRUCTURE","HANDLERS","INDEX","INSTALLATION","PROJECT_OVERVIEW","TROUBLESHOOTING","USAGE"]}],["$","main",null,{"className":"flex-1 w-full min-w-0","children":["$","$L3",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L7",null,{"children":["$","$L4",null,{}]}],"templateStyles":[],"templateScripts":[],"notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]}]]}]}]]}]]}],{"children":[["slug","CONFIGURATION","d"],["$","$1","c",{"children":[null,["$","$L3",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L4",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":["__PAGE__",["$","$1","c",{"children":["$L8",null,["$","$L9",null,{"children":["$La",["$","$Lb",null,{"promise":"$@c"}]]}]]}],{},null,false]},null,false]},null,false]},null,false],["$","$1","h",{"children":[null,[["$","$Ld",null,{"children":"$Le"}],null],["$","$Lf",null,{"children":["$","div",null,{"hidden":true,"children":["$","$10",null,{"fallback":null,"children":"$L11"}]}]}]]}],false]],"m":"$undefined","G":["$12",[]],"s":false,"S":true}
+13:I[20005,["279","static/chunks/050357b0-c29a1ec11e45b759.js","2280","static/chunks/28f0fb3b-93ff7b29321306e3.js","3878","static/chunks/3878-6ad1e15e2594e860.js","6315","static/chunks/6315-afb745340946da74.js","3508","static/chunks/app/docs/%5Bslug%5D/page-bc3a690998312dca.js"],"default"]
+14:T226f,# Configuration Guide
+
+This document explains how to configure the Ultimate Media Downloader to suit your needs. The application uses a JSON configuration file and environment variables for different settings.
+
+---
+
+## Configuration File
+
+The main configuration file is `config.json` located in the project root directory.
+
+### File Location
+
+```text
+umd/
+    config.json        <-- Main configuration file
+    ultimate_downloader.py
+    ...
+```
+
+### Configuration Structure
+
+```mermaid
+graph TD
+    CONFIG[config.json] --> A[spotify]
+    CONFIG --> B[apple_music]
+    CONFIG --> C[download]
+    CONFIG --> D[proxy]
+    CONFIG --> E[authentication]
+    CONFIG --> F[advanced]
+    CONFIG --> G[ui]
+    CONFIG --> H[post_processing]
+    CONFIG --> I[filters]
+```
+
+---
+
+## Configuration Sections
+
+### Spotify Settings
+
+```json
+{
+    "spotify": {
+        "client_id": "",
+        "client_secret": "",
+        "enabled": false
+    }
+}
+```
+
+| Setting | Type | Description |
+|---------|------|-------------|
+| `client_id` | string | Spotify API client ID |
+| `client_secret` | string | Spotify API client secret |
+| `enabled` | boolean | Whether Spotify API is enabled |
+
+To get Spotify API credentials:
+
+1. Go to [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)
+2. Create a new application
+3. Copy the Client ID and Client Secret
+
+### Apple Music Settings
+
+```json
+{
+    "apple_music": {
+        "enabled": false,
+        "cookie_file": "",
+        "media_user_token": ""
+    }
+}
+```
+
+| Setting | Type | Description |
+|---------|------|-------------|
+| `enabled` | boolean | Whether Apple Music direct download is enabled |
+| `cookie_file` | string | Path to cookies file |
+| `media_user_token` | string | Apple Music media user token |
+
+### Download Settings
+
+```json
+{
+    "download": {
+        "output_dir": "downloads",
+        "format": "best",
+        "audio_format": "mp3",
+        "audio_quality": "320",
+        "video_quality": "1080",
+        "embed_thumbnail": true,
+        "embed_metadata": true,
+        "subtitles": false,
+        "auto_subtitles": false,
+        "all_subtitles": false,
+        "subtitle_language": "en"
+    }
+}
+```
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| `output_dir` | string | "downloads" | Default download directory |
+| `format` | string | "best" | Default video format |
+| `audio_format` | string | "mp3" | Default audio format |
+| `audio_quality` | string | "320" | Audio bitrate in kbps |
+| `video_quality` | string | "1080" | Default video quality |
+| `embed_thumbnail` | boolean | true | Embed cover art in audio files |
+| `embed_metadata` | boolean | true | Embed metadata in files |
+| `subtitles` | boolean | false | Download subtitles |
+| `subtitle_language` | string | "en" | Subtitle language code |
+
+### Proxy Settings
+
+```json
+{
+    "proxy": {
+        "enabled": false,
+        "http": "",
+        "https": "",
+        "socks5": ""
+    }
+}
+```
+
+| Setting | Type | Description |
+|---------|------|-------------|
+| `enabled` | boolean | Whether to use proxy |
+| `http` | string | HTTP proxy URL |
+| `https` | string | HTTPS proxy URL |
+| `socks5` | string | SOCKS5 proxy URL |
+
+Example proxy formats:
+
+```text
+http://username:password@proxy.example.com:8080
+socks5://127.0.0.1:1080
+```
+
+### Authentication Settings
+
+```json
+{
+    "authentication": {
+        "youtube": {
+            "cookies_file": ""
+        },
+        "instagram": {
+            "username": "",
+            "password": ""
+        },
+        "facebook": {
+            "cookies_file": ""
+        }
+    }
+}
+```
+
+Using cookies allows downloading age-restricted or private content that you have access to.
+
+### Advanced Settings
+
+```json
+{
+    "advanced": {
+        "concurrent_downloads": 3,
+        "retry_attempts": 3,
+        "timeout": 300,
+        "rate_limit": null,
+        "user_agent": "Mozilla/5.0 ...",
+        "cookies_file": "",
+        "archive_file": "archive.txt",
+        "use_cache": true,
+        "cache_dir": ".cache"
+    }
+}
+```
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| `concurrent_downloads` | integer | 3 | Max parallel downloads |
+| `retry_attempts` | integer | 3 | Retries on failure |
+| `timeout` | integer | 300 | Request timeout in seconds |
+| `rate_limit` | integer/null | null | Download speed limit in KB/s |
+| `user_agent` | string | Chrome UA | Browser user agent |
+| `archive_file` | string | "archive.txt" | Downloaded URLs record |
+| `use_cache` | boolean | true | Enable caching |
+| `cache_dir` | string | ".cache" | Cache directory |
+
+### UI Settings
+
+```json
+{
+    "ui": {
+        "show_progress": true,
+        "verbose": false,
+        "quiet": false,
+        "colors": true,
+        "ascii_banner": true
+    }
+}
+```
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| `show_progress` | boolean | true | Show download progress |
+| `verbose` | boolean | false | Enable verbose output |
+| `quiet` | boolean | false | Suppress output |
+| `colors` | boolean | true | Use colored output |
+| `ascii_banner` | boolean | true | Show ASCII art banner |
+
+### Post-Processing Settings
+
+```json
+{
+    "post_processing": {
+        "convert_format": false,
+        "target_format": "mp4",
+        "normalize_audio": false,
+        "organize_files": true,
+        "file_template": "%(title)s.%(ext)s"
+    }
+}
+```
+
+| Setting | Type | Description |
+|---------|------|-------------|
+| `convert_format` | boolean | Convert after download |
+| `target_format` | string | Target format for conversion |
+| `normalize_audio` | boolean | Normalize audio levels |
+| `organize_files` | boolean | Organize into folders |
+| `file_template` | string | Filename template |
+
+### Filter Settings
+
+```json
+{
+    "filters": {
+        "min_duration": null,
+        "max_duration": null,
+        "date_after": null,
+        "date_before": null,
+        "min_views": null,
+        "max_views": null
+    }
+}
+```
+
+These filters skip downloads that do not match criteria:
+
+| Setting | Type | Description |
+|---------|------|-------------|
+| `min_duration` | integer/null | Minimum duration in seconds |
+| `max_duration` | integer/null | Maximum duration in seconds |
+| `date_after` | string/null | Only after date (YYYYMMDD) |
+| `date_before` | string/null | Only before date (YYYYMMDD) |
+| `min_views` | integer/null | Minimum view count |
+| `max_views` | integer/null | Maximum view count |
+
+---
+
+## Environment Variables
+
+Some settings can be configured through environment variables, which override config file settings.
+
+### Available Variables
+
+| Variable | Purpose |
+|----------|---------|
+| `SPOTIFY_CLIENT_ID` | Spotify API client ID |
+| `SPOTIFY_CLIENT_SECRET` | Spotify API client secret |
+| `APPLE_MUSIC_TOKEN` | Apple Music API token |
+| `APPLE_MUSIC_STOREFRONT` | Apple Music region (default: "us") |
+
+### Setting Environment Variables
+
+On macOS and Linux, add to your shell profile:
+
+```bash
+# ~/.zshrc or ~/.bashrc
+export SPOTIFY_CLIENT_ID="your_client_id"
+export SPOTIFY_CLIENT_SECRET="your_client_secret"
+```
+
+Then reload:
+
+```bash
+source ~/.zshrc
+```
+
+On Windows, use System Properties or PowerShell:
+
+```powershell
+[Environment]::SetEnvironmentVariable("SPOTIFY_CLIENT_ID", "your_client_id", "User")
+```
+
+---
+
+## Common Configurations
+
+### Configuration for Music Downloads
+
+If you primarily download music:
+
+```json
+{
+    "download": {
+        "audio_format": "flac",
+        "audio_quality": "320",
+        "embed_thumbnail": true,
+        "embed_metadata": true
+    },
+    "post_processing": {
+        "organize_files": true,
+        "file_template": "%(artist)s - %(title)s.%(ext)s"
+    }
+}
+```
+
+### Configuration for Video Archiving
+
+If you download videos for archival:
+
+```json
+{
+    "download": {
+        "format": "best",
+        "video_quality": "2160",
+        "subtitles": true,
+        "all_subtitles": true
+    },
+    "advanced": {
+        "archive_file": "archive.txt"
+    }
+}
+```
+
+### Configuration for Slow Connections
+
+If you have limited bandwidth:
+
+```json
+{
+    "download": {
+        "video_quality": "720"
+    },
+    "advanced": {
+        "concurrent_downloads": 1,
+        "rate_limit": 500,
+        "retry_attempts": 5
+    }
+}
+```
+
+### Configuration with Proxy
+
+If you need to use a proxy:
+
+```json
+{
+    "proxy": {
+        "enabled": true,
+        "https": "http://proxy.example.com:8080"
+    }
+}
+```
+
+---
+
+## Summary
+
+The configuration system allows you to customize:
+
+- Default download settings
+- Audio and video quality preferences
+- Proxy and authentication
+- UI appearance
+- Post-processing behavior
+- Content filters
+
+Most users will not need to change the defaults, but power users can fine-tune every aspect of the application's behavior.
+
+For usage instructions, see the [Usage Guide](USAGE.md).
+8:["$","div",null,{"className":"flex gap-12 items-start relative w-full","children":[["$","article",null,{"className":"border-[3px] border-[var(--offblack)] shadow-[8px_8px_0px_var(--offblack)] bg-[var(--offwhite)] p-8 md:p-16 mb-24 relative flex-1 min-w-0 mt-16","children":[["$","div",null,{"className":"absolute top-0 right-0 bg-[var(--offblack)] text-[var(--offwhite)] font-mono text-sm tracking-[0.2em] px-4 py-2 uppercase font-bold","children":["CONFIGURATION",".md"]}],["$","$L13",null,{"content":"$14"}]]}],"$L15"]}]
+16:I[90286,["279","static/chunks/050357b0-c29a1ec11e45b759.js","2280","static/chunks/28f0fb3b-93ff7b29321306e3.js","3878","static/chunks/3878-6ad1e15e2594e860.js","6315","static/chunks/6315-afb745340946da74.js","3508","static/chunks/app/docs/%5Bslug%5D/page-bc3a690998312dca.js"],"default"]
+15:["$","$L16",null,{"headings":[{"level":2,"text":"Configuration File","slug":"configuration-file"},{"level":3,"text":"File Location","slug":"file-location"},{"level":3,"text":"Configuration Structure","slug":"configuration-structure"},{"level":2,"text":"Configuration Sections","slug":"configuration-sections"},{"level":3,"text":"Spotify Settings","slug":"spotify-settings"},{"level":3,"text":"Apple Music Settings","slug":"apple-music-settings"},{"level":3,"text":"Download Settings","slug":"download-settings"},{"level":3,"text":"Proxy Settings","slug":"proxy-settings"},{"level":3,"text":"Authentication Settings","slug":"authentication-settings"},{"level":3,"text":"Advanced Settings","slug":"advanced-settings"},{"level":3,"text":"UI Settings","slug":"ui-settings"},{"level":3,"text":"Post-Processing Settings","slug":"post-processing-settings"},{"level":3,"text":"Filter Settings","slug":"filter-settings"},{"level":2,"text":"Environment Variables","slug":"environment-variables"},{"level":3,"text":"Available Variables","slug":"available-variables"},{"level":3,"text":"Setting Environment Variables","slug":"setting-environment-variables"},{"level":2,"text":"Common Configurations","slug":"common-configurations"},{"level":3,"text":"Configuration for Music Downloads","slug":"configuration-for-music-downloads"},{"level":3,"text":"Configuration for Video Archiving","slug":"configuration-for-video-archiving"},{"level":3,"text":"Configuration for Slow Connections","slug":"configuration-for-slow-connections"},{"level":3,"text":"Configuration with Proxy","slug":"configuration-with-proxy"},{"level":2,"text":"Summary","slug":"summary"}]}]
+e:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+a:null
+c:{"metadata":[["$","title","0",{"children":"CONFIGURATION | UMD Documentation"}],["$","meta","1",{"name":"description","content":"Download media from 1000+ platforms with one command."}]],"error":null,"digest":"$undefined"}
+11:"$c:metadata"

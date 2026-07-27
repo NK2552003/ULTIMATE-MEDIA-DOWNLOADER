@@ -1,0 +1,506 @@
+1:"$Sreact.fragment"
+2:I[93247,["5592","static/chunks/c15bf2b0-bfa95b308e62c6cc.js","8171","static/chunks/8171-072b61e2eb314140.js","5246","static/chunks/5246-010341edb3c20d3e.js","7177","static/chunks/app/layout-85e8378134696645.js"],"default"]
+3:I[9766,[],""]
+4:I[98924,[],""]
+5:I[33451,["5592","static/chunks/c15bf2b0-bfa95b308e62c6cc.js","8171","static/chunks/8171-072b61e2eb314140.js","2619","static/chunks/2619-04bc32f026a0d946.js","4499","static/chunks/app/docs/layout-b5c0d7de0e88f8a7.js"],"default"]
+6:I[49400,["5592","static/chunks/c15bf2b0-bfa95b308e62c6cc.js","8171","static/chunks/8171-072b61e2eb314140.js","2619","static/chunks/2619-04bc32f026a0d946.js","4499","static/chunks/app/docs/layout-b5c0d7de0e88f8a7.js"],"default"]
+7:I[37569,["4012","static/chunks/4012-d7d3939322bac069.js","6395","static/chunks/app/docs/template-df5e073e914c4610.js"],"default"]
+9:I[24431,[],"OutletBoundary"]
+b:I[15278,[],"AsyncMetadataOutlet"]
+d:I[24431,[],"ViewportBoundary"]
+f:I[24431,[],"MetadataBoundary"]
+10:"$Sreact.suspense"
+12:I[57150,[],""]
+:HL["/_next/static/css/43d8a26082dd6c66.css","style"]
+0:{"P":null,"b":"85teulKhSzCWNUsofAEOs","p":"","c":["","docs","INSTALLATION"],"i":false,"f":[[["",{"children":["docs",{"children":[["slug","INSTALLATION","d"],{"children":["__PAGE__",{}]}]}]},"$undefined","$undefined",true],["",["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/43d8a26082dd6c66.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]],["$","html",null,{"lang":"en","children":["$","body",null,{"children":["$","$L2",null,{"children":["$","$L3",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L4",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}]}]}]]}],{"children":["docs",["$","$1","c",{"children":[null,["$","div",null,{"className":"min-h-screen bg-[var(--offwhite)] text-[var(--offblack)] font-sans","children":[["$","$L5",null,{}],["$","div",null,{"className":"container mx-auto px-4 md:px-12 lg:px-24 xl:px-32 max-w-[90rem] pt-32 pb-32","children":["$","div",null,{"className":"flex gap-12 items-start mt-12","children":[["$","$L6",null,{"docs":["ARCHITECTURE","AUTO_UPDATE","CHANGELOG","CONFIGURATION","FILE_STRUCTURE","HANDLERS","INDEX","INSTALLATION","PROJECT_OVERVIEW","TROUBLESHOOTING","USAGE"]}],["$","main",null,{"className":"flex-1 w-full min-w-0","children":["$","$L3",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L7",null,{"children":["$","$L4",null,{}]}],"templateStyles":[],"templateScripts":[],"notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]}]]}]}]]}]]}],{"children":[["slug","INSTALLATION","d"],["$","$1","c",{"children":[null,["$","$L3",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L4",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":["__PAGE__",["$","$1","c",{"children":["$L8",null,["$","$L9",null,{"children":["$La",["$","$Lb",null,{"promise":"$@c"}]]}]]}],{},null,false]},null,false]},null,false]},null,false],["$","$1","h",{"children":[null,[["$","$Ld",null,{"children":"$Le"}],null],["$","$Lf",null,{"children":["$","div",null,{"hidden":true,"children":["$","$10",null,{"fallback":null,"children":"$L11"}]}]}]]}],false]],"m":"$undefined","G":["$12",[]],"s":false,"S":true}
+13:I[20005,["279","static/chunks/050357b0-c29a1ec11e45b759.js","2280","static/chunks/28f0fb3b-93ff7b29321306e3.js","3878","static/chunks/3878-6ad1e15e2594e860.js","6315","static/chunks/6315-afb745340946da74.js","3508","static/chunks/app/docs/%5Bslug%5D/page-bc3a690998312dca.js"],"default"]
+14:T2262,# Installation Guide
+
+This guide will walk you through installing the Ultimate Media Downloader on your system. Whether you are using macOS, Linux, or Windows, this document covers everything you need to get started.
+
+---
+
+## Prerequisites
+
+Before installing, make sure you have the following software on your system.
+
+### Required Software
+
+| Software | Minimum Version | Purpose |
+|----------|-----------------|---------|
+| Python | 3.9 or higher | Core runtime for the application |
+| pip | Latest | Python package manager |
+| Git | Any recent version | Cloning the repository |
+
+### Recommended Software
+
+| Software | Purpose |
+|----------|---------|
+| FFmpeg | Processing audio and video files |
+| pipx | Clean isolated installation |
+
+### Checking Your System
+
+Run these commands to check if you have the prerequisites:
+
+```bash
+# Check Python version
+python3 --version
+
+# Check pip
+pip3 --version
+
+# Check Git
+git --version
+
+# Check FFmpeg (optional but recommended)
+ffmpeg -version
+```
+
+If any of these are missing, follow the instructions in the next section for your operating system.
+
+---
+
+## Quick Installation
+
+The fastest way to install is using the provided scripts.
+
+### On macOS and Linux
+
+```bash
+# Clone the repository
+git clone https://codeberg.org/nk2552003/umd.git
+
+# Enter the directory
+cd umd
+
+# Run the install script
+./scripts/setup.sh
+```
+
+### On Windows
+
+```batch
+:: Clone the repository
+git clone https://codeberg.org/nk2552003/umd.git
+
+:: Enter the directory
+cd umd
+
+:: Run the install script
+scripts\setup.bat
+```
+
+After installation, you can use the tool from anywhere with the `umd` command:
+
+```bash
+umd --help
+```
+
+---
+
+## Installation by Platform
+
+### macOS Installation
+
+#### Step 1: Install Homebrew (if not installed)
+
+Homebrew is a package manager for macOS that makes installing software easy.
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+#### Step 2: Install Prerequisites
+
+```bash
+# Install Python
+brew install python@3.11
+
+# Install FFmpeg
+brew install ffmpeg
+
+# Install pipx for clean package installation
+brew install pipx
+pipx ensurepath
+```
+
+#### Step 3: Install Ultimate Media Downloader
+
+```bash
+# Clone the repository
+git clone https://codeberg.org/nk2552003/umd.git
+cd umd
+
+# Run the installer
+./scripts/setup.sh
+```
+
+#### Step 4: Update PATH (if needed)
+
+If the `umd` command is not found after installation, add the Python bin directory to your PATH:
+
+```bash
+echo 'export PATH="$PATH:$HOME/Library/Python/3.11/bin"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+---
+
+### Linux Installation (Ubuntu/Debian)
+
+#### Step 1: Update Package Lists
+
+```bash
+sudo apt update
+```
+
+#### Step 2: Install Prerequisites
+
+```bash
+# Install Python and pip
+sudo apt install -y python3 python3-pip python3-venv
+
+# Install Git
+sudo apt install -y git
+
+# Install FFmpeg
+sudo apt install -y ffmpeg
+```
+
+#### Step 3: Install pipx (Recommended)
+
+```bash
+# Install pipx
+python3 -m pip install --user pipx
+python3 -m pipx ensurepath
+
+# Restart your terminal or run
+source ~/.bashrc
+```
+
+#### Step 4: Install Ultimate Media Downloader
+
+```bash
+# Clone the repository
+git clone https://codeberg.org/nk2552003/umd.git
+cd umd
+
+# Run the installer
+./scripts/setup.sh
+```
+
+#### Step 5: Update PATH (if needed)
+
+```bash
+echo 'export PATH="$PATH:$HOME/.local/bin"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+---
+
+### Windows Installation
+
+#### Step 1: Install Python
+
+1. Download Python from [python.org](https://www.python.org/downloads/)
+2. Run the installer
+3. Check the box that says "Add Python to PATH"
+4. Click "Install Now"
+
+#### Step 2: Install Git
+
+1. Download Git from [git-scm.com](https://git-scm.com/downloads)
+2. Run the installer with default options
+
+#### Step 3: Install FFmpeg
+
+Option A: Using Chocolatey (if you have it)
+
+```batch
+choco install ffmpeg
+```
+
+Option B: Manual Installation
+
+1. Download FFmpeg from [ffmpeg.org](https://ffmpeg.org/download.html)
+2. Extract to `C:\ffmpeg`
+3. Add `C:\ffmpeg\bin` to your system PATH
+
+#### Step 4: Install Ultimate Media Downloader
+
+Open Command Prompt or PowerShell:
+
+```batch
+:: Clone the repository
+git clone https://codeberg.org/nk2552003/umd.git
+
+:: Enter the directory
+cd umd
+
+:: Run the installer
+scripts\setup.bat
+```
+
+---
+
+## Alternative Installation Methods
+
+### Method 1: Using pip Directly
+
+If you prefer not to use pipx, you can install with pip:
+
+```bash
+git clone https://codeberg.org/nk2552003/umd.git
+cd umd
+pip3 install -e .
+```
+
+### Method 2: Using Virtual Environment
+
+For a completely isolated installation:
+
+```bash
+# Clone the repository
+git clone https://codeberg.org/nk2552003/umd.git
+cd umd
+
+# Create virtual environment
+python3 -m venv venv
+
+# Activate virtual environment
+# On macOS/Linux:
+source venv/bin/activate
+# On Windows:
+venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the application
+python ultimate_downloader.py --help
+```
+
+### Method 3: Using pipx Manually
+
+```bash
+# Install pipx if not installed
+pip install --user pipx
+pipx ensurepath
+
+# Clone and install
+git clone https://codeberg.org/nk2552003/umd.git
+cd umd
+pipx install -e .
+```
+
+---
+
+## Verifying Installation
+
+After installation, run these commands to verify everything is working:
+
+```bash
+# Check version
+umd --version
+
+# Show help
+umd --help
+
+# Test with a video (shows info without downloading)
+umd "https://www.youtube.com/watch?v=dQw4w9WgXcQ" --info
+```
+
+### Expected Output
+
+When you run `umd --help`, you should see output similar to:
+
+```
+usage: umd [-h] [-q QUALITY] [-a] [-f FORMAT] [-o OUTPUT] ...
+
+Ultimate Multi-Platform Media Downloader
+
+A powerful, feature-rich downloader supporting many platforms including 
+YouTube, Spotify, Instagram, TikTok, SoundCloud, Apple Music, JioSaavn, and more!
+```
+
+---
+
+## Troubleshooting
+
+### Common Issues
+
+#### Issue: "command not found: umd"
+
+The `umd` command is not in your PATH.
+
+Solution:
+
+```bash
+# macOS
+echo 'export PATH="$PATH:$HOME/Library/Python/3.11/bin"' >> ~/.zshrc
+source ~/.zshrc
+
+# Linux
+echo 'export PATH="$PATH:$HOME/.local/bin"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+#### Issue: "No module named 'yt_dlp'"
+
+Dependencies were not installed correctly.
+
+Solution:
+
+```bash
+pip3 install -r requirements.txt
+```
+
+#### Issue: "FFmpeg not found"
+
+FFmpeg is required for audio/video processing.
+
+Solution:
+
+```bash
+# macOS
+brew install ffmpeg
+
+# Ubuntu/Debian
+sudo apt install ffmpeg
+
+# Windows (with Chocolatey)
+choco install ffmpeg
+```
+
+#### Issue: SSL Certificate Errors
+
+Some platforms have SSL issues.
+
+Solution: The application handles this automatically, but you can also try:
+
+```bash
+pip3 install --upgrade certifi
+```
+
+#### Issue: "Permission denied" on Linux/macOS
+
+The install script does not have execute permission.
+
+Solution:
+
+```bash
+chmod +x scripts/install.sh
+./scripts/install.sh
+```
+
+### Getting Help
+
+If you encounter issues not covered here:
+
+1. Check the [Issues](https://codeberg.org/nk2552003/umd/issues)
+2. Run with verbose mode for more details: `umd --verbose "URL"`
+3. Create a new issue with the error message and your system information
+
+---
+
+## Uninstallation
+
+### Using the Uninstall Script
+
+```bash
+# macOS/Linux
+./scripts/uninstall.sh
+
+# Windows
+scripts\uninstall.bat
+```
+
+### Manual Uninstallation
+
+If you installed with pipx:
+
+```bash
+pipx uninstall ultimate-downloader
+```
+
+If you installed with pip:
+
+```bash
+pip3 uninstall ultimate-downloader
+```
+
+To remove the cloned directory:
+
+```bash
+rm -rf umd
+```
+
+### Cleaning Up Downloads
+
+The default download location is:
+
+```
+~/Downloads/UltimateDownloader/
+```
+
+You can remove this folder to clean up downloaded files.
+
+---
+
+## Post-Installation Configuration
+
+### Optional: Set Up Spotify API
+
+For better Spotify metadata extraction:
+
+1. Go to [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)
+2. Create a new application
+3. Get your Client ID and Client Secret
+4. Set environment variables:
+
+```bash
+export SPOTIFY_CLIENT_ID="your_client_id"
+export SPOTIFY_CLIENT_SECRET="your_client_secret"
+```
+
+Add these to your shell profile (`.zshrc` or `.bashrc`) to make them permanent.
+
+### Optional: Configure Download Directory
+
+Edit `config.json` in the installation directory to change the default download location:
+
+```json
+{
+    "download": {
+        "output_dir": "/your/custom/path"
+    }
+}
+```
+
+Or use the `--output` flag when running commands:
+
+```bash
+umd "URL" --output /path/to/downloads
+```
+
+---
+
+## Summary
+
+You now have the Ultimate Media Downloader installed on your system. The installation process:
+
+1. Installed Python dependencies
+2. Set up the `umd` command globally
+3. Configured the default download directory
+
+For usage instructions, see the [Usage Guide](USAGE.md).
+
+For architecture details, see the [Architecture Documentation](ARCHITECTURE.md).
+8:["$","div",null,{"className":"flex gap-12 items-start relative w-full","children":[["$","article",null,{"className":"border-[3px] border-[var(--offblack)] shadow-[8px_8px_0px_var(--offblack)] bg-[var(--offwhite)] p-8 md:p-16 mb-24 relative flex-1 min-w-0 mt-16","children":[["$","div",null,{"className":"absolute top-0 right-0 bg-[var(--offblack)] text-[var(--offwhite)] font-mono text-sm tracking-[0.2em] px-4 py-2 uppercase font-bold","children":["INSTALLATION",".md"]}],["$","$L13",null,{"content":"$14"}]]}],"$L15"]}]
+16:I[90286,["279","static/chunks/050357b0-c29a1ec11e45b759.js","2280","static/chunks/28f0fb3b-93ff7b29321306e3.js","3878","static/chunks/3878-6ad1e15e2594e860.js","6315","static/chunks/6315-afb745340946da74.js","3508","static/chunks/app/docs/%5Bslug%5D/page-bc3a690998312dca.js"],"default"]
+15:["$","$L16",null,{"headings":[{"level":2,"text":"Prerequisites","slug":"prerequisites"},{"level":3,"text":"Required Software","slug":"required-software"},{"level":3,"text":"Recommended Software","slug":"recommended-software"},{"level":3,"text":"Checking Your System","slug":"checking-your-system"},{"level":2,"text":"Quick Installation","slug":"quick-installation"},{"level":3,"text":"On macOS and Linux","slug":"on-macos-and-linux"},{"level":3,"text":"On Windows","slug":"on-windows"},{"level":2,"text":"Installation by Platform","slug":"installation-by-platform"},{"level":3,"text":"macOS Installation","slug":"macos-installation"},{"level":3,"text":"Linux Installation (Ubuntu/Debian)","slug":"linux-installation-ubuntudebian"},{"level":3,"text":"Windows Installation","slug":"windows-installation"},{"level":2,"text":"Alternative Installation Methods","slug":"alternative-installation-methods"},{"level":3,"text":"Method 1: Using pip Directly","slug":"method-1-using-pip-directly"},{"level":3,"text":"Method 2: Using Virtual Environment","slug":"method-2-using-virtual-environment"},{"level":3,"text":"Method 3: Using pipx Manually","slug":"method-3-using-pipx-manually"},{"level":2,"text":"Verifying Installation","slug":"verifying-installation"},{"level":3,"text":"Expected Output","slug":"expected-output"},{"level":2,"text":"Troubleshooting","slug":"troubleshooting"},{"level":3,"text":"Common Issues","slug":"common-issues"},{"level":3,"text":"Getting Help","slug":"getting-help"},{"level":2,"text":"Uninstallation","slug":"uninstallation"},{"level":3,"text":"Using the Uninstall Script","slug":"using-the-uninstall-script"},{"level":3,"text":"Manual Uninstallation","slug":"manual-uninstallation"},{"level":3,"text":"Cleaning Up Downloads","slug":"cleaning-up-downloads"},{"level":2,"text":"Post-Installation Configuration","slug":"post-installation-configuration"},{"level":3,"text":"Optional: Set Up Spotify API","slug":"optional-set-up-spotify-api"},{"level":3,"text":"Optional: Configure Download Directory","slug":"optional-configure-download-directory"},{"level":2,"text":"Summary","slug":"summary"}]}]
+e:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+a:null
+c:{"metadata":[["$","title","0",{"children":"INSTALLATION | UMD Documentation"}],["$","meta","1",{"name":"description","content":"Download media from 1000+ platforms with one command."}]],"error":null,"digest":"$undefined"}
+11:"$c:metadata"

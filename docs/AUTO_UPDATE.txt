@@ -1,0 +1,261 @@
+1:"$Sreact.fragment"
+2:I[93247,["5592","static/chunks/c15bf2b0-bfa95b308e62c6cc.js","8171","static/chunks/8171-072b61e2eb314140.js","5246","static/chunks/5246-010341edb3c20d3e.js","7177","static/chunks/app/layout-85e8378134696645.js"],"default"]
+3:I[9766,[],""]
+4:I[98924,[],""]
+5:I[33451,["5592","static/chunks/c15bf2b0-bfa95b308e62c6cc.js","8171","static/chunks/8171-072b61e2eb314140.js","2619","static/chunks/2619-04bc32f026a0d946.js","4499","static/chunks/app/docs/layout-b5c0d7de0e88f8a7.js"],"default"]
+6:I[49400,["5592","static/chunks/c15bf2b0-bfa95b308e62c6cc.js","8171","static/chunks/8171-072b61e2eb314140.js","2619","static/chunks/2619-04bc32f026a0d946.js","4499","static/chunks/app/docs/layout-b5c0d7de0e88f8a7.js"],"default"]
+7:I[37569,["4012","static/chunks/4012-d7d3939322bac069.js","6395","static/chunks/app/docs/template-df5e073e914c4610.js"],"default"]
+9:I[24431,[],"OutletBoundary"]
+b:I[15278,[],"AsyncMetadataOutlet"]
+d:I[24431,[],"ViewportBoundary"]
+f:I[24431,[],"MetadataBoundary"]
+10:"$Sreact.suspense"
+12:I[57150,[],""]
+:HL["/_next/static/css/43d8a26082dd6c66.css","style"]
+0:{"P":null,"b":"85teulKhSzCWNUsofAEOs","p":"","c":["","docs","AUTO_UPDATE"],"i":false,"f":[[["",{"children":["docs",{"children":[["slug","AUTO_UPDATE","d"],{"children":["__PAGE__",{}]}]}]},"$undefined","$undefined",true],["",["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/43d8a26082dd6c66.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]],["$","html",null,{"lang":"en","children":["$","body",null,{"children":["$","$L2",null,{"children":["$","$L3",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L4",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}]}]}]]}],{"children":["docs",["$","$1","c",{"children":[null,["$","div",null,{"className":"min-h-screen bg-[var(--offwhite)] text-[var(--offblack)] font-sans","children":[["$","$L5",null,{}],["$","div",null,{"className":"container mx-auto px-4 md:px-12 lg:px-24 xl:px-32 max-w-[90rem] pt-32 pb-32","children":["$","div",null,{"className":"flex gap-12 items-start mt-12","children":[["$","$L6",null,{"docs":["ARCHITECTURE","AUTO_UPDATE","CHANGELOG","CONFIGURATION","FILE_STRUCTURE","HANDLERS","INDEX","INSTALLATION","PROJECT_OVERVIEW","TROUBLESHOOTING","USAGE"]}],["$","main",null,{"className":"flex-1 w-full min-w-0","children":["$","$L3",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L7",null,{"children":["$","$L4",null,{}]}],"templateStyles":[],"templateScripts":[],"notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]}]]}]}]]}]]}],{"children":[["slug","AUTO_UPDATE","d"],["$","$1","c",{"children":[null,["$","$L3",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L4",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":["__PAGE__",["$","$1","c",{"children":["$L8",null,["$","$L9",null,{"children":["$La",["$","$Lb",null,{"promise":"$@c"}]]}]]}],{},null,false]},null,false]},null,false]},null,false],["$","$1","h",{"children":[null,[["$","$Ld",null,{"children":"$Le"}],null],["$","$Lf",null,{"children":["$","div",null,{"hidden":true,"children":["$","$10",null,{"fallback":null,"children":"$L11"}]}]}]]}],false]],"m":"$undefined","G":["$12",[]],"s":false,"S":true}
+13:I[20005,["279","static/chunks/050357b0-c29a1ec11e45b759.js","2280","static/chunks/28f0fb3b-93ff7b29321306e3.js","3878","static/chunks/3878-6ad1e15e2594e860.js","6315","static/chunks/6315-afb745340946da74.js","3508","static/chunks/app/docs/%5Bslug%5D/page-bc3a690998312dca.js"],"default"]
+14:T1899,# Auto-Update System Documentation
+
+## Overview
+
+Ultimate Media Downloader now includes an automatic update system that checks for new versions every time you run the application. This ensures you always have the latest features, bug fixes, and improvements.
+
+## How It Works
+
+### Automatic Version Checking
+
+Every time you run `umd`, the application:
+
+1. **Checks Current Version**: Reads your installed version
+2. **Fetches Latest Version**: Queires Codeberg for the latest release
+3. **Compares Versions**: Determines if an update is available
+4. **Prompts for Update**: If a newer version exists, asks if you want to update
+5. **Auto-Updates**: Downloads and installs the latest version with your permission
+
+### Caching System
+
+To avoid unnecessary network requests:
+- Version information is cached for **1 hour**
+- Cache is stored in `~/.umd_version_cache.json`
+- Cache is automatically cleared after successful updates
+
+## Usage
+
+### Automatic Updates (Default Behavior)
+
+When you run `umd`, the version checker runs automatically:
+
+```bash
+umd https://youtube.com/watch?v=example
+```
+
+If an update is available, you'll see:
+
+```
+⚠️  New version available: v3.1.0 (current: v3.0.0)
+Would you like to update now? (Y/n):
+```
+
+- Press `Y` or `Enter` to update immediately
+- Press `N` to skip the update and continue
+
+### Manual Update
+
+You can manually update at any time using the standalone scripts:
+
+**macOS/Linux:**
+```bash
+cd /path/to/umd
+./scripts/update.sh
+```
+
+**Windows:**
+```cmd
+cd C:\path\to\umd
+scripts\update.bat
+```
+
+### Update via pip
+
+You can also update directly using pipx (recommended) or pip:
+
+**Using pipx (recommended - matches installation method):**
+```bash
+pipx install git+https://codeberg.org/nk2552003/umd.git --force
+```
+
+**Using pip:**
+```bash
+pip install --upgrade git+https://codeberg.org/nk2552003/umd.git
+```
+
+## Features
+
+### Cross-Platform Support
+
+✅ **Windows**: Full support with `.bat` script  
+✅ **macOS**: Full support with `.sh` script  
+✅ **Linux**: Full support with `.sh` script  
+
+### Smart Update Detection
+
+- Uses semantic versioning (e.g., 2.2.1 → 2.3.0)
+- Only prompts when a newer version is available
+- Handles version parsing errors gracefully
+
+### Non-Intrusive
+
+- Silent when no update is available
+- Minimal disruption to user experience
+- Fails gracefully without breaking the main application
+
+### Update Cache
+
+- Reduces API calls to Codeberg
+- Configurable cache duration (default: 1 hour)
+- Automatically refreshed after updates
+
+## Configuration
+
+### Disable Auto-Update Prompts
+
+If you want to disable the automatic update check, you can modify the code:
+
+**Option 1**: Comment out the version check in [ultimate_downloader.py](../ultimate_downloader.py#L3718):
+
+```python
+def main():
+    # from version_checker import check_for_updates
+    # check_for_updates(auto_update=True)
+    
+    args = parse_arguments()
+    # ... rest of code
+```
+
+**Option 2**: Set `auto_update=False`:
+
+```python
+check_for_updates(auto_update=False)  # Only shows message, doesn't prompt
+```
+
+### Change Cache Duration
+
+Edit [version_checker.py](../version_checker.py) and modify:
+
+```python
+self.cache_duration = 3600  # Change to desired seconds
+```
+
+Examples:
+- `1800` = 30 minutes
+- `3600` = 1 hour (default)
+- `86400` = 24 hours
+
+## Troubleshooting
+
+### Update Fails
+
+If the automatic update fails:
+
+1. **Check Internet Connection**: Ensure you can access Codeberg
+2. **Check Permissions**: You may need administrator/sudo privileges
+3. **Use Manual Update**: Run the standalone update script
+4. **Use pip Directly**: `pip install --upgrade git+https://codeberg.org/nk2552003/umd.git`
+
+### Version Check Fails
+
+If version checking fails:
+- The application continues normally without interruption
+- Check your internet connection
+- Codeberg API may be rate-limited (rare)
+- Cache will be used if available
+
+### Cache Issues
+
+To clear the version cache:
+
+**macOS/Linux:**
+```bash
+rm ~/.umd_version_cache.json
+```
+
+**Windows:**
+```cmd
+del %USERPROFILE%\.umd_version_cache.json
+```
+
+## Technical Details
+
+### Version Checker Components
+
+- **version_checker.py**: Main update logic
+- **scripts/update.sh**: Standalone update script for Unix systems
+- **scripts/update.bat**: Standalone update script for Windows
+
+### Dependencies
+
+- `packaging`: For semantic version parsing
+- `requests`: For Codeberg API calls
+- Standard library modules for OS detection and caching
+
+### Codeberg API
+
+- Endpoint: `https://codeberg.org/api/v1/repos/{self.repo}/releases/latest`
+- Rate limit: 60 requests/hour (unauthenticated)
+- Cached responses minimize API calls
+
+## Security
+
+- Only downloads from official Codeberg repository
+- Uses HTTPS for all connections
+- Verifies versions before updating
+- No automatic installation without user consent
+
+## Best Practices
+
+1. **Keep Updated**: Always accept updates for latest features and security fixes
+2. **Backup Config**: Your config files are preserved during updates
+3. **Check Release Notes**: Review changes in new versions
+4. **Report Issues**: If updates fail, report on Codeberg
+
+## Related Files
+
+- [version_checker.py](../version_checker.py) - Main update logic
+- [ultimate_downloader.py](../ultimate_downloader.py) - Integration point
+- [scripts/update.sh](../scripts/update.sh) - Unix update script
+- [scripts/update.bat](../scripts/update.bat) - Windows update script
+- [requirements.txt](../requirements.txt) - Dependencies including `packaging`
+
+## FAQ
+
+**Q: How often does it check for updates?**  
+A: Once per hour, with results cached to minimize API calls.
+
+**Q: Can I disable automatic updates?**  
+A: Yes, see the Configuration section above.
+
+**Q: Will I lose my settings during update?**  
+A: No, your config files and downloads are preserved.
+
+**Q: What if I don't want to update right away?**  
+A: Press 'N' when prompted and continue using your current version.
+
+**Q: Can I update manually?**  
+A: Yes, use the standalone update scripts or pip install command.
+
+**Q: What happens if Codeberg is down?**  
+A: The app continues normally using cached version info or assuming current version is latest.
+
+## Support
+
+For issues or questions about the update system:
+- Open an issue on CodeBerg
+- Check existing issues for similar problems
+- Include error messages and your OS version
+8:["$","div",null,{"className":"flex gap-12 items-start relative w-full","children":[["$","article",null,{"className":"border-[3px] border-[var(--offblack)] shadow-[8px_8px_0px_var(--offblack)] bg-[var(--offwhite)] p-8 md:p-16 mb-24 relative flex-1 min-w-0 mt-16","children":[["$","div",null,{"className":"absolute top-0 right-0 bg-[var(--offblack)] text-[var(--offwhite)] font-mono text-sm tracking-[0.2em] px-4 py-2 uppercase font-bold","children":["AUTO_UPDATE",".md"]}],["$","$L13",null,{"content":"$14"}]]}],"$L15"]}]
+16:I[90286,["279","static/chunks/050357b0-c29a1ec11e45b759.js","2280","static/chunks/28f0fb3b-93ff7b29321306e3.js","3878","static/chunks/3878-6ad1e15e2594e860.js","6315","static/chunks/6315-afb745340946da74.js","3508","static/chunks/app/docs/%5Bslug%5D/page-bc3a690998312dca.js"],"default"]
+15:["$","$L16",null,{"headings":[{"level":2,"text":"Overview","slug":"overview"},{"level":2,"text":"How It Works","slug":"how-it-works"},{"level":3,"text":"Automatic Version Checking","slug":"automatic-version-checking"},{"level":3,"text":"Caching System","slug":"caching-system"},{"level":2,"text":"Usage","slug":"usage"},{"level":3,"text":"Automatic Updates (Default Behavior)","slug":"automatic-updates-default-behavior"},{"level":3,"text":"Manual Update","slug":"manual-update"},{"level":3,"text":"Update via pip","slug":"update-via-pip"},{"level":2,"text":"Features","slug":"features"},{"level":3,"text":"Cross-Platform Support","slug":"cross-platform-support"},{"level":3,"text":"Smart Update Detection","slug":"smart-update-detection"},{"level":3,"text":"Non-Intrusive","slug":"non-intrusive"},{"level":3,"text":"Update Cache","slug":"update-cache"},{"level":2,"text":"Configuration","slug":"configuration"},{"level":3,"text":"Disable Auto-Update Prompts","slug":"disable-auto-update-prompts"},{"level":3,"text":"Change Cache Duration","slug":"change-cache-duration"},{"level":2,"text":"Troubleshooting","slug":"troubleshooting"},{"level":3,"text":"Update Fails","slug":"update-fails"},{"level":3,"text":"Version Check Fails","slug":"version-check-fails"},{"level":3,"text":"Cache Issues","slug":"cache-issues"},{"level":2,"text":"Technical Details","slug":"technical-details"},{"level":3,"text":"Version Checker Components","slug":"version-checker-components"},{"level":3,"text":"Dependencies","slug":"dependencies"},{"level":3,"text":"Codeberg API","slug":"codeberg-api"},{"level":2,"text":"Security","slug":"security"},{"level":2,"text":"Best Practices","slug":"best-practices"},{"level":2,"text":"Related Files","slug":"related-files"},{"level":2,"text":"FAQ","slug":"faq"},{"level":2,"text":"Support","slug":"support"}]}]
+e:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+a:null
+c:{"metadata":[["$","title","0",{"children":"AUTO_UPDATE | UMD Documentation"}],["$","meta","1",{"name":"description","content":"Download media from 1000+ platforms with one command."}]],"error":null,"digest":"$undefined"}
+11:"$c:metadata"

@@ -1,0 +1,910 @@
+<!DOCTYPE html><!--85teulKhSzCWNUsofAEOs--><html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="/_next/static/css/43d8a26082dd6c66.css" data-precedence="next"/><link rel="preload" as="script" fetchPriority="low" href="/_next/static/chunks/webpack-bfe36d62ec019d6f.js"/><script src="/_next/static/chunks/4bd1b696-100b9d70ed4e49c1.js" async=""></script><script src="/_next/static/chunks/1255-4f3e5465d2137be3.js" async=""></script><script src="/_next/static/chunks/main-app-c797c7cf9ec5b2d8.js" async=""></script><script src="/_next/static/chunks/c15bf2b0-bfa95b308e62c6cc.js" async=""></script><script src="/_next/static/chunks/8171-072b61e2eb314140.js" async=""></script><script src="/_next/static/chunks/5246-010341edb3c20d3e.js" async=""></script><script src="/_next/static/chunks/app/layout-85e8378134696645.js" async=""></script><script src="/_next/static/chunks/2619-04bc32f026a0d946.js" async=""></script><script src="/_next/static/chunks/app/docs/layout-b5c0d7de0e88f8a7.js" async=""></script><script src="/_next/static/chunks/4012-d7d3939322bac069.js" async=""></script><script src="/_next/static/chunks/app/docs/template-df5e073e914c4610.js" async=""></script><script src="/_next/static/chunks/050357b0-c29a1ec11e45b759.js" async=""></script><script src="/_next/static/chunks/28f0fb3b-93ff7b29321306e3.js" async=""></script><script src="/_next/static/chunks/3878-6ad1e15e2594e860.js" async=""></script><script src="/_next/static/chunks/6315-afb745340946da74.js" async=""></script><script src="/_next/static/chunks/app/docs/%5Bslug%5D/page-bc3a690998312dca.js" async=""></script><title>USAGE | UMD Documentation</title><meta name="description" content="Download media from 1000+ platforms with one command."/><script src="/_next/static/chunks/polyfills-42372ed130431b0a.js" noModule=""></script></head><body><div hidden=""><!--$--><!--/$--></div><div class="fixed inset-0 z-[100] flex pointer-events-none"><div class="absolute inset-0 flex items-center justify-center z-10 shutter-logo"><div class="w-16 h-16 border-[3px] border-[var(--offblack)] bg-[var(--accent-color)] flex items-center justify-center shadow-[4px_4px_0px_var(--offblack)]"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-terminal w-8 h-8 text-[var(--offblack)]" aria-hidden="true"><path d="M12 19h8"></path><path d="m4 17 6-6-6-6"></path></svg></div></div><div class="shutter-bar flex-1 h-full bg-[var(--offblack)]" style="transform-origin:top"></div><div class="shutter-bar flex-1 h-full bg-[var(--offblack)]" style="transform-origin:top"></div><div class="shutter-bar flex-1 h-full bg-[var(--offblack)]" style="transform-origin:top"></div><div class="shutter-bar flex-1 h-full bg-[var(--offblack)]" style="transform-origin:top"></div><div class="shutter-bar flex-1 h-full bg-[var(--offblack)]" style="transform-origin:top"></div></div><div><div class="min-h-screen bg-[var(--offwhite)] text-[var(--offblack)] font-sans"><div class="fixed top-0 left-0 w-full h-32 z-40 transition-opacity duration-500 pointer-events-none opacity-0" style="backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);background-color:transparent;mask-image:linear-gradient(to bottom, black 50%, transparent 100%);-webkit-mask-image:linear-gradient(to bottom, black 50%, transparent 100%)"></div><header class="fixed top-0 left-0 w-full py-4 md:py-8 z-50 mix-blend-difference text-[#f5f5f0]"><div class="flex flex-wrap items-center justify-between max-w-full mx-auto px-4 md:px-8 gap-y-6"><a href="/" class="text-2xl md:text-3xl font-bold tracking-tight block">UMD</a><div class="flex items-center ml-auto relative order-2 lg:order-none"><a class="inline-block bg-[#f5f5f0] text-[#3a3a38] mix-blend-normal px-4 py-2 md:px-6 md:py-3 text-sm md:text-lg uppercase font-bold" target="_blank" href="https://codeberg.org/nk2552003/umd/releases">+ GET UMD</a><div class="w-[30vw] md:w-[40vw] h-[2px] ml-4 bg-white/20 hidden sm:block"><div class="h-full bg-[var(--accent-color)] origin-left" style="transform:scaleX(0)"></div></div></div><nav class="flex gap-4 md:gap-8 w-full lg:w-auto lg:ml-12 text-center lg:text-right justify-center group order-3 lg:order-none mt-2 lg:mt-0"><a href="/" class="text-base md:text-xl lowercase transition-all duration-300 group-hover:blur-[2px] hover:!blur-none opacity-70">home</a><a href="/docs/INSTALLATION" class="text-base md:text-xl lowercase transition-all duration-300 group-hover:blur-[2px] hover:!blur-none opacity-70">install</a><a href="/docs/USAGE" class="text-base md:text-xl lowercase transition-all duration-300 group-hover:blur-[2px] hover:!blur-none opacity-100 font-bold border-b-2">usage</a><a href="/docs/CONFIGURATION" class="text-base md:text-xl lowercase transition-all duration-300 group-hover:blur-[2px] hover:!blur-none opacity-70">config</a></nav></div></header><div class="container mx-auto px-4 md:px-12 lg:px-24 xl:px-32 max-w-[90rem] pt-32 pb-32"><div class="flex gap-12 items-start mt-12"><aside class="w-64 flex-shrink-0 hidden lg:flex flex-col border-r-2 border-[var(--offblack)] sticky top-32 h-[calc(100vh-10rem)]"><div class="flex-1 overflow-y-auto overscroll-contain pr-8 pb-8"><div class="font-black text-xl uppercase tracking-tighter mb-6">Documentation</div><nav class="flex flex-col gap-2"><a href="/docs/ARCHITECTURE" class="font-mono text-sm uppercase tracking-wider py-2 px-3 border-[2px] transition-all
+                  border-transparent hover:border-[var(--offblack)] hover:bg-[var(--offwhite)] hover:shadow-[4px_4px_0px_var(--offblack)] hover:translate-x-[-2px] hover:translate-y-[-2px]">ARCHITECTURE<!-- -->.md</a><a href="/docs/AUTO_UPDATE" class="font-mono text-sm uppercase tracking-wider py-2 px-3 border-[2px] transition-all
+                  border-transparent hover:border-[var(--offblack)] hover:bg-[var(--offwhite)] hover:shadow-[4px_4px_0px_var(--offblack)] hover:translate-x-[-2px] hover:translate-y-[-2px]">AUTO_UPDATE<!-- -->.md</a><a href="/docs/CHANGELOG" class="font-mono text-sm uppercase tracking-wider py-2 px-3 border-[2px] transition-all
+                  border-transparent hover:border-[var(--offblack)] hover:bg-[var(--offwhite)] hover:shadow-[4px_4px_0px_var(--offblack)] hover:translate-x-[-2px] hover:translate-y-[-2px]">CHANGELOG<!-- -->.md</a><a href="/docs/CONFIGURATION" class="font-mono text-sm uppercase tracking-wider py-2 px-3 border-[2px] transition-all
+                  border-transparent hover:border-[var(--offblack)] hover:bg-[var(--offwhite)] hover:shadow-[4px_4px_0px_var(--offblack)] hover:translate-x-[-2px] hover:translate-y-[-2px]">CONFIGURATION<!-- -->.md</a><a href="/docs/FILE_STRUCTURE" class="font-mono text-sm uppercase tracking-wider py-2 px-3 border-[2px] transition-all
+                  border-transparent hover:border-[var(--offblack)] hover:bg-[var(--offwhite)] hover:shadow-[4px_4px_0px_var(--offblack)] hover:translate-x-[-2px] hover:translate-y-[-2px]">FILE_STRUCTURE<!-- -->.md</a><a href="/docs/HANDLERS" class="font-mono text-sm uppercase tracking-wider py-2 px-3 border-[2px] transition-all
+                  border-transparent hover:border-[var(--offblack)] hover:bg-[var(--offwhite)] hover:shadow-[4px_4px_0px_var(--offblack)] hover:translate-x-[-2px] hover:translate-y-[-2px]">HANDLERS<!-- -->.md</a><a href="/docs/INDEX" class="font-mono text-sm uppercase tracking-wider py-2 px-3 border-[2px] transition-all
+                  border-transparent hover:border-[var(--offblack)] hover:bg-[var(--offwhite)] hover:shadow-[4px_4px_0px_var(--offblack)] hover:translate-x-[-2px] hover:translate-y-[-2px]">INDEX<!-- -->.md</a><a href="/docs/INSTALLATION" class="font-mono text-sm uppercase tracking-wider py-2 px-3 border-[2px] transition-all
+                  border-transparent hover:border-[var(--offblack)] hover:bg-[var(--offwhite)] hover:shadow-[4px_4px_0px_var(--offblack)] hover:translate-x-[-2px] hover:translate-y-[-2px]">INSTALLATION<!-- -->.md</a><a href="/docs/PROJECT_OVERVIEW" class="font-mono text-sm uppercase tracking-wider py-2 px-3 border-[2px] transition-all
+                  border-transparent hover:border-[var(--offblack)] hover:bg-[var(--offwhite)] hover:shadow-[4px_4px_0px_var(--offblack)] hover:translate-x-[-2px] hover:translate-y-[-2px]">PROJECT_OVERVIEW<!-- -->.md</a><a href="/docs/TROUBLESHOOTING" class="font-mono text-sm uppercase tracking-wider py-2 px-3 border-[2px] transition-all
+                  border-transparent hover:border-[var(--offblack)] hover:bg-[var(--offwhite)] hover:shadow-[4px_4px_0px_var(--offblack)] hover:translate-x-[-2px] hover:translate-y-[-2px]">TROUBLESHOOTING<!-- -->.md</a><a href="/docs/USAGE" class="font-mono text-sm uppercase tracking-wider py-2 px-3 border-[2px] transition-all
+                  border-[var(--offblack)] bg-[var(--accent-color)] shadow-[4px_4px_0px_var(--offblack)] font-bold translate-x-[-2px] translate-y-[-2px]">USAGE<!-- -->.md</a></nav></div></aside><main class="flex-1 w-full min-w-0"><div class="pointer-events-none fixed inset-0 z-[9999] grid" style="grid-template-rows:repeat(5, 1fr)"><div class="bg-[var(--offblack)] w-full" style="margin-bottom:-1px;transform:none;transform-origin:100% 50% 0"></div><div class="bg-[var(--offblack)] w-full" style="margin-bottom:-1px;transform:none;transform-origin:100% 50% 0"></div><div class="bg-[var(--offblack)] w-full" style="margin-bottom:-1px;transform:none;transform-origin:100% 50% 0"></div><div class="bg-[var(--offblack)] w-full" style="margin-bottom:-1px;transform:none;transform-origin:100% 50% 0"></div><div class="bg-[var(--offblack)] w-full" style="margin-bottom:-1px;transform:none;transform-origin:100% 50% 0"></div></div><div class="flex gap-12 items-start relative w-full"><article class="border-[3px] border-[var(--offblack)] shadow-[8px_8px_0px_var(--offblack)] bg-[var(--offwhite)] p-8 md:p-16 mb-24 relative flex-1 min-w-0 mt-16"><div class="absolute top-0 right-0 bg-[var(--offblack)] text-[var(--offwhite)] font-mono text-sm tracking-[0.2em] px-4 py-2 uppercase font-bold">USAGE<!-- -->.md</div><div class="max-w-none text-[var(--offblack)] bg-[var(--offwhite)]  [&amp;_h1]:scroll-mt-48 [&amp;_h1]:font-black [&amp;_h1]:uppercase [&amp;_h1]:tracking-tighter [&amp;_h1]:text-5xl [&amp;_h1]:mb-8 [&amp;_h1]:mt-12 [&amp;_h1]:border-b-4 [&amp;_h1]:border-[var(--offblack)] [&amp;_h1]:pb-4 [&amp;_h2]:scroll-mt-48 [&amp;_h2]:font-bold [&amp;_h2]:uppercase [&amp;_h2]:tracking-tighter [&amp;_h2]:text-4xl [&amp;_h2]:mt-10 [&amp;_h2]:mb-6 [&amp;_h2]:border-b-2 [&amp;_h2]:border-[var(--offblack)] [&amp;_h2]:pb-2 [&amp;_h3]:scroll-mt-48 [&amp;_h3]:font-bold [&amp;_h3]:uppercase [&amp;_h3]:tracking-tighter [&amp;_h3]:text-3xl [&amp;_h3]:mt-8 [&amp;_h3]:mb-4 [&amp;_h4]:scroll-mt-48 [&amp;_h4]:font-bold [&amp;_h4]:uppercase [&amp;_h4]:tracking-tighter [&amp;_h4]:text-2xl [&amp;_h4]:mt-6 [&amp;_h4]:mb-4 [&amp;_p]:text-xl [&amp;_p]:leading-relaxed [&amp;_p]:mb-6 [&amp;_a]:text-[var(--offblack)] [&amp;_a]:font-bold [&amp;_a]:underline [&amp;_a]:decoration-2 [&amp;_a]:underline-offset-4 hover:[&amp;_a]:bg-[var(--accent-color)] hover:[&amp;_a]:no-underline [&amp;_strong]:font-bold [&amp;_strong]:text-[var(--offblack)] [&amp;_ul]:list-disc [&amp;_ul]:pl-8 [&amp;_ul]:text-xl [&amp;_ul]:mb-6 [&amp;_ol]:list-decimal [&amp;_ol]:pl-8 [&amp;_ol]:text-xl [&amp;_ol]:mb-6 [&amp;_li]:my-2 [&amp;_blockquote]:border-l-8 [&amp;_blockquote]:border-[var(--offblack)] [&amp;_blockquote]:pl-6 [&amp;_blockquote]:py-2 [&amp;_blockquote]:bg-[var(--accent-color)] [&amp;_blockquote]:italic [&amp;_blockquote]:font-medium [&amp;_code]:text-[var(--offwhite)] [&amp;_code]:bg-[var(--offblack)] [&amp;_code]:px-2 [&amp;_code]:py-1 [&amp;_code]:font-mono [&amp;_code]:text-base [&amp;_code]:font-normal [&amp;_code]:shadow-[2px_2px_0px_var(--accent-color)] [&amp;_pre]:bg-[var(--offblack)] [&amp;_pre]:text-[var(--offwhite)] [&amp;_pre]:p-6 [&amp;_pre]:font-mono [&amp;_pre]:text-sm [&amp;_pre]:overflow-x-auto [&amp;_pre]:border-2 [&amp;_pre]:border-[var(--accent-color)] [&amp;_pre]:shadow-[6px_6px_0px_var(--offblack)] [&amp;_pre]:my-8 [&amp;_pre_code]:bg-transparent [&amp;_pre_code]:p-0 [&amp;_pre_code]:shadow-none [&amp;_pre_code]:text-[var(--offwhite)] [&amp;_img]:border-[4px] [&amp;_img]:border-[var(--offblack)] [&amp;_img]:shadow-[8px_8px_0px_var(--offblack)] [&amp;_img]:my-8 [&amp;_table]:w-full [&amp;_table]:border-collapse [&amp;_table]:border-2 [&amp;_table]:border-[var(--offblack)] [&amp;_table]:mb-8 [&amp;_th]:border-2 [&amp;_th]:border-[var(--offblack)] [&amp;_th]:bg-[var(--offblack)] [&amp;_th]:text-[var(--offwhite)] [&amp;_th]:p-3 [&amp;_th]:text-left [&amp;_th]:font-bold [&amp;_th]:uppercase [&amp;_th]:tracking-wider [&amp;_td]:border-2 [&amp;_td]:border-[var(--offblack)] [&amp;_td]:p-3 [&amp;_hr]:border-2 [&amp;_hr]:border-[var(--offblack)] [&amp;_hr]:my-12"><h1 id="usage-guide"><a href="#usage-guide">Usage Guide</a></h1>
+<p>This guide explains how to use the Ultimate Media Downloader. It covers basic usage, advanced features, and practical examples for different scenarios.</p>
+<hr/>
+<h2 id="getting-started"><a href="#getting-started">Getting Started</a></h2>
+<h3 id="interactive-mode"><a href="#interactive-mode">Interactive Mode</a></h3>
+<p>The easiest way to use the application is interactive mode. Just run:</p>
+<pre><code class="language-bash">umd
+</code></pre>
+<p>This will present a menu where you can paste URLs and choose options without memorizing commands.</p>
+<h3 id="direct-download"><a href="#direct-download">Direct Download</a></h3>
+<p>For quick downloads, provide the URL directly:</p>
+<pre><code class="language-bash">umd &quot;https://www.youtube.com/watch?v=VIDEO_ID&quot;
+</code></pre>
+<h3 id="getting-help"><a href="#getting-help">Getting Help</a></h3>
+<p>To see all available options:</p>
+<pre><code class="language-bash">umd --help
+</code></pre>
+<p>To see the version:</p>
+<pre><code class="language-bash">umd --version
+</code></pre>
+<hr/>
+<h2 id="basic-commands"><a href="#basic-commands">Basic Commands</a></h2>
+<h3 id="download-workflow"><a href="#download-workflow">Download Workflow</a></h3>
+<p>Here is the typical workflow for downloading content:</p>
+<pre><div class="flex justify-center my-8 p-4 md:p-8 border-[2px] border-[var(--offblack)] bg-[var(--offwhite)]">Loading diagram...</div></pre>
+<h3 id="basic-options"><a href="#basic-options">Basic Options</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Short</th><th>Description</th></tr></thead><tbody><tr><td><code>--help</code></td><td><code>-h</code></td><td>Show help message</td></tr><tr><td><code>--version</code></td><td><code>-v</code></td><td>Show version number</td></tr><tr><td><code>--verbose</code></td><td></td><td>Enable detailed output</td></tr><tr><td><code>--output</code></td><td><code>-o</code></td><td>Set download directory</td></tr><tr><td><code>--info</code></td><td><code>-i</code></td><td>Show info without downloading</td></tr></tbody></table>
+<hr/>
+<h2 id="downloading-videos"><a href="#downloading-videos">Downloading Videos</a></h2>
+<h3 id="default-video-download"><a href="#default-video-download">Default Video Download</a></h3>
+<p>Downloads the best available quality:</p>
+<pre><code class="language-bash">umd &quot;https://www.youtube.com/watch?v=VIDEO_ID&quot;
+</code></pre>
+<h3 id="specific-quality"><a href="#specific-quality">Specific Quality</a></h3>
+<p>Choose a specific resolution:</p>
+<pre><code class="language-bash"># 1080p HD
+umd &quot;https://www.youtube.com/watch?v=VIDEO_ID&quot; --quality 1080p
+
+# 720p HD
+umd &quot;https://www.youtube.com/watch?v=VIDEO_ID&quot; --quality 720p
+
+# 4K if available
+umd &quot;https://www.youtube.com/watch?v=VIDEO_ID&quot; --quality 4k
+</code></pre>
+<h3 id="available-quality-options"><a href="#available-quality-options">Available Quality Options</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Quality</th><th>Description</th></tr></thead><tbody><tr><td><code>best</code></td><td>Highest available quality (default)</td></tr><tr><td><code>worst</code></td><td>Lowest available quality</td></tr><tr><td><code>4k</code> / <code>2160p</code></td><td>Ultra HD 4K</td></tr><tr><td><code>1440p</code></td><td>Quad HD</td></tr><tr><td><code>1080p</code></td><td>Full HD</td></tr><tr><td><code>720p</code></td><td>HD</td></tr><tr><td><code>480p</code></td><td>Standard definition</td></tr><tr><td><code>360p</code></td><td>Low quality</td></tr></tbody></table>
+<h3 id="video-format"><a href="#video-format">Video Format</a></h3>
+<p>Specify the output format:</p>
+<pre><code class="language-bash"># Download as MP4
+umd &quot;URL&quot; --format mp4
+
+# Download as WebM
+umd &quot;URL&quot; --format webm
+
+# Download as MKV
+umd &quot;URL&quot; --format mkv
+</code></pre>
+<h3 id="view-available-formats"><a href="#view-available-formats">View Available Formats</a></h3>
+<p>Before downloading, see what formats are available:</p>
+<pre><code class="language-bash">umd &quot;URL&quot; --show-formats
+</code></pre>
+<p>This shows a table with all available video and audio formats, their quality, file size, and codecs.</p>
+<hr/>
+<h2 id="downloading-audio"><a href="#downloading-audio">Downloading Audio</a></h2>
+<h3 id="audio-only-mode"><a href="#audio-only-mode">Audio Only Mode</a></h3>
+<p>Extract just the audio from a video:</p>
+<pre><code class="language-bash">umd &quot;URL&quot; --audio-only
+</code></pre>
+<h3 id="audio-formats"><a href="#audio-formats">Audio Formats</a></h3>
+<pre><code class="language-bash"># MP3 (most compatible)
+umd &quot;URL&quot; --audio-only --format mp3
+
+# FLAC (lossless quality)
+umd &quot;URL&quot; --audio-only --format flac
+
+# M4A (Apple compatible)
+umd &quot;URL&quot; --audio-only --format m4a
+
+# WAV (uncompressed)
+umd &quot;URL&quot; --audio-only --format wav
+
+# Opus (efficient compression)
+umd &quot;URL&quot; --audio-only --format opus
+</code></pre>
+<h3 id="audio-quality-levels"><a href="#audio-quality-levels">Audio Quality Levels</a></h3>
+<pre><code class="language-bash"># Best quality (default)
+umd &quot;URL&quot; --audio-only --audio-quality best
+
+# High quality
+umd &quot;URL&quot; --audio-only --audio-quality high
+
+# Medium quality
+umd &quot;URL&quot; --audio-only --audio-quality medium
+
+# Low quality (smaller files)
+umd &quot;URL&quot; --audio-only --audio-quality low
+</code></pre>
+<h3 id="embedding-metadata"><a href="#embedding-metadata">Embedding Metadata</a></h3>
+<p>Add song information and cover art:</p>
+<pre><code class="language-bash">umd &quot;URL&quot; --audio-only --embed-metadata --embed-thumbnail
+</code></pre>
+<p>This embeds:</p>
+<ul>
+<li>Song title</li>
+<li>Artist name</li>
+<li>Album name</li>
+<li>Year</li>
+<li>Cover art/thumbnail</li>
+</ul>
+<hr/>
+<h2 id="playlists-and-albums"><a href="#playlists-and-albums">Playlists and Albums</a></h2>
+<h3 id="downloading-playlists"><a href="#downloading-playlists">Downloading Playlists</a></h3>
+<pre><code class="language-bash"># Download entire playlist
+umd &quot;https://www.youtube.com/playlist?list=PLAYLIST_ID&quot;
+
+# Force playlist mode
+umd &quot;URL&quot; --playlist
+
+# Download only one video from playlist URL
+umd &quot;PLAYLIST_URL&quot; --no-playlist
+</code></pre>
+<h3 id="playlist-options"><a href="#playlist-options">Playlist Options</a></h3>
+<pre><code class="language-bash"># Limit number of downloads
+umd &quot;PLAYLIST_URL&quot; --max-downloads 10
+
+# Start from specific position
+umd &quot;PLAYLIST_URL&quot; --start-index 5
+
+# Combine options: download items 5-15
+umd &quot;PLAYLIST_URL&quot; --start-index 5 --max-downloads 10
+</code></pre>
+<h3 id="interactive-playlist-mode"><a href="#interactive-playlist-mode">Interactive Playlist Mode</a></h3>
+<p>By default, playlist downloads show an interactive menu where you can:</p>
+<ul>
+<li>See all playlist items</li>
+<li>Choose which ones to download</li>
+<li>Select quality settings</li>
+</ul>
+<p>To skip the interactive menu:</p>
+<pre><code class="language-bash">umd &quot;PLAYLIST_URL&quot; --no-interactive
+</code></pre>
+<h3 id="playlist-download-flow"><a href="#playlist-download-flow">Playlist Download Flow</a></h3>
+<pre><div class="flex justify-center my-8 p-4 md:p-8 border-[2px] border-[var(--offblack)] bg-[var(--offwhite)]">Loading diagram...</div></pre>
+<hr/>
+<h2 id="batch-downloads"><a href="#batch-downloads">Batch Downloads</a></h2>
+<h3 id="from-file"><a href="#from-file">From File</a></h3>
+<p>Create a text file with URLs (one per line):</p>
+<pre><code class="language-text">https://www.youtube.com/watch?v=VIDEO1
+https://www.youtube.com/watch?v=VIDEO2
+https://www.youtube.com/watch?v=VIDEO3
+</code></pre>
+<p>Then download all:</p>
+<pre><code class="language-bash">umd --batch-file urls.txt
+</code></pre>
+<h3 id="optimized-batch-download"><a href="#optimized-batch-download">Optimized Batch Download</a></h3>
+<p>For faster batch downloads with parallel processing:</p>
+<pre><code class="language-bash">umd --batch-file urls.txt --optimized-batch --max-concurrent 5
+</code></pre>
+<p>This downloads 5 files simultaneously instead of one at a time.</p>
+<h3 id="batch-with-options"><a href="#batch-with-options">Batch with Options</a></h3>
+<p>Combine batch download with other options:</p>
+<pre><code class="language-bash"># Batch download as audio
+umd --batch-file urls.txt --audio-only --format mp3
+
+# Batch download specific quality
+umd --batch-file urls.txt --quality 720p
+</code></pre>
+<hr/>
+<h2 id="platform-specific-usage"><a href="#platform-specific-usage">Platform-Specific Usage</a></h2>
+<h3 id="youtube"><a href="#youtube">YouTube</a></h3>
+<pre><code class="language-bash"># Video
+umd &quot;https://www.youtube.com/watch?v=VIDEO_ID&quot;
+
+# Playlist
+umd &quot;https://www.youtube.com/playlist?list=PLAYLIST_ID&quot;
+
+# Channel (all videos)
+umd &quot;https://www.youtube.com/@ChannelName/videos&quot;
+
+# Shorts
+umd &quot;https://www.youtube.com/shorts/SHORT_ID&quot;
+</code></pre>
+<h3 id="spotify"><a href="#spotify">Spotify</a></h3>
+<p>Spotify URLs are converted to YouTube searches:</p>
+<pre><code class="language-bash"># Track
+umd &quot;https://open.spotify.com/track/TRACK_ID&quot; --audio-only
+
+# Album
+umd &quot;https://open.spotify.com/album/ALBUM_ID&quot; --audio-only
+
+# Playlist
+umd &quot;https://open.spotify.com/playlist/PLAYLIST_ID&quot; --audio-only
+</code></pre>
+<h3 id="apple-music"><a href="#apple-music">Apple Music</a></h3>
+<p>Similar to Spotify:</p>
+<pre><code class="language-bash"># Song
+umd &quot;https://music.apple.com/us/song/...&quot; --audio-only
+
+# Album
+umd &quot;https://music.apple.com/us/album/...&quot; --audio-only
+</code></pre>
+<h3 id="jiosaavn"><a href="#jiosaavn">JioSaavn</a></h3>
+<p>Indian music platform with comprehensive metadata:</p>
+<pre><code class="language-bash"># Track
+umd &quot;https://www.jiosaavn.com/song/...&quot; --audio-only
+
+# Album
+umd &quot;https://www.jiosaavn.com/album/...&quot; --audio-only
+
+# Playlist
+umd &quot;https://www.jiosaavn.com/featured/...&quot; --audio-only
+</code></pre>
+<h3 id="gaana"><a href="#gaana">Gaana</a></h3>
+<p>Indian music platform with comprehensive metadata:</p>
+<pre><code class="language-bash"># Track
+umd &quot;https://gaana.com/song/...&quot; --audio-only
+
+# Album
+umd &quot;https://gaana.com/album/...&quot; --audio-only
+
+# Playlist
+umd &quot;https://gaana.com/playlist/...&quot; --audio-only
+
+# Artist
+umd &quot;https://gaana.com/artist/...&quot; --audio-only
+</code></pre>
+<h3 id="instagram"><a href="#instagram">Instagram</a></h3>
+<pre><code class="language-bash"># Single post
+umd &quot;https://www.instagram.com/p/POST_ID/&quot;
+
+# Single reel
+umd &quot;https://www.instagram.com/reel/REEL_ID/&quot;
+
+# Profile with interactive menu (shows options)
+umd &quot;https://www.instagram.com/username/&quot;
+
+# Direct download all profile reels
+umd &quot;https://www.instagram.com/username/reels/&quot;
+
+# Download stories
+umd &quot;https://www.instagram.com/stories/username/&quot;
+</code></pre>
+<p><strong>Instagram Notes:</strong></p>
+<ul>
+<li>First-time use: Requires authentication via cookies.json</li>
+<li>Cookie file locations: <code>./cookies.json</code> or <code>~/.instagram_cookies.json</code></li>
+<li>Profile downloads show interactive menu with 5 options</li>
+<li>Supports range selection (e.g., posts 1-20)</li>
+<li>Can create ZIP files for bulk downloads</li>
+<li>Stories expire after 24 hours</li>
+</ul>
+<h3 id="tiktok"><a href="#tiktok">TikTok</a></h3>
+<pre><code class="language-bash">umd &quot;https://www.tiktok.com/@user/video/VIDEO_ID&quot;
+</code></pre>
+<h3 id="twitterx"><a href="#twitterx">Twitter/X</a></h3>
+<pre><code class="language-bash">umd &quot;https://twitter.com/user/status/TWEET_ID&quot;
+</code></pre>
+<h3 id="soundcloud"><a href="#soundcloud">SoundCloud</a></h3>
+<pre><code class="language-bash"># Track
+umd &quot;https://soundcloud.com/artist/track&quot; --audio-only
+
+# Playlist
+umd &quot;https://soundcloud.com/artist/sets/playlist&quot; --audio-only
+</code></pre>
+<h3 id="linkedin"><a href="#linkedin">LinkedIn</a></h3>
+<pre><code class="language-bash"># Post with video
+umd &quot;https://www.linkedin.com/posts/username_POST_ID&quot;
+
+# Profile posts
+umd &quot;https://www.linkedin.com/in/username/&quot;
+</code></pre>
+<h3 id="reddit"><a href="#reddit">Reddit</a></h3>
+<pre><code class="language-bash"># Single post
+umd &quot;https://www.reddit.com/r/subreddit/comments/POST_ID/title/&quot;
+
+# User posts
+umd &quot;https://www.reddit.com/user/username/&quot;
+</code></pre>
+<h3 id="pinterest"><a href="#pinterest">Pinterest</a></h3>
+<pre><code class="language-bash"># Single pin
+umd &quot;https://www.pinterest.com/pin/PIN_ID/&quot;
+
+# Board
+umd &quot;https://www.pinterest.com/username/board-name/&quot;
+
+# User profile
+umd &quot;https://www.pinterest.com/username/&quot;
+</code></pre>
+<h3 id="youtube-music"><a href="#youtube-music">YouTube Music</a></h3>
+<p>YouTube Music URLs are handled directly without limits:</p>
+<pre><code class="language-bash"># Track
+umd &quot;https://music.youtube.com/watch?v=VIDEO_ID&quot; --audio-only
+
+# Playlist (fetches all tracks)
+umd &quot;https://music.youtube.com/playlist?list=PLAYLIST_ID&quot; --audio-only
+</code></pre>
+<h3 id="amazon-music"><a href="#amazon-music">Amazon Music</a></h3>
+<pre><code class="language-bash"># Track
+umd &quot;https://music.amazon.com/albums/ALBUM_ID?trackAsin=TRACK_ID&quot; --audio-only
+
+# Album
+umd &quot;https://music.amazon.com/albums/ALBUM_ID&quot; --audio-only
+</code></pre>
+<h3 id="twitch--kick-live-streams--vods"><a href="#twitch--kick-live-streams--vods">Twitch &amp; Kick (Live Streams &amp; VODs)</a></h3>
+<pre><code class="language-bash"># Twitch VOD or Stream
+umd &quot;https://www.twitch.tv/videos/VIDEO_ID&quot;
+
+# Kick Stream or VOD
+umd &quot;https://kick.com/username&quot;
+</code></pre>
+<h3 id="vimeo--dailymotion"><a href="#vimeo--dailymotion">Vimeo &amp; Dailymotion</a></h3>
+<pre><code class="language-bash"># Vimeo Video
+umd &quot;https://vimeo.com/VIDEO_ID&quot;
+
+# Dailymotion Video
+umd &quot;https://www.dailymotion.com/video/VIDEO_ID&quot;
+</code></pre>
+<h3 id="rumble--bitchute"><a href="#rumble--bitchute">Rumble &amp; BitChute</a></h3>
+<pre><code class="language-bash"># Rumble Video
+umd &quot;https://rumble.com/v12345-video-title.html&quot;
+
+# BitChute Video
+umd &quot;https://www.bitchute.com/video/VIDEO_ID/&quot;
+</code></pre>
+<h3 id="ted-talks"><a href="#ted-talks">TED Talks</a></h3>
+<pre><code class="language-bash">umd &quot;https://www.ted.com/talks/speaker_name_talk_title&quot;
+</code></pre>
+<h3 id="flickr"><a href="#flickr">Flickr</a></h3>
+<pre><code class="language-bash"># Single Photo
+umd &quot;https://www.flickr.com/photos/username/PHOTO_ID/&quot;
+
+# Album
+umd &quot;https://www.flickr.com/photos/username/albums/ALBUM_ID/&quot;
+</code></pre>
+<h3 id="other-platforms"><a href="#other-platforms">Other Platforms</a></h3>
+<p>Many other platforms like <strong>Boomplay, Audiomack, PeerTube, Veoh, TrillerTV, HiAnime, and Adult sites</strong> are also fully supported out-of-the-box. Just pass the URL directly:</p>
+<pre><code class="language-bash">umd &quot;URL&quot;
+</code></pre>
+<hr/>
+<h2 id="downloading-wallpapers"><a href="#downloading-wallpapers">Downloading Wallpapers</a></h2>
+<p>The built-in 4K Wallpapers module lets you browse and download high-resolution wallpapers from <a href="https://4kwallpapers.com">4kwallpapers.com</a>.</p>
+<h3 id="open-the-wallpaper-browser"><a href="#open-the-wallpaper-browser">Open the Wallpaper Browser</a></h3>
+<pre><code class="language-bash"># Interactive menu (CLI flag)
+umd --wallpaper
+
+# Search directly from the command line
+umd --wallpaper-search &quot;anime&quot;
+umd --wallpaper-search &quot;space galaxy&quot;
+</code></pre>
+<h3 id="wallpaper-command-in-interactive-mode"><a href="#wallpaper-command-in-interactive-mode">Wallpaper Command in Interactive Mode</a></h3>
+<p>While inside <code>umd</code> interactive mode, type any of these:</p>
+<pre><code>wallpaper
+wallpapers
+wp
+</code></pre>
+<h3 id="paste-a-4kwallpaperscom-url"><a href="#paste-a-4kwallpaperscom-url">Paste a 4kwallpapers.com URL</a></h3>
+<p>You can also paste any 4kwallpapers.com URL directly into the interactive prompt:</p>
+<pre><code>https://4kwallpapers.com/anime/
+https://4kwallpapers.com/search/?q=cyberpunk
+https://4kwallpapers.com/nature/mountains-123456.html
+</code></pre>
+<p>The handler will auto-detect the URL type and behave accordingly.</p>
+<h3 id="interactive-menu-options"><a href="#interactive-menu-options">Interactive Menu Options</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Description</th></tr></thead><tbody><tr><td><code>1</code></td><td>Home / Featured wallpapers</td></tr><tr><td><code>2</code></td><td>Recently Added wallpapers</td></tr><tr><td><code>3</code></td><td>Browse by Tag (scraped from live site)</td></tr><tr><td><code>4</code></td><td>Categories (anime, nature, space, etc.)</td></tr><tr><td><code>5</code></td><td>Search by keyword</td></tr><tr><td><code>0</code></td><td>Exit wallpaper browser</td></tr></tbody></table>
+<h3 id="browsing--downloading-wallpapers"><a href="#browsing--downloading-wallpapers">Browsing &amp; Downloading Wallpapers</a></h3>
+<p>After selecting a section, the handler will:</p>
+<ol>
+<li>Fetch wallpapers from page 1 and show the count</li>
+<li>Ask how many wallpapers to browse (default: 96, max per session: 2400)</li>
+<li>Show the numbered list of wallpapers</li>
+<li>Prompt you to select which ones to download</li>
+</ol>
+<h4 id="selection-syntax"><a href="#selection-syntax">Selection Syntax</a></h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Input</th><th>Meaning</th></tr></thead><tbody><tr><td><code>all</code></td><td>Download every wallpaper in the list</td></tr><tr><td><code>1</code></td><td>Download wallpaper #1 only</td></tr><tr><td><code>1,3,7</code></td><td>Download wallpapers 1, 3, and 7</td></tr><tr><td><code>1-10</code></td><td>Download wallpapers 1 through 10</td></tr><tr><td><code>1-5,8,10-15</code></td><td>Combined ranges and individual picks</td></tr><tr><td><em>(press Enter)</em></td><td>Skip / cancel</td></tr></tbody></table>
+<h4 id="resolution-selection"><a href="#resolution-selection">Resolution Selection</a></h4>
+<p>After selecting wallpapers, you will be asked to choose a resolution. Available resolutions are scraped live from each wallpaper page (e.g., <code>3840x2160</code>, <code>1920x1080</code>, <code>1280x720</code>). The highest available resolution is highlighted as the default.</p>
+<h3 id="download-location"><a href="#download-location">Download Location</a></h3>
+<p>Wallpapers are saved to:</p>
+<pre><code>~/Downloads/UltimateDownloader/4kwallpapers/
+</code></pre>
+<h3 id="notes"><a href="#notes">Notes</a></h3>
+<ul>
+<li><strong>Search results</strong> are limited to 24 per session (site limitation — search pages are single-page only)</li>
+<li><strong>Category / tag pages</strong> support pagination up to 2400 wallpapers per session</li>
+<li><strong>Cloudflare</strong> is automatically bypassed — no extra setup needed</li>
+</ul>
+<hr/>
+<h2 id="command-reference"><a href="#command-reference">Command Reference</a></h2>
+<h3 id="complete-option-list"><a href="#complete-option-list">Complete Option List</a></h3>
+<h4 id="basic-options-1"><a href="#basic-options-1">Basic Options</a></h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Description</th></tr></thead><tbody><tr><td><code>url</code></td><td>URL to download (optional, starts interactive mode if not provided)</td></tr><tr><td><code>-h, --help</code></td><td>Show help and exit</td></tr><tr><td><code>-v, --version</code></td><td>Show version and exit</td></tr><tr><td><code>--verbose</code></td><td>Show detailed output</td></tr></tbody></table>
+<h4 id="quality-options"><a href="#quality-options">Quality Options</a></h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Description</th></tr></thead><tbody><tr><td><code>-q, --quality</code></td><td>Video quality (best, 1080p, 720p, etc.)</td></tr><tr><td><code>--audio-quality</code></td><td>Audio quality level (best, high, medium, low)</td></tr></tbody></table>
+<h4 id="format-options"><a href="#format-options">Format Options</a></h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Description</th></tr></thead><tbody><tr><td><code>-a, --audio-only</code></td><td>Download audio only</td></tr><tr><td><code>-f, --format</code></td><td>Output format (mp4, mp3, flac, etc.)</td></tr><tr><td><code>--audio-format</code></td><td>Audio format (mp3, flac, opus, m4a, aac, wav)</td></tr><tr><td><code>--custom-format</code></td><td>Custom yt-dlp format selector</td></tr></tbody></table>
+<h4 id="output-options"><a href="#output-options">Output Options</a></h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Description</th></tr></thead><tbody><tr><td><code>-o, --output</code></td><td>Output directory</td></tr><tr><td><code>--embed-metadata</code></td><td>Embed metadata in file</td></tr><tr><td><code>--embed-thumbnail</code></td><td>Embed thumbnail/cover art</td></tr></tbody></table>
+<h4 id="playlist-options-1"><a href="#playlist-options-1">Playlist Options</a></h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Description</th></tr></thead><tbody><tr><td><code>-p, --playlist</code></td><td>Download as playlist</td></tr><tr><td><code>--no-playlist</code></td><td>Download single video from playlist URL</td></tr><tr><td><code>-m, --max-downloads</code></td><td>Maximum items to download</td></tr><tr><td><code>-s, --start-index</code></td><td>Starting position in playlist</td></tr></tbody></table>
+<h4 id="batch-options"><a href="#batch-options">Batch Options</a></h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Description</th></tr></thead><tbody><tr><td><code>--batch-file</code></td><td>File containing URLs</td></tr><tr><td><code>--optimized-batch</code></td><td>Enable parallel downloading</td></tr><tr><td><code>--max-concurrent</code></td><td>Number of parallel downloads</td></tr></tbody></table>
+<h4 id="information-options"><a href="#information-options">Information Options</a></h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Description</th></tr></thead><tbody><tr><td><code>-i, --info</code></td><td>Show info without downloading</td></tr><tr><td><code>--show-formats</code></td><td>List available formats</td></tr><tr><td><code>--check-support</code></td><td>Check if URL is supported</td></tr><tr><td><code>--list-platforms</code></td><td>Show supported platforms</td></tr></tbody></table>
+<h4 id="mode-options"><a href="#mode-options">Mode Options</a></h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Description</th></tr></thead><tbody><tr><td><code>--interactive</code></td><td>Force interactive mode</td></tr><tr><td><code>--no-interactive</code></td><td>Disable interactive prompts</td></tr></tbody></table>
+<h4 id="wallpaper-options"><a href="#wallpaper-options">Wallpaper Options</a></h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Description</th></tr></thead><tbody><tr><td><code>--wallpaper</code></td><td>Open the 4K Wallpapers interactive browser</td></tr><tr><td><code>--wallpaper-search QUERY</code></td><td>Search 4kwallpapers.com for QUERY and show results</td></tr></tbody></table>
+<hr/>
+<h2 id="tips-and-best-practices"><a href="#tips-and-best-practices">Tips and Best Practices</a></h2>
+<h3 id="for-best-audio-quality"><a href="#for-best-audio-quality">For Best Audio Quality</a></h3>
+<pre><code class="language-bash">umd &quot;URL&quot; --audio-only --format flac --embed-metadata --embed-thumbnail
+</code></pre>
+<p>FLAC gives lossless quality, and embedding metadata makes files easier to organize in music players.</p>
+<h3 id="for-smaller-video-files"><a href="#for-smaller-video-files">For Smaller Video Files</a></h3>
+<pre><code class="language-bash">umd &quot;URL&quot; --quality 720p --format mp4
+</code></pre>
+<p>720p offers good quality with reasonable file sizes.</p>
+<h3 id="for-music-collections"><a href="#for-music-collections">For Music Collections</a></h3>
+<p>When downloading music albums or playlists:</p>
+<pre><code class="language-bash">umd &quot;SPOTIFY_PLAYLIST_URL&quot; --audio-only --format mp3 --embed-metadata --embed-thumbnail --optimized-batch
+</code></pre>
+<h3 id="check-before-downloading"><a href="#check-before-downloading">Check Before Downloading</a></h3>
+<p>Always check what you are getting:</p>
+<pre><code class="language-bash"># See what formats are available
+umd &quot;URL&quot; --show-formats
+
+# See video info
+umd &quot;URL&quot; --info
+</code></pre>
+<h3 id="organize-downloads"><a href="#organize-downloads">Organize Downloads</a></h3>
+<p>Use a custom output directory for different content types:</p>
+<pre><code class="language-bash"># Music
+umd &quot;URL&quot; --audio-only --output ~/Music/Downloads
+
+# Videos
+umd &quot;URL&quot; --output ~/Videos/Downloads
+</code></pre>
+<h3 id="resume-failed-downloads"><a href="#resume-failed-downloads">Resume Failed Downloads</a></h3>
+<p>The application automatically resumes interrupted downloads. If a download fails, just run the same command again.</p>
+<h3 id="avoid-rate-limiting"><a href="#avoid-rate-limiting">Avoid Rate Limiting</a></h3>
+<p>When downloading many files, use reasonable concurrency:</p>
+<pre><code class="language-bash">umd --batch-file urls.txt --optimized-batch --max-concurrent 3
+</code></pre>
+<p>Using too many concurrent downloads might trigger rate limiting from the source.</p>
+<hr/>
+<h2 id="download-location-1"><a href="#download-location-1">Download Location</a></h2>
+<p>By default, files are saved to:</p>
+<pre><code class="language-text">~/Downloads/UltimateDownloader/
+</code></pre>
+<p>The folder structure:</p>
+<pre><code class="language-text">~/Downloads/UltimateDownloader/
+    Artist Name - Song Title.mp3
+    Video Title.mp4
+    Playlist Name/
+        01 - Song One.mp3
+        02 - Song Two.mp3
+    Album Name/
+        01 - Track One.mp3
+        02 - Track Two.mp3
+</code></pre>
+<hr/>
+<h2 id="examples-summary"><a href="#examples-summary">Examples Summary</a></h2>
+<p>Here are quick copy-paste examples for common tasks:</p>
+<pre><code class="language-bash"># Simple video download
+umd &quot;https://youtube.com/watch?v=xxx&quot;
+
+# Audio from YouTube
+umd &quot;https://youtube.com/watch?v=xxx&quot; --audio-only --format mp3
+
+# High quality audio with metadata
+umd &quot;URL&quot; --audio-only --format flac --embed-metadata --embed-thumbnail
+
+# Specific video quality
+umd &quot;URL&quot; --quality 1080p --format mp4
+
+# Spotify album
+umd &quot;https://open.spotify.com/album/xxx&quot; --audio-only
+
+# YouTube playlist
+umd &quot;https://youtube.com/playlist?list=xxx&quot;
+
+# Batch download
+umd --batch-file urls.txt --audio-only --format mp3
+
+# Check what is available
+umd &quot;URL&quot; --show-formats
+</code></pre>
+<hr/>
+<h2 id="next-steps"><a href="#next-steps">Next Steps</a></h2>
+<p>Now that you know how to use the application, you might want to explore:</p>
+<ul>
+<li><a href="ARCHITECTURE.md">Architecture Documentation</a> - Understand how the application works</li>
+<li><a href="HANDLERS.md">Handlers Documentation</a> - Learn about platform-specific features</li>
+<li><a href="CONFIGURATION.md">Configuration Guide</a> - Customize default settings</li>
+</ul></div></article><aside class="w-64 flex-shrink-0 hidden xl:flex flex-col border-l-2 border-[var(--offblack)] sticky top-32 h-[calc(100vh-10rem)]"><div class="flex-1 overflow-y-auto overscroll-contain pl-8 pr-4 pb-8 relative"><div class="font-mono text-sm tracking-widest uppercase mb-6 opacity-60 sticky top-0 bg-[var(--offwhite)] py-2 z-10">On this page</div><nav class="flex flex-col gap-3"><a id="toc-link-getting-started" href="#getting-started" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:0rem;font-size:0.875rem">Getting Started</a><a id="toc-link-interactive-mode" href="#interactive-mode" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Interactive Mode</a><a id="toc-link-direct-download" href="#direct-download" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Direct Download</a><a id="toc-link-getting-help" href="#getting-help" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Getting Help</a><a id="toc-link-basic-commands" href="#basic-commands" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:0rem;font-size:0.875rem">Basic Commands</a><a id="toc-link-download-workflow" href="#download-workflow" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Download Workflow</a><a id="toc-link-basic-options" href="#basic-options" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Basic Options</a><a id="toc-link-downloading-videos" href="#downloading-videos" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:0rem;font-size:0.875rem">Downloading Videos</a><a id="toc-link-default-video-download" href="#default-video-download" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Default Video Download</a><a id="toc-link-specific-quality" href="#specific-quality" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Specific Quality</a><a id="toc-link-available-quality-options" href="#available-quality-options" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Available Quality Options</a><a id="toc-link-video-format" href="#video-format" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Video Format</a><a id="toc-link-view-available-formats" href="#view-available-formats" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">View Available Formats</a><a id="toc-link-downloading-audio" href="#downloading-audio" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:0rem;font-size:0.875rem">Downloading Audio</a><a id="toc-link-audio-only-mode" href="#audio-only-mode" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Audio Only Mode</a><a id="toc-link-audio-formats" href="#audio-formats" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Audio Formats</a><a id="toc-link-audio-quality-levels" href="#audio-quality-levels" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Audio Quality Levels</a><a id="toc-link-embedding-metadata" href="#embedding-metadata" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Embedding Metadata</a><a id="toc-link-playlists-and-albums" href="#playlists-and-albums" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:0rem;font-size:0.875rem">Playlists and Albums</a><a id="toc-link-downloading-playlists" href="#downloading-playlists" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Downloading Playlists</a><a id="toc-link-playlist-options" href="#playlist-options" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Playlist Options</a><a id="toc-link-interactive-playlist-mode" href="#interactive-playlist-mode" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Interactive Playlist Mode</a><a id="toc-link-playlist-download-flow" href="#playlist-download-flow" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Playlist Download Flow</a><a id="toc-link-batch-downloads" href="#batch-downloads" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:0rem;font-size:0.875rem">Batch Downloads</a><a id="toc-link-from-file" href="#from-file" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">From File</a><a id="toc-link-optimized-batch-download" href="#optimized-batch-download" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Optimized Batch Download</a><a id="toc-link-batch-with-options" href="#batch-with-options" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Batch with Options</a><a id="toc-link-platform-specific-usage" href="#platform-specific-usage" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:0rem;font-size:0.875rem">Platform-Specific Usage</a><a id="toc-link-youtube" href="#youtube" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">YouTube</a><a id="toc-link-spotify" href="#spotify" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Spotify</a><a id="toc-link-apple-music" href="#apple-music" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Apple Music</a><a id="toc-link-jiosaavn" href="#jiosaavn" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">JioSaavn</a><a id="toc-link-gaana" href="#gaana" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Gaana</a><a id="toc-link-instagram" href="#instagram" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Instagram</a><a id="toc-link-tiktok" href="#tiktok" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">TikTok</a><a id="toc-link-twitterx" href="#twitterx" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Twitter/X</a><a id="toc-link-soundcloud" href="#soundcloud" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">SoundCloud</a><a id="toc-link-linkedin" href="#linkedin" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">LinkedIn</a><a id="toc-link-reddit" href="#reddit" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Reddit</a><a id="toc-link-pinterest" href="#pinterest" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Pinterest</a><a id="toc-link-youtube-music" href="#youtube-music" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">YouTube Music</a><a id="toc-link-amazon-music" href="#amazon-music" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Amazon Music</a><a id="toc-link-twitch--kick-live-streams--vods" href="#twitch--kick-live-streams--vods" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Twitch &amp; Kick (Live Streams &amp; VODs)</a><a id="toc-link-vimeo--dailymotion" href="#vimeo--dailymotion" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Vimeo &amp; Dailymotion</a><a id="toc-link-rumble--bitchute" href="#rumble--bitchute" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Rumble &amp; BitChute</a><a id="toc-link-ted-talks" href="#ted-talks" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">TED Talks</a><a id="toc-link-flickr" href="#flickr" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Flickr</a><a id="toc-link-other-platforms" href="#other-platforms" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Other Platforms</a><a id="toc-link-downloading-wallpapers" href="#downloading-wallpapers" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:0rem;font-size:0.875rem">Downloading Wallpapers</a><a id="toc-link-open-the-wallpaper-browser" href="#open-the-wallpaper-browser" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Open the Wallpaper Browser</a><a id="toc-link-wallpaper-command-in-interactive-mode" href="#wallpaper-command-in-interactive-mode" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Wallpaper Command in Interactive Mode</a><a id="toc-link-paste-a-4kwallpaperscom-url" href="#paste-a-4kwallpaperscom-url" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Paste a 4kwallpapers.com URL</a><a id="toc-link-interactive-menu-options" href="#interactive-menu-options" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Interactive Menu Options</a><a id="toc-link-browsing--downloading-wallpapers" href="#browsing--downloading-wallpapers" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Browsing &amp; Downloading Wallpapers</a><a id="toc-link-download-location" href="#download-location" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Download Location</a><a id="toc-link-notes" href="#notes" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Notes</a><a id="toc-link-command-reference" href="#command-reference" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:0rem;font-size:0.875rem">Command Reference</a><a id="toc-link-complete-option-list" href="#complete-option-list" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Complete Option List</a><a id="toc-link-tips-and-best-practices" href="#tips-and-best-practices" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:0rem;font-size:0.875rem">Tips and Best Practices</a><a id="toc-link-for-best-audio-quality" href="#for-best-audio-quality" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">For Best Audio Quality</a><a id="toc-link-for-smaller-video-files" href="#for-smaller-video-files" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">For Smaller Video Files</a><a id="toc-link-for-music-collections" href="#for-music-collections" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">For Music Collections</a><a id="toc-link-check-before-downloading" href="#check-before-downloading" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Check Before Downloading</a><a id="toc-link-organize-downloads" href="#organize-downloads" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Organize Downloads</a><a id="toc-link-resume-failed-downloads" href="#resume-failed-downloads" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Resume Failed Downloads</a><a id="toc-link-avoid-rate-limiting" href="#avoid-rate-limiting" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:1rem;font-size:0.8rem">Avoid Rate Limiting</a><a id="toc-link-download-location-1" href="#download-location-1" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:0rem;font-size:0.875rem">Download Location</a><a id="toc-link-examples-summary" href="#examples-summary" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:0rem;font-size:0.875rem">Examples Summary</a><a id="toc-link-next-steps" href="#next-steps" class="text-sm transition-all duration-200 border-l-2 pl-4 py-1
+                border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]" style="margin-left:0rem;font-size:0.875rem">Next Steps</a></nav></div></aside></div><!--$--><!--/$--></main></div></div></div></div><section aria-label="Notifications alt+T" tabindex="-1" aria-live="polite" aria-relevant="additions text" aria-atomic="false"></section><script src="/_next/static/chunks/webpack-bfe36d62ec019d6f.js" id="_R_" async=""></script><script>(self.__next_f=self.__next_f||[]).push([0])</script><script>self.__next_f.push([1,"1:\"$Sreact.fragment\"\n2:I[93247,[\"5592\",\"static/chunks/c15bf2b0-bfa95b308e62c6cc.js\",\"8171\",\"static/chunks/8171-072b61e2eb314140.js\",\"5246\",\"static/chunks/5246-010341edb3c20d3e.js\",\"7177\",\"static/chunks/app/layout-85e8378134696645.js\"],\"default\"]\n3:I[9766,[],\"\"]\n4:I[98924,[],\"\"]\n5:I[33451,[\"5592\",\"static/chunks/c15bf2b0-bfa95b308e62c6cc.js\",\"8171\",\"static/chunks/8171-072b61e2eb314140.js\",\"2619\",\"static/chunks/2619-04bc32f026a0d946.js\",\"4499\",\"static/chunks/app/docs/layout-b5c0d7de0e88f8a7.js\"],\"default\"]\n6:I[49400,[\"5592\",\"static/chunks/c15bf2b0-bfa95b308e62c6cc.js\",\"8171\",\"static/chunks/8171-072b61e2eb314140.js\",\"2619\",\"static/chunks/2619-04bc32f026a0d946.js\",\"4499\",\"static/chunks/app/docs/layout-b5c0d7de0e88f8a7.js\"],\"default\"]\n7:I[37569,[\"4012\",\"static/chunks/4012-d7d3939322bac069.js\",\"6395\",\"static/chunks/app/docs/template-df5e073e914c4610.js\"],\"default\"]\n9:I[24431,[],\"OutletBoundary\"]\nb:I[15278,[],\"AsyncMetadataOutlet\"]\nd:I[24431,[],\"ViewportBoundary\"]\nf:I[24431,[],\"MetadataBoundary\"]\n10:\"$Sreact.suspense\"\n12:I[57150,[],\"\"]\n:HL[\"/_next/static/css/43d8a26082dd6c66.css\",\"style\"]\n"])</script><script>self.__next_f.push([1,"0:{\"P\":null,\"b\":\"85teulKhSzCWNUsofAEOs\",\"p\":\"\",\"c\":[\"\",\"docs\",\"USAGE\"],\"i\":false,\"f\":[[[\"\",{\"children\":[\"docs\",{\"children\":[[\"slug\",\"USAGE\",\"d\"],{\"children\":[\"__PAGE__\",{}]}]}]},\"$undefined\",\"$undefined\",true],[\"\",[\"$\",\"$1\",\"c\",{\"children\":[[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/_next/static/css/43d8a26082dd6c66.css\",\"precedence\":\"next\",\"crossOrigin\":\"$undefined\",\"nonce\":\"$undefined\"}]],[\"$\",\"html\",null,{\"lang\":\"en\",\"children\":[\"$\",\"body\",null,{\"children\":[\"$\",\"$L2\",null,{\"children\":[\"$\",\"$L3\",null,{\"parallelRouterKey\":\"children\",\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L4\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":[[[\"$\",\"title\",null,{\"children\":\"404: This page could not be found.\"}],[\"$\",\"div\",null,{\"style\":{\"fontFamily\":\"system-ui,\\\"Segoe UI\\\",Roboto,Helvetica,Arial,sans-serif,\\\"Apple Color Emoji\\\",\\\"Segoe UI Emoji\\\"\",\"height\":\"100vh\",\"textAlign\":\"center\",\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"center\",\"justifyContent\":\"center\"},\"children\":[\"$\",\"div\",null,{\"children\":[[\"$\",\"style\",null,{\"dangerouslySetInnerHTML\":{\"__html\":\"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\"}}],[\"$\",\"h1\",null,{\"className\":\"next-error-h1\",\"style\":{\"display\":\"inline-block\",\"margin\":\"0 20px 0 0\",\"padding\":\"0 23px 0 0\",\"fontSize\":24,\"fontWeight\":500,\"verticalAlign\":\"top\",\"lineHeight\":\"49px\"},\"children\":404}],[\"$\",\"div\",null,{\"style\":{\"display\":\"inline-block\"},\"children\":[\"$\",\"h2\",null,{\"style\":{\"fontSize\":14,\"fontWeight\":400,\"lineHeight\":\"49px\",\"margin\":0},\"children\":\"This page could not be found.\"}]}]]}]}]],[]],\"forbidden\":\"$undefined\",\"unauthorized\":\"$undefined\"}]}]}]}]]}],{\"children\":[\"docs\",[\"$\",\"$1\",\"c\",{\"children\":[null,[\"$\",\"div\",null,{\"className\":\"min-h-screen bg-[var(--offwhite)] text-[var(--offblack)] font-sans\",\"children\":[[\"$\",\"$L5\",null,{}],[\"$\",\"div\",null,{\"className\":\"container mx-auto px-4 md:px-12 lg:px-24 xl:px-32 max-w-[90rem] pt-32 pb-32\",\"children\":[\"$\",\"div\",null,{\"className\":\"flex gap-12 items-start mt-12\",\"children\":[[\"$\",\"$L6\",null,{\"docs\":[\"ARCHITECTURE\",\"AUTO_UPDATE\",\"CHANGELOG\",\"CONFIGURATION\",\"FILE_STRUCTURE\",\"HANDLERS\",\"INDEX\",\"INSTALLATION\",\"PROJECT_OVERVIEW\",\"TROUBLESHOOTING\",\"USAGE\"]}],[\"$\",\"main\",null,{\"className\":\"flex-1 w-full min-w-0\",\"children\":[\"$\",\"$L3\",null,{\"parallelRouterKey\":\"children\",\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L7\",null,{\"children\":[\"$\",\"$L4\",null,{}]}],\"templateStyles\":[],\"templateScripts\":[],\"notFound\":\"$undefined\",\"forbidden\":\"$undefined\",\"unauthorized\":\"$undefined\"}]}]]}]}]]}]]}],{\"children\":[[\"slug\",\"USAGE\",\"d\"],[\"$\",\"$1\",\"c\",{\"children\":[null,[\"$\",\"$L3\",null,{\"parallelRouterKey\":\"children\",\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L4\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":\"$undefined\",\"forbidden\":\"$undefined\",\"unauthorized\":\"$undefined\"}]]}],{\"children\":[\"__PAGE__\",[\"$\",\"$1\",\"c\",{\"children\":[\"$L8\",null,[\"$\",\"$L9\",null,{\"children\":[\"$La\",[\"$\",\"$Lb\",null,{\"promise\":\"$@c\"}]]}]]}],{},null,false]},null,false]},null,false]},null,false],[\"$\",\"$1\",\"h\",{\"children\":[null,[[\"$\",\"$Ld\",null,{\"children\":\"$Le\"}],null],[\"$\",\"$Lf\",null,{\"children\":[\"$\",\"div\",null,{\"hidden\":true,\"children\":[\"$\",\"$10\",null,{\"fallback\":null,\"children\":\"$L11\"}]}]}]]}],false]],\"m\":\"$undefined\",\"G\":[\"$12\",[]],\"s\":false,\"S\":true}\n"])</script><script>self.__next_f.push([1,"13:I[20005,[\"279\",\"static/chunks/050357b0-c29a1ec11e45b759.js\",\"2280\",\"static/chunks/28f0fb3b-93ff7b29321306e3.js\",\"3878\",\"static/chunks/3878-6ad1e15e2594e860.js\",\"6315\",\"static/chunks/6315-afb745340946da74.js\",\"3508\",\"static/chunks/app/docs/%5Bslug%5D/page-bc3a690998312dca.js\"],\"default\"]\n14:T4380,"])</script><script>self.__next_f.push([1,"# Usage Guide\n\nThis guide explains how to use the Ultimate Media Downloader. It covers basic usage, advanced features, and practical examples for different scenarios.\n\n---\n\n## Getting Started\n\n### Interactive Mode\n\nThe easiest way to use the application is interactive mode. Just run:\n\n```bash\numd\n```\n\nThis will present a menu where you can paste URLs and choose options without memorizing commands.\n\n### Direct Download\n\nFor quick downloads, provide the URL directly:\n\n```bash\numd \"https://www.youtube.com/watch?v=VIDEO_ID\"\n```\n\n### Getting Help\n\nTo see all available options:\n\n```bash\numd --help\n```\n\nTo see the version:\n\n```bash\numd --version\n```\n\n---\n\n## Basic Commands\n\n### Download Workflow\n\nHere is the typical workflow for downloading content:\n\n```mermaid\nflowchart TD\n    A[Start] --\u003e B{Have URL?}\n    B --\u003e|No| C[Run: umd]\n    B --\u003e|Yes| D[Run: umd URL]\n    C --\u003e E[Interactive Menu]\n    D --\u003e F{Audio or Video?}\n    E --\u003e G[Paste URL]\n    G --\u003e F\n    F --\u003e|Audio| H[Add --audio-only]\n    F --\u003e|Video| I[Choose quality]\n    H --\u003e J[Add format: --format mp3]\n    I --\u003e K[Add quality: --quality 1080p]\n    J --\u003e L[Download starts]\n    K --\u003e L\n    L --\u003e M[File saved to Downloads]\n```\n\n### Basic Options\n\n| Option | Short | Description |\n|--------|-------|-------------|\n| `--help` | `-h` | Show help message |\n| `--version` | `-v` | Show version number |\n| `--verbose` | | Enable detailed output |\n| `--output` | `-o` | Set download directory |\n| `--info` | `-i` | Show info without downloading |\n\n---\n\n## Downloading Videos\n\n### Default Video Download\n\nDownloads the best available quality:\n\n```bash\numd \"https://www.youtube.com/watch?v=VIDEO_ID\"\n```\n\n### Specific Quality\n\nChoose a specific resolution:\n\n```bash\n# 1080p HD\numd \"https://www.youtube.com/watch?v=VIDEO_ID\" --quality 1080p\n\n# 720p HD\numd \"https://www.youtube.com/watch?v=VIDEO_ID\" --quality 720p\n\n# 4K if available\numd \"https://www.youtube.com/watch?v=VIDEO_ID\" --quality 4k\n```\n\n### Available Quality Options\n\n| Quality | Description |\n|---------|-------------|\n| `best` | Highest available quality (default) |\n| `worst` | Lowest available quality |\n| `4k` / `2160p` | Ultra HD 4K |\n| `1440p` | Quad HD |\n| `1080p` | Full HD |\n| `720p` | HD |\n| `480p` | Standard definition |\n| `360p` | Low quality |\n\n### Video Format\n\nSpecify the output format:\n\n```bash\n# Download as MP4\numd \"URL\" --format mp4\n\n# Download as WebM\numd \"URL\" --format webm\n\n# Download as MKV\numd \"URL\" --format mkv\n```\n\n### View Available Formats\n\nBefore downloading, see what formats are available:\n\n```bash\numd \"URL\" --show-formats\n```\n\nThis shows a table with all available video and audio formats, their quality, file size, and codecs.\n\n---\n\n## Downloading Audio\n\n### Audio Only Mode\n\nExtract just the audio from a video:\n\n```bash\numd \"URL\" --audio-only\n```\n\n### Audio Formats\n\n```bash\n# MP3 (most compatible)\numd \"URL\" --audio-only --format mp3\n\n# FLAC (lossless quality)\numd \"URL\" --audio-only --format flac\n\n# M4A (Apple compatible)\numd \"URL\" --audio-only --format m4a\n\n# WAV (uncompressed)\numd \"URL\" --audio-only --format wav\n\n# Opus (efficient compression)\numd \"URL\" --audio-only --format opus\n```\n\n### Audio Quality Levels\n\n```bash\n# Best quality (default)\numd \"URL\" --audio-only --audio-quality best\n\n# High quality\numd \"URL\" --audio-only --audio-quality high\n\n# Medium quality\numd \"URL\" --audio-only --audio-quality medium\n\n# Low quality (smaller files)\numd \"URL\" --audio-only --audio-quality low\n```\n\n### Embedding Metadata\n\nAdd song information and cover art:\n\n```bash\numd \"URL\" --audio-only --embed-metadata --embed-thumbnail\n```\n\nThis embeds:\n\n- Song title\n- Artist name\n- Album name\n- Year\n- Cover art/thumbnail\n\n---\n\n## Playlists and Albums\n\n### Downloading Playlists\n\n```bash\n# Download entire playlist\numd \"https://www.youtube.com/playlist?list=PLAYLIST_ID\"\n\n# Force playlist mode\numd \"URL\" --playlist\n\n# Download only one video from playlist URL\numd \"PLAYLIST_URL\" --no-playlist\n```\n\n### Playlist Options\n\n```bash\n# Limit number of downloads\numd \"PLAYLIST_URL\" --max-downloads 10\n\n# Start from specific position\numd \"PLAYLIST_URL\" --start-index 5\n\n# Combine options: download items 5-15\numd \"PLAYLIST_URL\" --start-index 5 --max-downloads 10\n```\n\n### Interactive Playlist Mode\n\nBy default, playlist downloads show an interactive menu where you can:\n\n- See all playlist items\n- Choose which ones to download\n- Select quality settings\n\nTo skip the interactive menu:\n\n```bash\numd \"PLAYLIST_URL\" --no-interactive\n```\n\n### Playlist Download Flow\n\n```mermaid\nflowchart TD\n    A[Playlist URL] --\u003e B{Interactive Mode?}\n    B --\u003e|Yes| C[Show playlist items]\n    C --\u003e D[User selects items]\n    D --\u003e E[User chooses quality]\n    B --\u003e|No| F[Use command options]\n    E --\u003e G[Download selected items]\n    F --\u003e G\n    G --\u003e H{More items?}\n    H --\u003e|Yes| I[Download next item]\n    I --\u003e H\n    H --\u003e|No| J[Show summary]\n```\n\n---\n\n## Batch Downloads\n\n### From File\n\nCreate a text file with URLs (one per line):\n\n```text\nhttps://www.youtube.com/watch?v=VIDEO1\nhttps://www.youtube.com/watch?v=VIDEO2\nhttps://www.youtube.com/watch?v=VIDEO3\n```\n\nThen download all:\n\n```bash\numd --batch-file urls.txt\n```\n\n### Optimized Batch Download\n\nFor faster batch downloads with parallel processing:\n\n```bash\numd --batch-file urls.txt --optimized-batch --max-concurrent 5\n```\n\nThis downloads 5 files simultaneously instead of one at a time.\n\n### Batch with Options\n\nCombine batch download with other options:\n\n```bash\n# Batch download as audio\numd --batch-file urls.txt --audio-only --format mp3\n\n# Batch download specific quality\numd --batch-file urls.txt --quality 720p\n```\n\n---\n\n## Platform-Specific Usage\n\n### YouTube\n\n```bash\n# Video\numd \"https://www.youtube.com/watch?v=VIDEO_ID\"\n\n# Playlist\numd \"https://www.youtube.com/playlist?list=PLAYLIST_ID\"\n\n# Channel (all videos)\numd \"https://www.youtube.com/@ChannelName/videos\"\n\n# Shorts\numd \"https://www.youtube.com/shorts/SHORT_ID\"\n```\n\n### Spotify\n\nSpotify URLs are converted to YouTube searches:\n\n```bash\n# Track\numd \"https://open.spotify.com/track/TRACK_ID\" --audio-only\n\n# Album\numd \"https://open.spotify.com/album/ALBUM_ID\" --audio-only\n\n# Playlist\numd \"https://open.spotify.com/playlist/PLAYLIST_ID\" --audio-only\n```\n\n### Apple Music\n\nSimilar to Spotify:\n\n```bash\n# Song\numd \"https://music.apple.com/us/song/...\" --audio-only\n\n# Album\numd \"https://music.apple.com/us/album/...\" --audio-only\n```\n\n### JioSaavn\n\nIndian music platform with comprehensive metadata:\n\n```bash\n# Track\numd \"https://www.jiosaavn.com/song/...\" --audio-only\n\n# Album\numd \"https://www.jiosaavn.com/album/...\" --audio-only\n\n# Playlist\numd \"https://www.jiosaavn.com/featured/...\" --audio-only\n```\n\n### Gaana\n\nIndian music platform with comprehensive metadata:\n\n```bash\n# Track\numd \"https://gaana.com/song/...\" --audio-only\n\n# Album\numd \"https://gaana.com/album/...\" --audio-only\n\n# Playlist\numd \"https://gaana.com/playlist/...\" --audio-only\n\n# Artist\numd \"https://gaana.com/artist/...\" --audio-only\n```\n\n### Instagram\n\n```bash\n# Single post\numd \"https://www.instagram.com/p/POST_ID/\"\n\n# Single reel\numd \"https://www.instagram.com/reel/REEL_ID/\"\n\n# Profile with interactive menu (shows options)\numd \"https://www.instagram.com/username/\"\n\n# Direct download all profile reels\numd \"https://www.instagram.com/username/reels/\"\n\n# Download stories\numd \"https://www.instagram.com/stories/username/\"\n```\n\n**Instagram Notes:**\n- First-time use: Requires authentication via cookies.json\n- Cookie file locations: `./cookies.json` or `~/.instagram_cookies.json`\n- Profile downloads show interactive menu with 5 options\n- Supports range selection (e.g., posts 1-20)\n- Can create ZIP files for bulk downloads\n- Stories expire after 24 hours\n\n### TikTok\n\n```bash\numd \"https://www.tiktok.com/@user/video/VIDEO_ID\"\n```\n\n### Twitter/X\n\n```bash\numd \"https://twitter.com/user/status/TWEET_ID\"\n```\n\n### SoundCloud\n\n```bash\n# Track\numd \"https://soundcloud.com/artist/track\" --audio-only\n\n# Playlist\numd \"https://soundcloud.com/artist/sets/playlist\" --audio-only\n```\n\n### LinkedIn\n\n```bash\n# Post with video\numd \"https://www.linkedin.com/posts/username_POST_ID\"\n\n# Profile posts\numd \"https://www.linkedin.com/in/username/\"\n```\n\n### Reddit\n\n```bash\n# Single post\numd \"https://www.reddit.com/r/subreddit/comments/POST_ID/title/\"\n\n# User posts\numd \"https://www.reddit.com/user/username/\"\n```\n\n### Pinterest\n\n```bash\n# Single pin\numd \"https://www.pinterest.com/pin/PIN_ID/\"\n\n# Board\numd \"https://www.pinterest.com/username/board-name/\"\n\n# User profile\numd \"https://www.pinterest.com/username/\"\n```\n\n### YouTube Music\n\nYouTube Music URLs are handled directly without limits:\n\n```bash\n# Track\numd \"https://music.youtube.com/watch?v=VIDEO_ID\" --audio-only\n\n# Playlist (fetches all tracks)\numd \"https://music.youtube.com/playlist?list=PLAYLIST_ID\" --audio-only\n```\n\n### Amazon Music\n\n```bash\n# Track\numd \"https://music.amazon.com/albums/ALBUM_ID?trackAsin=TRACK_ID\" --audio-only\n\n# Album\numd \"https://music.amazon.com/albums/ALBUM_ID\" --audio-only\n```\n\n### Twitch \u0026 Kick (Live Streams \u0026 VODs)\n\n```bash\n# Twitch VOD or Stream\numd \"https://www.twitch.tv/videos/VIDEO_ID\"\n\n# Kick Stream or VOD\numd \"https://kick.com/username\"\n```\n\n### Vimeo \u0026 Dailymotion\n\n```bash\n# Vimeo Video\numd \"https://vimeo.com/VIDEO_ID\"\n\n# Dailymotion Video\numd \"https://www.dailymotion.com/video/VIDEO_ID\"\n```\n\n### Rumble \u0026 BitChute\n\n```bash\n# Rumble Video\numd \"https://rumble.com/v12345-video-title.html\"\n\n# BitChute Video\numd \"https://www.bitchute.com/video/VIDEO_ID/\"\n```\n\n### TED Talks\n\n```bash\numd \"https://www.ted.com/talks/speaker_name_talk_title\"\n```\n\n### Flickr\n\n```bash\n# Single Photo\numd \"https://www.flickr.com/photos/username/PHOTO_ID/\"\n\n# Album\numd \"https://www.flickr.com/photos/username/albums/ALBUM_ID/\"\n```\n\n### Other Platforms\n\nMany other platforms like **Boomplay, Audiomack, PeerTube, Veoh, TrillerTV, HiAnime, and Adult sites** are also fully supported out-of-the-box. Just pass the URL directly:\n\n```bash\numd \"URL\"\n```\n\n---\n\n## Downloading Wallpapers\n\nThe built-in 4K Wallpapers module lets you browse and download high-resolution wallpapers from [4kwallpapers.com](https://4kwallpapers.com).\n\n### Open the Wallpaper Browser\n\n```bash\n# Interactive menu (CLI flag)\numd --wallpaper\n\n# Search directly from the command line\numd --wallpaper-search \"anime\"\numd --wallpaper-search \"space galaxy\"\n```\n\n### Wallpaper Command in Interactive Mode\n\nWhile inside `umd` interactive mode, type any of these:\n\n```\nwallpaper\nwallpapers\nwp\n```\n\n### Paste a 4kwallpapers.com URL\n\nYou can also paste any 4kwallpapers.com URL directly into the interactive prompt:\n\n```\nhttps://4kwallpapers.com/anime/\nhttps://4kwallpapers.com/search/?q=cyberpunk\nhttps://4kwallpapers.com/nature/mountains-123456.html\n```\n\nThe handler will auto-detect the URL type and behave accordingly.\n\n### Interactive Menu Options\n\n| Option | Description |\n|--------|-------------|\n| `1` | Home / Featured wallpapers |\n| `2` | Recently Added wallpapers |\n| `3` | Browse by Tag (scraped from live site) |\n| `4` | Categories (anime, nature, space, etc.) |\n| `5` | Search by keyword |\n| `0` | Exit wallpaper browser |\n\n### Browsing \u0026 Downloading Wallpapers\n\nAfter selecting a section, the handler will:\n\n1. Fetch wallpapers from page 1 and show the count\n2. Ask how many wallpapers to browse (default: 96, max per session: 2400)\n3. Show the numbered list of wallpapers\n4. Prompt you to select which ones to download\n\n#### Selection Syntax\n\n| Input | Meaning |\n|-------|---------|\n| `all` | Download every wallpaper in the list |\n| `1` | Download wallpaper #1 only |\n| `1,3,7` | Download wallpapers 1, 3, and 7 |\n| `1-10` | Download wallpapers 1 through 10 |\n| `1-5,8,10-15` | Combined ranges and individual picks |\n| *(press Enter)* | Skip / cancel |\n\n#### Resolution Selection\n\nAfter selecting wallpapers, you will be asked to choose a resolution. Available resolutions are scraped live from each wallpaper page (e.g., `3840x2160`, `1920x1080`, `1280x720`). The highest available resolution is highlighted as the default.\n\n### Download Location\n\nWallpapers are saved to:\n\n```\n~/Downloads/UltimateDownloader/4kwallpapers/\n```\n\n### Notes\n\n- **Search results** are limited to 24 per session (site limitation — search pages are single-page only)\n- **Category / tag pages** support pagination up to 2400 wallpapers per session\n- **Cloudflare** is automatically bypassed — no extra setup needed\n\n---\n\n## Command Reference\n\n### Complete Option List\n\n#### Basic Options\n\n| Option | Description |\n|--------|-------------|\n| `url` | URL to download (optional, starts interactive mode if not provided) |\n| `-h, --help` | Show help and exit |\n| `-v, --version` | Show version and exit |\n| `--verbose` | Show detailed output |\n\n#### Quality Options\n\n| Option | Description |\n|--------|-------------|\n| `-q, --quality` | Video quality (best, 1080p, 720p, etc.) |\n| `--audio-quality` | Audio quality level (best, high, medium, low) |\n\n#### Format Options\n\n| Option | Description |\n|--------|-------------|\n| `-a, --audio-only` | Download audio only |\n| `-f, --format` | Output format (mp4, mp3, flac, etc.) |\n| `--audio-format` | Audio format (mp3, flac, opus, m4a, aac, wav) |\n| `--custom-format` | Custom yt-dlp format selector |\n\n#### Output Options\n\n| Option | Description |\n|--------|-------------|\n| `-o, --output` | Output directory |\n| `--embed-metadata` | Embed metadata in file |\n| `--embed-thumbnail` | Embed thumbnail/cover art |\n\n#### Playlist Options\n\n| Option | Description |\n|--------|-------------|\n| `-p, --playlist` | Download as playlist |\n| `--no-playlist` | Download single video from playlist URL |\n| `-m, --max-downloads` | Maximum items to download |\n| `-s, --start-index` | Starting position in playlist |\n\n#### Batch Options\n\n| Option | Description |\n|--------|-------------|\n| `--batch-file` | File containing URLs |\n| `--optimized-batch` | Enable parallel downloading |\n| `--max-concurrent` | Number of parallel downloads |\n\n#### Information Options\n\n| Option | Description |\n|--------|-------------|\n| `-i, --info` | Show info without downloading |\n| `--show-formats` | List available formats |\n| `--check-support` | Check if URL is supported |\n| `--list-platforms` | Show supported platforms |\n\n#### Mode Options\n\n| Option | Description |\n|--------|-------------|\n| `--interactive` | Force interactive mode |\n| `--no-interactive` | Disable interactive prompts |\n\n#### Wallpaper Options\n\n| Option | Description |\n|--------|-------------|\n| `--wallpaper` | Open the 4K Wallpapers interactive browser |\n| `--wallpaper-search QUERY` | Search 4kwallpapers.com for QUERY and show results |\n\n---\n\n## Tips and Best Practices\n\n### For Best Audio Quality\n\n```bash\numd \"URL\" --audio-only --format flac --embed-metadata --embed-thumbnail\n```\n\nFLAC gives lossless quality, and embedding metadata makes files easier to organize in music players.\n\n### For Smaller Video Files\n\n```bash\numd \"URL\" --quality 720p --format mp4\n```\n\n720p offers good quality with reasonable file sizes.\n\n### For Music Collections\n\nWhen downloading music albums or playlists:\n\n```bash\numd \"SPOTIFY_PLAYLIST_URL\" --audio-only --format mp3 --embed-metadata --embed-thumbnail --optimized-batch\n```\n\n### Check Before Downloading\n\nAlways check what you are getting:\n\n```bash\n# See what formats are available\numd \"URL\" --show-formats\n\n# See video info\numd \"URL\" --info\n```\n\n### Organize Downloads\n\nUse a custom output directory for different content types:\n\n```bash\n# Music\numd \"URL\" --audio-only --output ~/Music/Downloads\n\n# Videos\numd \"URL\" --output ~/Videos/Downloads\n```\n\n### Resume Failed Downloads\n\nThe application automatically resumes interrupted downloads. If a download fails, just run the same command again.\n\n### Avoid Rate Limiting\n\nWhen downloading many files, use reasonable concurrency:\n\n```bash\numd --batch-file urls.txt --optimized-batch --max-concurrent 3\n```\n\nUsing too many concurrent downloads might trigger rate limiting from the source.\n\n---\n\n## Download Location\n\nBy default, files are saved to:\n\n```text\n~/Downloads/UltimateDownloader/\n```\n\nThe folder structure:\n\n```text\n~/Downloads/UltimateDownloader/\n    Artist Name - Song Title.mp3\n    Video Title.mp4\n    Playlist Name/\n        01 - Song One.mp3\n        02 - Song Two.mp3\n    Album Name/\n        01 - Track One.mp3\n        02 - Track Two.mp3\n```\n\n---\n\n## Examples Summary\n\nHere are quick copy-paste examples for common tasks:\n\n```bash\n# Simple video download\numd \"https://youtube.com/watch?v=xxx\"\n\n# Audio from YouTube\numd \"https://youtube.com/watch?v=xxx\" --audio-only --format mp3\n\n# High quality audio with metadata\numd \"URL\" --audio-only --format flac --embed-metadata --embed-thumbnail\n\n# Specific video quality\numd \"URL\" --quality 1080p --format mp4\n\n# Spotify album\numd \"https://open.spotify.com/album/xxx\" --audio-only\n\n# YouTube playlist\numd \"https://youtube.com/playlist?list=xxx\"\n\n# Batch download\numd --batch-file urls.txt --audio-only --format mp3\n\n# Check what is available\numd \"URL\" --show-formats\n```\n\n---\n\n## Next Steps\n\nNow that you know how to use the application, you might want to explore:\n\n- [Architecture Documentation](ARCHITECTURE.md) - Understand how the application works\n- [Handlers Documentation](HANDLERS.md) - Learn about platform-specific features\n- [Configuration Guide](CONFIGURATION.md) - Customize default settings\n"])</script><script>self.__next_f.push([1,"8:[\"$\",\"div\",null,{\"className\":\"flex gap-12 items-start relative w-full\",\"children\":[[\"$\",\"article\",null,{\"className\":\"border-[3px] border-[var(--offblack)] shadow-[8px_8px_0px_var(--offblack)] bg-[var(--offwhite)] p-8 md:p-16 mb-24 relative flex-1 min-w-0 mt-16\",\"children\":[[\"$\",\"div\",null,{\"className\":\"absolute top-0 right-0 bg-[var(--offblack)] text-[var(--offwhite)] font-mono text-sm tracking-[0.2em] px-4 py-2 uppercase font-bold\",\"children\":[\"USAGE\",\".md\"]}],[\"$\",\"$L13\",null,{\"content\":\"$14\"}]]}],\"$L15\"]}]\n"])</script><script>self.__next_f.push([1,"16:I[90286,[\"279\",\"static/chunks/050357b0-c29a1ec11e45b759.js\",\"2280\",\"static/chunks/28f0fb3b-93ff7b29321306e3.js\",\"3878\",\"static/chunks/3878-6ad1e15e2594e860.js\",\"6315\",\"static/chunks/6315-afb745340946da74.js\",\"3508\",\"static/chunks/app/docs/%5Bslug%5D/page-bc3a690998312dca.js\"],\"default\"]\n"])</script><script>self.__next_f.push([1,"15:[\"$\",\"$L16\",null,{\"headings\":[{\"level\":2,\"text\":\"Getting Started\",\"slug\":\"getting-started\"},{\"level\":3,\"text\":\"Interactive Mode\",\"slug\":\"interactive-mode\"},{\"level\":3,\"text\":\"Direct Download\",\"slug\":\"direct-download\"},{\"level\":3,\"text\":\"Getting Help\",\"slug\":\"getting-help\"},{\"level\":2,\"text\":\"Basic Commands\",\"slug\":\"basic-commands\"},{\"level\":3,\"text\":\"Download Workflow\",\"slug\":\"download-workflow\"},{\"level\":3,\"text\":\"Basic Options\",\"slug\":\"basic-options\"},{\"level\":2,\"text\":\"Downloading Videos\",\"slug\":\"downloading-videos\"},{\"level\":3,\"text\":\"Default Video Download\",\"slug\":\"default-video-download\"},{\"level\":3,\"text\":\"Specific Quality\",\"slug\":\"specific-quality\"},{\"level\":3,\"text\":\"Available Quality Options\",\"slug\":\"available-quality-options\"},{\"level\":3,\"text\":\"Video Format\",\"slug\":\"video-format\"},{\"level\":3,\"text\":\"View Available Formats\",\"slug\":\"view-available-formats\"},{\"level\":2,\"text\":\"Downloading Audio\",\"slug\":\"downloading-audio\"},{\"level\":3,\"text\":\"Audio Only Mode\",\"slug\":\"audio-only-mode\"},{\"level\":3,\"text\":\"Audio Formats\",\"slug\":\"audio-formats\"},{\"level\":3,\"text\":\"Audio Quality Levels\",\"slug\":\"audio-quality-levels\"},{\"level\":3,\"text\":\"Embedding Metadata\",\"slug\":\"embedding-metadata\"},{\"level\":2,\"text\":\"Playlists and Albums\",\"slug\":\"playlists-and-albums\"},{\"level\":3,\"text\":\"Downloading Playlists\",\"slug\":\"downloading-playlists\"},{\"level\":3,\"text\":\"Playlist Options\",\"slug\":\"playlist-options\"},{\"level\":3,\"text\":\"Interactive Playlist Mode\",\"slug\":\"interactive-playlist-mode\"},{\"level\":3,\"text\":\"Playlist Download Flow\",\"slug\":\"playlist-download-flow\"},{\"level\":2,\"text\":\"Batch Downloads\",\"slug\":\"batch-downloads\"},{\"level\":3,\"text\":\"From File\",\"slug\":\"from-file\"},{\"level\":3,\"text\":\"Optimized Batch Download\",\"slug\":\"optimized-batch-download\"},{\"level\":3,\"text\":\"Batch with Options\",\"slug\":\"batch-with-options\"},{\"level\":2,\"text\":\"Platform-Specific Usage\",\"slug\":\"platform-specific-usage\"},{\"level\":3,\"text\":\"YouTube\",\"slug\":\"youtube\"},{\"level\":3,\"text\":\"Spotify\",\"slug\":\"spotify\"},{\"level\":3,\"text\":\"Apple Music\",\"slug\":\"apple-music\"},{\"level\":3,\"text\":\"JioSaavn\",\"slug\":\"jiosaavn\"},{\"level\":3,\"text\":\"Gaana\",\"slug\":\"gaana\"},{\"level\":3,\"text\":\"Instagram\",\"slug\":\"instagram\"},{\"level\":3,\"text\":\"TikTok\",\"slug\":\"tiktok\"},{\"level\":3,\"text\":\"Twitter/X\",\"slug\":\"twitterx\"},{\"level\":3,\"text\":\"SoundCloud\",\"slug\":\"soundcloud\"},{\"level\":3,\"text\":\"LinkedIn\",\"slug\":\"linkedin\"},{\"level\":3,\"text\":\"Reddit\",\"slug\":\"reddit\"},{\"level\":3,\"text\":\"Pinterest\",\"slug\":\"pinterest\"},{\"level\":3,\"text\":\"YouTube Music\",\"slug\":\"youtube-music\"},{\"level\":3,\"text\":\"Amazon Music\",\"slug\":\"amazon-music\"},{\"level\":3,\"text\":\"Twitch \u0026 Kick (Live Streams \u0026 VODs)\",\"slug\":\"twitch--kick-live-streams--vods\"},{\"level\":3,\"text\":\"Vimeo \u0026 Dailymotion\",\"slug\":\"vimeo--dailymotion\"},{\"level\":3,\"text\":\"Rumble \u0026 BitChute\",\"slug\":\"rumble--bitchute\"},{\"level\":3,\"text\":\"TED Talks\",\"slug\":\"ted-talks\"},{\"level\":3,\"text\":\"Flickr\",\"slug\":\"flickr\"},{\"level\":3,\"text\":\"Other Platforms\",\"slug\":\"other-platforms\"},{\"level\":2,\"text\":\"Downloading Wallpapers\",\"slug\":\"downloading-wallpapers\"},{\"level\":3,\"text\":\"Open the Wallpaper Browser\",\"slug\":\"open-the-wallpaper-browser\"},{\"level\":3,\"text\":\"Wallpaper Command in Interactive Mode\",\"slug\":\"wallpaper-command-in-interactive-mode\"},{\"level\":3,\"text\":\"Paste a 4kwallpapers.com URL\",\"slug\":\"paste-a-4kwallpaperscom-url\"},{\"level\":3,\"text\":\"Interactive Menu Options\",\"slug\":\"interactive-menu-options\"},{\"level\":3,\"text\":\"Browsing \u0026 Downloading Wallpapers\",\"slug\":\"browsing--downloading-wallpapers\"},{\"level\":3,\"text\":\"Download Location\",\"slug\":\"download-location\"},{\"level\":3,\"text\":\"Notes\",\"slug\":\"notes\"},{\"level\":2,\"text\":\"Command Reference\",\"slug\":\"command-reference\"},{\"level\":3,\"text\":\"Complete Option List\",\"slug\":\"complete-option-list\"},{\"level\":2,\"text\":\"Tips and Best Practices\",\"slug\":\"tips-and-best-practices\"},{\"level\":3,\"text\":\"For Best Audio Quality\",\"slug\":\"for-best-audio-quality\"},{\"level\":3,\"text\":\"For Smaller Video Files\",\"slug\":\"for-smaller-video-files\"},{\"level\":3,\"text\":\"For Music Collections\",\"slug\":\"for-music-collections\"},{\"level\":3,\"text\":\"Check Before Downloading\",\"slug\":\"check-before-downloading\"},{\"level\":3,\"text\":\"Organize Downloads\",\"slug\":\"organize-downloads\"},{\"level\":3,\"text\":\"Resume Failed Downloads\",\"slug\":\"resume-failed-downloads\"},{\"level\":3,\"text\":\"Avoid Rate Limiting\",\"slug\":\"avoid-rate-limiting\"},{\"level\":2,\"text\":\"Download Location\",\"slug\":\"download-location-1\"},{\"level\":2,\"text\":\"Examples Summary\",\"slug\":\"examples-summary\"},{\"level\":2,\"text\":\"Next Steps\",\"slug\":\"next-steps\"}]}]\n"])</script><script>self.__next_f.push([1,"e:[[\"$\",\"meta\",\"0\",{\"charSet\":\"utf-8\"}],[\"$\",\"meta\",\"1\",{\"name\":\"viewport\",\"content\":\"width=device-width, initial-scale=1\"}]]\na:null\n"])</script><script>self.__next_f.push([1,"c:{\"metadata\":[[\"$\",\"title\",\"0\",{\"children\":\"USAGE | UMD Documentation\"}],[\"$\",\"meta\",\"1\",{\"name\":\"description\",\"content\":\"Download media from 1000+ platforms with one command.\"}]],\"error\":null,\"digest\":\"$undefined\"}\n"])</script><script>self.__next_f.push([1,"11:\"$c:metadata\"\n"])</script></body></html>

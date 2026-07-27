@@ -1,0 +1,343 @@
+1:"$Sreact.fragment"
+2:I[93247,["5592","static/chunks/c15bf2b0-bfa95b308e62c6cc.js","8171","static/chunks/8171-072b61e2eb314140.js","5246","static/chunks/5246-010341edb3c20d3e.js","7177","static/chunks/app/layout-85e8378134696645.js"],"default"]
+3:I[9766,[],""]
+4:I[98924,[],""]
+5:I[33451,["5592","static/chunks/c15bf2b0-bfa95b308e62c6cc.js","8171","static/chunks/8171-072b61e2eb314140.js","2619","static/chunks/2619-04bc32f026a0d946.js","4499","static/chunks/app/docs/layout-b5c0d7de0e88f8a7.js"],"default"]
+6:I[49400,["5592","static/chunks/c15bf2b0-bfa95b308e62c6cc.js","8171","static/chunks/8171-072b61e2eb314140.js","2619","static/chunks/2619-04bc32f026a0d946.js","4499","static/chunks/app/docs/layout-b5c0d7de0e88f8a7.js"],"default"]
+7:I[37569,["4012","static/chunks/4012-d7d3939322bac069.js","6395","static/chunks/app/docs/template-df5e073e914c4610.js"],"default"]
+9:I[24431,[],"OutletBoundary"]
+b:I[15278,[],"AsyncMetadataOutlet"]
+d:I[24431,[],"ViewportBoundary"]
+f:I[24431,[],"MetadataBoundary"]
+10:"$Sreact.suspense"
+12:I[57150,[],""]
+:HL["/_next/static/css/43d8a26082dd6c66.css","style"]
+0:{"P":null,"b":"85teulKhSzCWNUsofAEOs","p":"","c":["","docs","PROJECT_OVERVIEW"],"i":false,"f":[[["",{"children":["docs",{"children":[["slug","PROJECT_OVERVIEW","d"],{"children":["__PAGE__",{}]}]}]},"$undefined","$undefined",true],["",["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/43d8a26082dd6c66.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]],["$","html",null,{"lang":"en","children":["$","body",null,{"children":["$","$L2",null,{"children":["$","$L3",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L4",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}]}]}]]}],{"children":["docs",["$","$1","c",{"children":[null,["$","div",null,{"className":"min-h-screen bg-[var(--offwhite)] text-[var(--offblack)] font-sans","children":[["$","$L5",null,{}],["$","div",null,{"className":"container mx-auto px-4 md:px-12 lg:px-24 xl:px-32 max-w-[90rem] pt-32 pb-32","children":["$","div",null,{"className":"flex gap-12 items-start mt-12","children":[["$","$L6",null,{"docs":["ARCHITECTURE","AUTO_UPDATE","CHANGELOG","CONFIGURATION","FILE_STRUCTURE","HANDLERS","INDEX","INSTALLATION","PROJECT_OVERVIEW","TROUBLESHOOTING","USAGE"]}],["$","main",null,{"className":"flex-1 w-full min-w-0","children":["$","$L3",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L7",null,{"children":["$","$L4",null,{}]}],"templateStyles":[],"templateScripts":[],"notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]}]]}]}]]}]]}],{"children":[["slug","PROJECT_OVERVIEW","d"],["$","$1","c",{"children":[null,["$","$L3",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L4",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":["__PAGE__",["$","$1","c",{"children":["$L8",null,["$","$L9",null,{"children":["$La",["$","$Lb",null,{"promise":"$@c"}]]}]]}],{},null,false]},null,false]},null,false]},null,false],["$","$1","h",{"children":[null,[["$","$Ld",null,{"children":"$Le"}],null],["$","$Lf",null,{"children":["$","div",null,{"hidden":true,"children":["$","$10",null,{"fallback":null,"children":"$L11"}]}]}]]}],false]],"m":"$undefined","G":["$12",[]],"s":false,"S":true}
+13:I[20005,["279","static/chunks/050357b0-c29a1ec11e45b759.js","2280","static/chunks/28f0fb3b-93ff7b29321306e3.js","3878","static/chunks/3878-6ad1e15e2594e860.js","6315","static/chunks/6315-afb745340946da74.js","3508","static/chunks/app/docs/%5Bslug%5D/page-bc3a690998312dca.js"],"default"]
+14:T2133,# Project Overview
+
+This document provides a high-level overview of the Ultimate Media Downloader project, its goals, features, and technical details.
+
+---
+
+## What is Ultimate Media Downloader
+
+Ultimate Media Downloader is a command-line application written in Python that allows you to download media content from over 100 different websites. It handles videos, audio, playlists, and entire channels from platforms like YouTube, Spotify, Instagram, TikTok, and many more.
+
+The project was created to provide a single, unified tool for downloading media instead of using different tools for different platforms.
+
+### Why This Project Exists
+
+Many people need to download media for legitimate purposes:
+
+- Archiving personal content
+- Offline access to purchased content
+- Educational research
+- Creating backups
+- Accessibility needs
+
+This tool makes these tasks easier by providing a consistent interface across all platforms.
+
+---
+
+## Project Goals
+
+### Primary Goals
+
+1. **Simplicity**: One command (`umd`) to download from any supported platform
+2. **Quality**: Download the highest quality available
+3. **Reliability**: Handle errors gracefully and retry failed downloads
+4. **Extensibility**: Easy to add support for new platforms
+
+### Design Goals
+
+1. **User-Friendly**: Beautiful CLI interface with progress bars
+2. **Cross-Platform**: Works on Windows, macOS, and Linux
+3. **Modular**: Clean code organization with separate handlers
+4. **Well-Documented**: Comprehensive documentation for users and developers
+
+---
+
+## Core Features
+
+### Feature Overview
+
+```mermaid
+mindmap
+  root((Ultimate Media Downloader))
+    Video Downloads
+      Multiple qualities
+      Format selection
+      Resume support
+    Audio Downloads
+      MP3, FLAC, WAV
+      Metadata embedding
+      Cover art
+    Playlists
+      Full playlist download
+      Selective download
+      Album support
+    Platforms
+      YouTube
+      Spotify
+      Instagram
+      TikTok
+      HiAnime
+      Eporner
+      HQPorner
+      Beeg
+      4kwallpapers
+      100+ more
+    Advanced
+      Batch downloads
+      Proxy support
+      Rate limiting
+```
+
+### Video Features
+
+| Feature | Description |
+|---------|-------------|
+| Quality Selection | Choose from 4K, 1080p, 720p, and more |
+| Format Support | MP4, WebM, MKV output formats |
+| Resume Downloads | Automatically resume interrupted downloads |
+| Live Streams | Record live streams in progress |
+
+### Audio Features
+
+| Feature | Description |
+|---------|-------------|
+| Audio Extraction | Extract audio from any video |
+| Multiple Formats | MP3, FLAC, WAV, M4A, Opus |
+| Quality Settings | Up to 320kbps bitrate |
+| Metadata | Embed title, artist, album, year |
+| Cover Art | Embed thumbnail as cover art |
+
+### Playlist Features
+
+| Feature | Description |
+|---------|-------------|
+| Full Downloads | Download entire playlists |
+| Selective | Choose specific items to download |
+| Batch Mode | Parallel downloading for speed |
+| Progress | Track overall playlist progress |
+
+### Platform Features
+
+| Feature | Description |
+|---------|-------------|
+| Auto-Detection | Automatically detect platform from URL |
+| Fallback | Multiple download methods per platform |
+| Authentication | Cookie support for private content |
+| Anti-Bot Bypass | Handle Cloudflare and other protections |
+
+---
+
+## Supported Platforms
+
+### Video Platforms
+
+| Platform | Content Types |
+|----------|--------------|
+| YouTube | Videos, playlists, channels, shorts, live |
+| Vimeo | Videos, private videos |
+| Dailymotion | Videos |
+| Twitch | VODs, clips, live streams |
+| Facebook | Videos, live streams |
+| HiAnime | Videos, Series, Episodes |
+| TikTok | Videos, user content |
+| Eporner | Videos |
+| HQPorner | Videos |
+| Beeg | Videos |
+| Rumble | Videos |
+| Kick | VODs, live streams |
+| TED | Videos |
+| BitChute | Videos |
+| Flickr | Videos, Images |
+| PeerTube | Videos |
+| Veoh | Videos |
+| TrillerTV | Videos, Streams |
+
+### Music Platforms
+
+| Platform | Content Types |
+|----------|--------------|
+| Spotify | Tracks, albums, playlists (via YouTube) |
+| SoundCloud | Tracks, playlists, user uploads |
+| Apple Music | Songs, albums (via YouTube) |
+| JioSaavn | Tracks, albums, playlists (via YouTube) |
+| Gaana | Tracks, albums, playlists, artists (via YouTube) |
+| Bandcamp | Tracks, albums |
+| Amazon Music | Tracks, albums, playlists |
+| Boomplay | Tracks, albums |
+| Audiomack | Tracks, albums, playlists |
+| YouTube Music | Tracks, albums, playlists |
+
+### Social Media
+
+| Platform | Content Types |
+|----------|--------------|
+| Instagram | Posts, reels, stories, IGTV, profiles |
+| TikTok | Videos, user content |
+| Twitter/X | Video tweets |
+| Reddit | Videos, posts, user content |
+| Tumblr | Images, videos, blogs |
+| LinkedIn | Posts, videos |
+| Pinterest | Pins, boards, profiles |
+
+### Image & Wallpaper Platforms
+
+| Platform | Content Types |
+|----------|--------------|
+| 4kwallpapers.com | 4K/8K wallpapers — browse by category, tag, or search; range selection; multi-resolution download |
+
+### Additional Support
+
+Through the yt-dlp integration, the application supports over 1000 additional websites. Use `umd --list-platforms` to see the full list.
+
+---
+
+## Technology Stack
+
+### Core Technologies
+
+```mermaid
+graph TB
+    subgraph "Application Layer"
+        PYTHON[Python 3.9+]
+        MAIN[ultimate_downloader.py]
+    end
+
+    subgraph "Download Engine"
+        YTDLP[yt-dlp]
+        REQUESTS[requests/httpx]
+        CLOUDSCRAPER[cloudscraper]
+    end
+
+    subgraph "Media Processing"
+        FFMPEG[FFmpeg]
+        MUTAGEN[Mutagen]
+        PILLOW[Pillow]
+    end
+
+    subgraph "User Interface"
+        RICH[Rich]
+        PYFIGLET[pyfiglet]
+        HALO[Halo]
+    end
+
+    subgraph "Platform APIs"
+        SPOTIPY[Spotipy]
+        YOUTUBE_SEARCH[youtube-search-python]
+    end
+
+    PYTHON --> MAIN
+    MAIN --> YTDLP
+    MAIN --> REQUESTS
+    MAIN --> CLOUDSCRAPER
+    YTDLP --> FFMPEG
+    MAIN --> MUTAGEN
+    MAIN --> PILLOW
+    MAIN --> RICH
+    MAIN --> PYFIGLET
+    MAIN --> HALO
+    MAIN --> SPOTIPY
+    MAIN --> YOUTUBE_SEARCH
+```
+
+### Key Dependencies
+
+| Package | Purpose |
+|---------|---------|
+| yt-dlp | Core download engine for 1000+ sites |
+| rich | Beautiful terminal formatting |
+| requests | HTTP requests |
+| mutagen | Audio metadata editing |
+| Pillow | Image processing |
+| spotipy | Spotify API wrapper |
+| cloudscraper | Cloudflare bypass |
+| BeautifulSoup | HTML parsing |
+| sixel | Terminal image rendering |
+| sentence-transformers | AI YouTube search scoring (Optional) |
+
+### Why These Technologies
+
+- **yt-dlp**: Most comprehensive video extraction library available
+- **Rich**: Modern, beautiful terminal UI with progress bars
+- **Mutagen**: Industry-standard audio metadata library
+- **FFmpeg**: Universal media processing tool
+
+---
+
+## Project Statistics
+
+### Codebase Overview
+
+| Metric | Value |
+|--------|-------|
+| Main Application | ~3500 lines |
+| Generic Downloader | ~1200 lines |
+| Spotify Handler | ~1200 lines |
+| Apple Music Handler | ~1100 lines |
+| JioSaavn Handler | ~1700 lines |
+| Gaana Handler | ~1140 lines |
+| Instagram Handler | ~1719 lines |
+| 4K Wallpapers Handler | ~950 lines |
+| YouTube Scorer | ~1000 lines |
+| Utility Modules | ~1500 lines |
+| Total Python Code | ~15000+ lines |
+
+### File Count
+
+| Category | Count |
+|----------|-------|
+| Python Files | 35+ |
+| Handler Modules | 32 |
+| Utility Modules | 9 |
+| Shell Scripts | 8 |
+| Documentation | 11+ |
+
+### Supported Sites
+
+| Category | Count |
+|----------|-------|
+| Video Platforms | 50+ |
+| Music Platforms | 10+ |
+| Social Media | 15+ |
+| Image/Wallpaper | 1+ |
+| Other Sites | 900+ |
+| Total via yt-dlp | 1000+ |
+
+---
+
+## Future Development
+
+### Planned Features
+
+- GUI application (Electron or native)
+- Browser extension integration
+- Download scheduling
+- Enhanced metadata from additional sources
+- Mobile companion app
+
+### Contributing
+
+The project welcomes contributions. See the main README for contribution guidelines.
+
+---
+
+## Summary
+
+Ultimate Media Downloader is a comprehensive solution for downloading media from the internet. It combines the power of yt-dlp with custom handlers for specific platforms, all wrapped in a user-friendly interface.
+
+The modular architecture makes it easy to extend and maintain, while the extensive configuration options allow users to customize behavior to their needs.
+
+For installation instructions, see [Installation Guide](INSTALLATION.md).
+For usage instructions, see [Usage Guide](USAGE.md).
+8:["$","div",null,{"className":"flex gap-12 items-start relative w-full","children":[["$","article",null,{"className":"border-[3px] border-[var(--offblack)] shadow-[8px_8px_0px_var(--offblack)] bg-[var(--offwhite)] p-8 md:p-16 mb-24 relative flex-1 min-w-0 mt-16","children":[["$","div",null,{"className":"absolute top-0 right-0 bg-[var(--offblack)] text-[var(--offwhite)] font-mono text-sm tracking-[0.2em] px-4 py-2 uppercase font-bold","children":["PROJECT_OVERVIEW",".md"]}],["$","$L13",null,{"content":"$14"}]]}],"$L15"]}]
+16:I[90286,["279","static/chunks/050357b0-c29a1ec11e45b759.js","2280","static/chunks/28f0fb3b-93ff7b29321306e3.js","3878","static/chunks/3878-6ad1e15e2594e860.js","6315","static/chunks/6315-afb745340946da74.js","3508","static/chunks/app/docs/%5Bslug%5D/page-bc3a690998312dca.js"],"default"]
+15:["$","$L16",null,{"headings":[{"level":2,"text":"What is Ultimate Media Downloader","slug":"what-is-ultimate-media-downloader"},{"level":3,"text":"Why This Project Exists","slug":"why-this-project-exists"},{"level":2,"text":"Project Goals","slug":"project-goals"},{"level":3,"text":"Primary Goals","slug":"primary-goals"},{"level":3,"text":"Design Goals","slug":"design-goals"},{"level":2,"text":"Core Features","slug":"core-features"},{"level":3,"text":"Feature Overview","slug":"feature-overview"},{"level":3,"text":"Video Features","slug":"video-features"},{"level":3,"text":"Audio Features","slug":"audio-features"},{"level":3,"text":"Playlist Features","slug":"playlist-features"},{"level":3,"text":"Platform Features","slug":"platform-features"},{"level":2,"text":"Supported Platforms","slug":"supported-platforms"},{"level":3,"text":"Video Platforms","slug":"video-platforms"},{"level":3,"text":"Music Platforms","slug":"music-platforms"},{"level":3,"text":"Social Media","slug":"social-media"},{"level":3,"text":"Image & Wallpaper Platforms","slug":"image--wallpaper-platforms"},{"level":3,"text":"Additional Support","slug":"additional-support"},{"level":2,"text":"Technology Stack","slug":"technology-stack"},{"level":3,"text":"Core Technologies","slug":"core-technologies"},{"level":3,"text":"Key Dependencies","slug":"key-dependencies"},{"level":3,"text":"Why These Technologies","slug":"why-these-technologies"},{"level":2,"text":"Project Statistics","slug":"project-statistics"},{"level":3,"text":"Codebase Overview","slug":"codebase-overview"},{"level":3,"text":"File Count","slug":"file-count"},{"level":3,"text":"Supported Sites","slug":"supported-sites"},{"level":2,"text":"Future Development","slug":"future-development"},{"level":3,"text":"Planned Features","slug":"planned-features"},{"level":3,"text":"Contributing","slug":"contributing"},{"level":2,"text":"Summary","slug":"summary"}]}]
+e:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+a:null
+c:{"metadata":[["$","title","0",{"children":"PROJECT_OVERVIEW | UMD Documentation"}],["$","meta","1",{"name":"description","content":"Download media from 1000+ platforms with one command."}]],"error":null,"digest":"$undefined"}
+11:"$c:metadata"
