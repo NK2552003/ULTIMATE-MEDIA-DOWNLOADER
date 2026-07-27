@@ -3,6 +3,8 @@ import { SiSpotify, SiTiktok, SiTed, SiRumble, SiReddit, SiPinterest, SiPeertube
 import { FaApple, FaAmazon, FaLinkedin, FaYoutube } from 'react-icons/fa'
 import PixelStrip from './PixelStrip'
 
+const basePath = process.env.NODE_ENV === 'production' ? '/ULTIMATE-MEDIA-DOWNLOADER' : '';
+
 export default function Compatibility() {
   return (
     <div className="w-full relative flex flex-col items-center mt-24 md:mt-32">
@@ -11,7 +13,7 @@ export default function Compatibility() {
         {/* Works on any Mac */}
         <div className="w-full border-[3px] border-[var(--offblack)] shadow-[12px_12px_0px_var(--offblack)] overflow-hidden relative group min-h-[300px] flex items-center bg-[var(--offwhite)]">
           <img 
-            src="/totoro_mac.jpg" 
+            src={`${basePath}/totoro_mac.jpg`}
             alt="Totoro using a Mac" 
             className="absolute inset-0 w-full h-full object-cover object-[100%_center] scale-110 -translate-y-5 filter grayscale contrast-125 opacity-80 group-hover:scale-[1.15] group-hover:-translate-y-6 group-hover:opacity-100 transition-all duration-700"
           />
@@ -89,22 +91,22 @@ export default function Compatibility() {
           <AudienceCard 
             title="Developers" 
             description="Save API keys, terminal output, code snippets, and reference docs without switching context." 
-            image="/totoro_developer.jpg"
+            image={`${basePath}/totoro_developer.jpg`}
           />
           <AudienceCard 
             title="Music lovers" 
             description="Collect tracks, albums, and playlists in lossless FLAC. Metadata preserved. Library stays organized." 
-            image="/totoro_music.jpg"
+            image={`${basePath}/totoro_music.jpg`}
           />
           <AudienceCard 
             title="Content creators" 
             description="Download reference footage, pull stock video, grab audio stems — all without leaving your terminal." 
-            image="/totoro_creator.jpg"
+            image={`${basePath}/totoro_creator.jpg`}
           />
           <AudienceCard 
             title="Everyone" 
             description="If you've ever wanted to keep a video or song locally, UMD does it cleanly and without bloat." 
-            image="/totoro_everyone.jpg"
+            image={`${basePath}/totoro_everyone.jpg`}
           />
         </div>
         

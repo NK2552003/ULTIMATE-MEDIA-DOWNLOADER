@@ -45,9 +45,6 @@ downloads/
 *.flac
 *.wav
 *.m4a
-*.jpg
-*.png
-*.jpeg
 
 # Configuration (with credentials)
 config.local.json
