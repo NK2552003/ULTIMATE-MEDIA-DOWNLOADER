@@ -104,15 +104,8 @@ export default function Header() {
 
   return (
     <>
-      {/* Top Notification Banner */}
-      <div className="fixed top-0 left-0 w-full z-[100] bg-[var(--accent-color)] text-[var(--offblack)] border-b-[2px] border-[var(--offblack)] py-1.5 px-4 text-center font-mono text-xs md:text-sm font-bold uppercase tracking-widest flex items-center justify-center gap-3">
-        <span className="animate-pulse">🚧</span>
-        This site is currently under development
-        <span className="animate-pulse">🚧</span>
-      </div>
-
       <div 
-        className={`fixed top-8 md:top-9 left-0 w-full h-32 z-40 transition-opacity duration-500 pointer-events-none ${isScrolled ? 'opacity-100' : 'opacity-0'}`}
+        className={`fixed top-0 left-0 w-full h-32 z-40 transition-opacity duration-500 pointer-events-none ${isScrolled ? 'opacity-100' : 'opacity-0'}`}
         style={{
           backdropFilter: 'blur(12px)',
           WebkitBackdropFilter: 'blur(12px)',
@@ -121,7 +114,7 @@ export default function Header() {
           WebkitMaskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)'
         }}
       ></div>
-      <header className="fixed top-8 md:top-9 left-0 w-full py-4 md:py-8 z-50 mix-blend-difference text-[#f5f5f0]">
+      <header className="fixed top-0 left-0 w-full py-4 md:py-8 z-50 mix-blend-difference text-[#f5f5f0]">
         <div className="flex flex-wrap items-center justify-between max-w-full mx-auto px-4 md:px-8 gap-y-6">
         <div className="text-2xl md:text-3xl font-bold tracking-tight">
           {splitText("UMD")}

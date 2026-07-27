@@ -12,6 +12,7 @@ gsap.registerPlugin(ScrollTrigger, CustomEase);
 
 import { Toaster } from 'sonner';
 import ResponsibleUseToast from './ResponsibleUseToast';
+import DevelopmentToast from './DevelopmentToast';
 
 export default function ClientLayout({
   children,
@@ -106,8 +107,14 @@ export default function ClientLayout({
         <div ref={splashRef} className="fixed inset-0 z-[100] flex pointer-events-none">
            {/* Shutter logo centered over everything */}
            <div className="absolute inset-0 flex items-center justify-center z-10 shutter-logo">
-              <div className="w-16 h-16 border-[3px] border-[var(--offblack)] bg-[var(--accent-color)] flex items-center justify-center shadow-[4px_4px_0px_var(--offblack)]">
-                <Terminal strokeWidth={2.5} className="w-8 h-8 text-[var(--offblack)]" />
+              <div className="relative">
+                {/* Radiation signal border beat animation */}
+                <div className="absolute inset-0 border-[3px] border-[var(--offblack)] bg-[var(--accent-color)] rounded-sm animate-radiation pointer-events-none -z-10"></div>
+                
+                {/* Main logo */}
+                <div className="relative w-16 h-16 border-[3px] border-[var(--offblack)] bg-[var(--accent-color)] flex items-center justify-center shadow-[4px_4px_0px_var(--offblack)]">
+                  <Terminal strokeWidth={2.5} className="w-8 h-8 text-[var(--offblack)]" />
+                </div>
               </div>
            </div>
 
@@ -128,6 +135,7 @@ export default function ClientLayout({
       
       <Toaster position="bottom-center" />
       <ResponsibleUseToast />
+      <DevelopmentToast />
     </>
   );
 }
