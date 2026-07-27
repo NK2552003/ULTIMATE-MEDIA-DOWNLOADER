@@ -139,3 +139,11 @@ $RECYCLE.BIN/
 .directory
 .Trash-*
 .nfs*
+
+# Next.js
+/.next/
+/out/
+build/
+.vercel
+*.tsbuildinfo
+next-env.d.ts
