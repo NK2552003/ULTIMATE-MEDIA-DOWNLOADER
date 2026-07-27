@@ -4,8 +4,24 @@ import Footer from '@/components/Footer';
 import { GitBranch, GitPullRequest, Bug, Lightbulb, Code2, MessageSquare, Heart, Star } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Contributing | UMD',
-  description: 'Learn how to contribute to UMD — from bug reports to new platform handlers. All contributions welcome.',
+  title: "Contributing",
+  description:
+    "Learn how to contribute to UMD — from bug reports and feature requests to adding new platform handlers. All contributions are welcome.",
+  openGraph: {
+    title: "Contributing to Ultimate Media Downloader",
+    description: "Join the UMD community. Submit bug reports, feature requests, or new platform handlers.",
+    url: "https://ultimate-media-downloader.fun/contributing",
+    images: [{ url: "https://ultimate-media-downloader.fun/og-image.jpg", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contribute to UMD",
+    description: "How to contribute to Ultimate Media Downloader.",
+    images: ["https://ultimate-media-downloader.fun/og-image.jpg"],
+  },
+  alternates: {
+    canonical: "https://ultimate-media-downloader.fun/contributing",
+  },
 };
 
 const WAYS_TO_CONTRIBUTE = [

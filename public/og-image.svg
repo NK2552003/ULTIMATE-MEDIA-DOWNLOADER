@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#f4f1ee"/>
+  
+  <!-- Subtle noise texture via filter -->
+  <filter id="noise">
+    <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+    <feColorMatrix type="saturate" values="0"/>
+    <feBlend in="SourceGraphic" mode="multiply" result="noisy"/>
+    <feComposite in="noisy" in2="SourceGraphic" operator="in"/>
+  </filter>
+  <rect width="1200" height="630" fill="#f4f1ee" filter="url(#noise)" opacity="0.3"/>
+  
+  <!-- Terminal cursor top left -->
+  <text x="60" y="110" font-family="'PP Neue Montreal', 'Helvetica Neue', Arial, sans-serif" font-weight="800" font-size="52" fill="#3a3a38" letter-spacing="-2">
+    &gt;_
+  </text>
+  
+  <!-- Main Heading -->
+  <text x="60" y="290" font-family="'PP Neue Montreal', 'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="86" fill="#3a3a38" letter-spacing="-4">
+    Ultimate Media
+  </text>
+  <text x="60" y="380" font-family="'PP Neue Montreal', 'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="86" fill="#3a3a38" letter-spacing="-4">
+    Downloader
+  </text>
+  
+  <!-- Subtitle -->
+  <text x="60" y="450" font-family="'PP Neue Montreal', 'Helvetica Neue', Arial, sans-serif" font-weight="400" font-size="28" fill="#3a3a38" opacity="0.7" letter-spacing="-0.5">
+    Download from 1000+ platforms with one command.
+  </text>
+
+  <!-- Divider line -->
+  <line x1="60" y1="490" x2="1140" y2="490" stroke="#3a3a38" stroke-width="1" opacity="0.15"/>
+  
+  <!-- Bottom left: UMD brand -->
+  <text x="60" y="560" font-family="'PP Neue Montreal', 'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="32" fill="#3a3a38" letter-spacing="-1">
+    UMD
+  </text>
+  
+  <!-- Bottom right: URL -->
+  <text x="1140" y="560" text-anchor="end" font-family="'PP Neue Montreal', 'Helvetica Neue', Arial, sans-serif" font-weight="400" font-size="22" fill="#3a3a38" opacity="0.5" letter-spacing="-0.3">
+    ultimate-media-downloader.fun
+  </text>
+</svg>

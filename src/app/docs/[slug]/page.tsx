@@ -16,10 +16,31 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const doc = getDocBySlug(slug);
   if (!doc) {
-    return { title: 'Not Found' };
+    return { title: "Not Found" };
   }
+
+  const title = `${doc.slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())}`;
+  const description = `UMD documentation: ${title}. Complete guide for Ultimate Media Downloader — install, configure, and use across 1000+ platforms.`;
+  const canonical = `https://ultimate-media-downloader.fun/docs/${slug}`;
+
   return {
-    title: `${doc.slug.toUpperCase()} | UMD Documentation`,
+    title,
+    description,
+    openGraph: {
+      title: `${title} — UMD Documentation`,
+      description,
+      url: canonical,
+      images: [{ url: "https://ultimate-media-downloader.fun/og-image.jpg", width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} | UMD Docs`,
+      description,
+      images: ["https://ultimate-media-downloader.fun/og-image.jpg"],
+    },
+    alternates: {
+      canonical,
+    },
   };
 }
 
