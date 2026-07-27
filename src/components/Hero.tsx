@@ -6,7 +6,7 @@ import { Terminal, Zap, Award, List, RefreshCw, Info, MonitorSmartphone, AppWind
 import { FaYoutube } from "react-icons/fa";
 import PixelStrip from "./PixelStrip";
 
-const basePath = process.env.NODE_ENV === 'production' ? '/ULTIMATE-MEDIA-DOWNLOADER' : '';
+const basePath = '';
 
 export default function Hero() {
   const textRef = useRef(null);

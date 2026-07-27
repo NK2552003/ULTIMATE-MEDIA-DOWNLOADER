@@ -4,6 +4,6 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  basePath: process.env.NODE_ENV === 'production' ? '/ULTIMATE-MEDIA-DOWNLOADER' : '',
+  basePath: '',
 };
 export default nextConfig;
