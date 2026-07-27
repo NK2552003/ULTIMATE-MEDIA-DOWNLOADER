@@ -480,6 +480,82 @@ umd "https://www.pinterest.com/username/board-name/"
 umd "https://www.pinterest.com/username/"
 ```
 
+### YouTube Music
+
+YouTube Music URLs are handled directly without limits:
+
+```bash
+# Track
+umd "https://music.youtube.com/watch?v=VIDEO_ID" --audio-only
+
+# Playlist (fetches all tracks)
+umd "https://music.youtube.com/playlist?list=PLAYLIST_ID" --audio-only
+```
+
+### Amazon Music
+
+```bash
+# Track
+umd "https://music.amazon.com/albums/ALBUM_ID?trackAsin=TRACK_ID" --audio-only
+
+# Album
+umd "https://music.amazon.com/albums/ALBUM_ID" --audio-only
+```
+
+### Twitch & Kick (Live Streams & VODs)
+
+```bash
+# Twitch VOD or Stream
+umd "https://www.twitch.tv/videos/VIDEO_ID"
+
+# Kick Stream or VOD
+umd "https://kick.com/username"
+```
+
+### Vimeo & Dailymotion
+
+```bash
+# Vimeo Video
+umd "https://vimeo.com/VIDEO_ID"
+
+# Dailymotion Video
+umd "https://www.dailymotion.com/video/VIDEO_ID"
+```
+
+### Rumble & BitChute
+
+```bash
+# Rumble Video
+umd "https://rumble.com/v12345-video-title.html"
+
+# BitChute Video
+umd "https://www.bitchute.com/video/VIDEO_ID/"
+```
+
+### TED Talks
+
+```bash
+umd "https://www.ted.com/talks/speaker_name_talk_title"
+```
+
+### Flickr
+
+```bash
+# Single Photo
+umd "https://www.flickr.com/photos/username/PHOTO_ID/"
+
+# Album
+umd "https://www.flickr.com/photos/username/albums/ALBUM_ID/"
+```
+
+### Other Platforms
+
+Many other platforms like **Boomplay, Audiomack, PeerTube, Veoh, TrillerTV, HiAnime, and Adult sites** are also fully supported out-of-the-box. Just pass the URL directly:
+
+```bash
+umd "URL"
+```
+
 ---
 
 ## Downloading Wallpapers

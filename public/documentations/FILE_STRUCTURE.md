@@ -17,7 +17,7 @@ This document describes the organization of files and directories in the Ultimat
 
 ```mermaid
 graph TD
-    ROOT[ULTIMATE-MEDIA-DOWNLOADER/] --> MAIN[Main Python Files]
+    ROOT[umd/] --> MAIN[Main Python Files]
     ROOT --> HANDLERS[handlers/]
     ROOT --> UTILS[utils/]
     ROOT --> SCRIPTS[scripts/]
@@ -49,6 +49,21 @@ graph TD
     HANDLERS --> H16[hqporner_handler.py]
     HANDLERS --> H17[beeg_handler.py]
     HANDLERS --> H18[four_k_wallpapers_handler.py]
+    HANDLERS --> H19[amazon_music_handler.py]
+    HANDLERS --> H20[audiomack_handler.py]
+    HANDLERS --> H21[bitchute_handler.py]
+    HANDLERS --> H22[boomplay_handler.py]
+    HANDLERS --> H23[dailymotion_handler.py]
+    HANDLERS --> H24[flickr_handler.py]
+    HANDLERS --> H25[kick_handler.py]
+    HANDLERS --> H26[peertube_handler.py]
+    HANDLERS --> H27[rumble_handler.py]
+    HANDLERS --> H28[ted_handler.py]
+    HANDLERS --> H29[trillertv_handler.py]
+    HANDLERS --> H30[twitch_handler.py]
+    HANDLERS --> H31[veoh_handler.py]
+    HANDLERS --> H32[vimeo_handler.py]
+    HANDLERS --> H33[youtube_music_handler.py]
 
     UTILS --> U1[utils.py]
     UTILS --> U2[url_validator.py]
@@ -199,6 +214,21 @@ Location: `handlers/`
 | `hqporner_handler.py` | ~701 | HQPorner videos |
 | `beeg_handler.py` | ~901 | Beeg videos |
 | `four_k_wallpapers_handler.py` | ~950 | 4kwallpapers.com image browsing & download |
+| `amazon_music_handler.py` | ~900 | Amazon Music content |
+| `audiomack_handler.py` | ~900 | Audiomack songs and albums |
+| `bitchute_handler.py` | ~900 | BitChute videos |
+| `boomplay_handler.py` | ~900 | Boomplay tracks and albums |
+| `dailymotion_handler.py` | ~900 | Dailymotion videos |
+| `flickr_handler.py` | ~900 | Flickr photos and albums |
+| `kick_handler.py` | ~900 | Kick VODs and streams |
+| `peertube_handler.py` | ~900 | PeerTube videos |
+| `rumble_handler.py` | ~900 | Rumble videos |
+| `ted_handler.py` | ~900 | TED talks |
+| `trillertv_handler.py` | ~900 | TrillerTV videos |
+| `twitch_handler.py` | ~900 | Twitch streams and VODs |
+| `veoh_handler.py` | ~900 | Veoh videos |
+| `vimeo_handler.py` | ~900 | Vimeo videos |
+| `youtube_music_handler.py` | ~924 | YouTube Music tracks and playlists |
 
 ### Handler Structure
 
@@ -338,7 +368,7 @@ Location: `documentations/`
 These files are created during operation:
 
 ```text
-ULTIMATE-MEDIA-DOWNLOADER/
+umd/
     .cache/                  # Download cache
     __pycache__/            # Python bytecode cache
     handlers/__pycache__/   # Handler bytecode cache
@@ -376,6 +406,21 @@ graph LR
         HQPORNER[hqporner_handler.py]
         BEEG[beeg_handler.py]
         WALLPAPER[four_k_wallpapers_handler.py]
+        AMAZON[amazon_music_handler.py]
+        AUDIOMACK[audiomack_handler.py]
+        BITCHUTE[bitchute_handler.py]
+        BOOMPLAY[boomplay_handler.py]
+        DAILYMOTION[dailymotion_handler.py]
+        FLICKR[flickr_handler.py]
+        KICK[kick_handler.py]
+        PEERTUBE[peertube_handler.py]
+        RUMBLE[rumble_handler.py]
+        TED[ted_handler.py]
+        TRILLER[trillertv_handler.py]
+        TWITCH[twitch_handler.py]
+        VEOH[veoh_handler.py]
+        VIMEO[vimeo_handler.py]
+        YOUTUBE_MUSIC[youtube_music_handler.py]
     end
 
     subgraph "Utilities"
@@ -399,6 +444,21 @@ graph LR
     MAIN --> HQPORNER
     MAIN --> BEEG
     MAIN --> WALLPAPER
+    MAIN --> AMAZON
+    MAIN --> AUDIOMACK
+    MAIN --> BITCHUTE
+    MAIN --> BOOMPLAY
+    MAIN --> DAILYMOTION
+    MAIN --> FLICKR
+    MAIN --> KICK
+    MAIN --> PEERTUBE
+    MAIN --> RUMBLE
+    MAIN --> TED
+    MAIN --> TRILLER
+    MAIN --> TWITCH
+    MAIN --> VEOH
+    MAIN --> VIMEO
+    MAIN --> YOUTUBE_MUSIC
     MAIN --> UTILS
     MAIN --> URL_VAL
     MAIN --> UI_COMP

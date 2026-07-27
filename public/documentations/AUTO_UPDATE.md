@@ -11,7 +11,7 @@ Ultimate Media Downloader now includes an automatic update system that checks fo
 Every time you run `umd`, the application:
 
 1. **Checks Current Version**: Reads your installed version
-2. **Fetches Latest Version**: Queries GitHub for the latest release
+2. **Fetches Latest Version**: Queires Codeberg for the latest release
 3. **Compares Versions**: Determines if an update is available
 4. **Prompts for Update**: If a newer version exists, asks if you want to update
 5. **Auto-Updates**: Downloads and installs the latest version with your permission
@@ -36,7 +36,7 @@ umd https://youtube.com/watch?v=example
 If an update is available, you'll see:
 
 ```
-⚠️  New version available: v2.3.0 (current: v2.2.1)
+⚠️  New version available: v3.1.0 (current: v3.0.0)
 Would you like to update now? (Y/n):
 ```
 
@@ -49,13 +49,13 @@ You can manually update at any time using the standalone scripts:
 
 **macOS/Linux:**
 ```bash
-cd /path/to/ULTIMATE-MEDIA-DOWNLOADER
+cd /path/to/umd
 ./scripts/update.sh
 ```
 
 **Windows:**
 ```cmd
-cd C:\path\to\ULTIMATE-MEDIA-DOWNLOADER
+cd C:\path\to\umd
 scripts\update.bat
 ```
 
@@ -65,12 +65,12 @@ You can also update directly using pipx (recommended) or pip:
 
 **Using pipx (recommended - matches installation method):**
 ```bash
-pipx install git+https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git --force
+pipx install git+https://codeberg.org/nk2552003/umd.git --force
 ```
 
 **Using pip:**
 ```bash
-pip install --upgrade git+https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+pip install --upgrade git+https://codeberg.org/nk2552003/umd.git
 ```
 
 ## Features
@@ -95,7 +95,7 @@ pip install --upgrade git+https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER
 
 ### Update Cache
 
-- Reduces API calls to GitHub
+- Reduces API calls to Codeberg
 - Configurable cache duration (default: 1 hour)
 - Automatically refreshed after updates
 
@@ -141,17 +141,17 @@ Examples:
 
 If the automatic update fails:
 
-1. **Check Internet Connection**: Ensure you can access GitHub
+1. **Check Internet Connection**: Ensure you can access Codeberg
 2. **Check Permissions**: You may need administrator/sudo privileges
 3. **Use Manual Update**: Run the standalone update script
-4. **Use pip Directly**: `pip install --upgrade git+https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git`
+4. **Use pip Directly**: `pip install --upgrade git+https://codeberg.org/nk2552003/umd.git`
 
 ### Version Check Fails
 
 If version checking fails:
 - The application continues normally without interruption
 - Check your internet connection
-- GitHub API may be rate-limited (rare)
+- Codeberg API may be rate-limited (rare)
 - Cache will be used if available
 
 ### Cache Issues
@@ -179,18 +179,18 @@ del %USERPROFILE%\.umd_version_cache.json
 ### Dependencies
 
 - `packaging`: For semantic version parsing
-- `requests`: For GitHub API calls
+- `requests`: For Codeberg API calls
 - Standard library modules for OS detection and caching
 
-### GitHub API
+### Codeberg API
 
-- Endpoint: `https://api.github.com/repos/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/releases/latest`
+- Endpoint: `https://codeberg.org/api/v1/repos/{self.repo}/releases/latest`
 - Rate limit: 60 requests/hour (unauthenticated)
 - Cached responses minimize API calls
 
 ## Security
 
-- Only downloads from official GitHub repository
+- Only downloads from official Codeberg repository
 - Uses HTTPS for all connections
 - Verifies versions before updating
 - No automatic installation without user consent
@@ -200,7 +200,7 @@ del %USERPROFILE%\.umd_version_cache.json
 1. **Keep Updated**: Always accept updates for latest features and security fixes
 2. **Backup Config**: Your config files are preserved during updates
 3. **Check Release Notes**: Review changes in new versions
-4. **Report Issues**: If updates fail, report on GitHub
+4. **Report Issues**: If updates fail, report on Codeberg
 
 ## Related Files
 
@@ -227,12 +227,12 @@ A: Press 'N' when prompted and continue using your current version.
 **Q: Can I update manually?**  
 A: Yes, use the standalone update scripts or pip install command.
 
-**Q: What happens if GitHub is down?**  
+**Q: What happens if Codeberg is down?**  
 A: The app continues normally using cached version info or assuming current version is latest.
 
 ## Support
 
 For issues or questions about the update system:
-- Open an issue on GitHub
+- Open an issue on CodeBerg
 - Check existing issues for similar problems
 - Include error messages and your OS version

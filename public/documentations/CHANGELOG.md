@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Table of Contents
 
+- [Version 3.0.1](#version-301)
+- [Version 3.0.0](#version-300)
 - [Version 2.2.1](#version-221)
 - [Version 2.2.0](#version-220)
 - [Version 2.1.0](#version-210)
@@ -15,6 +17,40 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - [Version 1.0.5](#version-105)
 - [Version 1.0.0](#version-100)
 - [Roadmap](#roadmap)
+
+---
+
+## Version 3.0.1
+
+**Release Date**: July 2026
+
+### Added
+
+- **YouTube Music Handler**: Integrated `youtube_music_handler.py` to properly detect and handle `music.youtube.com` links.
+
+---
+
+## Version 3.0.0
+
+**Release Date**: June 2026
+
+This is a major release introducing massive platform expansion, AI integration, and enriched terminal experiences.
+
+### Added
+
+- **14 New Platform Handlers**: 
+  - **Music**: Amazon Music, Boomplay, Audiomack
+  - **Video/Streaming**: Dailymotion, Vimeo, Rumble, Twitch, Kick, TED, BitChute, Flickr, PeerTube, Veoh, TrillerTV
+- **Concurrent Downloading**: Added robust concurrent downloading support across all handlers to significantly speed up batch downloads.
+- **Terminal Image Rendering**: Added `sixel` support to render images (e.g. thumbnails, wallpapers) directly in modern terminal emulators.
+- **AI-Powered YouTube Scoring**: Introduced optional semantic matching (`sentence-transformers` and `torch`) to deeply improve the accuracy of YouTube searches when resolving music streams.
+- **Dynamic Patching**: Introduced `patch_handlers.py` to seamlessly manage handler overrides.
+- **Testing Scripts**: Expanded testing coverage with `test_new_handlers.py` and `test_video_handlers.py`.
+
+### Changed
+
+- Updated `ultimate_downloader.py` to seamlessly orchestrate the 14 new handlers.
+- Overhauled `requirements.txt` to include new dependencies (`sixel`) and optional AI dependencies.
 
 ---
 
@@ -343,45 +379,6 @@ Initial release of Ultimate Media Downloader.
 
 ---
 
-## Version History Diagram
-
-```mermaid
-gitGraph
-    commit id: "v1.0.0" tag: "v1.0.0"
-    commit id: "Basic features"
-    commit id: "Bug fixes"
-    commit id: "v1.0.5" tag: "v1.0.5"
-    commit id: "pipx support"
-    commit id: "Install scripts"
-    branch feature/handlers
-    commit id: "Spotify handler"
-    commit id: "Apple Music handler"
-    commit id: "JioSaavn handler"
-    commit id: "Adult handlers"
-    checkout main
-    branch feature/utils
-    commit id: "Utility modules"
-    commit id: "UI components"
-    checkout main
-    merge feature/handlers
-    merge feature/utils
-    commit id: "v2.0.0" tag: "v2.0.0"
-    branch feature/social
-    commit id: "Instagram handler"
-    commit id: "Reddit handler"
-    commit id: "Pinterest handler"
-    commit id: "LinkedIn handler"
-    checkout main
-    merge feature/social
-    commit id: "v2.1.0" tag: "v2.1.0"
-    branch feature/wallpapers
-    commit id: "4kwallpapers handler"
-    commit id: "CLI wallpaper flags"
-    checkout main
-    merge feature/wallpapers
-    commit id: "v2.2.1" tag: "v2.2.1"
-```
-
 ---
 
 ## Upgrade Guide
@@ -401,8 +398,8 @@ gitGraph
 2. Clone the new repository:
 
    ```bash
-   git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
-   cd ULTIMATE-MEDIA-DOWNLOADER
+   git clone https://codeberg.org/nk2552003/umd.git
+   cd umd
    ```
 
 3. Install the new version:
@@ -451,4 +448,4 @@ flowchart LR
 2. Version number is updated in relevant files
 3. Changelog is updated with release notes
 4. Git tag is created for the release
-5. Release is published on GitHub
+5. Release is published on Codeberg

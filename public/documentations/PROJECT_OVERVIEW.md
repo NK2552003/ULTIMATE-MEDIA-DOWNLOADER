@@ -142,6 +142,14 @@ mindmap
 | Eporner | Videos |
 | HQPorner | Videos |
 | Beeg | Videos |
+| Rumble | Videos |
+| Kick | VODs, live streams |
+| TED | Videos |
+| BitChute | Videos |
+| Flickr | Videos, Images |
+| PeerTube | Videos |
+| Veoh | Videos |
+| TrillerTV | Videos, Streams |
 
 ### Music Platforms
 
@@ -150,7 +158,13 @@ mindmap
 | Spotify | Tracks, albums, playlists (via YouTube) |
 | SoundCloud | Tracks, playlists, user uploads |
 | Apple Music | Songs, albums (via YouTube) |
-| JioSaavn | Tracks, albums, playlists (via YouTube) || Gaana | Tracks, albums, playlists, artists (via YouTube) || Bandcamp | Tracks, albums |
+| JioSaavn | Tracks, albums, playlists (via YouTube) |
+| Gaana | Tracks, albums, playlists, artists (via YouTube) |
+| Bandcamp | Tracks, albums |
+| Amazon Music | Tracks, albums, playlists |
+| Boomplay | Tracks, albums |
+| Audiomack | Tracks, albums, playlists |
+| YouTube Music | Tracks, albums, playlists |
 
 ### Social Media
 
@@ -236,6 +250,8 @@ graph TB
 | spotipy | Spotify API wrapper |
 | cloudscraper | Cloudflare bypass |
 | BeautifulSoup | HTML parsing |
+| sixel | Terminal image rendering |
+| sentence-transformers | AI YouTube search scoring (Optional) |
 
 ### Why These Technologies
 
@@ -268,9 +284,9 @@ graph TB
 
 | Category | Count |
 |----------|-------|
-| Python Files | 21 |
-| Handler Modules | 18 |
-| Utility Modules | 8 |
+| Python Files | 35+ |
+| Handler Modules | 32 |
+| Utility Modules | 9 |
 | Shell Scripts | 8 |
 | Documentation | 11+ |
 

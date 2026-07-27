@@ -1,0 +1,657 @@
+.scene {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 0 1rem;
+}
+
+.macbook {
+  width: 100%;
+  max-width: 1200px;
+  position: relative;
+}
+
+.lid {
+  position: relative;
+  background: #000000;
+  border-radius: 14px 14px 4px 4px;
+  padding: 7px 7px 10px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.lid::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 14px 14px 4px 4px;
+  background: linear-gradient(155deg,rgba(255,255,255,0.03) 0%,transparent 38%);
+  pointer-events: none;
+  z-index: 20;
+}
+
+.screenWrap {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  aspect-ratio: 16/10;
+  background: var(--offwhite);
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+.screenWrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(128deg,rgba(0,0,0,0.02) 0%,transparent 50%);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Desktop */
+.desktop {
+  position: absolute;
+  inset: 0;
+  background: url('/totoro_wallpaper.jpg') center/cover no-repeat;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Menu Bar */
+.menubar {
+  height: 24px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  font-size: 11px;
+  color: #111;
+  z-index: 100;
+}
+.menuLeft, .menuRight {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.menuItem, .menuIcon {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.menuTime {
+  font-weight: 500;
+}
+
+.desktopArea {
+  flex: 1;
+  position: relative;
+}
+
+/* Dock */
+.dockWrapper {
+  position: absolute;
+  bottom: 8px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  z-index: 100;
+}
+
+.dock {
+  height: 52px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  gap: 10px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.4);
+}
+
+.dockIcon {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.dockIcon:hover {
+  transform: scale(1.15) translateY(-4px);
+}
+.dockIcon.active::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #333;
+}
+
+/* Windows */
+.window {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(30px);
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 10px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.4);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 1;
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+.titlebar {
+  height: 28px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.8), rgba(255,255,255,0.4));
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  position: relative;
+}
+
+.windowControls {
+  display: flex;
+  gap: 7px;
+  position: absolute;
+  left: 12px;
+}
+
+.control {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
+}
+.control.close { background: #ff5f56; }
+.control.minimize { background: #ffbd2e; }
+.control.maximize { background: #27c93f; }
+
+.title {
+  flex: 1;
+  text-align: center;
+  font-size: 11px;
+  color: #333;
+  font-weight: 500;
+}
+
+/* Terminal Window */
+.terminalWindow {
+  top: 8%;
+  left: 10%;
+  width: 52%;
+  height: 55%;
+  background: rgba(30, 30, 30, 0.95);
+  border-color: rgba(255,255,255,0.15);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.2);
+}
+.terminalWindow .titlebar {
+  background: rgba(40, 40, 40, 0.95);
+  border-bottom-color: rgba(0,0,0,0.6);
+}
+.terminalWindow .title {
+  color: #ccc;
+}
+
+.terminal {
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: clamp(7px, 1.2vw, 13px);
+  line-height: 1.58;
+  position: relative;
+  color: var(--offwhite);
+  overflow: hidden;
+}
+
+.termOuter {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  overflow: hidden;
+  padding: clamp(5px, 0.9vw, 11px);
+}
+
+.termInner {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  transform: translateY(0px);
+  transition: transform 0.35s cubic-bezier(0.22,0.61,0.36,1);
+  will-change: transform;
+}
+
+.termInner :global(.ln) {
+  font-size: clamp(7px, 1.15vw, 12.5px);
+  line-height: 1.58;
+  margin: 0;
+  font-family: var(--font-mono);
+  color: #eee;
+}
+
+.termInner :global(.bold) { font-weight: 700; }
+
+.termInner :global(.ascii-block) {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: clamp(3px,0.45vw,6px) clamp(4px,0.7vw,9px);
+  margin-bottom: clamp(3px,0.4vw,5px);
+  text-align: center;
+}
+
+.termInner :global(.ascii-title) {
+  color: #fff;
+  font-size: clamp(13px, 2.8vw, 32px);
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  line-height: 1;
+}
+
+.termInner :global(.imode-box) {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: clamp(3px,0.45vw,6px) clamp(5px,0.8vw,11px);
+  margin-bottom: clamp(2px,0.35vw,5px);
+}
+
+.termInner :global(.dl-box) {
+  border: 1px dashed rgba(255, 255, 255, 0.5);
+  padding: clamp(2px,0.35vw,5px) clamp(4px,0.65vw,9px);
+  margin: clamp(2px,0.3vw,4px) 0;
+}
+
+.termInner :global(.sep) {
+  color: #aaa;
+  opacity: 0.8;
+  text-align: center;
+  font-size: clamp(5px, 0.7vw, 8px);
+  letter-spacing: 0.2em;
+  margin: 2px 0;
+}
+
+.termInner :global(.cursor-blink) {
+  display: inline-block;
+  width: 0.55em;
+  height: 0.9em;
+  background: #eee;
+  vertical-align: text-bottom;
+  animation: blink 1s step-end infinite;
+}
+
+.termInner :global(.c-white) { color: #fff; }
+.termInner :global(.c-gray) { color: #999; }
+.termInner :global(.c-cyan) { color: #56b6c2; }
+.termInner :global(.c-green) { color: #98c379; }
+.termInner :global(.c-yellow) { color: #e5c07b; }
+.termInner :global(.c-purple) { color: #c678dd; }
+.termInner :global(.c-red) { color: #e06c75; font-style: italic; }
+.termInner :global(.c-orange) { color: #d19a66; }
+.termInner :global(.c-pink) { color: #e06c75; opacity: 0.8; }
+
+/* Finder Window */
+.finderWindow {
+  top: 15%;
+  left: 35%;
+  width: 48%;
+  height: 55%;
+  z-index: 2;
+}
+
+.finderBody {
+  display: flex;
+  flex: 1;
+}
+.finderSidebar {
+  width: 130px;
+  background: rgba(255,255,255,0.4);
+  border-right: 1px solid rgba(0,0,0,0.1);
+  padding: 12px 8px;
+  font-size: 11px;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-weight: 500;
+}
+.sidebarItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 8px;
+  border-radius: 6px;
+}
+.sidebarItem:hover {
+  background: rgba(0,0,0,0.06);
+}
+
+.finderMain {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: rgba(255,255,255,0.7);
+}
+.finderToolbar {
+  padding: 8px 16px;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  font-size: 11px;
+  font-weight: 600;
+  color: #444;
+  background: rgba(255,255,255,0.4);
+}
+
+.finderItems {
+  padding: 20px;
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+
+.fileItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 75px;
+  text-align: center;
+}
+
+.fileIconFolder, .fileIconAudio {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.9);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.fileName {
+  font-size: 11px;
+  color: #222;
+  word-break: break-all;
+  line-height: 1.2;
+}
+
+/* Music Player */
+.musicPlayerWindow {
+  top: 45%;
+  left: 55%;
+  width: 32%;
+  height: 22%;
+  z-index: 3;
+  background: rgba(30, 30, 30, 0.85);
+  color: white;
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  pointer-events: none;
+  border-color: rgba(255,255,255,0.15);
+}
+.musicPlayerWindow .titlebar {
+  background: rgba(40, 40, 40, 0.7);
+  border-bottom-color: rgba(0,0,0,0.4);
+}
+.musicPlayerWindow .title {
+  color: #ccc;
+}
+
+.musicPlayerWindow.musicVisible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.musicContent {
+  display: flex;
+  padding: 16px;
+  gap: 16px;
+  align-items: center;
+  height: 100%;
+}
+.albumArt {
+  width: clamp(50px, 7vw, 70px);
+  height: clamp(50px, 7vw, 70px);
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+}
+.musicInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.songTitle {
+  font-size: clamp(12px, 1.5vw, 15px);
+  font-weight: 600;
+}
+.songArtist {
+  font-size: clamp(10px, 1.2vw, 12px);
+  color: #aaa;
+}
+.controls {
+  display: flex;
+  gap: 14px;
+  margin-top: 4px;
+  align-items: center;
+  color: #eee;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.base {
+  background: #000000;
+  border-radius: 0 0 16px 16px;
+  height: 18px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: none;
+}
+
+.base::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.trackpad {
+  width: 20%;
+  height: 8px;
+  background: rgba(255,255,255,0.02);
+  border-radius: 3px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.shadow {
+  display: none;
+}
+
+.outerFade {
+  position: absolute;
+  bottom: -20px;
+  left: -20px;
+  right: -20px;
+  height: 50%;
+  background: linear-gradient(to bottom, transparent 0%, rgba(58, 58, 56, 0.7) 45%, var(--offblack) 80%, var(--offblack) 100%);
+  pointer-events: none;
+  z-index: 30;
+}
+
+.progWrap {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: clamp(6px, 1vw, 11px);
+  margin: 2px 0;
+}
+
+.progBar {
+  flex: 1;
+  height: clamp(3px, 0.45vw, 5px);
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.progFill {
+  height: 100%;
+  background: #56b6c2;
+  border-radius: 0;
+  width: 0%;
+  transition: width 0.08s linear;
+}
+
+.successBox {
+  border: 1px dashed rgba(255, 255, 255, 0.5);
+  padding: clamp(2px,0.35vw,5px) clamp(4px,0.65vw,9px);
+  margin: clamp(2px,0.3vw,4px) 0;
+  text-align: center;
+}
+
+/* Responsive Design for Mobile Devices */
+@media (max-width: 768px) {
+  .scene {
+    padding: 0 0.5rem;
+  }
+  
+  /* Convert Macbook frame to a sleek Tablet/Screen frame on mobile */
+  .lid {
+    padding: 4px; /* Thin bezel */
+    border-radius: 16px;
+  }
+  .lid::before {
+    display: none;
+  }
+  .base {
+    display: none; /* Hide keyboard base */
+  }
+  .screenWrap {
+    aspect-ratio: 3 / 4; /* Taller screen for mobile */
+    border-radius: 12px;
+  }
+
+  /* Adjust Menu Bar */
+  .menubar {
+    padding: 0 8px;
+  }
+  .menuItem {
+    display: none; /* Hide most menu items */
+  }
+  .menuItem:first-child, .menuItem:nth-child(2) {
+    display: flex; /* Keep Apple logo and "Finder" */
+  }
+  .menuRight .menuIcon:nth-child(1),
+  .menuRight .menuIcon:nth-child(3),
+  .menuRight .menuIcon:nth-child(4) {
+    display: none; /* Hide some icons to save space */
+  }
+
+  /* Adjust Windows to stack vertically */
+  .terminalWindow {
+    top: 5%;
+    left: 2%;
+    width: 96%;
+    height: 35%;
+  }
+  
+  .finderWindow {
+    top: 42%;
+    left: 2%;
+    width: 96%;
+    height: 42%;
+    z-index: 10;
+  }
+  
+  .musicPlayerWindow {
+    top: 25%;
+    left: 10%;
+    width: 80%;
+    height: 15%;
+    z-index: 20;
+  }
+
+  /* Adjust Finder internals */
+  .finderSidebar {
+    width: 80px;
+    padding: 8px 4px;
+    font-size: 10px;
+  }
+  .finderItems {
+    padding: 10px;
+    gap: 12px;
+  }
+  .fileIconFolder, .fileIconAudio {
+    width: 36px;
+    height: 36px;
+  }
+
+  /* Adjust Dock */
+  .dockWrapper {
+    bottom: 6px;
+  }
+  .dock {
+    height: 44px;
+    padding: 0 6px;
+    gap: 8px;
+    border-radius: 12px;
+  }
+  .dockIcon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .screenWrap {
+    aspect-ratio: 4 / 7; /* Even taller for very small phones */
+  }
+  
+  .terminalWindow {
+    height: 30%;
+  }
+  .finderWindow {
+    height: 45%;
+    top: 38%;
+  }
+  .musicPlayerWindow {
+    height: 120px;
+  }
+}

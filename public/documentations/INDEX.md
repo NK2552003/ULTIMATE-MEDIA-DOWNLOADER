@@ -139,7 +139,7 @@ If you cannot find what you need:
 1. Check the [Troubleshooting Guide](TROUBLESHOOTING.md)
 2. Search the documentation for keywords
 3. Run `umd --help` for command reference
-4. Create an issue on GitHub
+4. Create an issue on Codeberg
 
 ---
 

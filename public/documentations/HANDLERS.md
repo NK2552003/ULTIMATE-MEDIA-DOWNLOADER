@@ -24,7 +24,9 @@ This document describes the platform-specific handlers in the Ultimate Media Dow
 18. [HQPorner Handler](#hqporner-handler)
 19. [Beeg Handler](#beeg-handler)
 20. [4K Wallpapers Handler](#4k-wallpapers-handler)
-21. [Creating Custom Handlers](#creating-custom-handlers)
+21. [YouTube Music Handler](#youtube-music-handler)
+22. [Additional Handlers (v3.0.0)](#additional-handlers-v300)
+23. [Creating Custom Handlers](#creating-custom-handlers)
 
 ---
 
@@ -1419,6 +1421,342 @@ https://4kwallpapers.com/images/wallpapers/anime-girl-3840x2160-12345.png
 
 ---
 
+
+## YouTube Music Handler
+
+**File**: `handlers/youtube_music_handler.py`
+
+The YouTube Music Handler downloads tracks, albums, and playlists from music.youtube.com. It uses the YouTube Music Innertube API to bypass extraction limits and fetch complete playlists.
+
+### Supported Content Types
+
+| Content Type | URL Pattern | Example |
+|--------------|-------------|---------|
+| Single Track | `/watch?v=...` | `https://music.youtube.com/watch?v=xxx` |
+| Playlist | `/playlist?list=...` | `https://music.youtube.com/playlist?list=xxx` |
+| Album/Browse | `/browse/...` | `https://music.youtube.com/browse/xxx` |
+
+### Processing Flow
+
+```mermaid
+flowchart TD
+    A[YouTube Music URL] --> B[Detect content type]
+    B --> C{Type?}
+    C -->|Track| D[_download_track]
+    C -->|Playlist/Album| E[_download_playlist]
+    
+    D --> F[Fetch metadata]
+    F --> G[Download via yt-dlp]
+    
+    E --> H[Extract playlist ID]
+    H --> I[Fetch ALL tracks via Innertube API]
+    I --> J{API Success?}
+    J -->|Yes| K[Show tracks & ask selection]
+    J -->|No| L[yt-dlp fallback]
+    L --> K
+    K --> M[Concurrent batch download]
+```
+
+### Key Features
+- **Innertube API Integration**: Uses the 'next' API with continuation tokens to fetch ALL tracks in a playlist (bypassing the usual 100-track limit).
+- **Concurrent Downloading**: Uses parallel workers for maximum speed when downloading playlists and albums.
+- **Rich Metadata Extraction**: High-quality metadata embedding including title, artist, album, and thumbnail.
+- **yt-dlp Fallback**: Seamless fallback extraction if the primary API fails.
+- **Interactive UI**: Rich progress bars and track selection UI.
+
+---
+
+
+## Amazon Music Handler
+
+**File**: `handlers/amazon_music_handler.py`
+
+The Amazon Music Handler enables downloading music from Amazon Music by extracting metadata and searching for equivalent content on YouTube.
+
+### Supported Content Types
+
+| Content Type | URL Pattern | Example |
+|--------------|-------------|---------|
+| Track | `/albums/...` | `https://music.amazon.com/albums/xxx?trackAsin=yyy` |
+| Album | `/albums/...` | `https://music.amazon.com/albums/xxx` |
+| Playlist | `/playlists/...` | `https://music.amazon.com/playlists/xxx` |
+| Artist | `/artists/...` | `https://music.amazon.com/artists/xxx` |
+
+### Key Features
+- High-quality metadata embedding (title, artist, album)
+- Automatic album and playlist downloading
+- YouTube search and scoring integration for accurate matching
+- Interactive download capabilities
+
+---
+
+## Boomplay Handler
+
+**File**: `handlers/boomplay_handler.py`
+
+The Boomplay Handler supports downloading music from the Boomplay platform, commonly used for African music.
+
+### Supported Content Types
+
+| Content Type | URL Pattern | Example |
+|--------------|-------------|---------|
+| Track | `/songs/...` | `https://www.boomplay.com/songs/xxx` |
+| Album | `/albums/...` | `https://www.boomplay.com/albums/xxx` |
+| Playlist | `/playlists/...` | `https://www.boomplay.com/playlists/xxx` |
+| Artist | `/artists/...` | `https://www.boomplay.com/artists/xxx` |
+
+### Key Features
+- Full metadata extraction via web scraping
+- Batch downloading for albums and playlists
+- YouTube fallback for actual audio retrieval
+
+---
+
+## Audiomack Handler
+
+**File**: `handlers/audiomack_handler.py`
+
+The Audiomack Handler downloads songs, albums, and playlists from Audiomack by fetching metadata and using YouTube for high-quality audio downloads.
+
+### Supported Content Types
+
+| Content Type | URL Pattern | Example |
+|--------------|-------------|---------|
+| Song | `/song/...` | `https://audiomack.com/user/song/xxx` |
+| Album | `/album/...` | `https://audiomack.com/user/album/xxx` |
+| Playlist | `/playlist/...` | `https://audiomack.com/user/playlist/xxx` |
+| Artist | `/artist/...` | `https://audiomack.com/user` |
+
+### Key Features
+- Comprehensive metadata extraction
+- Support for artist discographies
+- Intelligent YouTube scoring for accuracy
+
+---
+
+## Dailymotion Handler
+
+**File**: `handlers/dailymotion_handler.py`
+
+Downloads video content from Dailymotion, supporting both single videos and collections.
+
+### Supported Content Types
+
+| Content Type | URL Pattern | Example |
+|--------------|-------------|---------|
+| Single Video | `/video/...` | `https://www.dailymotion.com/video/xxx` |
+| Collection | `/(user|playlist)/...` | `https://www.dailymotion.com/user/xxx` |
+
+### Key Features
+- High-resolution video extraction (up to 4K if available)
+- Channel/collection batch downloading
+- Robust yt-dlp integration
+
+---
+
+## Vimeo Handler
+
+**File**: `handlers/vimeo_handler.py`
+
+The Vimeo Handler specializes in downloading Vimeo videos, including support for password-protected content.
+
+### Supported Content Types
+
+| Content Type | URL Pattern | Example |
+|--------------|-------------|---------|
+| Single Video | `vimeo.com/...` | `https://vimeo.com/xxx` |
+| Collection | `/channels/...` | `https://vimeo.com/channels/xxx` |
+
+### Key Features
+- Password support for private videos
+- High-quality format selection
+- Collection/channel downloads
+
+---
+
+## Rumble Handler
+
+**File**: `handlers/rumble_handler.py`
+
+Downloads videos and channels from the Rumble platform.
+
+### Supported Content Types
+
+| Content Type | URL Pattern | Example |
+|--------------|-------------|---------|
+| Single Video | `rumble.com/...` | `https://rumble.com/xxx.html` |
+| Channel | `/c/...` | `https://rumble.com/c/xxx` |
+
+### Key Features
+- Direct single video downloads
+- Complete channel archival support
+- Format and quality selection
+
+---
+
+## Twitch Handler
+
+**File**: `handlers/twitch_handler.py`
+
+The Twitch Handler downloads VODs, Clips, and Live Streams from Twitch.
+
+### Supported Content Types
+
+| Content Type | URL Pattern | Example |
+|--------------|-------------|---------|
+| VOD | `/videos/...` | `https://www.twitch.tv/videos/xxx` |
+| Clip | `clips.twitch.tv/...` | `https://clips.twitch.tv/xxx` |
+| Live Stream | `twitch.tv/...` | `https://www.twitch.tv/xxx` |
+
+### Key Features
+- Live stream recording capabilities
+- Cookie support for subscriber-only VODs
+- Batch VOD list downloading
+- Quality and format options
+
+---
+
+## Kick Handler
+
+**File**: `handlers/kick_handler.py`
+
+Downloads VODs and Live Streams from the Kick streaming platform.
+
+### Supported Content Types
+
+| Content Type | URL Pattern | Example |
+|--------------|-------------|---------|
+| VOD | `/video/...` | `https://kick.com/video/xxx` |
+| Live Stream | `kick.com/...` | `https://kick.com/xxx` |
+
+### Key Features
+- Live stream capture
+- VOD extraction with metadata
+- yt-dlp integration with platform-specific options
+
+---
+
+## TED Handler
+
+**File**: `handlers/ted_handler.py`
+
+Downloads TED Talks with support for specific subtitle languages and entire collections.
+
+### Supported Content Types
+
+| Content Type | URL Pattern | Example |
+|--------------|-------------|---------|
+| Talk | `/talks/...` | `https://www.ted.com/talks/xxx` |
+| Collection | `/playlists/...` | `https://www.ted.com/playlists/xxx` |
+
+### Key Features
+- Subtitle language selection
+- High-quality video extraction
+- Playlist and series support
+
+---
+
+## BitChute Handler
+
+**File**: `handlers/bitchute_handler.py`
+
+Downloads videos and channel content from BitChute.
+
+### Supported Content Types
+
+| Content Type | URL Pattern | Example |
+|--------------|-------------|---------|
+| Single Video | `/video/...` | `https://www.bitchute.com/video/xxx` |
+| Channel | `/channel/...` | `https://www.bitchute.com/channel/xxx` |
+
+### Key Features
+- Direct video downloads
+- Channel enumeration and batch downloading
+- Quality selection
+
+---
+
+## Flickr Handler
+
+**File**: `handlers/flickr_handler.py`
+
+Downloads photos and albums from Flickr.
+
+### Supported Content Types
+
+| Content Type | URL Pattern | Example |
+|--------------|-------------|---------|
+| Single Photo | `/photos/.../...` | `https://www.flickr.com/photos/user/xxx` |
+| Album | `/albums/...` | `https://www.flickr.com/photos/user/albums/xxx` |
+| User Stream | `/photos/...` | `https://www.flickr.com/photos/user/` |
+
+### Key Features
+- Downloads original/high-resolution images
+- Album batch downloading
+- User photostream downloading
+
+---
+
+## PeerTube Handler
+
+**File**: `handlers/peertube_handler.py`
+
+Downloads content from PeerTube instances (decentralized video hosting).
+
+### Supported Content Types
+
+| Content Type | URL Pattern | Example |
+|--------------|-------------|---------|
+| Single Video | `/w/...` | `https://peertube.example.com/w/xxx` |
+| Channel | `/c/...` | `https://peertube.example.com/c/xxx` |
+| Playlist | `/w/p/...` | `https://peertube.example.com/w/p/xxx` |
+
+### Key Features
+- Supports any valid PeerTube instance URL
+- Video, channel, and playlist downloads
+- Interactive format selection
+
+---
+
+## Veoh Handler
+
+**File**: `handlers/veoh_handler.py`
+
+Downloads videos and user channels from Veoh.
+
+### Supported Content Types
+
+| Content Type | URL Pattern | Example |
+|--------------|-------------|---------|
+| Single Video | `/watch/...` | `https://www.veoh.com/watch/xxx` |
+| User Channel | `/users/...` | `https://www.veoh.com/users/xxx` |
+
+### Key Features
+- Direct video retrieval
+- User channel batch downloads
+- Format selection support
+
+---
+
+## TrillerTV Handler
+
+**File**: `handlers/trillertv_handler.py`
+
+Downloads videos and shows from TrillerTV (formerly FITE).
+
+### Supported Content Types
+
+| Content Type | URL Pattern | Example |
+|--------------|-------------|---------|
+| Single Video | `/watch/...` | `https://www.trillertv.com/watch/xxx` |
+| Show/Event | `/vl/...` | `https://www.trillertv.com/vl/xxx` |
+
+### Key Features
+- Video extraction with quality selection
+- Event/show page parsing
+- Interactive batch downloading
+
+---
 
 ## Creating Custom Handlers
 

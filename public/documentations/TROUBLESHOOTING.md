@@ -352,7 +352,7 @@ pip install -r requirements.txt
 
 **Solutions**:
 
-1. Make sure you are on v2.2.1 or later.
+1. Make sure you are on v3.0.0 or later.
 2. Verify `four_k_wallpapers_handler.py` exists in the `handlers/` directory.
 3. Check for import errors by running `umd --wallpaper` to see if there is a Python error.
 
@@ -595,7 +595,7 @@ If you cannot solve the issue:
 1. Note your operating system and Python version
 2. Copy the full error message
 3. Note the URL you were trying to download (if not private)
-4. Create an issue at: [GitHub Issues](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues)
+4. Create an issue at: [Issues](https://codeberg.org/nk2552003/umd/issues)
 
 ### Update All Dependencies
 
@@ -617,4 +617,4 @@ Most issues can be solved by:
 3. Checking URL validity and permissions
 4. Installing required external tools like FFmpeg
 
-If problems persist, check the GitHub issues or create a new one with detailed information about your problem.
+If problems persist, check the issues or create a new one with detailed information about your problem.

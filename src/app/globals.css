@@ -1,0 +1,118 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --accent-color: #cccccc;
+  --offwhite: #f4f1ee;
+  --offblack: #3a3a38;
+}
+
+@font-face {
+  src: url("https://fonts.cdnfonts.com/css/pp-neue-montreal") format("woff2");
+  font-family: "PP Neue Montreal", sans-serif;
+  font-weight: 400;
+}
+
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: max(10px, calc(100vw / 1512 * 10));
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  overflow-x: clip;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  font-family: "PP Neue Montreal", sans-serif;
+  font-weight: 700;
+  font-size: 1.8rem;
+  letter-spacing: -0.02em;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--offwhite);
+  color: var(--offblack);
+  overflow-x: clip;
+}
+
+/* Background noise effect */
+body::before {
+  content: "";
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: transparent
+    url("http://assets.iceable.com/img/noise-transparent.png") repeat 0 0;
+  background-size: 300px 300px;
+  animation: noise-animation 0.3s steps(5) infinite;
+  opacity: 0.9;
+  will-change: transform;
+  z-index: 100;
+  pointer-events: none;
+}
+
+@keyframes noise-animation {
+  0% { transform: translate(0, 0); }
+  10% { transform: translate(-2%, -3%); }
+  20% { transform: translate(-4%, 2%); }
+  30% { transform: translate(2%, -4%); }
+  40% { transform: translate(-2%, 5%); }
+  50% { transform: translate(-4%, 2%); }
+  60% { transform: translate(3%, 0); }
+  70% { transform: translate(0, 3%); }
+  80% { transform: translate(-3%, 0); }
+  90% { transform: translate(2%, 2%); }
+  100% { transform: translate(1%, 0); }
+}
+
+@keyframes firefly {
+  0% { transform: translateY(0) translateX(0) scale(0); opacity: 0; }
+  20% { transform: translateY(-30px) translateX(10px) scale(1); opacity: 0.8; }
+  60% { transform: translateY(-90px) translateX(-10px) scale(1); opacity: 0.6; }
+  100% { transform: translateY(-150px) translateX(20px) scale(0); opacity: 0; }
+}
+
+.animate-firefly {
+  animation: firefly linear infinite;
+}
+
+@keyframes eq-bounce {
+  0% { transform: scaleY(0.3); }
+  100% { transform: scaleY(1.0); }
+}
+
+@keyframes eq-bounce-x {
+  0% { transform: scaleX(0.2); }
+  100% { transform: scaleX(1.0); }
+}
+
+/* Grid System overrides for components */
+.container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 2rem;
+  height: 100%;
+}
+
+/* Grid Pattern for Changelog */
+.bg-grid-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(58, 58, 56, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(58, 58, 56, 0.1) 1px, transparent 1px);
+  background-size: 40px 40px;
+}

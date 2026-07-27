@@ -63,10 +63,10 @@ The fastest way to install is using the provided scripts.
 
 ```bash
 # Clone the repository
-git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+git clone https://codeberg.org/nk2552003/umd.git
 
 # Enter the directory
-cd ULTIMATE-MEDIA-DOWNLOADER
+cd umd
 
 # Run the install script
 ./scripts/setup.sh
@@ -76,10 +76,10 @@ cd ULTIMATE-MEDIA-DOWNLOADER
 
 ```batch
 :: Clone the repository
-git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+git clone https://codeberg.org/nk2552003/umd.git
 
 :: Enter the directory
-cd ULTIMATE-MEDIA-DOWNLOADER
+cd umd
 
 :: Run the install script
 scripts\setup.bat
@@ -123,8 +123,8 @@ pipx ensurepath
 
 ```bash
 # Clone the repository
-git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
-cd ULTIMATE-MEDIA-DOWNLOADER
+git clone https://codeberg.org/nk2552003/umd.git
+cd umd
 
 # Run the installer
 ./scripts/setup.sh
@@ -177,8 +177,8 @@ source ~/.bashrc
 
 ```bash
 # Clone the repository
-git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
-cd ULTIMATE-MEDIA-DOWNLOADER
+git clone https://codeberg.org/nk2552003/umd.git
+cd umd
 
 # Run the installer
 ./scripts/setup.sh
@@ -227,10 +227,10 @@ Open Command Prompt or PowerShell:
 
 ```batch
 :: Clone the repository
-git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
+git clone https://codeberg.org/nk2552003/umd.git
 
 :: Enter the directory
-cd ULTIMATE-MEDIA-DOWNLOADER
+cd umd
 
 :: Run the installer
 scripts\setup.bat
@@ -245,8 +245,8 @@ scripts\setup.bat
 If you prefer not to use pipx, you can install with pip:
 
 ```bash
-git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
-cd ULTIMATE-MEDIA-DOWNLOADER
+git clone https://codeberg.org/nk2552003/umd.git
+cd umd
 pip3 install -e .
 ```
 
@@ -256,8 +256,8 @@ For a completely isolated installation:
 
 ```bash
 # Clone the repository
-git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
-cd ULTIMATE-MEDIA-DOWNLOADER
+git clone https://codeberg.org/nk2552003/umd.git
+cd umd
 
 # Create virtual environment
 python3 -m venv venv
@@ -283,8 +283,8 @@ pip install --user pipx
 pipx ensurepath
 
 # Clone and install
-git clone https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER.git
-cd ULTIMATE-MEDIA-DOWNLOADER
+git clone https://codeberg.org/nk2552003/umd.git
+cd umd
 pipx install -e .
 ```
 
@@ -392,7 +392,7 @@ chmod +x scripts/install.sh
 
 If you encounter issues not covered here:
 
-1. Check the [GitHub Issues](https://github.com/NK2552003/ULTIMATE-MEDIA-DOWNLOADER/issues)
+1. Check the [Issues](https://codeberg.org/nk2552003/umd/issues)
 2. Run with verbose mode for more details: `umd --verbose "URL"`
 3. Create a new issue with the error message and your system information
 
@@ -427,7 +427,7 @@ pip3 uninstall ultimate-downloader
 To remove the cloned directory:
 
 ```bash
-rm -rf ULTIMATE-MEDIA-DOWNLOADER
+rm -rf umd
 ```
 
 ### Cleaning Up Downloads

@@ -67,6 +67,21 @@ graph TB
         HQPORNER[HQPorner Handler]
         BEEG[Beeg Handler]
         WALLPAPER[4KWallpapers Handler]
+        AMAZON[Amazon Music Handler]
+        AUDIOMACK[Audiomack Handler]
+        BITCHUTE[BitChute Handler]
+        BOOMPLAY[Boomplay Handler]
+        DAILYMOTION[Dailymotion Handler]
+        FLICKR[Flickr Handler]
+        KICK[Kick Handler]
+        PEERTUBE[PeerTube Handler]
+        RUMBLE[Rumble Handler]
+        TED[TED Handler]
+        TRILLER[TrillerTV Handler]
+        TWITCH[Twitch Handler]
+        VEOH[Veoh Handler]
+        VIMEO[Vimeo Handler]
+        YOUTUBE_MUSIC[YouTube Music Handler]
     end
 
     subgraph "Utility Layer"
@@ -108,6 +123,21 @@ graph TB
     MAIN --> PINTEREST
     MAIN --> INSTAGRAM
     MAIN --> WALLPAPER
+    MAIN --> AMAZON
+    MAIN --> AUDIOMACK
+    MAIN --> BITCHUTE
+    MAIN --> BOOMPLAY
+    MAIN --> DAILYMOTION
+    MAIN --> FLICKR
+    MAIN --> KICK
+    MAIN --> PEERTUBE
+    MAIN --> RUMBLE
+    MAIN --> TED
+    MAIN --> TRILLER
+    MAIN --> TWITCH
+    MAIN --> VEOH
+    MAIN --> VIMEO
+    MAIN --> YOUTUBE_MUSIC
 
     SPOTIFY --> SCORER
     APPLE --> SCORER
@@ -158,6 +188,7 @@ graph LR
 | Logger | `logger.py` | Custom logging to suppress verbose output |
 | YouTube Scorer | `youtube_scorer.py` | Ranks YouTube search results for accuracy |
 | Platform Info | `platform_info.py` | Displays supported platform information |
+| Patch Handlers | `patch_handlers.py` | Manages runtime patches and overrides for handlers |
 
 ---
 
@@ -404,6 +435,7 @@ graph TB
         F[progress_display.py] --> |"progress bars<br>download status"| DISPLAY[Progress Display]
         G[ui_components.py] --> |"Icons, Messages<br>ModernUI"| UI_COMP[UI Components]
         H[ui_utils.py] --> |"Rich console wrapper"| WRAPPER[Console Wrapper]
+        I[terminal_image.py] --> |"sixel image<br>rendering"| TERM_IMG[Terminal Image]
     end
 ```
 
@@ -416,6 +448,7 @@ graph TB
 | utils.py | `detect_platform()` | Identifies platform from URL |
 | url_validator.py | `is_valid_url()` | Checks if URL is properly formatted |
 | url_validator.py | `check_url_support()` | Verifies if URL can be downloaded |
+| terminal_image.py | `display_image()` | Renders an image using sixel if supported |
 | ui_components.py | `Icons.get()` | Returns consistent icons for UI |
 | ui_components.py | `Messages.success()` | Formats success messages |
 

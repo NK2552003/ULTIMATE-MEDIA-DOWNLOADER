@@ -18,7 +18,7 @@ The main configuration file is `config.json` located in the project root directo
 ### File Location
 
 ```text
-ULTIMATE-MEDIA-DOWNLOADER/
+umd/
     config.json        <-- Main configuration file
     ultimate_downloader.py
     ...
