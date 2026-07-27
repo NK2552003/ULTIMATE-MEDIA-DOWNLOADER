@@ -6,6 +6,8 @@ import { Terminal, Zap, Award, List, RefreshCw, Info, MonitorSmartphone, AppWind
 import { FaYoutube } from "react-icons/fa";
 import PixelStrip from "./PixelStrip";
 
+const basePath = process.env.NODE_ENV === 'production' ? '/ULTIMATE-MEDIA-DOWNLOADER' : '';
+
 export default function Hero() {
   const textRef = useRef(null);
 
@@ -56,7 +58,7 @@ export default function Hero() {
       </div>
 
       <img 
-        src="/totoro_hero.svg" 
+        src={`${basePath}/totoro_hero.svg`} 
         alt="Totoro Media Downloader" 
         className="hidden lg:block absolute right-0 bottom-0 h-[95vh] max-h-[1200px] w-auto object-contain object-right-bottom z-30 pointer-events-none mix-blend-multiply"
         style={{ 
@@ -149,11 +151,11 @@ export default function Hero() {
         {/* Mobile Graphic */}
         <div className="flex lg:hidden w-full justify-center relative mt-12 mb-4">
            <div className="relative w-[90vw] max-w-[400px]">
-             <img src="/main_2.svg" alt="Graphic" className="w-full h-auto object-contain z-10 relative filter contrast-125" />
+             <img src={`${basePath}/main_2.svg`} alt="Graphic" className="w-full h-auto object-contain z-10 relative filter contrast-125" />
              <div 
                className="absolute inset-0 bg-[url('https://cdn.cosmos.so/00c1aedd-73e6-4e74-a278-2252a626bbff?format=jpeg')] bg-center bg-cover mix-blend-screen opacity-90 z-20 pointer-events-none"
                style={{ 
-                 WebkitMaskImage: 'url(/main_2.svg)', 
+                 WebkitMaskImage: `url(${basePath}/main_2.svg)`, 
                  WebkitMaskSize: 'contain', 
                  WebkitMaskRepeat: 'no-repeat', 
                  WebkitMaskPosition: 'center',
