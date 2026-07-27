@@ -1,6 +1,31 @@
+import type { Metadata } from 'next';
 import DocsHeader from '@/components/DocsHeader';
 import DocsSidebar from '@/components/DocsSidebar';
 import { getDocSlugs } from '@/lib/docs';
+
+export const metadata: Metadata = {
+  title: {
+    default: "Documentation",
+    template: "%s | UMD Docs",
+  },
+  description:
+    "Complete documentation for Ultimate Media Downloader. Installation guides, CLI references, configuration, platform support, and advanced usage.",
+  openGraph: {
+    title: "Documentation — Ultimate Media Downloader",
+    description: "Complete installation, configuration, and usage documentation for UMD.",
+    url: "https://ultimate-media-downloader.fun/docs",
+    images: [{ url: "https://ultimate-media-downloader.fun/og-image.jpg", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "UMD Documentation",
+    description: "Complete documentation for Ultimate Media Downloader.",
+    images: ["https://ultimate-media-downloader.fun/og-image.jpg"],
+  },
+  alternates: {
+    canonical: "https://ultimate-media-downloader.fun/docs",
+  },
+};
 
 export default function DocsLayout({
   children,

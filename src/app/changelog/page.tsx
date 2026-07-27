@@ -7,7 +7,25 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  title: 'Changelog | UMD',
+  title: "Changelog",
+  description:
+    "Stay up to date with the latest UMD releases, bug fixes, new platform support, and feature additions. Full version history of Ultimate Media Downloader.",
+  openGraph: {
+    title: "Changelog — Ultimate Media Downloader",
+    description:
+      "Latest updates, new platform support, and bug fixes in Ultimate Media Downloader (UMD).",
+    url: "https://ultimate-media-downloader.fun/changelog",
+    images: [{ url: "https://ultimate-media-downloader.fun/og-image.jpg", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "UMD Changelog — What's New",
+    description: "Latest updates to Ultimate Media Downloader.",
+    images: ["https://ultimate-media-downloader.fun/og-image.jpg"],
+  },
+  alternates: {
+    canonical: "https://ultimate-media-downloader.fun/changelog",
+  },
 };
 
 export default function ChangelogPage() {

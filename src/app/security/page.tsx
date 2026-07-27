@@ -4,8 +4,24 @@ import Footer from '@/components/Footer';
 import { Shield, AlertTriangle, Lock, Eye, Bug, MessageSquare, CheckCircle, Clock } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Security | UMD',
-  description: 'Security policy, responsible disclosure guidelines, and security practices for UMD — Ultimate Media Downloader.',
+  title: "Security",
+  description:
+    "Security policy, responsible disclosure guidelines, and security best practices for Ultimate Media Downloader (UMD). Report vulnerabilities safely.",
+  openGraph: {
+    title: "Security Policy — Ultimate Media Downloader",
+    description: "Responsible disclosure guidelines and security practices for UMD.",
+    url: "https://ultimate-media-downloader.fun/security",
+    images: [{ url: "https://ultimate-media-downloader.fun/og-image.jpg", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "UMD Security Policy",
+    description: "Security practices and responsible disclosure for Ultimate Media Downloader.",
+    images: ["https://ultimate-media-downloader.fun/og-image.jpg"],
+  },
+  alternates: {
+    canonical: "https://ultimate-media-downloader.fun/security",
+  },
 };
 
 const SECURITY_SECTIONS = [
