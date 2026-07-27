@@ -1,4 +1,4 @@
-import { Apple, Play, Music, Camera, MessageSquare, Zap, Tv, Film, MonitorPlay, Radio, Headphones, Smartphone, Image as ImageIcon, Flame, AudioLines, Monitor, Chrome, Globe } from 'lucide-react'
+import { Apple, Play, Music, Camera, MessageSquare, Zap, Tv, Film, MonitorPlay, Radio, Headphones, Smartphone, Image as ImageIcon, Flame, AudioLines, Monitor, Globe } from 'lucide-react'
 import { SiSpotify, SiTiktok, SiTed, SiRumble, SiReddit, SiPinterest, SiPeertube, SiKick, SiInstagram, SiFlickr, SiDailymotion, SiTwitch, SiTumblr, SiVimeo, SiApplemusic, SiAudiomack } from 'react-icons/si'
 import { FaApple, FaAmazon, FaLinkedin, FaYoutube } from 'react-icons/fa'
 import PixelStrip from './PixelStrip'
