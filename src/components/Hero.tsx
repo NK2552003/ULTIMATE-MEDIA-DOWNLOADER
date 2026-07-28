@@ -123,7 +123,7 @@ export default function Hero() {
             </div>
             <div className="relative inline-block">
               {/* Textured Text Layer */}
-              <h1 className="text-[4rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] leading-[0.85] font-black uppercase tracking-tighter text-transparent bg-clip-text bg-[var(--offblack)] bg-[url('https://cdn.cosmos.so/00c1aedd-73e6-4e74-a278-2252a626bbff?format=jpeg')] bg-center bg-contain bg-blend-screen relative z-10 pointer-events-none">
+              <h1 className="text-[4rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] leading-[0.85] font-black uppercase tracking-tighter text-transparent bg-clip-text bg-[var(--offblack)] bg-[url('/texture.webp')] bg-center bg-contain bg-blend-screen relative z-10 pointer-events-none">
                 Ultimate<br/>
                 <span className="inline-flex items-center gap-2 md:gap-6">
                   Media
@@ -143,7 +143,7 @@ export default function Hero() {
                     <span className="relative z-10 inline-block border-[2px] md:border-[4px] border-[var(--offblack)] px-2 md:px-4 py-0 md:py-1 text-2xl md:text-4xl lg:text-6xl leading-none tracking-normal font-bold bg-[var(--accent-color)] text-[var(--offblack)]">
                       v3.0.1
                     </span>
-                    <span className="absolute inset-0 bg-[url('https://cdn.cosmos.so/00c1aedd-73e6-4e74-a278-2252a626bbff?format=jpeg')] bg-center bg-contain mix-blend-screen opacity-90 z-20 pointer-events-none"></span>
+                    <span className="absolute inset-0 bg-[url('/texture.webp')] bg-center bg-contain mix-blend-screen opacity-90 z-20 pointer-events-none"></span>
                   </span>
                 </span><br/>
                 <span className="opacity-0">Downloader</span>

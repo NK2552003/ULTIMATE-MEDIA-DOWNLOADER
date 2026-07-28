@@ -51,7 +51,7 @@ export default function Compatibility() {
                 [ SUPPORTED PLATFORMS ]
               </div>
             <h2 className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter text-center uppercase leading-[0.9] mb-8">
-              Built for <span className="relative inline-block">what</span><br/>you use
+              Built for <span className="text-transparent bg-clip-text bg-[var(--offblack)] bg-[url('/texture.webp')] bg-center bg-contain bg-blend-screen relative inline-block">what</span><br/>you use
             </h2>
             <p className="text-base md:text-xl font-mono opacity-80 max-w-3xl mx-auto p-4 text-center">
               UMD uses yt-dlp under the hood — supporting virtually every major video and audio platform.

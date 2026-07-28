@@ -58,7 +58,7 @@ export default function Documentation() {
             </div>
             <h2 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-left uppercase leading-[0.9] mb-8">
               Everything explained.<br/>
-              <span className="text-transparent bg-clip-text bg-[var(--offblack)] bg-[url('https://cdn.cosmos.so/00c1aedd-73e6-4e74-a278-2252a626bbff?format=jpeg')] bg-center bg-contain bg-blend-screen relative inline-block">
+              <span className="text-transparent bg-clip-text bg-[var(--offblack)] bg-[url('/texture.webp')] bg-center bg-contain bg-blend-screen relative inline-block">
                 Nothing hidden.
               </span>
             </h2>
@@ -91,7 +91,7 @@ export default function Documentation() {
           
           <div className="lg:w-2/3 p-8 md:p-12 flex flex-wrap items-center gap-4 md:gap-8 justify-center lg:justify-start relative" aria-label="UMD architecture diagram">
             {/* Texture background for the diagram side */}
-            <div className="absolute inset-0 bg-[url('https://cdn.cosmos.so/00c1aedd-73e6-4e74-a278-2252a626bbff?format=jpeg')] bg-center bg-cover mix-blend-screen opacity-50 pointer-events-none z-0"></div>
+            <div className="absolute inset-0 bg-[url('/texture.webp')] bg-center bg-cover mix-blend-screen opacity-50 pointer-events-none z-0"></div>
             
             <b className="text-lg md:text-2xl lg:text-3xl font-black uppercase tracking-tighter border-2 border-[var(--offblack)] px-4 py-2 bg-[var(--offwhite)] shadow-[4px_4px_0px_var(--offblack)] relative z-10">URL</b>
             <i className="text-xl md:text-2xl not-italic font-black relative z-10">→</i>

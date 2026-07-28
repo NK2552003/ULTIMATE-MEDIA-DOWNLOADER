@@ -257,7 +257,7 @@ export default function InstallationGuide() {
             [ INSTALLATION ]
           </div>
           <h2 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-center uppercase leading-[0.9] mb-8">
-            Up and running in <span className="text-transparent bg-clip-text bg-[url('https://cdn.cosmos.so/00c1aedd-73e6-4e74-a278-2252a626bbff?format=jpeg')] bg-center bg-cover invert opacity-90 inline-block">seconds.</span>
+            Up and running in <span className="text-transparent bg-clip-text bg-[url('/texture.webp')] bg-center bg-cover invert opacity-90 inline-block">seconds.</span>
           </h2>
           <p className="text-base md:text-lg lg:text-xl font-mono opacity-80 max-w-3xl mx-auto p-4">
             UMD requires Python 3.9+ and ffmpeg for audio conversion.

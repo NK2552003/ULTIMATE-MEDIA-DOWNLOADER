@@ -51,7 +51,7 @@ export default function LicensePage() {
             <div>
               <h1 className="text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-tighter leading-[0.9] mb-6">
                 Apache<br />
-                <span className="text-transparent bg-clip-text bg-[url('https://cdn.cosmos.so/00c1aedd-73e6-4e74-a278-2252a626bbff?format=jpeg')] bg-center bg-cover mix-blend-multiply inline-block">License 2.0</span>
+                <span className="text-transparent bg-clip-text bg-[url('/texture.webp')] bg-center bg-cover mix-blend-multiply inline-block">License 2.0</span>
               </h1>
               <p className="text-base md:text-lg lg:text-xl font-mono opacity-70 max-w-2xl leading-relaxed">
                 UMD is free and open-source software, licensed under the Apache License, Version 2.0. You are free to use, modify, and distribute it under the terms below.

@@ -116,7 +116,7 @@ export default function SecurityPage() {
             <div>
               <h1 className="text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-tighter leading-[0.9] mb-6">
                 Security<br />
-                <span className="text-transparent bg-clip-text bg-[url('https://cdn.cosmos.so/00c1aedd-73e6-4e74-a278-2252a626bbff?format=jpeg')] bg-center bg-cover mix-blend-multiply inline-block">Policy</span>
+                <span className="text-transparent bg-clip-text bg-[url('/texture.webp')] bg-center bg-cover mix-blend-multiply inline-block">Policy</span>
               </h1>
               <p className="text-base md:text-lg lg:text-xl font-mono opacity-70 max-w-2xl leading-relaxed">
                 Responsible disclosure, security guidelines, and how we handle vulnerability reports for UMD.

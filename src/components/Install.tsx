@@ -67,7 +67,7 @@ export default function Install() {
            <div className="inline-block border-[3px] border-[var(--offwhite)] px-4 py-1 font-mono text-sm tracking-[0.2em] uppercase mb-8 shadow-[4px_4px_0px_var(--offwhite)] bg-[var(--dark-color)]">
             [ INTERACTIVE CLI EXPERIENCE ]
           </div>
-        <h2 className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter text-center uppercase leading-[0.9] mb-8 text-transparent bg-clip-text bg-[url('https://cdn.cosmos.so/00c1aedd-73e6-4e74-a278-2252a626bbff?format=jpeg')] bg-center bg-cover invert opacity-90">
+        <h2 className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter text-center uppercase leading-[0.9] mb-8 text-transparent bg-clip-text bg-[url('/texture.webp')] bg-center bg-cover invert opacity-90">
           Command Line
         </h2>
         <div className="flex flex-col items-center gap-2">

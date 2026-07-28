@@ -108,7 +108,7 @@ export default function ContributingPage() {
           </div>
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-tighter leading-[0.9] mb-6">
             Contributing<br />
-            <span className="text-transparent bg-clip-text bg-[url('https://cdn.cosmos.so/00c1aedd-73e6-4e74-a278-2252a626bbff?format=jpeg')] bg-center bg-cover mix-blend-multiply inline-block">to UMD</span>
+            <span className="text-transparent bg-clip-text bg-[url('/texture.webp')] bg-center bg-cover mix-blend-multiply inline-block">to UMD</span>
           </h1>
           <p className="text-base md:text-lg lg:text-xl font-mono opacity-70 max-w-2xl leading-relaxed">
             UMD is built in the open. Whether you fix a typo, add a platform handler, or report a bug — every contribution makes it better.

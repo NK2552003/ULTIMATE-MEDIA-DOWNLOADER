@@ -82,7 +82,7 @@ export default function Features() {
             [ CORE FEATURES ]
           </div>
           <h2 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-center uppercase leading-[0.9] mb-8">
-            Download <span className="text-transparent bg-clip-text bg-[var(--offblack)] bg-[url('https://cdn.cosmos.so/00c1aedd-73e6-4e74-a278-2252a626bbff?format=jpeg')] bg-center bg-contain bg-blend-screen relative inline-block">Anything.</span><br/>Keep it useful.
+            Download <span className="text-transparent bg-clip-text bg-[var(--offblack)] bg-[url('/texture.webp')] bg-center bg-contain bg-blend-screen relative inline-block">Anything.</span><br/>Keep it useful.
           </h2>
           <p className="text-base md:text-xl font-mono opacity-80 max-w-3xl mx-auto p-4">
             Write it, speak it, paste it — UMD handles the rest, quietly and without fuss.
