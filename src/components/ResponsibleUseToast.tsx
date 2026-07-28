@@ -18,9 +18,9 @@ export default function ResponsibleUseToast() {
 
           {/* Content */}
           <div className="flex-1 z-10">
-            <h4 className="font-mono text-[10px] md:text-xs uppercase tracking-[0.15em] text-[var(--offblack)] opacity-80 font-bold mb-1 md:mb-2">
+            <p className="font-mono text-[10px] md:text-xs uppercase tracking-[0.15em] text-[var(--offblack)] opacity-80 font-bold mb-1 md:mb-2">
               Responsible Use
-            </h4>
+            </p>
             <p className="text-base md:text-lg lg:text-xl font-bold mb-1 md:mb-2 leading-tight uppercase tracking-tight">Your library, your responsibility.</p>
             <p className="text-xs md:text-sm opacity-80 leading-snug md:leading-relaxed font-mono max-w-2xl">
               UMD is for content you own or have permission to save. Respect copyright, creator rights, platform terms, and the laws that apply to you. Never use it to bypass access controls or download protected content.

@@ -18,9 +18,9 @@ export default function DevelopmentToast() {
 
           {/* Content */}
           <div className="flex-1 z-10">
-            <h4 className="font-mono text-[10px] md:text-xs uppercase tracking-[0.15em] text-[var(--offblack)] opacity-80 font-bold mb-1 md:mb-2">
+            <p className="font-mono text-[10px] md:text-xs uppercase tracking-[0.15em] text-[var(--offblack)] opacity-80 font-bold mb-1 md:mb-2">
               Work In Progress
-            </h4>
+            </p>
             <p className="text-base md:text-lg lg:text-xl font-bold mb-1 md:mb-2 leading-tight uppercase tracking-tight">Site under development.</p>
             <p className="text-xs md:text-sm opacity-80 leading-snug md:leading-relaxed font-mono max-w-2xl">
               This website is currently being built. Some features, pages, or designs may be incomplete, broken, or subject to change. Please bear with us while we construct the ultimate media downloader experience.

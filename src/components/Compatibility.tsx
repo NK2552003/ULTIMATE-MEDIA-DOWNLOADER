@@ -17,7 +17,8 @@ export default function Compatibility() {
             src={`${basePath}/totoro_mac.webp`}
             alt="Totoro using a Mac" 
             width={1200}
-            height={400}
+            height={768}
+            sizes="100vw"
             className="absolute inset-0 w-full h-full object-cover object-[100%_center] scale-110 -translate-y-5 filter grayscale contrast-125 opacity-80 group-hover:scale-[1.15] group-hover:-translate-y-6 group-hover:opacity-100 transition-all duration-700"
           />
           <div className="absolute inset-0 bg-white/70 backdrop-blur-md md:hidden pointer-events-none z-0"></div>
@@ -50,7 +51,7 @@ export default function Compatibility() {
                 [ SUPPORTED PLATFORMS ]
               </div>
             <h2 className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter text-center uppercase leading-[0.9] mb-8">
-              Built for <span className="text-transparent bg-clip-text bg-[var(--offblack)] bg-[url('https://cdn.cosmos.so/00c1aedd-73e6-4e74-a278-2252a626bbff?format=jpeg')] bg-center bg-contain bg-blend-screen relative inline-block">what</span><br/>you use
+              Built for <span className="relative inline-block">what</span><br/>you use
             </h2>
             <p className="text-base md:text-xl font-mono opacity-80 max-w-3xl mx-auto p-4 text-center">
               UMD uses yt-dlp under the hood — supporting virtually every major video and audio platform.
@@ -126,10 +127,15 @@ export default function Compatibility() {
 function PlatformIcon({ icon: Icon, name }: { icon: any, name: string }) {
   return (
     <div className="relative group cursor-help flex justify-center p-1 md:p-2">
-      <Icon className="w-6 h-6 md:w-9 md:h-9 group-hover:scale-110 transition-transform duration-300" />
+      <Icon
+        aria-label={name}
+        role="img"
+        title={name}
+        className="w-6 h-6 md:w-9 md:h-9 group-hover:scale-110 transition-transform duration-300"
+      />
       
       {/* Tooltip */}
-      <div className="absolute -top-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none bg-white text-[var(--offblack)] text-[10px] md:text-xs font-bold uppercase tracking-wider py-1.5 px-3 shadow-[4px_4px_0px_var(--offblack)] border-[2px] border-[var(--offblack)] z-50 whitespace-nowrap">
+      <div className="absolute -top-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none bg-white text-[var(--offblack)] text-[10px] md:text-xs font-bold uppercase tracking-wider py-1.5 px-3 shadow-[4px_4px_0px_var(--offblack)] border-[2px] border-[var(--offblack)] z-50 whitespace-nowrap" aria-hidden="true">
         {name}
       </div>
     </div>
@@ -143,8 +149,9 @@ function AudienceCard({ title, description, image }: { title: string, descriptio
         <Image 
           src={image} 
           alt={title} 
-          width={400}
-          height={500}
+          width={612}
+          height={820}
+          sizes="(max-width: 768px) 50vw, 25vw"
           loading="lazy"
           className="absolute inset-0 w-full h-full object-cover filter grayscale contrast-125 opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700" 
         />
