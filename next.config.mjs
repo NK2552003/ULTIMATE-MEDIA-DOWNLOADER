@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
+  trailingSlash: true,
   images: {
     unoptimized: true,
   },
@@ -8,6 +9,5 @@ const nextConfig = {
     appIsrStatus: false,
     buildActivity: false,
   },
-  basePath: '',
 };
 export default nextConfig;
