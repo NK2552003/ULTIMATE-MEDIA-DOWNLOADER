@@ -92,11 +92,11 @@ export default function ClientLayout({
       ease: "power3.inOut",
     }, "-=0.2");
 
-    // Content animating from bottom to top
+    // Content animating fade in (instead of y: 100vh to fix mobile LCP)
     if (containerRef.current) {
       tl.fromTo(containerRef.current,
-        { y: "100vh", opacity: 0.5 },
-        { y: 0, opacity: 1, duration: 1.2, ease: "power3.out", clearProps: "all" },
+        { opacity: 0 },
+        { opacity: 1, duration: 1.2, ease: "power3.out", clearProps: "all" },
         "-=0.7" // overlap with shutter animation
       );
     }
