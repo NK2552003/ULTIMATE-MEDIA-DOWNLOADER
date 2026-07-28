@@ -155,7 +155,7 @@ export default function Hero() {
         {/* Mobile Graphic */}
         <div className="flex lg:hidden w-full justify-center relative mt-12 mb-4">
            <div className="relative w-[90vw] max-w-[400px] rounded-lg overflow-hidden border border-[var(--offblack)] shadow-[4px_4px_0px_var(--offblack)]">
-             <Image src={`${basePath}/totoro_mobile_hero.jpg`} alt="Media Downloading" width={400} height={500} priority className="w-full h-auto object-contain z-10 relative" />
+             <Image src={`${basePath}/totoro_mobile_hero.webp`} alt="Media Downloading" width={400} height={500} priority className="w-full h-auto object-contain z-10 relative" />
            </div>
         </div>
 

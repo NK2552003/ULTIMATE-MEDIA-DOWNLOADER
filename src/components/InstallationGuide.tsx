@@ -271,7 +271,7 @@ export default function InstallationGuide() {
             <div className="h-[350px] md:h-[480px] lg:h-[480px] border-[2px] md:border-[3px] border-[var(--offwhite)] bg-[var(--offblack)] shadow-[4px_4px_0px_var(--offwhite)] md:shadow-[8px_8px_0px_var(--offwhite)] hover:shadow-[8px_8px_0px_var(--cyan)] overflow-hidden flex flex-col rounded-none transition-shadow duration-500 relative">
               
               {/* Blurred Wallpaper Background */}
-              <div className="absolute inset-0 bg-[url('/totoro_wallpaper.jpg')] bg-cover bg-center opacity-40 blur-[4px] z-0 pointer-events-none scale-105"></div>
+              <div className="absolute inset-0 bg-[url('/totoro_wallpaper.webp')] bg-cover bg-center opacity-40 blur-[4px] z-0 pointer-events-none scale-105"></div>
               {/* Dark overlay to ensure text readability */}
               <div className="absolute inset-0 bg-black/50 z-0 pointer-events-none"></div>
 
