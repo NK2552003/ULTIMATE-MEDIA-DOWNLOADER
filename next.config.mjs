@@ -4,6 +4,10 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  devIndicators: {
+    appIsrStatus: false,
+    buildActivity: false,
+  },
   basePath: '',
 };
 export default nextConfig;

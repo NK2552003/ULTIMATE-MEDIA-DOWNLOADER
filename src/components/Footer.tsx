@@ -65,12 +65,7 @@ export default function Footer() {
         { y: 0, opacity: 1, duration: 0.8, ease: "power3.out", stagger: 0.07,
           scrollTrigger: { trigger: footerRef.current, start: "top 90%" } }
       );
-      gsap.fromTo(
-        ".f-line",
-        { scaleX: 0, transformOrigin: "left" },
-        { scaleX: 1, duration: 1, ease: "power2.out",
-          scrollTrigger: { trigger: footerRef.current, start: "top 90%" } }
-      );
+
     }, footerRef);
     return () => ctx.revert();
   }, []);
@@ -132,7 +127,7 @@ export default function Footer() {
               </p>
             </div>
 
-            <p className="font-mono text-sm md:text-base opacity-60 leading-relaxed">
+            <p className="font-mono text-sm md:text-base opacity-80 leading-relaxed">
               Professional-grade, open-source media downloading for 115+ platforms.
               Built with Python. No ads. No telemetry. No nonsense.
             </p>
@@ -141,7 +136,7 @@ export default function Footer() {
               {["Apache 2.0", "Python 3.9+", "Open Source", "Free Forever"].map((tag) => (
                 <span
                   key={tag}
-                  className="border-[2px] border-[var(--offwhite)]/30 px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest opacity-60"
+                  className="border-[2px] border-[var(--offwhite)]/30 px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest opacity-80"
                 >
                   {tag}
                 </span>
@@ -207,7 +202,7 @@ export default function Footer() {
                 <li key={link.href} className="overflow-hidden">
                   <TransitionLink
                     href={link.href}
-                    className="group relative inline-flex items-center gap-3 font-mono text-sm opacity-60 hover:opacity-100 transition-all duration-200 hover:translate-x-1"
+                    className="group relative inline-flex items-center gap-3 font-mono text-sm opacity-80 hover:opacity-100 transition-all duration-200 hover:translate-x-1"
                   >
                     <span className="w-3 h-[2px] bg-[var(--offwhite)]/40 group-hover:w-5 group-hover:bg-[var(--accent-color)] transition-all duration-300" />
                     {link.label}
@@ -225,7 +220,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <TransitionLink
                     href={link.href}
-                    className="group inline-flex items-center gap-3 font-mono text-sm opacity-60 hover:opacity-100 transition-all duration-200 hover:translate-x-1"
+                    className="group inline-flex items-center gap-3 font-mono text-sm opacity-80 hover:opacity-100 transition-all duration-200 hover:translate-x-1"
                   >
                     <span className="w-3 h-[2px] bg-[var(--offwhite)]/40 group-hover:w-5 group-hover:bg-[var(--accent-color)] transition-all duration-300" />
                     {link.label}
@@ -243,7 +238,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <TransitionLink
                     href={link.href}
-                    className="group inline-flex items-center gap-3 font-mono text-sm opacity-60 hover:opacity-100 transition-all duration-200 hover:translate-x-1"
+                    className="group inline-flex items-center gap-3 font-mono text-sm opacity-80 hover:opacity-100 transition-all duration-200 hover:translate-x-1"
                   >
                     <span className="w-3 h-[2px] bg-[var(--offwhite)]/40 group-hover:w-5 group-hover:bg-[var(--accent-color)] transition-all duration-300" />
                     {link.label}
@@ -258,7 +253,7 @@ export default function Footer() {
                 href="https://codeberg.org/nk2552003/umd/issues"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 font-mono text-sm opacity-60 hover:opacity-100 hover:text-[var(--accent-color)] transition-all"
+                className="group inline-flex items-center gap-2 font-mono text-sm opacity-80 hover:opacity-100 hover:text-[var(--accent-color)] transition-all"
               >
                 Report an Issue
                 <ArrowUpRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-all" />
@@ -267,7 +262,7 @@ export default function Footer() {
                 href="https://codeberg.org/nk2552003"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 font-mono text-sm opacity-60 hover:opacity-100 hover:text-[var(--accent-color)] transition-all"
+                className="group inline-flex items-center gap-2 font-mono text-sm opacity-80 hover:opacity-100 hover:text-[var(--accent-color)] transition-all"
               >
                 @nk2552003
                 <ArrowUpRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-all" />

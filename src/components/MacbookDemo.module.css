@@ -52,7 +52,7 @@
 .desktop {
   position: absolute;
   inset: 0;
-  background: url('/totoro_wallpaper.jpg') center/cover no-repeat;
+  background: url('/totoro_wallpaper.webp') center/cover no-repeat;
   display: flex;
   flex-direction: column;
   overflow: hidden;

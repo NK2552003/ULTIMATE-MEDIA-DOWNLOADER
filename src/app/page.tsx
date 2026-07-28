@@ -1,13 +1,14 @@
+import dynamic from 'next/dynamic';
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import Install from "@/components/Install";
 import PixelStrip from "@/components/PixelStrip";
-import Features from "@/components/Features";
-import InstallationGuide from "@/components/InstallationGuide";
-import Documentation from "@/components/Documentation";
 
-import FAQ from "@/components/FAQ";
-import Footer from "@/components/Footer";
+const Install = dynamic(() => import("@/components/Install"));
+const Features = dynamic(() => import("@/components/Features"));
+const InstallationGuide = dynamic(() => import("@/components/InstallationGuide"));
+const Documentation = dynamic(() => import("@/components/Documentation"));
+const FAQ = dynamic(() => import("@/components/FAQ"));
+const Footer = dynamic(() => import("@/components/Footer"));
 
 export default function Home() {
   return (

@@ -60,7 +60,7 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
   return (
     <aside className="w-64 flex-shrink-0 hidden xl:flex flex-col border-l-2 border-[var(--offblack)] sticky top-32 h-[calc(100vh-10rem)]">
       <div ref={scrollContainerRef} className="flex-1 overflow-y-auto overscroll-contain pl-8 pr-4 pb-8 relative">
-        <div className="font-mono text-sm tracking-widest uppercase mb-6 opacity-60 sticky top-0 bg-[var(--offwhite)] py-2 z-10">
+        <div className="font-mono text-sm tracking-widest uppercase mb-6 opacity-80 sticky top-0 bg-[var(--offwhite)] py-2 z-10">
           On this page
         </div>
         <nav className="flex flex-col gap-3">
@@ -72,7 +72,7 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
               className={`text-sm transition-all duration-200 border-l-2 pl-4 py-1
                 ${activeId === heading.slug 
                   ? 'border-[var(--offblack)] font-bold text-[var(--offblack)]' 
-                  : 'border-transparent text-[var(--offblack)] opacity-60 hover:opacity-100 hover:border-[var(--offblack)]'
+                  : 'border-transparent text-[var(--offblack)] opacity-80 hover:opacity-100 hover:border-[var(--offblack)]'
                 }`}
               style={{ 
                 marginLeft: `${(heading.level - 2) * 1}rem`,

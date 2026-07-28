@@ -1,10 +1,12 @@
 import { getDocBySlug } from '@/lib/docs';
 import { parseChangelog } from '@/lib/changelog';
-import ChangelogTimeline from '@/components/ChangelogTimeline';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import dynamic from 'next/dynamic';
+
+const ChangelogTimeline = dynamic(() => import('@/components/ChangelogTimeline'));
+const Footer = dynamic(() => import('@/components/Footer'));
 
 export const metadata: Metadata = {
   title: "Changelog",

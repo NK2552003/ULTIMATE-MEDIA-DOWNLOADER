@@ -57,8 +57,8 @@ export default function PixelStrip({
   }, [direction]);
 
   const svgContent = (
-    <div className="w-full" style={{ height: `${rows * squareSize}px` }}>
-      <svg width="100%" height="100%">
+    <div className="w-full flex" style={{ height: `${rows * squareSize}px` }}>
+      <svg aria-hidden="true" width="100%" height="100%" className="block">
         <defs>
           <pattern 
             id={patternId} 
@@ -76,7 +76,7 @@ export default function PixelStrip({
     </div>
   );
 
-  const solidBar = <div className="w-full h-8 md:h-12" style={{ backgroundColor: primaryColor }}></div>;
+  const solidBar = <div className="w-full h-8 md:h-12 relative -mt-[1px] -mb-[1px]" style={{ backgroundColor: primaryColor }}></div>;
 
   return (
     <div className="w-full relative z-20 flex flex-col">

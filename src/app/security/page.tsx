@@ -145,7 +145,7 @@ export default function SecurityPage() {
                 <div className={`inline-flex items-center justify-center w-14 h-14 md:w-20 md:h-20 border-[3px] border-[var(--offblack)] ${section.color} shadow-[4px_4px_0px_var(--offblack)]`}>
                   <section.icon strokeWidth={2.5} className="w-6 h-6 md:w-9 md:h-9" />
                 </div>
-                <div className="font-mono text-xs tracking-[0.2em] uppercase opacity-60">{section.tag}</div>
+                <div className="font-mono text-xs tracking-[0.2em] uppercase opacity-80">{section.tag}</div>
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tighter leading-[0.95]">{section.title}</h2>
               </div>
 
@@ -205,7 +205,7 @@ export default function SecurityPage() {
           {/* Contact CTA */}
           <div className="border-[3px] border-[var(--offblack)] bg-[var(--offblack)] text-[var(--offwhite)] p-8 md:p-12 lg:p-16 shadow-[8px_8px_0px_var(--accent-color)] flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
             <div>
-              <div className="font-mono text-xs tracking-[0.2em] uppercase opacity-60 mb-3">[ CONTACT ]</div>
+              <div className="font-mono text-xs tracking-[0.2em] uppercase opacity-80 mb-3">[ CONTACT ]</div>
               <h3 className="text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tighter leading-none">Found something?</h3>
               <p className="font-mono text-sm md:text-base opacity-70 mt-4 max-w-lg leading-relaxed">Report it responsibly. We read every report and respond to all legitimate security concerns.</p>
             </div>

@@ -1,6 +1,7 @@
 import { Apple, Play, Music, Camera, MessageSquare, Zap, Tv, Film, MonitorPlay, Radio, Headphones, Smartphone, Image as ImageIcon, Flame, AudioLines, Monitor, Globe } from 'lucide-react'
 import { SiSpotify, SiTiktok, SiTed, SiRumble, SiReddit, SiPinterest, SiPeertube, SiKick, SiInstagram, SiFlickr, SiDailymotion, SiTwitch, SiTumblr, SiVimeo, SiApplemusic, SiAudiomack } from 'react-icons/si'
 import { FaApple, FaAmazon, FaLinkedin, FaYoutube } from 'react-icons/fa'
+import Image from 'next/image'
 import PixelStrip from './PixelStrip'
 
 const basePath = '';
@@ -12,9 +13,11 @@ export default function Compatibility() {
         
         {/* Works on any Mac */}
         <div className="w-full border-[3px] border-[var(--offblack)] shadow-[12px_12px_0px_var(--offblack)] overflow-hidden relative group min-h-[300px] flex items-center bg-[var(--offwhite)]">
-          <img 
-            src={`${basePath}/totoro_mac.jpg`}
+          <Image 
+            src={`${basePath}/totoro_mac.webp`}
             alt="Totoro using a Mac" 
+            width={1200}
+            height={400}
             className="absolute inset-0 w-full h-full object-cover object-[100%_center] scale-110 -translate-y-5 filter grayscale contrast-125 opacity-80 group-hover:scale-[1.15] group-hover:-translate-y-6 group-hover:opacity-100 transition-all duration-700"
           />
           <div className="absolute inset-0 bg-white/70 backdrop-blur-md md:hidden pointer-events-none z-0"></div>
@@ -91,22 +94,22 @@ export default function Compatibility() {
           <AudienceCard 
             title="Developers" 
             description="Save API keys, terminal output, code snippets, and reference docs without switching context." 
-            image={`${basePath}/totoro_developer.jpg`}
+            image={`${basePath}/totoro_developer.webp`}
           />
           <AudienceCard 
             title="Music lovers" 
             description="Collect tracks, albums, and playlists in lossless FLAC. Metadata preserved. Library stays organized." 
-            image={`${basePath}/totoro_music.jpg`}
+            image={`${basePath}/totoro_music.webp`}
           />
           <AudienceCard 
             title="Content creators" 
             description="Download reference footage, pull stock video, grab audio stems — all without leaving your terminal." 
-            image={`${basePath}/totoro_creator.jpg`}
+            image={`${basePath}/totoro_creator.webp`}
           />
           <AudienceCard 
             title="Everyone" 
             description="If you've ever wanted to keep a video or song locally, UMD does it cleanly and without bloat." 
-            image={`${basePath}/totoro_everyone.jpg`}
+            image={`${basePath}/totoro_everyone.webp`}
           />
         </div>
         
@@ -137,21 +140,24 @@ function AudienceCard({ title, description, image }: { title: string, descriptio
   return (
     <div className="relative w-full aspect-[4/5] border-[3px] border-[var(--offblack)] shadow-[8px_8px_0px_var(--offblack)] hover:shadow-[12px_12px_0px_var(--offblack)] hover:-translate-y-1 transition-all group overflow-hidden bg-[var(--offblack)]">
       {image && (
-        <img 
+        <Image 
           src={image} 
           alt={title} 
+          width={400}
+          height={500}
+          loading="lazy"
           className="absolute inset-0 w-full h-full object-cover filter grayscale contrast-125 opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700" 
         />
       )}
       
       {/* Overlay gradient for text readability */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-80 transition-opacity duration-500"></div>
 
       {/* Blurred text container at the bottom */}
       <div className="absolute bottom-0 left-0 right-0 p-3 md:p-6 backdrop-blur-md bg-black/30 border-t-[3px] border-[var(--offblack)] translate-y-4 group-hover:translate-y-0 transition-transform duration-500 flex flex-col gap-2 md:gap-3 text-white">
-        <h4 className="text-sm md:text-2xl font-bold uppercase tracking-tight leading-none">
+        <h3 className="text-sm md:text-2xl font-bold uppercase tracking-tight leading-none">
           {title}
-        </h4>
+        </h3>
         <div className="w-full h-[2px] bg-white opacity-30"></div>
         <p className="font-mono text-[10px] md:text-sm opacity-90 leading-tight md:leading-relaxed">
           {description}
