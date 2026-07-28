@@ -114,7 +114,8 @@ body::before {
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
   height: 100%;
 }
 

@@ -18,7 +18,7 @@ export default function ResponsibleUseToast() {
 
           {/* Content */}
           <div className="flex-1 z-10">
-            <h4 className="font-mono text-[10px] md:text-xs uppercase tracking-[0.15em] text-[var(--offblack)] opacity-60 font-bold mb-1 md:mb-2">
+            <h4 className="font-mono text-[10px] md:text-xs uppercase tracking-[0.15em] text-[var(--offblack)] opacity-80 font-bold mb-1 md:mb-2">
               Responsible Use
             </h4>
             <p className="text-base md:text-lg lg:text-xl font-bold mb-1 md:mb-2 leading-tight uppercase tracking-tight">Your library, your responsibility.</p>

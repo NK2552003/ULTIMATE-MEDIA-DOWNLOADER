@@ -1,9 +1,11 @@
 import { notFound } from 'next/navigation';
 import { getDocBySlug, getDocSlugs } from '@/lib/docs';
-import MarkdownRenderer from '@/components/MarkdownRenderer';
 import TableOfContents from '@/components/TableOfContents';
 import { Metadata } from 'next';
 import GithubSlugger from 'github-slugger';
+import dynamic from 'next/dynamic';
+
+const MarkdownRenderer = dynamic(() => import('@/components/MarkdownRenderer'));
 
 export async function generateStaticParams() {
   const slugs = getDocSlugs();

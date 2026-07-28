@@ -20,7 +20,7 @@ function getCategoryColor(name: string) {
 const Doodles = [
   // Git Branch
   (props: React.SVGProps<SVGSVGElement>) => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" strokeLinejoin="miter" {...props}>
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" strokeLinejoin="miter" {...props}>
       <line x1="6" y1="3" x2="6" y2="21"></line>
       <circle cx="6" cy="6" r="3" fill="currentColor"></circle>
       <circle cx="6" cy="18" r="3" fill="currentColor"></circle>
@@ -30,14 +30,14 @@ const Doodles = [
   ),
   // Code Brackets
   (props: React.SVGProps<SVGSVGElement>) => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" strokeLinejoin="miter" {...props}>
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" strokeLinejoin="miter" {...props}>
       <polyline points="16 18 22 12 16 6"></polyline>
       <polyline points="8 6 2 12 8 18"></polyline>
     </svg>
   ),
   // Sticky Note
   (props: React.SVGProps<SVGSVGElement>) => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" strokeLinejoin="miter" {...props}>
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" strokeLinejoin="miter" {...props}>
       <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
       <polyline points="14 2 14 8 20 8"></polyline>
       <line x1="16" y1="13" x2="8" y2="13"></line>
@@ -47,7 +47,7 @@ const Doodles = [
   ),
   // Terminal / Command Prompt
   (props: React.SVGProps<SVGSVGElement>) => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" strokeLinejoin="miter" {...props}>
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" strokeLinejoin="miter" {...props}>
       <polyline points="4 17 10 11 4 5"></polyline>
       <line x1="12" y1="19" x2="20" y2="19"></line>
     </svg>
