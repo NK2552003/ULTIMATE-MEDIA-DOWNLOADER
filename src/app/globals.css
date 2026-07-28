@@ -56,7 +56,7 @@ body::before {
   width: 200%;
   height: 200%;
   background: transparent
-    url("http://assets.iceable.com/img/noise-transparent.png") repeat 0 0;
+    url("/noise.png") repeat 0 0;
   background-size: 300px 300px;
   animation: noise-animation 0.3s steps(5) infinite;
   opacity: 0.9;

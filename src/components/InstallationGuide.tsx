@@ -221,7 +221,7 @@ export default function InstallationGuide() {
 
   return (
     <section id="install" className="w-full bg-[var(--offblack)] text-[var(--offwhite)] relative overflow-hidden pt-24 md:pt-32 pb-0">
-      <div className="absolute inset-0 bg-[url('http://assets.iceable.com/img/noise-transparent.png')] opacity-10 mix-blend-overlay pointer-events-none z-0"></div>
+      <div className="absolute inset-0 bg-[url('/noise.png')] opacity-10 mix-blend-overlay pointer-events-none z-0"></div>
 
       {/* Background Doodles Layer */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.15] text-[var(--offwhite)]">
