@@ -14,7 +14,7 @@ export default function Compatibility() {
         {/* Works on any Mac */}
         <div className="w-full border-[3px] border-[var(--offblack)] shadow-[12px_12px_0px_var(--offblack)] overflow-hidden relative group min-h-[300px] flex items-center bg-[var(--offwhite)]">
           <Image 
-            src={`${basePath}/totoro_mac.jpg`}
+            src={`${basePath}/totoro_mac.webp`}
             alt="Totoro using a Mac" 
             width={1200}
             height={400}
@@ -94,22 +94,22 @@ export default function Compatibility() {
           <AudienceCard 
             title="Developers" 
             description="Save API keys, terminal output, code snippets, and reference docs without switching context." 
-            image={`${basePath}/totoro_developer.jpg`}
+            image={`${basePath}/totoro_developer.webp`}
           />
           <AudienceCard 
             title="Music lovers" 
             description="Collect tracks, albums, and playlists in lossless FLAC. Metadata preserved. Library stays organized." 
-            image={`${basePath}/totoro_music.jpg`}
+            image={`${basePath}/totoro_music.webp`}
           />
           <AudienceCard 
             title="Content creators" 
             description="Download reference footage, pull stock video, grab audio stems — all without leaving your terminal." 
-            image={`${basePath}/totoro_creator.jpg`}
+            image={`${basePath}/totoro_creator.webp`}
           />
           <AudienceCard 
             title="Everyone" 
             description="If you've ever wanted to keep a video or song locally, UMD does it cleanly and without bloat." 
-            image={`${basePath}/totoro_everyone.jpg`}
+            image={`${basePath}/totoro_everyone.webp`}
           />
         </div>
         
