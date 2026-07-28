@@ -70,6 +70,7 @@ export default function ClientLayout({
     const tl = gsap.timeline({
       onComplete: () => {
         setSplashFinished(true);
+        (window as any).__splashFinished = true;
         window.dispatchEvent(new Event('splashComplete'));
       }
     });
@@ -122,7 +123,7 @@ export default function ClientLayout({
            {Array.from({ length: 5 }).map((_, i) => (
              <div 
                key={i} 
-               className="shutter-bar flex-1 h-full bg-[var(--offblack)]"
+               className="shutter-bar flex-1 h-[120vh] bg-[var(--offblack)]"
                style={{ transformOrigin: 'top' }}
              />
            ))}

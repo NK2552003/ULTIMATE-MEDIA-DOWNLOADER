@@ -84,7 +84,7 @@ export default function Documentation() {
         
         <div className="border-2 border-[var(--offblack)] flex flex-col lg:flex-row bg-[var(--offwhite)] shadow-[12px_12px_0px_var(--offblack)] relative overflow-hidden">
           <div className="p-8 md:p-12 border-b-2 lg:border-b-0 lg:border-r-2 border-[var(--offblack)] lg:w-1/3 flex flex-col justify-center relative z-10 bg-[var(--offwhite)]">
-            <span className="font-mono text-xs md:text-sm uppercase tracking-widest mb-4 inline-block opacity-60">System at a glance</span>
+            <span className="font-mono text-xs md:text-sm uppercase tracking-widest mb-4 inline-block opacity-80">System at a glance</span>
             <h3 className="text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tighter leading-none mb-4">One command,<br/>clear flow.</h3>
             <p className="text-base md:text-lg lg:text-xl leading-relaxed opacity-80">URL validation routes requests to a dedicated handler when it can. A reliable generic pathway remains available for supported sites.</p>
           </div>

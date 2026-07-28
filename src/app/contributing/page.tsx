@@ -155,7 +155,7 @@ export default function ContributingPage() {
             <div className="flex flex-col gap-0 border-[3px] border-[var(--offblack)] shadow-[8px_8px_0px_var(--offblack)] overflow-hidden">
               {WORKFLOW_STEPS.map((step, i) => (
                 <div key={i} className="flex items-start gap-6 p-5 md:p-7 border-b-[2px] border-[var(--offblack)] last:border-b-0 hover:bg-[var(--accent-color)] transition-colors group bg-[var(--offwhite)]">
-                  <span className="font-mono text-2xl md:text-3xl font-black opacity-20 group-hover:opacity-60 transition-opacity shrink-0 pt-1 w-10">
+                  <span className="font-mono text-2xl md:text-3xl font-black opacity-20 group-hover:opacity-80 transition-opacity shrink-0 pt-1 w-10">
                     {String(i + 1).padStart(2, '0')}
                   </span>
                   <div className="flex flex-col gap-1">
@@ -211,7 +211,7 @@ test: add tests for audio extraction`}</pre>
           {/* CTA */}
           <div className="border-[3px] border-[var(--offblack)] bg-[var(--offblack)] text-[var(--offwhite)] p-8 md:p-12 lg:p-16 shadow-[8px_8px_0px_var(--accent-color)] flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
             <div>
-              <div className="font-mono text-xs tracking-[0.2em] uppercase opacity-60 mb-3">[ READY? ]</div>
+              <div className="font-mono text-xs tracking-[0.2em] uppercase opacity-80 mb-3">[ READY? ]</div>
               <h3 className="text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tighter leading-none">Let&apos;s build it<br/>together.</h3>
               <p className="font-mono text-sm md:text-base opacity-70 mt-4 max-w-lg leading-relaxed">Every line of code, every bug report, every doc fix makes UMD better for everyone.</p>
             </div>

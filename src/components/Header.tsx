@@ -9,7 +9,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const splitText = (text: string) => {
   return text.split("").map((char, index) => (
-    <span key={index} className="header-anim opacity-0 inline-block -translate-y-4" style={{ whiteSpace: char === ' ' ? 'pre' : 'normal' }}>
+    <span key={index} className="header-anim opacity-0 inline-block -translate-y-4 leading-none" style={{ whiteSpace: char === ' ' ? 'pre' : 'normal' }}>
       {char}
     </span>
   ));
@@ -63,7 +63,7 @@ export default function Header() {
       if (el) observer.observe(el);
     });
 
-    const handleSplashComplete = () => {
+    const playHeaderAnim = () => {
       gsap.to(".header-anim", {
         opacity: 1,
         y: 0,
@@ -73,11 +73,15 @@ export default function Header() {
       });
     };
 
-    window.addEventListener("splashComplete", handleSplashComplete);
+    if ((window as any).__splashFinished) {
+      playHeaderAnim();
+    } else {
+      window.addEventListener("splashComplete", playHeaderAnim);
+    }
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("splashComplete", handleSplashComplete);
+      window.removeEventListener("splashComplete", playHeaderAnim);
       observer.disconnect();
     };
   }, []);
@@ -116,14 +120,14 @@ export default function Header() {
       ></div>
       <header className="fixed top-0 left-0 w-full py-4 md:py-8 z-50 mix-blend-difference text-[#f5f5f0]">
         <div className="flex flex-wrap items-center justify-between max-w-full mx-auto px-4 md:px-8 gap-y-6">
-        <div className="text-2xl md:text-3xl font-bold tracking-tight">
+        <div className="flex items-center h-10 text-2xl md:text-3xl font-bold tracking-tight">
           {splitText("UMD")}
         </div>
         
-        <div className="flex items-center ml-auto relative order-2 lg:order-none">
+        <div className="flex items-center h-10 ml-auto relative order-2 lg:order-none">
           <Link
             href="https://codeberg.org/nk2552003/umd/releases"
-            className="header-anim opacity-0 -translate-y-4 inline-block bg-[#f5f5f0] text-[#3a3a38] mix-blend-normal px-4 py-2 md:px-6 md:py-3 text-sm md:text-lg uppercase font-bold"
+            className="header-anim opacity-0 -translate-y-4 inline-flex items-center justify-center h-10 bg-[#f5f5f0] text-[#3a3a38] mix-blend-normal px-4 md:px-6 text-sm md:text-lg uppercase font-bold leading-none"
             target="_blank"
           >
             + GET UMD

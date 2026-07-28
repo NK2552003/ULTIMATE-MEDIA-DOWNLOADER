@@ -120,14 +120,14 @@ limitations under the License.`}</pre>
                 [ FULL TEXT ]
               </div>
               <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter">Terms and Conditions</h2>
-              <p className="font-mono text-sm md:text-base opacity-60">Apache License, Version 2.0, January 2004 · http://www.apache.org/licenses/</p>
+              <p className="font-mono text-sm md:text-base opacity-80">Apache License, Version 2.0, January 2004 · http://www.apache.org/licenses/</p>
             </div>
 
             <div className="flex flex-col gap-6">
               {SECTIONS.map((s) => (
                 <div key={s.num} className="border-[2px] md:border-[3px] border-[var(--offblack)] bg-[var(--offwhite)] shadow-[4px_4px_0px_var(--offblack)] hover:shadow-[8px_8px_0px_var(--offblack)] hover:-translate-y-0.5 transition-all duration-300 group overflow-hidden">
                   <div className="border-b-[2px] md:border-b-[3px] border-[var(--offblack)] px-6 md:px-8 py-4 flex items-center gap-4 bg-[var(--accent-color)] group-hover:bg-[var(--offblack)] group-hover:text-[var(--offwhite)] transition-colors">
-                    <span className="font-mono text-2xl md:text-3xl font-black opacity-40 group-hover:opacity-60">{s.num}.</span>
+                    <span className="font-mono text-2xl md:text-3xl font-black opacity-40 group-hover:opacity-80">{s.num}.</span>
                     <h3 className="text-lg md:text-2xl font-black uppercase tracking-tight">{s.title}</h3>
                   </div>
                   <div className="p-6 md:p-8">
@@ -142,7 +142,7 @@ limitations under the License.`}</pre>
 
           {/* Appendix */}
           <div className="border-[3px] border-[var(--offblack)] p-8 md:p-12 bg-[var(--offwhite)] shadow-[8px_8px_0px_var(--offblack)]">
-            <div className="font-mono text-xs tracking-[0.2em] uppercase opacity-60 mb-4">[ APPENDIX ]</div>
+            <div className="font-mono text-xs tracking-[0.2em] uppercase opacity-80 mb-4">[ APPENDIX ]</div>
             <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tighter mb-6">How to Apply This License to Your Work</h3>
             <p className="font-mono text-sm md:text-base opacity-80 leading-relaxed mb-6">
               To apply the Apache License to your work, attach the following boilerplate notice, with the fields enclosed by brackets replaced with your own identifying information.

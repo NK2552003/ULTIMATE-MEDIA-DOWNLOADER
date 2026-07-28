@@ -5,21 +5,19 @@ import { Check, Copy, TerminalSquare } from "lucide-react";
 import PixelStrip from "./PixelStrip";
 
 const AppleIcon = () => (
-  <svg viewBox="0 0 384 512" fill="currentColor" className="w-4 h-4 md:w-5 md:h-5">
+  <svg aria-hidden="true" viewBox="0 0 384 512" fill="currentColor" className="w-4 h-4 md:w-5 md:h-5">
     <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.3 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.3zM34.4 46.1c25.4-31.5 61.1-46.1 82.6-46.1 4.5 0 9.1 .6 12.3 1.2-2.3 29.4-14.4 63.8-38.3 89.2-22.3 24.5-56.1 39.3-84.7 39.3-1.2-30.7 7.6-61.1 28.1-83.6z"/>
   </svg>
 );
 
 const WindowsIcon = () => (
-  <svg viewBox="0 0 448 512" fill="currentColor" className="w-4 h-4 md:w-5 md:h-5">
+  <svg aria-hidden="true" viewBox="0 0 448 512" fill="currentColor" className="w-4 h-4 md:w-5 md:h-5">
     <path d="M0 93.7l210.6-29.7v167.4H0V93.7zm0 216.9h210.6v167.4L0 448.3V310.6zm237.4 171.1L448 512V310.6H237.4v171.1zm0-394L448 0v216.9H237.4V87.7z"/>
   </svg>
 );
 
 const LinuxIcon = () => (
-  <svg viewBox="0 0 448 512" fill="currentColor" className="w-4 h-4 md:w-5 md:h-5">
-    <path d="M220.8 123.3c1 .5 1.8 1.7 3 1.7 1.1 0 2.8-.4 2.9-1.5 .2-1.4-1.9-2.3-3.2-2.9-1.7-.7-3.9-1-5.5-.1-.4 .2-.8 .7-.6 1.1 .3 1.3 2.3 1.1 3.4 1.7zm-21.9 1.7c1.2 0 2-1.2 3-1.7 1.1-.6 3.1-.4 3.5-1.7 .2-.4-.2-.9-.6-1.1-1.6-.9-3.8-.6-5.5 .1-1.3 .6-3.4 1.5-3.2 2.9 .1 1 1.8 1.5 2.8 1.5zM422.7 461.2c-15.3-25.2-18.7-41-45.6-70.1-50.5-54.7-70.6-72.2-74-78.5-8.3-15.6-1.8-21 21-39.6 15.7-12.7 19-14.8 24.3-21.1 23-27.6 16.5-62-11.4-78.1-24.9-14.3-51.5-22.3-73.4-31.9-20.7-9.1-39.3-17.7-65.7-19-49.8-2.6-73.2 21.6-103.5 45.4-11.9 9.3-21.4 16.6-43.1 35.8-32.9 29.1-32.4-5.4 92.5 13 12.2 14.1 13.9 14.7 16.7 1.1 5.4-8.3 11-13.6 16.5-15.1 15.6-53.7 49-62.1 82.2-6.5 25.8 4.6 44.5 14.7 54.4 19.3 18.9 45.6 22.8 77.3 15.7 34.6-7.8 71-33.8 86.8-51.8 10.1 14.1 23.4 28.1 46.1 33.2 26 5.8 47.9-2.9 66.8-24.3 10.9-12.4 18.9-25.7 28.5-44.4 2.8 7.3 4.2 12.9 5.3 18.5 3.3 16.6 20.4 46.1 49.3 54 22.3 6.1 52.8 5.7 75.6-14.2 18.5-16.1 22.5-35.1 13.5-52zM276.5 254.8c-10.6-4.5-21.8-31.9-14.4-44 5.3-8.8 16.3-15.3 27-14.8 10.5 .5 22.2 10.1 23.4 24.8 1.4 17.5-15.7 43.1-36 34zm-80.1-34.8c10.4-15.3 26.5-22.8 33.7-10.6 7 11.9-6.9 39.8-17.7 44.3-11.1 4.6-26.6-22-16-33.7z"/>
-  </svg>
+  <TerminalSquare className="w-4 h-4 md:w-5 md:h-5" />
 );
 
 const OS_TABS = [
@@ -227,10 +225,10 @@ export default function InstallationGuide() {
 
       {/* Background Doodles Layer */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.15] text-[var(--offwhite)]">
-        <svg className="absolute w-[150px] md:w-[200px] h-[150px] md:h-[200px] top-12 left-[2%] md:left-[10%] -rotate-12" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1">
+        <svg aria-hidden="true" className="absolute w-[150px] md:w-[200px] h-[150px] md:h-[200px] top-12 left-[2%] md:left-[10%] -rotate-12" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1">
           <path d="M50,10 C20,15 10,40 15,70 C20,95 60,95 85,75 C105,50 85,15 50,10" strokeLinecap="round"/>
         </svg>
-        <svg className="absolute w-24 md:w-32 h-24 md:h-32 top-[45%] md:top-[50%] left-[2%] md:left-[5%] rotate-[15deg]" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <svg aria-hidden="true" className="absolute w-24 md:w-32 h-24 md:h-32 top-[45%] md:top-[50%] left-[2%] md:left-[5%] rotate-[15deg]" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M0,50 Q25,10 50,50 T100,50" />
         </svg>
         <div className="absolute top-12 right-[5%] md:right-[15%] flex flex-col gap-2">
@@ -243,7 +241,7 @@ export default function InstallationGuide() {
               <span className="text-3xl md:text-4xl font-mono leading-none mt-2">+</span>
            </div>
         </div>
-        <svg className="absolute w-20 md:w-24 h-20 md:h-24 bottom-[10%] right-[2%] md:right-[8%] -rotate-12" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+        <svg aria-hidden="true" className="absolute w-20 md:w-24 h-20 md:h-24 bottom-[10%] right-[2%] md:right-[8%] -rotate-12" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
           <line x1="50" y1="10" x2="50" y2="90" />
           <line x1="10" y1="50" x2="90" y2="50" />
           <line x1="20" y1="20" x2="80" y2="80" />
@@ -279,7 +277,7 @@ export default function InstallationGuide() {
 
               {/* Terminal Header */}
               <div className="flex items-center justify-center px-4 py-3 border-b-[2px] md:border-b-[3px] border-[var(--offwhite)] bg-[#111]/70 backdrop-blur-md shrink-0 relative z-10">
-                <div className="text-xs font-mono opacity-60 flex items-center gap-2">
+                <div className="text-xs font-mono opacity-80 flex items-center gap-2">
                   <TerminalSquare className="w-3.5 h-3.5" /> root@umd-installer:~
                 </div>
               </div>
@@ -362,7 +360,7 @@ export default function InstallationGuide() {
               
               <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--cyan)] rounded-full blur-[100px] opacity-10 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none"></div>
 
-              <h3 className="font-mono text-base lg:text-lg uppercase tracking-widest opacity-60 flex items-center gap-3 shrink-0">
+              <h3 className="font-mono text-base lg:text-lg uppercase tracking-widest opacity-80 flex items-center gap-3 shrink-0">
                 <TerminalSquare className="w-5 h-5 text-[var(--cyan)]" /> Quick Commands
               </h3>
               
